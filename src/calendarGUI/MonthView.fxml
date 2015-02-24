@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="MonthViewController">
 	<children>
 		<VBox alignment="CENTER" prefHeight="80" prefWidth="890">
 			<Label fx:id="monthName" text="Testmonth" alignment="BOTTOM_CENTER"/>
