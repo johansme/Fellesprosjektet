@@ -3,27 +3,39 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Label?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1">
 	<columnConstraints>
-		<ColumnConstraints prefWidth="75"/>
-		<ColumnConstraints prefWidth="150"/>
-		<ColumnConstraints prefWidth="150"/>
-		<ColumnConstraints prefWidth="150"/>
-		<ColumnConstraints prefWidth="150"/>
-		<ColumnConstraints prefWidth="150"/>
-		<ColumnConstraints prefWidth="150"/>
-		<ColumnConstraints prefWidth="150"/>
+		<ColumnConstraints prefWidth="50"/>
+		<ColumnConstraints prefWidth="120"/>
+		<ColumnConstraints prefWidth="120"/>
+		<ColumnConstraints prefWidth="120"/>
+		<ColumnConstraints prefWidth="120"/>
+		<ColumnConstraints prefWidth="120"/>
+		<ColumnConstraints prefWidth="120"/>
+		<ColumnConstraints prefWidth="120"/>
 	</columnConstraints>
 	<rowConstraints>
-		<RowConstraints prefHeight="100"/>
+		<RowConstraints prefHeight="80"/>
 		<RowConstraints prefHeight="50"/>
-		<RowConstraints prefHeight="150"/>
-		<RowConstraints prefHeight="150"/>
-		<RowConstraints prefHeight="150"/>
-		<RowConstraints prefHeight="150"/>
-		<RowConstraints prefHeight="150"/>
-		<RowConstraints prefHeight="150"/>
+		<RowConstraints prefHeight="110"/>
+		<RowConstraints prefHeight="110"/>
+		<RowConstraints prefHeight="110"/>
+		<RowConstraints prefHeight="110"/>
+		<RowConstraints prefHeight="110"/>
+		<RowConstraints prefHeight="110"/>
 	</rowConstraints>
+	<children>
+		<Label fx:id="monthName" text="Testmonth" alignment="TOP_CENTER" GridPane.columnSpan="3" GridPane.columnIndex="4"/>
+		<Label text="Week" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+		<Label text="Monday" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+		<Label text="Tuesday" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+		<Label text="Wednesday" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+		<Label text="Thursday" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+		<Label text="Friday" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+		<Label text="Saturday" GridPane.columnIndex="6" GridPane.rowIndex="1"/>
+		<Label text="Sunday" GridPane.columnIndex="7" GridPane.rowIndex="1"/>
+	</children>
 </GridPane>
 
