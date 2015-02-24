@@ -1,15 +1,21 @@
 package login;
 
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 
-public class loginController {
+public class LoginController {
 
-	loginManager lman = new loginManager();
-
+	LoginManager lman = new LoginManager();
+	
 	
 	
 	@FXML TextField username;
@@ -19,7 +25,7 @@ public class loginController {
 	
 	
 	@FXML
-	private void login(){
+	private void login(Event e){
 		// get username and password
 		String uname;
 		String pass;
@@ -30,9 +36,19 @@ public class loginController {
 		if(lman.checkLogin(uname, pass)){
 			
 		 // its a match, proceeding to calendar
+		// harcore test!!!!
+			try{
+			Node node=(Node) e.getSource();
+			  Stage stage=(Stage) node.getScene().getWindow();
+			  Parent root = FXMLLoader.load(getClass().getResource("/calendarGUI/MonthView.fxml"));
+			  Scene scene = new Scene(root);
+			  stage.setScene(scene);
+			  stage.show();
+			} catch(Exception er) {
+				er.printStackTrace();
+			}
 			
-			System.out.println("goodie");
-			
+			//theMain.changeScene("/calendarGUI/MonthView.fxml");
 		}else{
 			
 			// no match, alert user.
