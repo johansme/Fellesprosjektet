@@ -1,6 +1,6 @@
 package login;
 
-public class loginManager {
+public class LoginManager {
 
 	
 	

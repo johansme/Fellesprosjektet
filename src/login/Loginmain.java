@@ -9,7 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
 
-public class main extends Application {
+
+public class Loginmain extends Application {
+	
+	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -22,6 +26,7 @@ public class main extends Application {
 			e.printStackTrace();
 		}
 	}
+
 	
 	public static void main(String[] args) {
 		launch(args);
