@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: bbb;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="509.0" fitWidth="633.0" layoutX="-16.0" layoutY="-30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../login.jpg" />
+         </image>
+      </ImageView>
+      <TextField layoutX="267.0" layoutY="152.0" prefHeight="35.0" prefWidth="153.0" promptText="Username..." />
+      <TextField layoutX="267.0" layoutY="193.0" prefHeight="35.0" prefWidth="153.0" promptText="Password..." />
+      <Button layoutX="387.0" layoutY="241.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="93.0" style="-fx-font-weight: BOLD; -fx-font-size: 16;" text="Login">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Label layoutX="245.0" layoutY="91.0" text="Welcome">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
