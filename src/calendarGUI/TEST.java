@@ -1,4 +1,4 @@
-package kalenderGUI;
+package calendarGUI;
 
 public class TEST {
 	
