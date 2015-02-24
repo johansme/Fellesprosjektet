@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class LoginController {
 
 	LoginManager lman = new LoginManager();
-	
+	ChangeScene changeScene = new ChangeScene();
 	
 	
 	@FXML TextField username;
@@ -27,32 +27,25 @@ public class LoginController {
 	@FXML
 	private void login(Event e){
 		// get username and password
+		
 		String uname;
 		String pass;
 		uname = username.textProperty().getValue();
 		pass = password.textProperty().getValue();
 		
 		//check if username and password corresponds
+		
 		if(lman.checkLogin(uname, pass)){
 			
 		 // its a match, proceeding to calendar
-		// harcore test!!!!
-			try{
-			Node node=(Node) e.getSource();
-			  Stage stage=(Stage) node.getScene().getWindow();
-			  Parent root = FXMLLoader.load(getClass().getResource("/calendarGUI/MonthView.fxml"));
-			  Scene scene = new Scene(root);
-			  stage.setScene(scene);
-			  stage.show();
-			} catch(Exception er) {
-				er.printStackTrace();
-			}
+		// changing stage fxml file to calendar
 			
-			//theMain.changeScene("/calendarGUI/MonthView.fxml");
+			changeScene.changeScene("/calendarGUI/MonthView.fxml", e);
+		
 		}else{
 			
 			// no match, alert user.
-			errorMessage.textProperty().setValue("Wrong username or password, or maybe botch, i dont know:D");
+			errorMessage.textProperty().setValue("Wrong username or password, or maybe both, i dont know:D");
 			
 		}
 			
