@@ -2,6 +2,7 @@ package login;
 
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 
@@ -14,6 +15,8 @@ public class loginController {
 	@FXML TextField username;
 	@FXML TextField password;
 	@FXML TextField errorMessage;
+	@FXML Button loginButton;
+	
 	
 	@FXML
 	private void login(){
@@ -38,20 +41,7 @@ public class loginController {
 		}
 			
 		}
-	@FXML
-	private void hidePassword(){
-		//for privacy reasons we have to hide the password from potential evil masterminds
-		String pass;
-		pass = password.textProperty().getValue();
-		System.out.println(pass);
-		String hider ="";
-		for (int i = 0; i< pass.length();i++){
-			hider += "*";
-		}
-		password.textProperty().set("hider");
 	
-	
-	}
 	
 	
 	
