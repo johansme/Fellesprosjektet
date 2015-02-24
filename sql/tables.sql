@@ -40,9 +40,11 @@ CREATE TABLE MeetingRoom(
 CREATE TABLE GroupMember(
 	groupid INT,
 	employeeid INT,
+	subgroup INT,
 	PRIMARY KEY(groupid, employeeid),
 	FOREIGN KEY(groupid) REFERENCES Group_(id),
-	FOREIGN KEY(employeeid) REFERENCES Employee(id)
+	FOREIGN KEY(employeeid) REFERENCES Employee(id),
+	FOREIGN KEY(subgroup) REFERENCES Group_(id)
 );
 
 CREATE TABLE MessageTo(
@@ -63,6 +65,14 @@ CREATE TABLE Invitation(
 	PRIMARY KEY(employeeid, appointmentid),
 	FOREIGN KEY(employeeid) REFERENCES Employee(id),
 	FOREIGN KEY(appointmentid) REFERENCES Appointment(id)
+);
+
+CREATE TABLE GroupInvitation(
+	groupid INT,
+	appointmentid INT,
+	PRIMARY KEY(groupid, appointmentid),
+	FOREIGN KEY(appointmentid) REFERENCES Appointment(id),
+	FOREIGN KEY(groupid) REFERENCES Group_(id)
 );
 
 CREATE TABLE ReservedFor(
