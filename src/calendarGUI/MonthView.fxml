@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="MonthViewController">
+	fx:controller="calendarGUI.MonthViewController">
 	<children>
 		<HBox alignment="CENTER" prefHeight="50" prefWidth="800">
 			<children>
