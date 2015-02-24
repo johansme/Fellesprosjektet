@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+	<columnConstraints>
+		<ColumnConstraints prefWidth="75"/>
+		<ColumnConstraints prefWidth="150"/>
+		<ColumnConstraints prefWidth="150"/>
+		<ColumnConstraints prefWidth="150"/>
+		<ColumnConstraints prefWidth="150"/>
+		<ColumnConstraints prefWidth="150"/>
+		<ColumnConstraints prefWidth="150"/>
+		<ColumnConstraints prefWidth="150"/>
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints prefHeight="100"/>
+		<RowConstraints prefHeight="50"/>
+		<RowConstraints prefHeight="150"/>
+		<RowConstraints prefHeight="150"/>
+		<RowConstraints prefHeight="150"/>
+		<RowConstraints prefHeight="150"/>
+		<RowConstraints prefHeight="150"/>
+		<RowConstraints prefHeight="150"/>
+	</rowConstraints>
 </GridPane>
 
