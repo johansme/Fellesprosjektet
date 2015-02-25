@@ -21,7 +21,7 @@
 				<Button fx:id="next" text="Next" alignment="CENTER_RIGHT" />
 			</children>
 		</HBox>
-		<GridPane layoutY="50" hgap="5" vgap="5">
+		<GridPane layoutY="50" hgap="5" vgap="5" >
 			<columnConstraints>
 				<ColumnConstraints prefWidth="65" />
 				<ColumnConstraints prefWidth="100" />
