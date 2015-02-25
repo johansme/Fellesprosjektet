@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="calendarGUI.MonthViewController">
+	fx:controller="calendarGUI.MonthViewController" stylesheets="resources/defaultTheme.css">
 	<children>
 		<HBox alignment="CENTER" prefHeight="50" prefWidth="800">
 			<children>
@@ -21,7 +21,8 @@
 				<Button fx:id="next" text="Next" alignment="CENTER_RIGHT" />
 			</children>
 		</HBox>
-		<GridPane layoutY="50" hgap="5" vgap="5" >
+		<GridPane layoutY="50" hgap="5" vgap="5"
+			style="-fx-background-color:#BBBBBB">
 			<columnConstraints>
 				<ColumnConstraints prefWidth="65" />
 				<ColumnConstraints prefWidth="100" />
@@ -42,125 +43,182 @@
 				<RowConstraints prefHeight="82" />
 			</rowConstraints>
 			<children>
-				<Label text="Week" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-				<Label text="Monday" GridPane.columnIndex="1" styleClass="subheader"
-					GridPane.rowIndex="0" />
-				<Label text="Tuesday" GridPane.columnIndex="2" styleClass="subheader"
-					GridPane.rowIndex="0" />
-				<Label text="Wednesday" GridPane.columnIndex="3" styleClass="subheader"
-					GridPane.rowIndex="0" />
-				<Label text="Thursday" GridPane.columnIndex="4" styleClass="subheader"
-					GridPane.rowIndex="0" />
-				<Label text="Friday" GridPane.columnIndex="5" styleClass="subheader"
-					GridPane.rowIndex="0" />
-				<Label text="Saturday" GridPane.columnIndex="6" styleClass="subheader"
-					GridPane.rowIndex="0" />
-				<Label text="Sunday" GridPane.columnIndex="7" styleClass="subheader"
-					GridPane.rowIndex="0" />
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
+					GridPane.rowIndex="0">
+					<children>
+						<Label text="Week" styleClass="subheader" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="1"
+					GridPane.rowIndex="0">
+					<children>
+						<Label text="Monday" styleClass="subheader" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="2"
+					GridPane.rowIndex="0">
+					<children>
+						<Label text="Tuesday" styleClass="subheader" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="3"
+					GridPane.rowIndex="0">
+					<children>
+						<Label text="Wednesday" styleClass="subheader" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="4"
+					GridPane.rowIndex="0">
+					<children>
+						<Label text="Thursday" styleClass="subheader" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="5"
+					GridPane.rowIndex="0">
+					<children>
+						<Label text="Friday" styleClass="subheader" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="6"
+					GridPane.rowIndex="0">
+					<children>
+						<Label text="Saturday" styleClass="subheader" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="7"
+					GridPane.rowIndex="0">
+					<children>
+						<Label text="Sunday" styleClass="subheader" />
+					</children>
+				</Pane>
 
-				<Label fx:id="week1" GridPane.columnIndex="0" styleClass="weeknr"
-					GridPane.rowIndex="1" />
-				<Label fx:id="week2" GridPane.columnIndex="0" styleClass="weeknr"
-					GridPane.rowIndex="2" />
-				<Label fx:id="week3" GridPane.columnIndex="0" styleClass="weeknr"
-					GridPane.rowIndex="3" />
-				<Label fx:id="week4" GridPane.columnIndex="0" styleClass="weeknr"
-					GridPane.rowIndex="4" />
-				<Label fx:id="week5" GridPane.columnIndex="0" styleClass="weeknr"
-					GridPane.rowIndex="5" />
-				<Label fx:id="week6" GridPane.columnIndex="0" styleClass="weeknr"
-					GridPane.rowIndex="6" />
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
+					GridPane.rowIndex="1">
+					<children>
+						<Label fx:id="week1" styleClass="weeknr" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
+					GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="week2" styleClass="weeknr" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
+					GridPane.rowIndex="3">
+					<children>
+						<Label fx:id="week3" styleClass="weeknr" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
+					GridPane.rowIndex="4">
+					<children>
+						<Label fx:id="week4" styleClass="weeknr" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
+					GridPane.rowIndex="5">
+					<children>
+						<Label fx:id="week5" styleClass="weeknr" />
+					</children>
+				</Pane>
+				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
+					GridPane.rowIndex="6">
+					<children>
+						<Label fx:id="week6" styleClass="weeknr" />
+					</children>
+				</Pane>
 
 				<fx:include fx:id="week1Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+					GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<fx:include fx:id="week1Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+					GridPane.columnIndex="2" GridPane.rowIndex="1" />
 				<fx:include fx:id="week1Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+					GridPane.columnIndex="3" GridPane.rowIndex="1" />
 				<fx:include fx:id="week1Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+					GridPane.columnIndex="4" GridPane.rowIndex="1" />
 				<fx:include fx:id="week1Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+					GridPane.columnIndex="5" GridPane.rowIndex="1" />
 				<fx:include fx:id="week1Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="1"/>
+					GridPane.columnIndex="6" GridPane.rowIndex="1" />
 				<fx:include fx:id="week1Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="1"/>
-				
+					GridPane.columnIndex="7" GridPane.rowIndex="1" />
+
 				<fx:include fx:id="week2Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+					GridPane.columnIndex="1" GridPane.rowIndex="2" />
 				<fx:include fx:id="week2Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+					GridPane.columnIndex="2" GridPane.rowIndex="2" />
 				<fx:include fx:id="week2Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+					GridPane.columnIndex="3" GridPane.rowIndex="2" />
 				<fx:include fx:id="week2Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+					GridPane.columnIndex="4" GridPane.rowIndex="2" />
 				<fx:include fx:id="week2Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="2"/>
+					GridPane.columnIndex="5" GridPane.rowIndex="2" />
 				<fx:include fx:id="week2Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="2"/>
+					GridPane.columnIndex="6" GridPane.rowIndex="2" />
 				<fx:include fx:id="week2Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="2"/>
-				
+					GridPane.columnIndex="7" GridPane.rowIndex="2" />
+
 				<fx:include fx:id="week3Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+					GridPane.columnIndex="1" GridPane.rowIndex="3" />
 				<fx:include fx:id="week3Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+					GridPane.columnIndex="2" GridPane.rowIndex="3" />
 				<fx:include fx:id="week3Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+					GridPane.columnIndex="3" GridPane.rowIndex="3" />
 				<fx:include fx:id="week3Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="3"/>
+					GridPane.columnIndex="4" GridPane.rowIndex="3" />
 				<fx:include fx:id="week3Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="3"/>
+					GridPane.columnIndex="5" GridPane.rowIndex="3" />
 				<fx:include fx:id="week3Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="3"/>
+					GridPane.columnIndex="6" GridPane.rowIndex="3" />
 				<fx:include fx:id="week3Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="3"/>
-				
+					GridPane.columnIndex="7" GridPane.rowIndex="3" />
+
 				<fx:include fx:id="week4Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+					GridPane.columnIndex="1" GridPane.rowIndex="4" />
 				<fx:include fx:id="week4Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+					GridPane.columnIndex="2" GridPane.rowIndex="4" />
 				<fx:include fx:id="week4Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+					GridPane.columnIndex="3" GridPane.rowIndex="4" />
 				<fx:include fx:id="week4Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="4"/>
+					GridPane.columnIndex="4" GridPane.rowIndex="4" />
 				<fx:include fx:id="week4Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="4"/>
+					GridPane.columnIndex="5" GridPane.rowIndex="4" />
 				<fx:include fx:id="week4Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="4"/>
+					GridPane.columnIndex="6" GridPane.rowIndex="4" />
 				<fx:include fx:id="week4Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="4"/>
-				
+					GridPane.columnIndex="7" GridPane.rowIndex="4" />
+
 				<fx:include fx:id="week5Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+					GridPane.columnIndex="1" GridPane.rowIndex="5" />
 				<fx:include fx:id="week5Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+					GridPane.columnIndex="2" GridPane.rowIndex="5" />
 				<fx:include fx:id="week5Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="5"/>
+					GridPane.columnIndex="3" GridPane.rowIndex="5" />
 				<fx:include fx:id="week5Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="5"/>
+					GridPane.columnIndex="4" GridPane.rowIndex="5" />
 				<fx:include fx:id="week5Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="5"/>
+					GridPane.columnIndex="5" GridPane.rowIndex="5" />
 				<fx:include fx:id="week5Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="5"/>
+					GridPane.columnIndex="6" GridPane.rowIndex="5" />
 				<fx:include fx:id="week5Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="5"/>
-				
+					GridPane.columnIndex="7" GridPane.rowIndex="5" />
+
 				<fx:include fx:id="week6Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+					GridPane.columnIndex="1" GridPane.rowIndex="6" />
 				<fx:include fx:id="week6Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+					GridPane.columnIndex="2" GridPane.rowIndex="6" />
 				<fx:include fx:id="week6Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="6"/>
+					GridPane.columnIndex="3" GridPane.rowIndex="6" />
 				<fx:include fx:id="week6Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="6"/>
+					GridPane.columnIndex="4" GridPane.rowIndex="6" />
 				<fx:include fx:id="week6Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="6"/>
+					GridPane.columnIndex="5" GridPane.rowIndex="6" />
 				<fx:include fx:id="week6Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="6"/>
+					GridPane.columnIndex="6" GridPane.rowIndex="6" />
 				<fx:include fx:id="week6Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="6"/>
-				
+					GridPane.columnIndex="7" GridPane.rowIndex="6" />
+
 			</children>
 		</GridPane>
 	</children>
