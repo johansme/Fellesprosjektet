@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarGUI.MonthDayViewController"
+	prefHeight="82" prefWidth="100" >
+	<children>
+		<Arc fx:id="dayArc" radiusX="40" radiusY="30" length="90" centerY="30"
+			type="ROUND" rotate="180" fill="WHITE" stroke="BLACK" centerX="60"/>
+		<Label fx:id="dayApp" text="#" layoutX="85" layoutY="5"/>
+		<Label fx:id="dayNo" text="30" layoutX="20" layoutY="10" alignment="CENTER"
+			prefWidth="60">
+			<font>
+				<Font name="System Bold" size="44.0"/>
+			</font>
+		</Label>
+	</children>
+</AnchorPane>
+
