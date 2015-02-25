@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ChangeScene {
+public class SceneHandler {
 
 	
 	public void changeScene(String fxmlPath , Event e){
