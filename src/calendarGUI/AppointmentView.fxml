@@ -1,19 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.RadioButton?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1"
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 prefWidth='800' prefHeight='600'
-stylesheets="resources/defaultTheme.css"
-mnemonicParsing='true'>
+fx:controller='calendarGUI.AppointmentViewController'
+styleClass='backgroundA'
+stylesheets='resources/defaultTheme.css'>
 	<children>
 		<Label fx:id="purpose" text="Here shall be displayed thy appointment description"
-		prefWidth='800' alignment='CENTER_LEFT'/>
-		<Label fx:id='date' text='30. February 1234'
-		prefWidth='800' alignment='CENTER_LEFT'/>
-		<HBox prefWidth='800'>
+		prefWidth='800' prefHeight='150' alignment='TOP_LEFT'
+		styleClass='header'
+		wrapText="true"/>
+		<HBox prefWidth='800' prefHeight='40'
+		styleClass='backroundB'>
 			<children>
-				<Label fx:id='from' text='hh:mm'/>
+				<Label text='Date:' prefWidth='400' prefHeight='40'
+				styleClass='description'/>
+				<Label fx:id='date' text='30. February 1234' prefWidth='400' prefHeight='40'
+				styleClass='attributeValue'/>
+			</children>
+		</HBox>
+		<HBox prefWidth='800' prefHeight='40'
+		styleClass='backgroundB'>
+			<children>
+				<Label text='From:' prefWidth='400' prefHeight='40'
+				styleClass='description'/>
+				<Label fx:id='from' text='hh:mm' prefWidth='400' prefHeight='40'
+				styleClass='attributeValue'/>
+			</children>
+		</HBox>
+		<HBox prefWidth='800' prefHeight='40'
+		styleClass='backgroundB'>
+			<children>
+				<Label text='To:' prefWidth='400' prefHeight='40'
+				styleClass='description'/>
+				<Label fx:id='until' text='hh:mm' prefWidth='400' prefHeight='40'
+				styleClass='attributeValue'/>
+			</children>
+		</HBox>
+		<HBox prefWidth='800' prefHeight='40'
+		styleClass='backgroundB'>
+			<children>
+				<Label text='Location:' prefWidth='400' prefHeight='40'
+				styleClass='description'/>
+				<Label fx:id='room' text='Moon' prefWidth='400' prefHeight='40'
+				styleClass='attributeValue'/>
+			</children>
+		</HBox>
+		<HBox prefWidth='800' prefHeight='40'
+		styleClass='backgorundB'>
+			<children>
+				<Label text='Attend:' prefWidth='400' prefHeight='40'
+				styleClass='description'/>
+				<Label text='Yes' prefWidth='50' prefHeight='40'
+				styleClass='attributeValue'/>
+				<RadioButton fx:id='yes' prefWidth='50' prefHeight='40'/>
+				<Label text='No' prefWidth='50' prefHeight='40'
+				styleClass='attributeValue'/>
+				<RadioButton fx:id='no' prefWidth='50' prefHeight='40'/>
+				<Button fx:id='confirmButton' text='Confirm' prefWidth='200' prefHeight='40'/>
+			</children>
+		</HBox>
+		<HBox prefWidth='800' prefHeight='210'
+		styleClass='backgroundB'>
+			<padding>
+				<Insets top='10'/>
+			</padding>
+			<children>
+				<Label text='Participants:' prefHeight='40' prefWidth='400'
+				styleClass='description'/>
+				<Label fx:id='participants' text='Stalin, Churchill, Obama etc massamjkjfkogjeah fsehdfshljh dffhdhgjjkljkløjk øjsdfhghl'
+				wrapText="true"
+				styleClass='attributeValue' alignment='TOP_LEFT'
+				prefWidth='400' prefHeight='210'/>
+			</children>
+		</HBox>
+		<HBox prefWidth='800' prefHeight='40'
+		styleClass='backgroundB' alignment='BOTTOM_LEFT'>
+			<children>
+				<Button fx:id='back' text='Back'
+				prefWidth='400' prefHeight='40'/>
+				<Button fx:id='edit' text='Edit'
+				prefWidth='400' prefHeight='40'/>
 			</children>
 		</HBox>
 	</children>
