@@ -1,86 +1,92 @@
 CREATE TABLE Employee(
-	id INT,
-	username VARCHAR(32),
-	name VARCHAR(255),
-	password VARCHAR(255),
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255) NOT NULL,
+	username VARCHAR(32) NOT NULL UNIQUE,
+	password VARCHAR(255) NOT NULL,
 	PRIMARY KEY(id)
 );
 
 CREATE TABLE Group_(
-	id INT,
-	name VARCHAR(255),
-	PRIMARY KEY(id)
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255) NOT NULL,
+	parent INT,
+	PRIMARY KEY(id),
+	FOREIGN KEY(parent) REFERENCES Group_(id)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE Appointment(
-	id INT,
+	id INT NOT NULL AUTO_INCREMENT,
 	location VARCHAR(255),
-	description VARCHAR(255),
-	starttime DATE,
-	endtime DATE,
-	lastmodified DATE,
-	createdby INT,
+	description VARCHAR(255) NOT NULL,
+	starttime DATE NOT NULL,
+	endtime DATE NOT NULL,
+	lastmodified DATE NOT NULL,
+	createdby INT NOT NULL,
 	PRIMARY KEY(id),
 	FOREIGN KEY(createdby) REFERENCES Employee(id)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE Message(
-	id INT,
-	content TEXT,
-	sent DATE,
-	PRIMARY KEY(id)
+	id INT NOT NULL AUTO_INCREMENT,
+	recipientid INT NOT NULL,
+	content TEXT NOT NULL,
+	sent DATE NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(recipientid) REFERENCES Employee(id)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE MeetingRoom(
-	name VARCHAR(255),
-	capacity INT,
-	PRIMARY KEY(name)
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(32) NOT NULL UNIQUE,
+	capacity INT NOT NULL,
+	PRIMARY KEY(id)
 );
 
 CREATE TABLE GroupMember(
-	groupid INT,
-	employeeid INT,
-	subgroup INT,
+	groupid INT NOT NULL,
+	employeeid INT NOT NULL,
 	PRIMARY KEY(groupid, employeeid),
-	FOREIGN KEY(groupid) REFERENCES Group_(id),
-	FOREIGN KEY(employeeid) REFERENCES Employee(id),
-	FOREIGN KEY(subgroup) REFERENCES Group_(id)
-);
-
-CREATE TABLE MessageTo(
-	employeeid INT,
-	messageid INT,
-	PRIMARY KEY(employeeid, messageid),
-	FOREIGN KEY(employeeid) REFERENCES Employee(id),
-	FOREIGN KEY(messageid) REFERENCES Message(id)
+	FOREIGN KEY(groupid) REFERENCES Group_(id)
+		ON DELETE CASCADE,
+	FOREIGN KEY(employeeid) REFERENCES Employee(id)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE Invitation(
-	employeeid INT,
-	appointmentid INT,
+	employeeid INT NOT NULL,
+	appointmentid INT NOT NULL,
 	accepted BOOLEAN,
 	hidden BOOLEAN,
-	dirty BOOLEAN,
+	dirty BOOLEAN DEFAULT TRUE,
 	alarm DATE,
 	PRIMARY KEY(employeeid, appointmentid),
-	FOREIGN KEY(employeeid) REFERENCES Employee(id),
+	FOREIGN KEY(employeeid) REFERENCES Employee(id)
+		ON DELETE CASCADE,
 	FOREIGN KEY(appointmentid) REFERENCES Appointment(id)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE GroupInvitation(
-	groupid INT,
-	appointmentid INT,
+	groupid INT NOT NULL,
+	appointmentid INT NOT NULL,
 	PRIMARY KEY(groupid, appointmentid),
-	FOREIGN KEY(appointmentid) REFERENCES Appointment(id),
+	FOREIGN KEY(appointmentid) REFERENCES Appointment(id)
+		ON DELETE CASCADE,
 	FOREIGN KEY(groupid) REFERENCES Group_(id)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE ReservedFor(
-	appointmentid INT,
-	room VARCHAR(255),
-	starttime DATE,
-	endtime DATE,
-	PRIMARY KEY(appointmentid, room),
-	FOREIGN KEY(appointmentid) REFERENCES Appointment(id),
-	FOREIGN KEY(room) REFERENCES MeetingRoom(name)
+	appointmentid INT NOT NULL,
+	roomid INT NOT NULL,
+	starttime DATE NOT NULL,
+	endtime DATE NOT NULL,
+	PRIMARY KEY(appointmentid),
+	FOREIGN KEY(appointmentid) REFERENCES Appointment(id)
+		ON DELETE CASCADE,
+	FOREIGN KEY(roomid) REFERENCES MeetingRoom(id)
+		ON DELETE CASCADE
 );

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+prefWidth='800' prefHeight='600'
+stylesheets="resources/defaultTheme.css"
+mnemonicParsing='true'>
+	<children>
+		<Label fx:id="purpose" text="Here shall be displayed thy appointment description"
+		prefWidth='800' alignment='CENTER_LEFT'/>
+		<Label fx:id='date' text='30. February 1234'
+		prefWidth='800' alignment='CENTER_LEFT'/>
+		<HBox prefWidth='800'>
+			<children>
+				<Label fx:id='from' text='hh:mm'/>
+			</children>
+		</HBox>
+	</children>
+</VBox>
+

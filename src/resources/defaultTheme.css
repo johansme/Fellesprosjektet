@@ -1,0 +1,17 @@
+.background {
+	-fx-background-color: #00FF1E;
+}
+
+.header {
+	-fx-font-family: "Comic Sans MS";
+	-fx-text-fill: #CCFF00;
+	-fx-font-size: 45pt;
+}
+
+Label {
+	-fx-text-fill: #dc143c;
+}
+
+Button {
+	-fx-text-fill: #dc143c;
+}

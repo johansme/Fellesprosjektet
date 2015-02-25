@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class LoginController {
 
 	LoginManager lman = new LoginManager();
-	ChangeScene changeScene = new ChangeScene();
+	SceneHandler sceneHandler = new SceneHandler();
 	
 	
 	@FXML TextField username;
@@ -40,7 +40,7 @@ public class LoginController {
 		 // its a match, proceeding to calendar
 		// changing stage fxml file to calendar
 			
-			changeScene.changeScene("/calendarGUI/MonthView.fxml", e);
+			sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
 		
 		}else{
 			
