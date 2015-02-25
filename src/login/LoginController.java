@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 
@@ -20,7 +21,7 @@ public class LoginController {
 	
 	@FXML TextField username;
 	@FXML TextField password;
-	@FXML TextField errorMessage;
+	@FXML Label errorMessage;
 	@FXML Button loginButton;
 	
 	
@@ -45,7 +46,7 @@ public class LoginController {
 		}else{
 			
 			// no match, alert user.
-			errorMessage.textProperty().setValue("Wrong username or password, or maybe both, i dont know:D");
+			errorMessage.textProperty().setValue("Invalid authentication credentials");
 			
 		}
 			

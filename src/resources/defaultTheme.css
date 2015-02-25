@@ -1,23 +1,37 @@
-.background {
-	-fx-background-color: #00FF1E;
+.backgroundA {
+	-fx-background-color: #cccccc;
 }
 
-.header {
-	-fx-font-family: "Comic Sans MS";
-	-fx-text-fill: #CCFF00;
-	-fx-font-size: 45pt;
+.backgroundB {
+	-fx-background-color: #cccccc;
 }
+
+.attributeValue {
+	-fx-font-size: 20pt;
+	-fx-text-fill: #000000;
+	-fx-font-family: "Verdana";
+}
+
 
 .subheader {
-	-fx-font-family: "Comic Sans MS Bold";
+	-fx-font-family: "Verdana";
 	-fx-text-fill: #CCFF00;
 	-fx-font-size: 28pt;
 }
 
-Label {
-	-fx-text-fill: #dc143c;
+.description {
+	-fx-font-size: 20pt;
+	-fx-text-fill: #000000;
+	-fx-font-weight: bold;
+	-fx-font-family: "Verdana";
 }
 
-Button {
-	-fx-text-fill: #dc143c;
+.Button {
+
+}
+
+.header {
+	-fx-text-fill: #000000;
+	-fx-font-size: 30pt;
+	-fx-font-family: "Verdana";
 }
