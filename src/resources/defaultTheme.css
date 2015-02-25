@@ -8,6 +8,12 @@
 	-fx-font-size: 45pt;
 }
 
+.subheader {
+	-fx-font-family: "Comic Sans MS Bold";
+	-fx-text-fill: #CCFF00;
+	-fx-font-size: 28pt;
+}
+
 Label {
 	-fx-text-fill: #dc143c;
 }
