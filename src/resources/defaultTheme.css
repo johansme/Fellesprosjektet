@@ -23,12 +23,7 @@
 	-fx-font-size: 20pt;
 	-fx-text-fill: #000000;
 	-fx-font-weight: bold;
-<<<<<<< HEAD
 	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
-	
-=======
-	-fx-font-family: "Verdana";
->>>>>>> origin/master
 }
 
 .Button {
@@ -38,10 +33,5 @@
 .header {
 	-fx-text-fill: #000000;
 	-fx-font-size: 30pt;
-<<<<<<< HEAD
 	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
-=======
-	-fx-font-family: "Verdana";
-}
->>>>>>> origin/master

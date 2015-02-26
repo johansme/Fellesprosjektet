@@ -1,6 +1,7 @@
 package calendarGUI;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import calendar.Appointment;
 import calendar.Day;
@@ -27,10 +28,18 @@ public class WeekViewController extends Application {
 		}
 	}
 	
+	ArrayList<Day> days;
+	
+	public void setView() {
+		setWeek(days.get(0).getWeekNumber());
+		setDate(days);
+		setAppointments(days);
+	}
+	
 	@FXML
 	private Label weekNum;
 	
-	public void setWeek(int week) {
+	private void setWeek(int week) {
 		weekNum.setText("Week "+week);
 		int prevWeek = week-1;
 		int nextWeek = week+1;
@@ -105,14 +114,14 @@ public class WeekViewController extends Application {
 	@FXML
 	private Label sunDate;
 	
-	public void setDate(LocalDate[] dates) {
-		monDate.setText(""+dates[0].getDayOfMonth()+". "+monthToString(dates[0].getMonthValue()));
-		tuesDate.setText(""+dates[1].getDayOfMonth()+". "+monthToString(dates[1].getMonthValue()));
-		wedDate.setText(""+dates[2].getDayOfMonth()+". "+monthToString(dates[2].getMonthValue()));
-		thurDate.setText(""+dates[3].getDayOfMonth()+". "+monthToString(dates[3].getMonthValue()));
-		friDate.setText(""+dates[4].getDayOfMonth()+". "+monthToString(dates[4].getMonthValue()));
-		satDate.setText(""+dates[5].getDayOfMonth()+". "+monthToString(dates[5].getMonthValue()));
-		sunDate.setText(""+dates[6].getDayOfMonth()+". "+monthToString(dates[6].getMonthValue()));
+	public void setDate(ArrayList<Day> dates) {
+		monDate.setText(""+dates.get(0).getDay().getDayOfMonth()+". "+monthToString(dates.get(0).getDay().getMonthValue()));
+		tuesDate.setText(""+dates.get(1).getDay().getDayOfMonth()+". "+monthToString(dates.get(1).getDay().getMonthValue()));
+		wedDate.setText(""+dates.get(2).getDay().getDayOfMonth()+". "+monthToString(dates.get(2).getDay().getMonthValue()));
+		thurDate.setText(""+dates.get(3).getDay().getDayOfMonth()+". "+monthToString(dates.get(3).getDay().getMonthValue()));
+		friDate.setText(""+dates.get(4).getDay().getDayOfMonth()+". "+monthToString(dates.get(4).getDay().getMonthValue()));
+		satDate.setText(""+dates.get(5).getDay().getDayOfMonth()+". "+monthToString(dates.get(5).getDay().getMonthValue()));
+		sunDate.setText(""+dates.get(6).getDay().getDayOfMonth()+". "+monthToString(dates.get(6).getDay().getMonthValue()));
 	}
 	
 	private String monthToString(int month) {
@@ -158,9 +167,11 @@ public class WeekViewController extends Application {
 	
 
 	
-	public void getAppointments(Day day) {
-		for (Appointment appointments : day.getAppointments()) {
-			
+	public void setAppointments(ArrayList<Day> days) {
+		for (Day day : days) {
+			for (Appointment a : day.getAppointments()) {
+				//TODO lag appointment i GUI
+			}
 		}
 	}
 	

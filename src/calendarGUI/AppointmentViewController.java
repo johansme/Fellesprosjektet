@@ -92,6 +92,7 @@ public class AppointmentViewController extends Application {
 		until.setText(appointment.getEndTime().toString());
 		room.setText(appointment.getLocation());
 		ArrayList<String> partpts = appointment.getParticipants();
+		//TODO useraccepted usercreated
 		for (String p : partpts) {
 			participants.getItems().add(p);
 		}
