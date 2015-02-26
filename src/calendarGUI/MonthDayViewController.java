@@ -1,5 +1,7 @@
 package calendarGUI;
 
+import java.time.LocalDate;
+
 import calendar.Day;
 import calendar.DayChangeListener;
 import javafx.fxml.FXML;
@@ -17,7 +19,7 @@ public class MonthDayViewController implements DayChangeListener {
 	
 	@FXML
 	private void initialize() {
-		day = new Day();
+		day = new Day(LocalDate.now());
 		dayNo.setText(String.valueOf(day.getDay().getDayOfMonth()));
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
 	}
