@@ -25,11 +25,11 @@ public class SceneHandler {
 		
 	}
 	
-	public void popUpScene(String fxmlPath){
+	public void popUpScene(String fxmlPath, int width,int height){
 		Stage primaryStage = new Stage();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-			Scene scene = new Scene(root,800,600);
+			Scene scene = new Scene(root,width,height);
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
