@@ -1,5 +1,6 @@
 package calendarGUI;
 
+import calendar.Calendar;
 import calendar.Month;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -66,8 +67,98 @@ public class MonthViewController {
 	@FXML private MonthDayViewController week2Day7Controller;
 	
 	
+	@FXML private AnchorPane week3Day1;
+	@FXML private MonthDayViewController week3Day1Controller;
+	
+	@FXML private AnchorPane week3Day2;
+	@FXML private MonthDayViewController week3Day2Controller;
+	
+	@FXML private AnchorPane week3Day3;
+	@FXML private MonthDayViewController week3Day3Controller;
+	
+	@FXML private AnchorPane week3Day4;
+	@FXML private MonthDayViewController week3Day4Controller;
+	
+	@FXML private AnchorPane week3Day5;
+	@FXML private MonthDayViewController week3Day5Controller;
+	
+	@FXML private AnchorPane week3Day6;
+	@FXML private MonthDayViewController week3Day6Controller;
+	
+	@FXML private AnchorPane week3Day7;
+	@FXML private MonthDayViewController week3Day7Controller;
+	
+	
+	@FXML private AnchorPane week4Day1;
+	@FXML private MonthDayViewController week4Day1Controller;
+	
+	@FXML private AnchorPane week4Day2;
+	@FXML private MonthDayViewController week4Day2Controller;
+	
+	@FXML private AnchorPane week4Day3;
+	@FXML private MonthDayViewController week4Day3Controller;
+	
+	@FXML private AnchorPane week4Day4;
+	@FXML private MonthDayViewController week4Day4Controller;
+	
+	@FXML private AnchorPane week4Day5;
+	@FXML private MonthDayViewController week4Day5Controller;
+	
+	@FXML private AnchorPane week4Day6;
+	@FXML private MonthDayViewController week4Day6Controller;
+	
+	@FXML private AnchorPane week4Day7;
+	@FXML private MonthDayViewController week4Day7Controller;
+	
+	
+	@FXML private AnchorPane week5Day1;
+	@FXML private MonthDayViewController week5Day1Controller;
+	
+	@FXML private AnchorPane week5Day2;
+	@FXML private MonthDayViewController week5Day2Controller;
+	
+	@FXML private AnchorPane week5Day3;
+	@FXML private MonthDayViewController week5Day3Controller;
+	
+	@FXML private AnchorPane week5Day4;
+	@FXML private MonthDayViewController week5Day4Controller;
+	
+	@FXML private AnchorPane week5Day5;
+	@FXML private MonthDayViewController week5Day5Controller;
+	
+	@FXML private AnchorPane week5Day6;
+	@FXML private MonthDayViewController week5Day6Controller;
+	
+	@FXML private AnchorPane week5Day7;
+	@FXML private MonthDayViewController week5Day7Controller;
+	
+	
+	@FXML private AnchorPane week6Day1;
+	@FXML private MonthDayViewController week6Day1Controller;
+	
+	@FXML private AnchorPane week6Day2;
+	@FXML private MonthDayViewController week6Day2Controller;
+	
+	@FXML private AnchorPane week6Day3;
+	@FXML private MonthDayViewController week6Day3Controller;
+	
+	@FXML private AnchorPane week6Day4;
+	@FXML private MonthDayViewController week6Day4Controller;
+	
+	@FXML private AnchorPane week6Day5;
+	@FXML private MonthDayViewController week6Day5Controller;
+	
+	@FXML private AnchorPane week6Day6;
+	@FXML private MonthDayViewController week6Day6Controller;
+	
+	@FXML private AnchorPane week6Day7;
+	@FXML private MonthDayViewController week6Day7Controller;
+	
+	
+	@FXML
 	private void initialize() {
-		
+//		month = Calendar.getCurrentMonth();
+		monthName.setText(month.getMonth());
 	}
 	
 }
