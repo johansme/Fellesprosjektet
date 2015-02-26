@@ -15,8 +15,8 @@
 
 .subheader {
 	-fx-font-family: "Verdana";
-	-fx-text-fill: #CCFF00;
-	-fx-font-size: 28pt;
+	-fx-text-fill: #000000;
+	-fx-font-size: 18pt;
 }
 
 .description {
