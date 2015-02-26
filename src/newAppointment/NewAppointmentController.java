@@ -27,6 +27,8 @@ public class NewAppointmentController {
 	@FXML DatePicker tilDato;
 	
 	
+	
+	
 	// handtering av til og fra tidfeltet
 	@FXML
 	private void fraTid(){
