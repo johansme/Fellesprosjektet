@@ -2,10 +2,11 @@
 <diagram height="660" made_with_version="1.5" name="Default" width="800">
 <entity id="0" is_weak="false" name="Employee" x="115" y="131">
 <attributes>
-<attribute is_hidden="false" is_key="true" name="id" type=""/>
+<attribute is_hidden="false" is_key="true" name="id" type="Integer"/>
 <attribute is_hidden="false" is_key="false" name="username" type="String"/>
 <attribute is_hidden="false" is_key="false" name="name" type="String"/>
 <attribute is_hidden="false" is_key="false" name="password" type="String"/>
+<attribute is_hidden="false" is_key="false" name="email" type="String"/>
 </attributes>
 </entity>
 <entity id="1" is_weak="false" name="Appointment" x="324" y="74">
@@ -71,7 +72,7 @@
 <connection connection_side="0" direction="0" object_id="8" relation_point_x="217" relation_point_y="109"/>
 </line>
 <line cardinality_string="(0,n)" has_u="false" id="13" is_weak="false" role="" style="0" turned="false">
-<connection connection_side="0" direction="0" object_id="0" relation_point_x="115" relation_point_y="176"/>
+<connection connection_side="0" direction="0" object_id="0" relation_point_x="115" relation_point_y="184"/>
 <connection connection_side="2" direction="0" object_id="12" relation_point_x="58" relation_point_y="141"/>
 </line>
 <line cardinality_string="(0,n)" has_u="false" id="14" is_weak="false" role="" style="0" turned="false">
@@ -87,7 +88,7 @@
 <connection connection_side="3" direction="1" object_id="16" relation_point_x="474" relation_point_y="103"/>
 </line>
 <line cardinality_string="(0,n)" has_u="false" id="20" is_weak="false" role="" style="0" turned="false">
-<connection connection_side="2" direction="0" object_id="0" relation_point_x="200" relation_point_y="176"/>
+<connection connection_side="2" direction="0" object_id="0" relation_point_x="200" relation_point_y="184"/>
 <connection connection_side="0" direction="0" object_id="19" relation_point_x="225" relation_point_y="214"/>
 </line>
 <line cardinality_string="(1,1)" has_u="false" id="21" is_weak="false" role="" style="0" turned="false">
