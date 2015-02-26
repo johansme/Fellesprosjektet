@@ -29,12 +29,17 @@ public class NewAppointmentController {
 	@FXML TextField otherField;
 	
 	
+	@FXML
+	private void description(){
+		
+	}
 	
 	@FXML
 	private void checkCapasity(){
 		String value = capasityField.textProperty().getValue();
-		if( !value.matches("\\d+") && !tilField.textProperty().getValue().matches("\\d\\d") ){
-			tilField.setPromptText("Invalid");
+		if( !value.matches("\\d+") ){
+			capasityField.setPromptText("Invalid");
+			capasityField.setText("1");
 		}else{
 			//lagre kapasitet:D
 			//bruk kapasitet til a foresla rom
@@ -140,7 +145,7 @@ private boolean validTilTime(){
 	
 	//dato handtering:
 	@FXML
-	private void dato(){
+	private void fraDato(){
 		
 		disableDates(tilDato, fraDato.getValue());
 		tilDato.setValue(fraDato.getValue());
@@ -179,7 +184,7 @@ private boolean validTilTime(){
 	@FXML
 	public void initialize(){
 		currentDate = Calendar.getInstance();
-		formalField.setText("Appointment Description...");
+		formalField.setPromptText("Appointment Description...");
 		
 		fraField.setPromptText(currentDate.getTime().getHours() + 1+":00" );
 		tilField.setPromptText(currentDate.getTime().getHours() + 2 + ":00" );

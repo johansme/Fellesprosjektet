@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0" style="-fx-border-width: 2; -fx-border-color: Black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0" style="-fx-border-width: 2; -fx-border-color: Black;" xmlns="http://javafx.com/javafx/8" fx:controller = "newAppointment.NewAppointmentController" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="54.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
       <Label layoutX="14.0" layoutY="5.0" text="New Appointment">
@@ -45,8 +45,8 @@
                </font>
             </Label>
             <TextField fx:id="formalField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onFocusedChange="#description" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DatePicker fx:id="fraDato" onFocusedChange="#fradato" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DatePicker fx:id="tilDato" onFocusedChange="#tildato" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DatePicker fx:id="fraDato" onFocusedChange="#fraDato" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="tilDato" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label id="labelEndDate" text="End date:" GridPane.rowIndex="3">
                <font>
                   <Font size="16.0" />
@@ -62,8 +62,8 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="fraField" maxHeight="-Infinity" maxWidth="-Infinity" onFocusedChange="#frafield" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="tilField" maxHeight="-Infinity" maxWidth="-Infinity" onFocusedChange="#tilfield" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="fraField" maxHeight="-Infinity" maxWidth="-Infinity" onFocusedChange="#fraTid" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="tilField" maxHeight="-Infinity" maxWidth="-Infinity" onFocusedChange="#tilTid" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Label text="Other:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font size="16.0" />
