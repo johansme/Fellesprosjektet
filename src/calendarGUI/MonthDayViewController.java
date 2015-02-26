@@ -17,6 +17,7 @@ public class MonthDayViewController implements DayChangeListener {
 	
 	@FXML
 	private void initialize() {
+		day = new Day();
 		dayNo.setText(String.valueOf(day.getDay().getDayOfMonth()));
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
 	}
