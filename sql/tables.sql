@@ -3,6 +3,7 @@ CREATE TABLE Employee(
 	name VARCHAR(255) NOT NULL,
 	username VARCHAR(32) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
 	PRIMARY KEY(id)
 );
 
@@ -25,16 +26,6 @@ CREATE TABLE Appointment(
 	createdby INT NOT NULL,
 	PRIMARY KEY(id),
 	FOREIGN KEY(createdby) REFERENCES Employee(id)
-		ON DELETE CASCADE
-);
-
-CREATE TABLE Message(
-	id INT NOT NULL AUTO_INCREMENT,
-	recipientid INT NOT NULL,
-	content TEXT NOT NULL,
-	sent DATE NOT NULL,
-	PRIMARY KEY(id),
-	FOREIGN KEY(recipientid) REFERENCES Employee(id)
 		ON DELETE CASCADE
 );
 
