@@ -25,4 +25,21 @@ public class SceneHandler {
 		
 	}
 	
+	public void popUpScene(String fxmlPath){
+		Stage primaryStage = new Stage();
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+			Scene scene = new Scene(root,800,600);
+			
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+		
+	
+	
 }
