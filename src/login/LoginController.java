@@ -23,7 +23,7 @@ public class LoginController {
 	@FXML TextField password;
 	@FXML Label errorMessage;
 	@FXML Button loginButton;
-	
+
 	
 	@FXML
 	private void login(Event e){
@@ -41,8 +41,10 @@ public class LoginController {
 		 // its a match, proceeding to calendar
 		// changing stage fxml file to calendar
 			
+			
 			sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
 			sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml",600,400);
+			
 		
 		}else{
 			
