@@ -41,7 +41,7 @@ public class LoginController {
 		 // its a match, proceeding to calendar
 		// changing stage fxml file to calendar
 			
-			//sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
+			sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
 			sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml",600,400);
 		
 		}else{
