@@ -15,10 +15,10 @@
 	<children>
 		<HBox alignment="CENTER" prefHeight="50" prefWidth="800">
 			<children>
-				<Button fx:id="previous" text="Previous" alignment="CENTER_LEFT" />
+				<Button fx:id="previous" text="Previous" alignment="CENTER_LEFT" styleClass="Button"/>
 				<Label fx:id="monthName" text="Testmonth" styleClass="header"
 					prefWidth="650" alignment="CENTER" />
-				<Button fx:id="next" text="Next" alignment="CENTER_RIGHT" />
+				<Button fx:id="next" text="Next" alignment="CENTER_RIGHT" styleClass="Button"/>
 			</children>
 		</HBox>
 		<GridPane layoutY="50" hgap="5" vgap="5"
@@ -42,6 +42,7 @@
 				<RowConstraints prefHeight="82" />
 				<RowConstraints prefHeight="82" />
 			</rowConstraints>
+			
 			<children>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
 					GridPane.rowIndex="0">
@@ -218,7 +219,6 @@
 					GridPane.columnIndex="6" GridPane.rowIndex="6" />
 				<fx:include fx:id="week6Day7" source="MonthDayView.fxml"
 					GridPane.columnIndex="7" GridPane.rowIndex="6" />
-
 			</children>
 		</GridPane>
 	</children>
