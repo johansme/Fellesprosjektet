@@ -158,7 +158,14 @@ public class MonthViewController {
 	@FXML
 	private void initialize() {
 //		month = Calendar.getCurrentMonth();
-		//monthName.setText(month.getMonth());
+		monthChanged();
 	}
+	
+	private void monthChanged() {
+//		monthName.setText(month.getMonth());
+		//TODO Complete month update
+	}
+	
+	
 	
 }
