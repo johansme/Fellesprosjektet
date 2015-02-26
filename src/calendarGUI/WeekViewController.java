@@ -2,6 +2,8 @@ package calendarGUI;
 
 import java.time.LocalDate;
 
+import calendar.Appointment;
+import calendar.Day;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -156,14 +158,11 @@ public class WeekViewController extends Application {
 	
 
 	
-//	public void setAppointments(Appointment[] appointments) {
-//		if (appointments!=null) {
-//			for (Appointment appointment : appointments) {
-//				int time = appointment.getTime();
-//				String day = appointment.getDay();
-//			}
-//		}
-//	}
+	public void getAppointments(Day day) {
+		for (Appointment appointments : day.getAppointments()) {
+			
+		}
+	}
 	
 
 	public static void main(String[] args) {

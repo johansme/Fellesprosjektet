@@ -9,14 +9,14 @@
 .attributeValue {
 	-fx-font-size: 20pt;
 	-fx-text-fill: #000000;
-	-fx-font-family: "Verdana";
+	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 .description {
 	-fx-font-size: 20pt;
 	-fx-text-fill: #000000;
 	-fx-font-weight: bold;
-	-fx-font-family: "Verdana";
+	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
 	
 }
 
@@ -27,5 +27,5 @@
 .header {
 	-fx-text-fill: #000000;
 	-fx-font-size: 30pt;
-	-fx-font-family: "Verdana";
+	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
 }

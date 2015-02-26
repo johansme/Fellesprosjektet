@@ -22,12 +22,22 @@ stylesheets='resources/defaultTheme.css'>
 		<HBox prefWidth='800' prefHeight='40'
 		styleClass='backroundB'>
 			<children>
-				<Label text='Date:' prefWidth='400' prefHeight='40'
+				<Label text='Start date:' prefWidth='400' prefHeight='40'
 				styleClass='description'/>
-				<Label fx:id='date' text='30. February 1234' prefWidth='400' prefHeight='40'
+				<Label fx:id='startDate' text='30. February 1234' prefWidth='400' prefHeight='40'
 				styleClass='attributeValue'/>
 			</children>
 		</HBox>
+		<HBox prefWidth='800' prefHeight='40'
+		styleClass='backroundB'>
+			<children>
+				<Label text='End date:' prefWidth='400' prefHeight='40'
+				styleClass='description'/>
+				<Label fx:id='endDate' text='30. February 1234' prefWidth='400' prefHeight='40'
+				styleClass='attributeValue'/>
+			</children>
+		</HBox>
+		
 		<HBox prefWidth='800' prefHeight='40'
 		styleClass='backgroundB'>
 			<children>
@@ -57,16 +67,20 @@ stylesheets='resources/defaultTheme.css'>
 		</HBox>
 		<HBox prefWidth='800' prefHeight='40'
 		styleClass='backgorundB'>
+			<fx:define>
+				<ToggleGroup fx:id="toggleAnswer"/>
+			</fx:define>
 			<children>
 				<Label text='Attend:' prefWidth='400' prefHeight='40'
 				styleClass='description'/>
 				<Label text='Yes' prefWidth='50' prefHeight='40'
 				styleClass='attributeValue'/>
-				<RadioButton fx:id='yes' prefWidth='50' prefHeight='40'/>
+				<RadioButton fx:id='yes' prefWidth='50' prefHeight='40' toggleGroup="$toggleAnswer"/>
 				<Label text='No' prefWidth='50' prefHeight='40'
 				styleClass='attributeValue'/>
-				<RadioButton fx:id='no' prefWidth='50' prefHeight='40'/>
-				<Button fx:id='confirmButton' text='Confirm' prefWidth='200' prefHeight='40'/>
+				<RadioButton fx:id='no' prefWidth='50' prefHeight='40' toggleGroup="$toggleAnswer"/>
+				<Button fx:id='confirmButton' text='Confirm' prefWidth='200' prefHeight='40'
+				onAction="#confirmAnswer"/>
 			</children>
 		</HBox>
 		<HBox prefWidth='800' prefHeight='210'
@@ -77,19 +91,22 @@ stylesheets='resources/defaultTheme.css'>
 			<children>
 				<Label text='Participants:' prefHeight='40' prefWidth='400'
 				styleClass='description'/>
-				<Label fx:id='participants' text='Stalin, Churchill, Obama etc massamjkjfkogjeah fsehdfshljh dffhdhgjjkljkløjk øjsdfhghl'
-				wrapText="true"
-				styleClass='attributeValue' alignment='TOP_LEFT'
-				prefWidth='400' prefHeight='210'/>
+				<ScrollPane prefWidth='400' prefHeight='210'>
+					<content>
+						<ListView fx:id="participants" prefWidth='400' prefHeight='210'
+						styleClass='attributeValue'/>
+					</content>
+					
+				</ScrollPane>
 			</children>
 		</HBox>
 		<HBox prefWidth='800' prefHeight='40'
 		styleClass='backgroundB' alignment='BOTTOM_LEFT'>
 			<children>
 				<Button fx:id='back' text='Back'
-				prefWidth='400' prefHeight='40'/>
+				prefWidth='400' prefHeight='40' onAction="#backAction"/>
 				<Button fx:id='edit' text='Edit'
-				prefWidth='400' prefHeight='40'/>
+				prefWidth='400' prefHeight='40' onAction="#editAction"/>
 			</children>
 		</HBox>
 	</children>
