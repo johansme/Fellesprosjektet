@@ -31,7 +31,7 @@ public class NewAppointmentController {
 	
 	@FXML
 	private void description(){
-		
+		System.out.println("YOLO");
 	}
 	
 	@FXML
