@@ -29,7 +29,7 @@ public class NewAppointmentController {
 	
 	// handtering av til og fra tidfeltet
 	@FXML
-	private void fra(){
+	private void fraTid(){
 		if(!fraField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !fraField.textProperty().getValue().matches("\\d\\d") ){
 			fraField.setText(currentDate.getTime().getHours() +":" + currentDate.getTime().getMinutes());
 		}else if(fraField.textProperty().getValue().matches("\\d\\d")){
@@ -43,7 +43,7 @@ public class NewAppointmentController {
 		
 	}
 	@FXML
-	private void til(){
+	private void tilTid(){
 		String value = tilField.textProperty().getValue();
 		if( !value.matches("\\d\\d:\\d\\d") && !tilField.textProperty().getValue().matches("\\d\\d") ){
 			tilField.setText(fraField.textProperty().getValue());
@@ -155,6 +155,30 @@ private boolean validTilTime(){
 	        datepicker.setDayCellFactory(dayCellFactory);
      
 	}
+	
+	
+	// seette start verdier slik at brukeren letter forstar hva han skal gjore:
+	// samt gjore innfylling meir effektivt
+	
+	@FXML
+	public void initialize(){
+		currentDate = Calendar.getInstance();
+		formalField.setText("Appointment Description...");
+		
+		fraField.setText(currentDate.getTime().getHours() + 1+":00" );
+		tilField.setText(currentDate.getTime().getHours() + 2 + ":00" );
+		
+		
+		
+		
+		fraDato.setValue(LocalDate.now());
+		disableDates(fraDato, LocalDate.now());
+		tilDato.setValue(LocalDate.now());
+		disableDates(tilDato, LocalDate.now());
+		
+		
+	}
+	
 	
 	
 }
