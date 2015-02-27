@@ -43,7 +43,7 @@ public class LoginController {
 			
 			
 			sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
-			sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml",600,480);
+			
 			
 		
 		}else{
