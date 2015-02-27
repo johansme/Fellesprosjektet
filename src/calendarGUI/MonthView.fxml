@@ -101,37 +101,43 @@
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
 					GridPane.rowIndex="1" onMouseClicked="#week1Clicked">
 					<children>
-						<Label fx:id="week1" styleClass="weeknr" />
+						<Label fx:id="week1" prefHeight="82" prefWidth="65"
+							alignment="CENTER" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
 					GridPane.rowIndex="2" onMouseClicked="#week2Clicked">
 					<children>
-						<Label fx:id="week2" styleClass="weeknr" />
+						<Label fx:id="week2" prefHeight="82" prefWidth="65"
+							alignment="CENTER" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
 					GridPane.rowIndex="3" onMouseClicked="#week3Clicked">
 					<children>
-						<Label fx:id="week3" styleClass="weeknr" />
+						<Label fx:id="week3" prefHeight="82" prefWidth="65"
+							alignment="CENTER" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
 					GridPane.rowIndex="4" onMouseClicked="#week4Clicked">
 					<children>
-						<Label fx:id="week4" styleClass="weeknr" />
+						<Label fx:id="week4" prefHeight="82" prefWidth="65"
+							alignment="CENTER" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
 					GridPane.rowIndex="5" onMouseClicked="#week5Clicked">
 					<children>
-						<Label fx:id="week5" text="9" styleClass="weeknr" />
+						<Label fx:id="week5" prefHeight="82" prefWidth="65"
+							alignment="CENTER" text="25" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
 					GridPane.rowIndex="6" onMouseClicked="#week6Clicked">
 					<children>
-						<Label fx:id="week6" styleClass="weeknr" />
+						<Label fx:id="week6" prefHeight="82" prefWidth="65"
+							alignment="CENTER" styleClass="weeknr" />
 					</children>
 				</Pane>
 
