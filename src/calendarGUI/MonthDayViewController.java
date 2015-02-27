@@ -34,8 +34,22 @@ public class MonthDayViewController implements DayChangeListener {
 	}
 
 	private void updateView() {
+		dayApp.visibleProperty().set(true);
+		dayArc.visibleProperty().set(true);
+		dayNo.visibleProperty().set(true);
 		dayNo.setText(String.valueOf(day.getDay().getDayOfMonth()));
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
+	}
+	
+	public void monthChange(Day day) {
+		this.day = day;
+		updateView();
+	}
+	
+	public void setBlank() {
+		dayApp.visibleProperty().set(false);
+		dayArc.visibleProperty().set(false);
+		dayNo.visibleProperty().set(false);
 	}
 	
 	public void changeDiscovered() {
