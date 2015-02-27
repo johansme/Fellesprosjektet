@@ -112,7 +112,7 @@
               </rowConstraints>
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Save" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id = "cancelButton" onAction ="#cancelButtonPressed"  alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <GridPane GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">

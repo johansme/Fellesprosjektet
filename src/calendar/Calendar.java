@@ -2,9 +2,12 @@ package calendar;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+<<<<<<< HEAD
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
+=======
+>>>>>>> 8aac87657eb4ae4e9a6f51fcb57e0ad1e69b5af1
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,7 @@ public class Calendar {
 		return currentMonth;
 	}
 	
+<<<<<<< HEAD
 
 	public int getCurrentWeekNumber()
 	{	
@@ -50,6 +54,8 @@ public class Calendar {
 		
 	}
 
+=======
+>>>>>>> 8aac87657eb4ae4e9a6f51fcb57e0ad1e69b5af1
 	public List<Month> getMonths() {
 		return months;
 	}

@@ -6,9 +6,11 @@ import java.util.Calendar;
 
 import newAppointment.NewAppointmentManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class NewAppointmentController {
@@ -27,6 +29,7 @@ public class NewAppointmentController {
 	@FXML DatePicker tilDato;
 	@FXML TextField capasityField;
 	@FXML TextField otherField;
+	@FXML Button cancelButton;
 	
 	
 	@FXML
@@ -34,6 +37,17 @@ public class NewAppointmentController {
 		/* System.out.println("YOLO"); */
 		//SMEGMABRO
 		//BiiiiiiRkyy
+	}
+	
+	@FXML
+	private void cancelButtonPressed(){
+	
+		    // get a handle to the stage
+		    Stage stage = (Stage) cancelButton.getScene().getWindow();
+		    // do what you have to do
+		    stage.close();
+		
+		
 	}
 	
 	@FXML
