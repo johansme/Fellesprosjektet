@@ -167,7 +167,7 @@ public class MonthViewController {
 	private void initialize() {
 		calendar = new Calendar(); //TODO fix connection to existing calendar
 		month = calendar.getCurrentMonth();
-		weekList1 = new ArrayList<>();
+		weekList1 = new ArrayList<MonthDayViewController>();
 		weekList1.add(week1Day1Controller);
 		weekList1.add(week1Day2Controller);
 		weekList1.add(week1Day3Controller);
@@ -176,7 +176,7 @@ public class MonthViewController {
 		weekList1.add(week1Day6Controller);
 		weekList1.add(week1Day7Controller);
 		
-		weekList2 = new ArrayList<>();
+		weekList2 = new ArrayList<MonthDayViewController>();
 		weekList2.add(week2Day1Controller);
 		weekList2.add(week2Day2Controller);
 		weekList2.add(week2Day3Controller);
@@ -185,7 +185,7 @@ public class MonthViewController {
 		weekList2.add(week2Day6Controller);
 		weekList2.add(week2Day7Controller);
 		
-		weekList3 = new ArrayList<>();
+		weekList3 = new ArrayList<MonthDayViewController>();
 		weekList3.add(week3Day1Controller);
 		weekList3.add(week3Day2Controller);
 		weekList3.add(week3Day3Controller);
@@ -194,7 +194,7 @@ public class MonthViewController {
 		weekList3.add(week3Day6Controller);
 		weekList3.add(week3Day7Controller);
 		
-		weekList4 = new ArrayList<>();
+		weekList4 = new ArrayList<MonthDayViewController>();
 		weekList4.add(week4Day1Controller);
 		weekList4.add(week4Day2Controller);
 		weekList4.add(week4Day3Controller);
@@ -203,7 +203,7 @@ public class MonthViewController {
 		weekList4.add(week4Day6Controller);
 		weekList4.add(week4Day7Controller);
 		
-		weekList5 = new ArrayList<>();
+		weekList5 = new ArrayList<MonthDayViewController>();
 		weekList5.add(week5Day1Controller);
 		weekList5.add(week5Day2Controller);
 		weekList5.add(week5Day3Controller);
@@ -212,7 +212,7 @@ public class MonthViewController {
 		weekList5.add(week5Day6Controller);
 		weekList5.add(week5Day7Controller);
 		
-		weekList6 = new ArrayList<>();
+		weekList6 = new ArrayList<MonthDayViewController>();
 		weekList6.add(week6Day1Controller);
 		weekList6.add(week6Day2Controller);
 		weekList6.add(week6Day3Controller);
