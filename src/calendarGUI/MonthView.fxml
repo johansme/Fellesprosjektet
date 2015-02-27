@@ -125,7 +125,7 @@
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
 					GridPane.rowIndex="5" onMouseClicked="#week5Clicked">
 					<children>
-						<Label fx:id="week5" styleClass="weeknr" />
+						<Label fx:id="week5" text="9" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
@@ -216,14 +216,10 @@
 					GridPane.columnIndex="2" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
 				<fx:include fx:id="week6Day3" source="MonthDayView.fxml"
 					GridPane.columnIndex="3" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
-				<fx:include fx:id="week6Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
-				<fx:include fx:id="week6Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
-				<fx:include fx:id="week6Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
-				<fx:include fx:id="week6Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
+				<Button fx:id="newAppointment" text="+ New appointment" alignment="CENTER"
+					prefHeight="41" prefWidth="415" onAction="#newAppointmentAction" 
+					GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="6"
+					GridPane.valignment="TOP"/>
 			</children>
 		</GridPane>
 	</children>
