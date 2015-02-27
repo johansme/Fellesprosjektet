@@ -38,6 +38,8 @@ public class MonthDayViewController implements DayChangeListener {
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
 	}
 	
-	
+	public void changeDiscovered() {
+		dayArc.setFill(Color.AZURE);
+	}
 
 }
