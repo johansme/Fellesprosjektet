@@ -2,9 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/birkottesen/Documents/progs/javax.mail.jar"/>
-	<classpathentry kind="lib" path="/Users/birkottesen/Documents/progs/jbcrypt.jar"/>
-	<classpathentry kind="lib" path="/Users/birkottesen/Documents/progs/JSON-java.jar"/>
-	<classpathentry kind="lib" path="/Users/birkottesen/Documents/progs/mysql-connector-java-5.1.34-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
