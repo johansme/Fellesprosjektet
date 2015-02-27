@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import calendar.Calendar;
+import calendar.Day;
 import calendar.Month;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import login.SceneHandler;
 
 public class MonthViewController {
 	
+	private Calendar calendar;
 	private Month month;
 	
 	private SceneHandler sceneHandler = new SceneHandler();
@@ -172,7 +174,8 @@ public class MonthViewController {
 	
 	@FXML
 	private void initialize() {
-//		month = Calendar.getCurrentMonth();
+		calendar = new Calendar();
+		month = calendar.getCurrentMonth();
 		weekList1 = new ArrayList<>();
 		weekList1.add(week1Day1Controller);
 		weekList1.add(week1Day2Controller);
@@ -231,7 +234,46 @@ public class MonthViewController {
 	}
 	
 	private void monthChanged() {
-//		monthName.setText(month.getMonth());
+		monthName.setText(month.getMonth());
+		Day[] days = month.getDays();
+		// the first weekday of the month as an int from 1 to 7
+		int firstDayStarts = days[0].getDay().getDayOfWeek().getValue();
+		int dayNo = 0;
+		for (int i = 0; i < firstDayStarts-1; i++) {
+			weekList1.get(i).setBlank();
+		}
+		for (int i = firstDayStarts-1; i < weekList1.size(); i++) {
+			weekList1.get(i).monthChange(days[dayNo]);
+			dayNo++;
+		}
+		for (int i = 0; i < weekList2.size(); i++) {
+			weekList2.get(i).monthChange(days[dayNo]);
+			dayNo++;
+		}
+		for (int i = 0; i < weekList3.size(); i++) {
+			weekList3.get(i).monthChange(days[dayNo]);
+			dayNo++;
+		}
+		for (int i = 0; i < weekList4.size(); i++) {
+			weekList4.get(i).monthChange(days[dayNo]);
+			dayNo++;
+		}
+		for (int i = 0; i < weekList5.size(); i++) {
+			if (dayNo < days.length) {
+				weekList5.get(i).monthChange(days[dayNo]);
+				dayNo++;				
+			} else {
+				weekList5.get(i).setBlank();
+			}
+		}
+		for (int i = 0; i < weekList6.size(); i++) {
+			if (dayNo < days.length) {
+				weekList6.get(i).monthChange(days[dayNo]);
+				dayNo++;				
+			} else {
+				weekList6.get(i).setBlank();
+			}
+		}
 		//TODO Complete month update
 	}
 	
@@ -281,6 +323,18 @@ public class MonthViewController {
 			day.changeDiscovered();
 		}
 		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
+	}
+	
+	@FXML
+	private void previousClicked(Event e) {
+		month = calendar.getPreviousMonth();
+		monthChanged();
+	}
+	
+	@FXML
+	private void nextClicked(Event e) {
+		month = calendar.getNextMonth();
+		monthChanged();
 	}
 	
 }
