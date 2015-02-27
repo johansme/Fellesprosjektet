@@ -153,17 +153,8 @@ public class MonthViewController {
 	@FXML private AnchorPane week6Day3;
 	@FXML private MonthDayViewController week6Day3Controller;
 	
-	@FXML private AnchorPane week6Day4;
-	@FXML private MonthDayViewController week6Day4Controller;
 	
-	@FXML private AnchorPane week6Day5;
-	@FXML private MonthDayViewController week6Day5Controller;
-	
-	@FXML private AnchorPane week6Day6;
-	@FXML private MonthDayViewController week6Day6Controller;
-	
-	@FXML private AnchorPane week6Day7;
-	@FXML private MonthDayViewController week6Day7Controller;
+	@FXML private Button newAppointment;
 	
 	private List<MonthDayViewController> weekList1;
 	private List<MonthDayViewController> weekList2;
@@ -174,7 +165,7 @@ public class MonthViewController {
 	
 	@FXML
 	private void initialize() {
-		calendar = new Calendar();
+		calendar = new Calendar(); //TODO fix connection to existing calendar
 		month = calendar.getCurrentMonth();
 		weekList1 = new ArrayList<>();
 		weekList1.add(week1Day1Controller);
@@ -225,16 +216,12 @@ public class MonthViewController {
 		weekList6.add(week6Day1Controller);
 		weekList6.add(week6Day2Controller);
 		weekList6.add(week6Day3Controller);
-		weekList6.add(week6Day4Controller);
-		weekList6.add(week6Day5Controller);
-		weekList6.add(week6Day6Controller);
-		weekList6.add(week6Day7Controller);
 		
 		monthChanged();
 	}
 	
 	private void monthChanged() {
-		monthName.setText(month.getMonth());
+		monthName.setText(month.getMonth() + " " + month.getYear());
 		Day[] days = month.getDays();
 		// the first weekday of the month as an int from 1 to 7
 		int firstDayStarts = days[0].getDay().getDayOfWeek().getValue();
@@ -277,6 +264,7 @@ public class MonthViewController {
 		//TODO Complete month update
 	}
 	
+	// element in 1st week is mouse clicked. Equivalent for the below
 	@FXML
 	private void week1Clicked(Event e) {
 		for (MonthDayViewController day : weekList1) {
@@ -325,16 +313,28 @@ public class MonthViewController {
 		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
 	}
 	
+	// when "Previous"-button is pressed
 	@FXML
 	private void previousClicked(Event e) {
-		month = calendar.getPreviousMonth();
+		try {
+			month = calendar.getPreviousMonth();
+		} catch (IllegalStateException isl) {
+			//TODO create pop-up with out of bounds-info
+		}
 		monthChanged();
 	}
 	
+	// when "Next"-button is pressed
 	@FXML
 	private void nextClicked(Event e) {
 		month = calendar.getNextMonth();
 		monthChanged();
+	}
+	
+	// when "New appointment"-button is pressed
+	@FXML
+	private void newAppointmentAction() {
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
 	}
 	
 }
