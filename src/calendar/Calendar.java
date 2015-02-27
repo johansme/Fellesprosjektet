@@ -43,13 +43,13 @@ public class Calendar {
 	}
 
 	
-	
 	public static void main(String args[]){
 		
 		Calendar c = new Calendar();
 		System.out.println("Uke: " + c.getCurrentWeekNumber());
 		
 	}
+
 	public List<Month> getMonths() {
 		return months;
 	}
