@@ -33,6 +33,7 @@ public class NewAppointmentController {
 	private void description(){
 		/* System.out.println("YOLO"); */
 		//SMEGMABRO
+		//BiiiiiiRkyy
 	}
 	
 	@FXML
