@@ -97,131 +97,131 @@
 
 
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
-					GridPane.rowIndex="1" >
+					GridPane.rowIndex="1" onMouseClicked="#week1Clicked">
 					<children>
 						<Label fx:id="week1" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
-					GridPane.rowIndex="2">
+					GridPane.rowIndex="2" onMouseClicked="#week2Clicked">
 					<children>
 						<Label fx:id="week2" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
-					GridPane.rowIndex="3">
+					GridPane.rowIndex="3" onMouseClicked="#week3Clicked">
 					<children>
 						<Label fx:id="week3" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
-					GridPane.rowIndex="4">
+					GridPane.rowIndex="4" onMouseClicked="#week4Clicked">
 					<children>
 						<Label fx:id="week4" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
-					GridPane.rowIndex="5">
+					GridPane.rowIndex="5" onMouseClicked="#week5Clicked">
 					<children>
 						<Label fx:id="week5" styleClass="weeknr" />
 					</children>
 				</Pane>
 				<Pane style="-fx-background-color:white" GridPane.columnIndex="0"
-					GridPane.rowIndex="6">
+					GridPane.rowIndex="6" onMouseClicked="#week6Clicked">
 					<children>
 						<Label fx:id="week6" styleClass="weeknr" />
 					</children>
 				</Pane>
 
 				<fx:include fx:id="week1Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="1" />
+					GridPane.columnIndex="1" GridPane.rowIndex="1" onMouseClicked="#week1Clicked"/>
 				<fx:include fx:id="week1Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="1" />
+					GridPane.columnIndex="2" GridPane.rowIndex="1" onMouseClicked="#week1Clicked"/>
 				<fx:include fx:id="week1Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="1" />
+					GridPane.columnIndex="3" GridPane.rowIndex="1" onMouseClicked="#week1Clicked"/>
 				<fx:include fx:id="week1Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="1" />
+					GridPane.columnIndex="4" GridPane.rowIndex="1" onMouseClicked="#week1Clicked"/>
 				<fx:include fx:id="week1Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="1" />
+					GridPane.columnIndex="5" GridPane.rowIndex="1" onMouseClicked="#week1Clicked"/>
 				<fx:include fx:id="week1Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="1" />
+					GridPane.columnIndex="6" GridPane.rowIndex="1" onMouseClicked="#week1Clicked"/>
 				<fx:include fx:id="week1Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="1" />
+					GridPane.columnIndex="7" GridPane.rowIndex="1" onMouseClicked="#week1Clicked"/>
 
 				<fx:include fx:id="week2Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="2" />
+					GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseClicked="#week2Clicked"/>
 				<fx:include fx:id="week2Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="2" />
+					GridPane.columnIndex="2" GridPane.rowIndex="2" onMouseClicked="#week2Clicked"/>
 				<fx:include fx:id="week2Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="2" />
+					GridPane.columnIndex="3" GridPane.rowIndex="2" onMouseClicked="#week2Clicked"/>
 				<fx:include fx:id="week2Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="2" />
+					GridPane.columnIndex="4" GridPane.rowIndex="2" onMouseClicked="#week2Clicked"/>
 				<fx:include fx:id="week2Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="2" />
+					GridPane.columnIndex="5" GridPane.rowIndex="2" onMouseClicked="#week2Clicked"/>
 				<fx:include fx:id="week2Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="2" />
+					GridPane.columnIndex="6" GridPane.rowIndex="2" onMouseClicked="#week2Clicked"/>
 				<fx:include fx:id="week2Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="2" />
+					GridPane.columnIndex="7" GridPane.rowIndex="2" onMouseClicked="#week2Clicked"/>
 
 				<fx:include fx:id="week3Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="3" />
+					GridPane.columnIndex="1" GridPane.rowIndex="3" onMouseClicked="#week3Clicked"/>
 				<fx:include fx:id="week3Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="3" />
+					GridPane.columnIndex="2" GridPane.rowIndex="3" onMouseClicked="#week3Clicked"/>
 				<fx:include fx:id="week3Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="3" />
+					GridPane.columnIndex="3" GridPane.rowIndex="3" onMouseClicked="#week3Clicked"/>
 				<fx:include fx:id="week3Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="3" />
+					GridPane.columnIndex="4" GridPane.rowIndex="3" onMouseClicked="#week3Clicked"/>
 				<fx:include fx:id="week3Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="3" />
+					GridPane.columnIndex="5" GridPane.rowIndex="3" onMouseClicked="#week3Clicked"/>
 				<fx:include fx:id="week3Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="3" />
+					GridPane.columnIndex="6" GridPane.rowIndex="3" onMouseClicked="#week3Clicked"/>
 				<fx:include fx:id="week3Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="3" />
+					GridPane.columnIndex="7" GridPane.rowIndex="3" onMouseClicked="#week3Clicked"/>
 
 				<fx:include fx:id="week4Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="4" />
+					GridPane.columnIndex="1" GridPane.rowIndex="4" onMouseClicked="#week4Clicked"/>
 				<fx:include fx:id="week4Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="4" />
+					GridPane.columnIndex="2" GridPane.rowIndex="4" onMouseClicked="#week4Clicked"/>
 				<fx:include fx:id="week4Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="4" />
+					GridPane.columnIndex="3" GridPane.rowIndex="4" onMouseClicked="#week4Clicked"/>
 				<fx:include fx:id="week4Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="4" />
+					GridPane.columnIndex="4" GridPane.rowIndex="4" onMouseClicked="#week4Clicked"/>
 				<fx:include fx:id="week4Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="4" />
+					GridPane.columnIndex="5" GridPane.rowIndex="4" onMouseClicked="#week4Clicked"/>
 				<fx:include fx:id="week4Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="4" />
+					GridPane.columnIndex="6" GridPane.rowIndex="4" onMouseClicked="#week4Clicked"/>
 				<fx:include fx:id="week4Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="4" />
+					GridPane.columnIndex="7" GridPane.rowIndex="4" onMouseClicked="#week4Clicked"/>
 
 				<fx:include fx:id="week5Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="5" />
+					GridPane.columnIndex="1" GridPane.rowIndex="5" onMouseClicked="#week5Clicked"/>
 				<fx:include fx:id="week5Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="5" />
+					GridPane.columnIndex="2" GridPane.rowIndex="5" onMouseClicked="#week5Clicked"/>
 				<fx:include fx:id="week5Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="5" />
+					GridPane.columnIndex="3" GridPane.rowIndex="5" onMouseClicked="#week5Clicked"/>
 				<fx:include fx:id="week5Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="5" />
+					GridPane.columnIndex="4" GridPane.rowIndex="5" onMouseClicked="#week5Clicked"/>
 				<fx:include fx:id="week5Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="5" />
+					GridPane.columnIndex="5" GridPane.rowIndex="5" onMouseClicked="#week5Clicked"/>
 				<fx:include fx:id="week5Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="5" />
+					GridPane.columnIndex="6" GridPane.rowIndex="5" onMouseClicked="#week5Clicked"/>
 				<fx:include fx:id="week5Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="5" />
+					GridPane.columnIndex="7" GridPane.rowIndex="5" onMouseClicked="#week5Clicked"/>
 
 				<fx:include fx:id="week6Day1" source="MonthDayView.fxml"
-					GridPane.columnIndex="1" GridPane.rowIndex="6" />
+					GridPane.columnIndex="1" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
 				<fx:include fx:id="week6Day2" source="MonthDayView.fxml"
-					GridPane.columnIndex="2" GridPane.rowIndex="6" />
+					GridPane.columnIndex="2" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
 				<fx:include fx:id="week6Day3" source="MonthDayView.fxml"
-					GridPane.columnIndex="3" GridPane.rowIndex="6" />
+					GridPane.columnIndex="3" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
 				<fx:include fx:id="week6Day4" source="MonthDayView.fxml"
-					GridPane.columnIndex="4" GridPane.rowIndex="6" />
+					GridPane.columnIndex="4" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
 				<fx:include fx:id="week6Day5" source="MonthDayView.fxml"
-					GridPane.columnIndex="5" GridPane.rowIndex="6" />
+					GridPane.columnIndex="5" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
 				<fx:include fx:id="week6Day6" source="MonthDayView.fxml"
-					GridPane.columnIndex="6" GridPane.rowIndex="6" />
+					GridPane.columnIndex="6" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
 				<fx:include fx:id="week6Day7" source="MonthDayView.fxml"
-					GridPane.columnIndex="7" GridPane.rowIndex="6" />
+					GridPane.columnIndex="7" GridPane.rowIndex="6" onMouseClicked="#week6Clicked"/>
 			</children>
 		</GridPane>
 	</children>
