@@ -23,6 +23,10 @@ public class Month {
 		createDays();
 	}
 	
+	public int getYear() {
+		return month.getYear();
+	}
+	
 	public String getMonth() {
 		return month.getMonth().toString();
 	}

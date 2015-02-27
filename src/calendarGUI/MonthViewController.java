@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import calendar.Calendar;
+import calendar.Day;
 import calendar.Month;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import login.SceneHandler;
 
 public class MonthViewController {
 	
+	private Calendar calendar;
 	private Month month;
 	
 	private SceneHandler sceneHandler = new SceneHandler();
@@ -151,17 +153,8 @@ public class MonthViewController {
 	@FXML private AnchorPane week6Day3;
 	@FXML private MonthDayViewController week6Day3Controller;
 	
-	@FXML private AnchorPane week6Day4;
-	@FXML private MonthDayViewController week6Day4Controller;
 	
-	@FXML private AnchorPane week6Day5;
-	@FXML private MonthDayViewController week6Day5Controller;
-	
-	@FXML private AnchorPane week6Day6;
-	@FXML private MonthDayViewController week6Day6Controller;
-	
-	@FXML private AnchorPane week6Day7;
-	@FXML private MonthDayViewController week6Day7Controller;
+	@FXML private Button newAppointment;
 	
 	private List<MonthDayViewController> weekList1;
 	private List<MonthDayViewController> weekList2;
@@ -172,8 +165,9 @@ public class MonthViewController {
 	
 	@FXML
 	private void initialize() {
-//		month = Calendar.getCurrentMonth();
-		weekList1 = new ArrayList<>();
+		calendar = new Calendar(); //TODO fix connection to existing calendar
+		month = calendar.getCurrentMonth();
+		weekList1 = new ArrayList<MonthDayViewController>();
 		weekList1.add(week1Day1Controller);
 		weekList1.add(week1Day2Controller);
 		weekList1.add(week1Day3Controller);
@@ -182,7 +176,7 @@ public class MonthViewController {
 		weekList1.add(week1Day6Controller);
 		weekList1.add(week1Day7Controller);
 		
-		weekList2 = new ArrayList<>();
+		weekList2 = new ArrayList<MonthDayViewController>();
 		weekList2.add(week2Day1Controller);
 		weekList2.add(week2Day2Controller);
 		weekList2.add(week2Day3Controller);
@@ -191,7 +185,7 @@ public class MonthViewController {
 		weekList2.add(week2Day6Controller);
 		weekList2.add(week2Day7Controller);
 		
-		weekList3 = new ArrayList<>();
+		weekList3 = new ArrayList<MonthDayViewController>();
 		weekList3.add(week3Day1Controller);
 		weekList3.add(week3Day2Controller);
 		weekList3.add(week3Day3Controller);
@@ -200,7 +194,7 @@ public class MonthViewController {
 		weekList3.add(week3Day6Controller);
 		weekList3.add(week3Day7Controller);
 		
-		weekList4 = new ArrayList<>();
+		weekList4 = new ArrayList<MonthDayViewController>();
 		weekList4.add(week4Day1Controller);
 		weekList4.add(week4Day2Controller);
 		weekList4.add(week4Day3Controller);
@@ -209,7 +203,7 @@ public class MonthViewController {
 		weekList4.add(week4Day6Controller);
 		weekList4.add(week4Day7Controller);
 		
-		weekList5 = new ArrayList<>();
+		weekList5 = new ArrayList<MonthDayViewController>();
 		weekList5.add(week5Day1Controller);
 		weekList5.add(week5Day2Controller);
 		weekList5.add(week5Day3Controller);
@@ -218,23 +212,59 @@ public class MonthViewController {
 		weekList5.add(week5Day6Controller);
 		weekList5.add(week5Day7Controller);
 		
-		weekList6 = new ArrayList<>();
+		weekList6 = new ArrayList<MonthDayViewController>();
 		weekList6.add(week6Day1Controller);
 		weekList6.add(week6Day2Controller);
 		weekList6.add(week6Day3Controller);
-		weekList6.add(week6Day4Controller);
-		weekList6.add(week6Day5Controller);
-		weekList6.add(week6Day6Controller);
-		weekList6.add(week6Day7Controller);
 		
 		monthChanged();
 	}
 	
 	private void monthChanged() {
-//		monthName.setText(month.getMonth());
+		monthName.setText(month.getMonth() + " " + month.getYear());
+		Day[] days = month.getDays();
+		// the first weekday of the month as an int from 1 to 7
+		int firstDayStarts = days[0].getDay().getDayOfWeek().getValue();
+		int dayNo = 0;
+		for (int i = 0; i < firstDayStarts-1; i++) {
+			weekList1.get(i).setBlank();
+		}
+		for (int i = firstDayStarts-1; i < weekList1.size(); i++) {
+			weekList1.get(i).monthChange(days[dayNo]);
+			dayNo++;
+		}
+		for (int i = 0; i < weekList2.size(); i++) {
+			weekList2.get(i).monthChange(days[dayNo]);
+			dayNo++;
+		}
+		for (int i = 0; i < weekList3.size(); i++) {
+			weekList3.get(i).monthChange(days[dayNo]);
+			dayNo++;
+		}
+		for (int i = 0; i < weekList4.size(); i++) {
+			weekList4.get(i).monthChange(days[dayNo]);
+			dayNo++;
+		}
+		for (int i = 0; i < weekList5.size(); i++) {
+			if (dayNo < days.length) {
+				weekList5.get(i).monthChange(days[dayNo]);
+				dayNo++;				
+			} else {
+				weekList5.get(i).setBlank();
+			}
+		}
+		for (int i = 0; i < weekList6.size(); i++) {
+			if (dayNo < days.length) {
+				weekList6.get(i).monthChange(days[dayNo]);
+				dayNo++;				
+			} else {
+				weekList6.get(i).setBlank();
+			}
+		}
 		//TODO Complete month update
 	}
 	
+	// element in 1st week is mouse clicked. Equivalent for the below
 	@FXML
 	private void week1Clicked(Event e) {
 		for (MonthDayViewController day : weekList1) {
@@ -281,6 +311,30 @@ public class MonthViewController {
 			day.changeDiscovered();
 		}
 		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
+	}
+	
+	// when "Previous"-button is pressed
+	@FXML
+	private void previousClicked(Event e) {
+		try {
+			month = calendar.getPreviousMonth();
+		} catch (IllegalStateException isl) {
+			//TODO create pop-up with out of bounds-info
+		}
+		monthChanged();
+	}
+	
+	// when "Next"-button is pressed
+	@FXML
+	private void nextClicked(Event e) {
+		month = calendar.getNextMonth();
+		monthChanged();
+	}
+	
+	// when "New appointment"-button is pressed
+	@FXML
+	private void newAppointmentAction() {
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
 	}
 	
 }

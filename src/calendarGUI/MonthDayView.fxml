@@ -12,10 +12,10 @@
 			type="ROUND" rotate="180" fill="WHITE" stroke="BLACK" layoutX="60"
 			strokeType="INSIDE"/>
 		<Label fx:id="dayApp" text="#" layoutX="85" layoutY="5"/>
-		<Label fx:id="dayNo" text="30" layoutX="20" layoutY="10" alignment="CENTER"
+		<Label fx:id="dayNo" layoutX="20" layoutY="15" alignment="CENTER"
 			prefWidth="60">
 			<font>
-				<Font name="System Bold" size="44.0"/>
+				<Font name="Trebuchet MS Bold" size="44.0"/>
 			</font>
 		</Label>
 	</children>
