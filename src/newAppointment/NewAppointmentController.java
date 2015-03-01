@@ -2,6 +2,7 @@ package newAppointment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import newAppointment.NewAppointmentManager;
@@ -19,15 +20,14 @@ public class NewAppointmentController {
 
 	Calendar currentDate;
 	
-	// Sette opp variabler for fxml elementer:
+	// rigging up fxml variables
 	
-	@FXML TextField formalField;
-	@FXML TextField fraField;
-	@FXML TextField tilField;
-	@FXML TextField antallPersField;
-	@FXML DatePicker fraDato;
-	@FXML DatePicker tilDato;
+	@FXML TextField descriptionField;
+	@FXML TextField fromField;
+	@FXML TextField toField;
 	@FXML TextField capasityField;
+	@FXML DatePicker fromDate;
+	@FXML DatePicker toDate;
 	@FXML TextField otherField;
 	@FXML Button cancelButton;
 	
@@ -41,6 +41,7 @@ public class NewAppointmentController {
 	
 	@FXML
 	private void cancelButtonPressed(){
+		// canselbutton pressed: close the stage
 	
 		    // get a handle to the stage
 		    Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -51,65 +52,76 @@ public class NewAppointmentController {
 	}
 	
 	@FXML
+	private void saveButtonPressed(){
+		//saveButton pressed check if fields are filled and save data
+		if(checkFieldsFill()){
+			appoint.setDescription(descriptionField.textProperty().getValue());
+			appoint.setEndDate(toDate.getValue());
+			appoint.setStartDate(fromDate.getValue());
+			appoint.setRoom("NTNU"); // this needs fixing:)
+			appoint.setStartTime(fromField.textProperty().getValue());
+			appoint.setEndTime(toField.textProperty().getValue());
+			appoint.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
+			appoint.printData();
+		}
+	}
+	
+	@FXML
 	private void checkCapasity(){
 		String value = capasityField.textProperty().getValue();
 		if( !value.matches("\\d+") ){
 			capasityField.setPromptText("Invalid");
 			capasityField.setText("1");
-		}else{
-			//lagre kapasitet:D
-			//bruk kapasitet til a foresla rom
-			
 		}
 		
 	}
 	
-	// handtering av til og fra tidfeltet
+	// methods for handling input in time fields
 	@FXML
-	private void fraTid(){
-		if(!fraField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !fraField.textProperty().getValue().matches("\\d\\d") ){
-			fraField.setText(currentDate.getTime().getHours() +":" + currentDate.getTime().getMinutes());
-		}else if(fraField.textProperty().getValue().matches("\\d\\d")){
+	private void fromTime(){
+		if(!fromField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !fromField.textProperty().getValue().matches("\\d\\d") ){
+			fromField.setText(currentDate.getTime().getHours() +":" + currentDate.getTime().getMinutes());
+		}else if(fromField.textProperty().getValue().matches("\\d\\d")){
 			
-			fraField.setText(fraField.getText() + ":00");
+			fromField.setText(fromField.getText() + ":00");
 		}
-		if(!validFraTime()){
-			fraField.setText(currentDate.getTime().getHours() +":" + currentDate.getTime().getMinutes());
+		if(!validFromTime()){
+			fromField.setText(currentDate.getTime().getHours() +":" + currentDate.getTime().getMinutes());
 			
 		}
 		
 	}
 	@FXML
-	private void tilTid(){
-		String value = tilField.textProperty().getValue();
-		if( !value.matches("\\d\\d:\\d\\d") && !tilField.textProperty().getValue().matches("\\d\\d") ){
-			tilField.setText(fraField.textProperty().getValue());
-			tilField.setPromptText("Ugyldig");
+	private void toTime(){
+		String value = toField.textProperty().getValue();
+		if( !value.matches("\\d\\d:\\d\\d") && !toField.textProperty().getValue().matches("\\d\\d") ){
+			toField.setText(fromField.textProperty().getValue());
+			toField.setPromptText("Ugyldig");
 		}else if(value.matches("\\d\\d")){
 			
-			tilField.setText(tilField.getText() + ":00");
+			toField.setText(toField.getText() + ":00");
 		}
-		if(!validTilTime()){
-			tilField.setText(fraField.textProperty().getValue());
+		if(!validToTime()){
+			toField.setText(fromField.textProperty().getValue());
 			
 		}
 		
 	}
 	
-	//validering av tid
+	//validating of time
 	
-private boolean validTilTime(){
+private boolean validToTime(){
 		
-		//konvertere string til egnet format til tid handtering
+		//casting to more approtiate data for handling time
 	
-		String tilTid = tilField.textProperty().getValue();
-		String fraTid = fraField.textProperty().getValue();
+		String tilTid = toField.textProperty().getValue();
+		String fraTid = fromField.textProperty().getValue();
 		int tilTidTime = Integer.parseInt(tilTid.split(":")[0]);
 		int fraTidTime = Integer.parseInt(fraTid.split(":")[0]);
 		int tilTidMin = Integer.parseInt(tilTid.split(":")[1]);
 		int fraTidMin = Integer.parseInt(fraTid.split(":")[1]);
 		
-		// logiske tester for a sjekke om tiltid er gyldig
+		// arithmetics for checking correct time
 		
 		if(tilTidTime>fraTidTime){
 		//	appoint.setFra(LocalTime.of(tilTidTime,tilTidMin));
@@ -126,17 +138,17 @@ private boolean validTilTime(){
 		}
 		
 	
-	private boolean validFraTime(){
+	private boolean validFromTime(){
 		
-		//konvertere string til egnet format til tid handtering
+		//casting to more approtiate data for handling time
 
-		String fraTid = fraField.textProperty().getValue();
+		String fraTid = fromField.textProperty().getValue();
 		int fraTidTime = Integer.parseInt(fraTid.split(":")[0]);
 		int fraTidMin = Integer.parseInt(fraTid.split(":")[1]);
 
-		// logiske tester for a sjekke om fratid er gyldig
+		// arithmetics for checking correct time
 		
-		if(fraDato.getValue().toString().equals( LocalDate.now().toString())){
+		if(fromDate.getValue().toString().equals( LocalDate.now().toString())){
 		
 		
 		
@@ -159,17 +171,17 @@ private boolean validTilTime(){
 		}
 	
 	
-	//dato handtering:
+	//date handling
 	@FXML
-	private void fraDato(){
+	private void fromDate(){
 		
-		disableDates(tilDato, fraDato.getValue());
-		tilDato.setValue(fraDato.getValue());
-		//appoint.setDato(FraDato.getValue());
+		disableDates(toDate, fromDate.getValue());
+		toDate.setValue(fromDate.getValue());
+		//appoint.setDato(fromDate.getValue());
 	}
 	
 	
-	//Insane kode for a disable datoer som ikkje sees pa som gyldige :D
+	//method for disabling invalid dates
 	
 	private void disableDates(DatePicker datepicker, final LocalDate now) {
 		final Callback<DatePicker, DateCell> dayCellFactory = 
@@ -194,26 +206,37 @@ private boolean validTilTime(){
 	}
 	
 	
-	// seette start verdier slik at brukeren letter forstar hva han skal gjore:
-	// samt gjore innfylling meir effektivt
+	// set default data in fields to help user
 	
 	@FXML
 	public void initialize(){
 		currentDate = Calendar.getInstance();
-		formalField.setPromptText("Appointment Description...");
+		descriptionField.setPromptText("Appointment Description...");
 		
-		fraField.setPromptText(currentDate.getTime().getHours() + 1+":00" );
-		tilField.setPromptText(currentDate.getTime().getHours() + 2 + ":00" );
-		
-		
+		fromField.setPromptText(currentDate.getTime().getHours() + 1+":00" );
+		toField.setPromptText(currentDate.getTime().getHours() + 2 + ":00" );
 		
 		
-		fraDato.setValue(LocalDate.now());
-		disableDates(fraDato, LocalDate.now());
-		tilDato.setValue(LocalDate.now());
-		disableDates(tilDato, LocalDate.now());
 		
 		
+		fromDate.setValue(LocalDate.now());
+		disableDates(fromDate, LocalDate.now());
+		toDate.setValue(LocalDate.now());
+		disableDates(toDate, LocalDate.now());
+		
+		
+	}
+	
+	// method for checking if necesary fields are filled out
+	public boolean checkFieldsFill(){
+		if(descriptionField.textProperty().getName() != "" &&
+				toField.textProperty().getValue() != "" &&
+				fromField.textProperty().getValue() != "" &&
+				capasityField.textProperty().getValue() != "0"
+				){
+			return true;
+		}
+		return false;
 	}
 	
 	

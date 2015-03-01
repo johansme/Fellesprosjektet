@@ -44,9 +44,9 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="formalField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onFocusedChange="#description" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DatePicker fx:id="fraDato" onFocusedChange="#fraDato" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DatePicker fx:id="tilDato" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="descriptionField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onFocusedChange="#description" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DatePicker fx:id="fromDate" onFocusedChange="#fromDate" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="toDate" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label id="labelEndDate" text="End date:" GridPane.rowIndex="3">
                <font>
                   <Font size="16.0" />
@@ -62,8 +62,8 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="fraField" maxHeight="-Infinity" maxWidth="-Infinity" onFocusedChange="#fraTid" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="tilField" maxHeight="-Infinity" maxWidth="-Infinity" onFocusedChange="#tilTid" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="fromField" maxHeight="-Infinity" maxWidth="-Infinity" onFocusedChange="#fromTime" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="toField" maxHeight="-Infinity" maxWidth="-Infinity" onFocusedChange="#toTime" prefHeight="25.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Label text="Other:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font size="16.0" />
@@ -111,7 +111,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Save" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button alignment="CENTER" onAction ="#saveButtonPressed" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Save" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Button fx:id = "cancelButton" onAction ="#cancelButtonPressed"  alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
