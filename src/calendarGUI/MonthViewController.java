@@ -261,7 +261,17 @@ public class MonthViewController {
 				weekList6.get(i).setBlank();
 			}
 		}
-		//TODO Complete month update
+		week1.setText("" + Calendar.getWeekNumber(week1Day7Controller.getDay().getDay()));
+		week2.setText("" + Calendar.getWeekNumber(week2Day1Controller.getDay().getDay()));
+		week3.setText("" + Calendar.getWeekNumber(week3Day1Controller.getDay().getDay()));
+		week4.setText("" + Calendar.getWeekNumber(week4Day1Controller.getDay().getDay()));
+		week5.setText("" + Calendar.getWeekNumber(week5Day1Controller.getDay().getDay()));
+		if (week6Day1Controller.getDay().getDay().isEqual(week4Day1Controller.getDay().getDay().plusDays(14))) {
+			week6.setVisible(true);
+			week6.setText("" + Calendar.getWeekNumber(week6Day1Controller.getDay().getDay()));
+		} else {
+			week6.setVisible(false);
+		}
 	}
 	
 	public void setCalendar(Calendar calendar) {
