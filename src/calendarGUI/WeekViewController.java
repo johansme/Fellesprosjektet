@@ -38,11 +38,15 @@ public class WeekViewController extends Application {
 	@FXML
 	private void initialize() {
 		setWeek(calendar.getCurrentWeekNumber());
+		setYear(calendar.getCurrentDate().getYear());
 		
 	}
 	
 	@FXML
 	private Label weekNum;
+	
+	@FXML
+	private Label year;
 	
 	
 	private void setWeek(int week) {
@@ -69,12 +73,17 @@ public class WeekViewController extends Application {
 		}
 	}
 	
+	private void setYear(int y) {
+		year.setText(" - "+y);
+	}
+	
 	@FXML
 	private Button prev;
 	
 	@FXML
 	public void prevAction() {
 		setWeek(calendar.getCurrentWeekNumber()-1);
+		setYear(calendar.getCurrentDate().getYear());
 		calendar.setCurrentDate(false);
 	}
 	
@@ -84,6 +93,8 @@ public class WeekViewController extends Application {
 	@FXML
 	public void nextAction() {
 		setWeek(calendar.getCurrentWeekNumber()+1);
+		setYear(calendar.getCurrentDate().getYear());
+
 		calendar.setCurrentDate(true);
 	}
 	
