@@ -95,8 +95,7 @@ stylesheets='resources/defaultTheme.css'>
 					<content>
 						<ListView fx:id="participants" prefWidth='400' prefHeight='210'
 						styleClass='attributeValue'/>
-					</content>
-					
+					</content>					
 				</ScrollPane>
 			</children>
 		</HBox>

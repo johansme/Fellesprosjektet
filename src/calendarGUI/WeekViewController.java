@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import calendar.Appointment;
+import calendar.Calendar;
 import calendar.Day;
 import javafx.application.Application;
 import javafx.event.Event;
@@ -15,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import login.LoginMain;
 import login.SceneHandler;
 
 public class WeekViewController extends Application {
@@ -30,18 +32,18 @@ public class WeekViewController extends Application {
 		}
 	}
 	
-	ArrayList<Day> days;
+	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
 
 	
-	public void setView() {
-		setWeek(days.get(0).getWeekNumber());
-		setDate(days);
-		setAppointments(days);
+	@FXML
+	private void initialize() {
+		
 	}
 	
 	@FXML
 	private Label weekNum;
+	
 	
 	private void setWeek(int week) {
 		weekNum.setText("Week "+week);
