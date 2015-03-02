@@ -1,5 +1,6 @@
-CREATE TABLE Employee(
+CREATE TABLE User(
 	id INT NOT NULL AUTO_INCREMENT,
+	surname VARCHAR(255) NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	username VARCHAR(32) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL,
@@ -25,7 +26,7 @@ CREATE TABLE Appointment(
 	lastmodified DATE NOT NULL,
 	createdby INT NOT NULL,
 	PRIMARY KEY(id),
-	FOREIGN KEY(createdby) REFERENCES Employee(id)
+	FOREIGN KEY(createdby) REFERENCES User(id)
 		ON DELETE CASCADE
 );
 
@@ -38,23 +39,23 @@ CREATE TABLE MeetingRoom(
 
 CREATE TABLE GroupMember(
 	groupid INT NOT NULL,
-	employeeid INT NOT NULL,
-	PRIMARY KEY(groupid, employeeid),
+	userid INT NOT NULL,
+	PRIMARY KEY(groupid, userid),
 	FOREIGN KEY(groupid) REFERENCES Group_(id)
 		ON DELETE CASCADE,
-	FOREIGN KEY(employeeid) REFERENCES Employee(id)
+	FOREIGN KEY(userid) REFERENCES User(id)
 		ON DELETE CASCADE
 );
 
 CREATE TABLE Invitation(
-	employeeid INT NOT NULL,
+	userid INT NOT NULL,
 	appointmentid INT NOT NULL,
 	accepted BOOLEAN,
 	hidden BOOLEAN,
 	dirty BOOLEAN DEFAULT TRUE,
 	alarm DATE,
-	PRIMARY KEY(employeeid, appointmentid),
-	FOREIGN KEY(employeeid) REFERENCES Employee(id)
+	PRIMARY KEY(userid, appointmentid),
+	FOREIGN KEY(userid) REFERENCES User(id)
 		ON DELETE CASCADE,
 	FOREIGN KEY(appointmentid) REFERENCES Appointment(id)
 		ON DELETE CASCADE
