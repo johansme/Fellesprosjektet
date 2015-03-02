@@ -175,7 +175,7 @@ stylesheets="resources/defaultTheme.css">
 				</GridPane>
 				<HBox prefHeight='40' prefWidth='800'>
 					<children>
-						<Button fx:id='back' onAction='#backAction' text='Back'
+						<Button fx:id='month' onAction='#monthClicked' text='Month'
 						alignment='CENTER' prefHeight='40' prefWidth='400'/>
 						<Button fx:id='newAppointment' onAction='#newAction' text='+ new appointment'
 						alignment='CENTER' prefHeight='40' prefWidth='400'/>

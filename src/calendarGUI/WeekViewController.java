@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import calendar.Appointment;
 import calendar.Day;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import login.SceneHandler;
 
 public class WeekViewController extends Application {
 
@@ -29,6 +31,8 @@ public class WeekViewController extends Application {
 	}
 	
 	ArrayList<Day> days;
+	private SceneHandler sceneHandler = new SceneHandler();
+
 	
 	public void setView() {
 		setWeek(days.get(0).getWeekNumber());
@@ -70,11 +74,11 @@ public class WeekViewController extends Application {
 	}
 	
 	@FXML
-	private Button back;
+	private Button month;
 	
 	@FXML
-	public void backAction() {
-		//init monthview
+	public void monthClicked(Event e) {
+		sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
 	}
 	
 	@FXML
@@ -82,7 +86,7 @@ public class WeekViewController extends Application {
 	
 	@FXML
 	public void newAction() {
-		//Init new appointment view
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
 	}
 	
 	@FXML
