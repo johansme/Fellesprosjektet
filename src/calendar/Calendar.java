@@ -97,12 +97,26 @@ public class Calendar {
 		}
 	}
 	
-	public void setCurrentDate(boolean b) { //boolean avgjor om det er next week eller previous
+	public void changeWeek(boolean b) throws IllegalStateException { //boolean avgjor om det er next week eller previous
 		if (b==true) {
 			currentDate = currentDate.plusWeeks(1);
+			if (! currentDate.getMonth().toString().equals(currentMonth.getMonth())) {
+				int i = months.indexOf(currentMonth);
+				if (i == months.size()-1) {
+					addFutureMonths(3);
+				}
+				currentMonth = months.get(i + 1);
+			}
 		}
 		else {
 			currentDate = currentDate.minusWeeks(1);
+			if (! currentDate.getMonth().toString().equals(currentMonth.getMonth())) {
+				int i = months.indexOf(currentMonth);
+				if (i == 0) {
+					addPastMonths(1);
+				}
+				currentMonth = months.get(0);
+			}
 		}
 	}
 	

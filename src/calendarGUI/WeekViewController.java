@@ -75,7 +75,7 @@ public class WeekViewController extends Application {
 	@FXML
 	public void prevAction() {
 		setWeek(calendar.getCurrentWeekNumber()-1);
-		calendar.setCurrentDate(false);
+		calendar.changeWeek(false);
 	}
 	
 	@FXML
@@ -84,7 +84,7 @@ public class WeekViewController extends Application {
 	@FXML
 	public void nextAction() {
 		setWeek(calendar.getCurrentWeekNumber()+1);
-		calendar.setCurrentDate(true);
+		calendar.changeWeek(true);
 	}
 	
 	@FXML
