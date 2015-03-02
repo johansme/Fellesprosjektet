@@ -16,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import login.LoginMain;
 import login.SceneHandler;
 
 public class WeekViewController extends Application {
@@ -32,12 +31,13 @@ public class WeekViewController extends Application {
 		}
 	}
 	
-	private Calendar calendar;
+	private Calendar calendar = new Calendar();
 	private SceneHandler sceneHandler = new SceneHandler();
 
 	
 	@FXML
 	private void initialize() {
+		setWeek(calendar.getCurrentWeekNumber());
 		
 	}
 	
@@ -64,7 +64,7 @@ public class WeekViewController extends Application {
 	
 	@FXML
 	public void prevAction() {
-		//init weekview x--
+		setWeek(calendar.getCurrentWeekNumber()-1);
 	}
 	
 	@FXML
@@ -72,7 +72,7 @@ public class WeekViewController extends Application {
 	
 	@FXML
 	public void nextAction() {
-		//init weekview x++
+		setWeek(calendar.getCurrentWeekNumber()+1);
 	}
 	
 	@FXML
