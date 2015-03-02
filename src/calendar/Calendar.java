@@ -18,16 +18,8 @@ public class Calendar {
 		currentMonth = new Month(currentDate);
 		months = new ArrayList<Month>();
 		months.add(currentMonth);
-		months.add(0 ,new Month(currentDate.minusMonths(1)));
-		months.add(0 ,new Month(currentDate.minusMonths(2)));
-		months.add(0 ,new Month(currentDate.minusMonths(3)));
-		months.add(0 ,new Month(currentDate.minusMonths(4)));
-		months.add(new Month(currentDate.plusMonths(1)));
-		months.add(new Month(currentDate.plusMonths(2)));
-		months.add(new Month(currentDate.plusMonths(3)));
-		months.add(new Month(currentDate.plusMonths(4)));
-		months.add(new Month(currentDate.plusMonths(5)));
-		months.add(new Month(currentDate.plusMonths(6)));
+		addPastMonths(5);
+		addFutureMonths(8);
 	}
 
 	public LocalDate getCurrentDate() {
@@ -39,21 +31,13 @@ public class Calendar {
 	}
 
 	public int getCurrentWeekNumber() {	
-
-		WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
-		int weekNumber = currentDate.get(weekFields.weekOfWeekBasedYear());
-		System.out.println(weekFields.weekBasedYear());
-		System.out.println(weekFields.weekOfYear());
-		return weekNumber;
-
+		return getWeekNumber(currentDate);
 	}
-
-
-	public static void main(String args[]){
-
-		Calendar c = new Calendar();
-		System.out.println("Uke: " + c.getCurrentWeekNumber());
-
+	
+	public int getWeekNumber(LocalDate date) {
+		WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+		int weekNumber = date.get(weekFields.weekOfWeekBasedYear());
+		return weekNumber;
 	}
 
 	public List<Month> getMonths() {
@@ -137,7 +121,7 @@ public class Calendar {
 	// adds a specified number of months to the end of the list
 	private void addFutureMonths(int numberOfMonths) {
 		Month month = months.get(months.size()-1);
-		LocalDate date = month.getDay(0).getDay();
+		LocalDate date = month.getDay(1).getDay();
 		for (int i = 0; i < numberOfMonths; i++) {
 			months.add(new Month(date.plusMonths(i)));
 		}
