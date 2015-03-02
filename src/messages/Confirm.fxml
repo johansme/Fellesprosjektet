@@ -14,7 +14,7 @@
 		</HBox>
 		<Label fx:id="confirmationInfo" text="test" layoutY="50" />
 		<Button fx:id="okButton" text="OK" onAction="#okButtonPressed" 
-		layoutX="110" layoutY="120" prefWidth="80"/>
+		layoutX="110" layoutY="120" prefWidth="80" />
 		<Button fx:id="cancelButton" text="Cancel" onAction="#cancelButtonPressed"
 		layoutX="200" layoutY="120" prefWidth="80" />
 	</children>
