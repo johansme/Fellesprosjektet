@@ -39,6 +39,7 @@ public class WeekViewController extends Application {
 	private void initialize() {
 		setWeek(calendar.getCurrentWeekNumber());
 		setYear(calendar.getCurrentDate().getYear());
+		setDates(calendar.getCurrentDate());
 		
 	}
 	
@@ -75,6 +76,26 @@ public class WeekViewController extends Application {
 	
 	private void setYear(int y) {
 		year.setText(" - "+y);
+	}
+	
+	private void setDates(LocalDate d) {
+		int i = (d.getDayOfWeek().getValue()-1);
+		LocalDate day = d.minusDays(i);
+		monDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
+		day.plusDays(1);
+		tuesDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
+		day.plusDays(1);
+		wedDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
+		day.plusDays(1);
+		thurDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
+		day.plusDays(1);
+		friDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
+		day.plusDays(1);
+		satDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
+		day.plusDays(1);
+		sunDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
+		day.plusDays(1);
+
 	}
 	
 	@FXML
@@ -143,15 +164,6 @@ public class WeekViewController extends Application {
 	@FXML
 	private Label sunDate;
 	
-	public void setDate(ArrayList<Day> dates) {
-		monDate.setText(""+dates.get(0).getDay().getDayOfMonth()+". "+monthToString(dates.get(0).getDay().getMonthValue()));
-		tuesDate.setText(""+dates.get(1).getDay().getDayOfMonth()+". "+monthToString(dates.get(1).getDay().getMonthValue()));
-		wedDate.setText(""+dates.get(2).getDay().getDayOfMonth()+". "+monthToString(dates.get(2).getDay().getMonthValue()));
-		thurDate.setText(""+dates.get(3).getDay().getDayOfMonth()+". "+monthToString(dates.get(3).getDay().getMonthValue()));
-		friDate.setText(""+dates.get(4).getDay().getDayOfMonth()+". "+monthToString(dates.get(4).getDay().getMonthValue()));
-		satDate.setText(""+dates.get(5).getDay().getDayOfMonth()+". "+monthToString(dates.get(5).getDay().getMonthValue()));
-		sunDate.setText(""+dates.get(6).getDay().getDayOfMonth()+". "+monthToString(dates.get(6).getDay().getMonthValue()));
-	}
 	
 	private String monthToString(int month) {
 		if (month==1) {
