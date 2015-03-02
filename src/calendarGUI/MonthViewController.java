@@ -165,7 +165,7 @@ public class MonthViewController {
 	
 	@FXML
 	private void initialize() {
-		calendar = new Calendar(); //TODO fix connection to existing calendar
+		setCalendar(new Calendar()); //TODO fix connection to existing calendar
 		month = calendar.getCurrentMonth();
 		weekList1 = new ArrayList<MonthDayViewController>();
 		weekList1.add(week1Day1Controller);
@@ -262,6 +262,12 @@ public class MonthViewController {
 			}
 		}
 		//TODO Complete month update
+	}
+	
+	public void setCalendar(Calendar calendar) {
+		if (calendar != null) {
+			this.calendar = calendar;
+		}
 	}
 	
 	// element in 1st week is mouse clicked. Equivalent for the below
