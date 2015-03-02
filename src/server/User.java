@@ -10,6 +10,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class User {
 	private int id = 0;
 	private String name = null;
+	private String surname = null;
 	private String username = null;
 	private String email = null;
 	
@@ -18,6 +19,14 @@ public class User {
 	}
 
 	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getSurname() {
+		return name;
+	}
+
+	public void setSurname(String name) {
 		this.name = name;
 	}
 
@@ -33,19 +42,20 @@ public class User {
 		return username;
 	}
 
-	public static boolean createUser(String name, String username, String password, String email) {
+	public static boolean createUser(String surname, String name, String username, String password, String email) {
 		DBConnection db = null;
 		boolean success = true;
-		final String stm_str = "INSERT INTO Employee VALUES(0, ?, ?, ?, ?)";
+		final String stm_str = "INSERT INTO User VALUES(0, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement stm = null;
 		try {
 			db = new DBConnection();
 			stm = db.getConnection().prepareStatement(stm_str);
-			stm.setString(1, name);
-			stm.setString(2, username);
-			stm.setString(3, BCrypt.hashpw(password, BCrypt.gensalt()));
-			stm.setString(4, email);
+			stm.setString(1, surname);
+			stm.setString(2, name);
+			stm.setString(3, username);
+			stm.setString(4, BCrypt.hashpw(password, BCrypt.gensalt()));
+			stm.setString(5, email);
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
@@ -67,7 +77,7 @@ public class User {
 		String db_pwd = null;
 		try {
 			db = new DBConnection();
-			final String stm_str = "SELECT password FROM Employee WHERE username=?";
+			final String stm_str = "SELECT password FROM User WHERE username=?";
 			stm = db.getConnection().prepareStatement(stm_str);
 			stm.setString(1, username);
 			stm.execute();
@@ -93,7 +103,7 @@ public class User {
 		boolean exists = true;
 		try {
 			db = new DBConnection();
-			final String stm_str = "SELECT 1 FROM Employee WHERE username=?";
+			final String stm_str = "SELECT 1 FROM User WHERE username=?";
 			stm = db.getConnection().prepareStatement(stm_str);
 			stm.setString(1, username);
 			stm.execute();
@@ -111,7 +121,7 @@ public class User {
 	
 	public User(int id) {
 		DBConnection db = null;
-		final String str_fmt = "SELECT name,username,email FROM Employee WHERE id=?";
+		final String str_fmt = "SELECT surname,name,username,email FROM User WHERE id=?";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
@@ -121,6 +131,7 @@ public class User {
 			stm.execute();
 			rs = stm.getResultSet();
 			if(rs.next()) {
+				surname = rs.getString("surname");
 				name = rs.getString("name");
 				username = rs.getString("username");
 				email = rs.getString("email");
@@ -137,12 +148,19 @@ public class User {
 	public JSONObject toJSON() {
 		JSONObject obj = new JSONObject();
 		obj.put("name", name);
+		obj.put("surname", surname);
 		obj.put("username", username);
 		obj.put("email", email);
 		return obj;
 	}
 	
+	static void CreateTestUsers() {
+		createUser("Stalin", "Joseph", "staljo", "staljo", "staljo@sovjet.ru");
+		createUser("Stephenson", "Bob", "bobstep", "bobstep", "bob@step.meme");
+		createUser("Cage", "Nicolas", "nicage", "nicage", "einhov@gmail.com");
+	}
+	
 	public static void main(String []args) {
-		createUser("Nicolas Cage", "nicage", "nicage", "einhov@gmail.com");
+		
 	}
 }
