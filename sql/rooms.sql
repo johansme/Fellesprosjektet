@@ -1,0 +1,13 @@
+INSERT INTO MeetingRoom VALUES(0, "Phobos", 5);
+INSERT INTO MeetingRoom VALUES(0, "Deimos", 8);
+INSERT INTO MeetingRoom VALUES(0, "Ganymede", 12);
+INSERT INTO MeetingRoom VALUES(0, "Callisto", 30);
+INSERT INTO MeetingRoom VALUES(0, "Io", 10);
+INSERT INTO MeetingRoom VALUES(0, "Europa", 200);
+INSERT INTO MeetingRoom VALUES(0, "Titan", 20000);
+INSERT INTO MeetingRoom VALUES(0, "Rhea", 40);
+INSERT INTO MeetingRoom VALUES(0, "Iapetus", 30);
+INSERT INTO MeetingRoom VALUES(0, "Dione", 20);
+INSERT INTO MeetingRoom VALUES(0, "Tethys", 15);
+INSERT INTO MeetingRoom VALUES(0, "Miranda", 10);
+INSERT INTO MeetingRoom VALUES(0, "Umbriel", 1);
