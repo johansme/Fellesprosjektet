@@ -37,8 +37,8 @@ public class WeekViewController extends Application {
 	
 	@FXML
 	private void initialize() {
-		setWeek(calendar.getCurrentWeekNumber());
-		setYear(calendar.getCurrentDate().getYear());
+		setWeek(calendar.getCurrentDate());
+		setYear(calendar.getCurrentDate());
 		setDates(calendar.getCurrentDate());
 		
 	}
@@ -50,31 +50,25 @@ public class WeekViewController extends Application {
 	private Label year;
 	
 	
-	private void setWeek(int week) {
-		if (week<1) {
-			weekNum.setText("Week 52");
-			week=52;
-		}
-		else if (week>52) {
-			weekNum.setText("Week 1");
-			week=1;
-		}
-		else {
-			weekNum.setText("Week "+week);
-		}
-		int prevWeek = week-1;
-		int nextWeek = week+1;
+	private void setWeek(LocalDate d) {
+		int thisWeek = Calendar.getWeekNumber(d);
+		int prevWeek = Calendar.getWeekNumber(d.minusWeeks(1));
+		int nextWeek = Calendar.getWeekNumber(d.plusWeeks(1));
+		weekNum.setText("Week "+thisWeek);
 		prev.setText("Week "+prevWeek);
 		next.setText("Week "+nextWeek);
-		if (week==1) {
-			prev.setText("Week 52");
-		}
-		if (week==52) {
-			next.setText("Week 1");
-		}
 	}
 	
-	private void setYear(int y) {
+	private void setYear(LocalDate d) {
+		if (d.getDayOfWeek().getValue()<4) {
+			int i=4-d.getDayOfWeek().getValue();
+			d=d.plusDays(i);
+		}
+		else if (d.getDayOfWeek().getValue()>4) {
+			int i=d.getDayOfWeek().getValue()-4;
+			d=d.minusDays(i);
+		}
+		int y=d.getYear();
 		year.setText(" - "+y);
 	}
 	
@@ -82,19 +76,19 @@ public class WeekViewController extends Application {
 		int i = (d.getDayOfWeek().getValue()-1);
 		LocalDate day = d.minusDays(i);
 		monDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day.plusDays(1);
+		day=day.plusDays(1);
 		tuesDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day.plusDays(1);
+		day=day.plusDays(1);
 		wedDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day.plusDays(1);
+		day=day.plusDays(1);
 		thurDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day.plusDays(1);
+		day=day.plusDays(1);
 		friDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day.plusDays(1);
+		day=day.plusDays(1);
 		satDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day.plusDays(1);
+		day=day.plusDays(1);
 		sunDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day.plusDays(1);
+		day=day.plusDays(1);
 
 	}
 	
@@ -103,9 +97,11 @@ public class WeekViewController extends Application {
 	
 	@FXML
 	public void prevAction() {
-		setWeek(calendar.getCurrentWeekNumber()-1);
-		setYear(calendar.getCurrentDate().getYear());
+		setWeek(calendar.getCurrentDate().minusWeeks(1));
 		calendar.changeWeek(false);
+		setYear(calendar.getCurrentDate());
+		setDates(calendar.getCurrentDate());
+
 	}
 	
 	@FXML
@@ -113,9 +109,10 @@ public class WeekViewController extends Application {
 	
 	@FXML
 	public void nextAction() {
-		setWeek(calendar.getCurrentWeekNumber()+1);
-		setYear(calendar.getCurrentDate().getYear());
+		setWeek(calendar.getCurrentDate().plusWeeks(1));
 		calendar.changeWeek(true);
+		setYear(calendar.getCurrentDate());
+		setDates(calendar.getCurrentDate());
 	}
 	
 	@FXML
