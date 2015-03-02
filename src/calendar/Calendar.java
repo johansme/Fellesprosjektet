@@ -97,4 +97,13 @@ public class Calendar {
 		}
 	}
 	
+	public void setCurrentDate(boolean b) { //boolean avgjor om det er next week eller previous
+		if (b==true) {
+			currentDate = currentDate.plusWeeks(1);
+		}
+		else {
+			currentDate = currentDate.minusWeeks(1);
+		}
+	}
+	
 }
