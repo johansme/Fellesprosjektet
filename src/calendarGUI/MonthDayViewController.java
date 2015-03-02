@@ -8,6 +8,7 @@ import calendar.Day;
 import calendar.DayChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 
@@ -16,6 +17,7 @@ public class MonthDayViewController implements DayChangeListener {
 	@FXML private Arc dayArc;
 	@FXML private Label dayApp;
 	@FXML private Label dayNo;
+	@FXML private AnchorPane background;
 	
 	private Day day;
 	
@@ -39,6 +41,11 @@ public class MonthDayViewController implements DayChangeListener {
 		dayNo.visibleProperty().set(true);
 		dayNo.setText(String.valueOf(day.getDay().getDayOfMonth()));
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
+		if (day.getDay().isEqual(LocalDate.now())) {
+			background.setStyle("-fx-background-color:#7FFFD4;");
+		} else {
+			background.setStyle("-fx-background-color:#FFFFFF;");			
+		}
 	}
 	
 	public void monthChange(Day day) {
@@ -50,6 +57,10 @@ public class MonthDayViewController implements DayChangeListener {
 		dayApp.visibleProperty().set(false);
 		dayArc.visibleProperty().set(false);
 		dayNo.visibleProperty().set(false);
+	}
+	
+	public Day getDay() {
+		return day;
 	}
 	
 	public void changeDiscovered() {

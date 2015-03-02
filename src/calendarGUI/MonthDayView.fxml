@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarGUI.MonthDayViewController"
-	prefHeight="82" prefWidth="100" style="-fx-background-color:white">
+	prefHeight="82" prefWidth="100" fx:id="background" style="-fx-background-color:white">
 	<children>
 		<Arc fx:id="dayArc" radiusX="40" radiusY="30" length="90" layoutY="30"
 			type="ROUND" rotate="180" fill="WHITE" stroke="BLACK" layoutX="60"
