@@ -34,7 +34,7 @@ public class Calendar {
 		return getWeekNumber(currentDate);
 	}
 	
-	public int getWeekNumber(LocalDate date) {
+	public static int getWeekNumber(LocalDate date) {
 		WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
 		int weekNumber = date.get(weekFields.weekOfWeekBasedYear());
 		return weekNumber;
@@ -45,41 +45,11 @@ public class Calendar {
 	}
 
 	public Month getNextMonth() {
-		int i = months.indexOf(currentMonth);
-		if (i == months.size() - 1) {
-			Month month = new Month(currentDate.plusMonths(1));
-			months.add(month);
-			currentDate = currentDate.plusMonths(1);
-			// sets currentDate to the 1st of the month
-			currentDate = currentDate.minusDays(currentDate.getDayOfMonth()-1);
-			currentMonth = month;
-			return month;
-		} else {
-			currentDate = currentDate.plusMonths(1);
-			currentDate = currentDate.minusDays(currentDate.getDayOfMonth()-1);
-			currentMonth = months.get(i + 1);
-			return months.get(i + 1);
-		}
+		return getFutureMonth(1);
 	}
 
 	public Month getPreviousMonth() throws IllegalStateException {
-		if (currentDate.isBefore(LocalDate.of(2000, 2, 1))) {
-			throw new IllegalStateException("This calendar does not support dates prior to the year 2000");
-		}
-		int i = months.indexOf(currentMonth);
-		if (i == 0) {
-			Month month = new Month(currentDate.minusMonths(1));
-			months.add(0, month);
-			currentDate = currentDate.minusMonths(1);
-			currentDate = currentDate.plusDays(currentDate.lengthOfMonth()-currentDate.getDayOfMonth());
-			currentMonth = month;
-			return month;
-		} else {
-			currentDate = currentDate.minusMonths(1);
-			currentDate = currentDate.plusDays(currentDate.lengthOfMonth()-currentDate.getDayOfMonth());
-			currentMonth = months.get(i - 1);
-			return months.get(i - 1);
-		}
+		return getPastMonth(1);
 	}
 
 	// Jumps a specified number of months forward
@@ -105,6 +75,15 @@ public class Calendar {
 		return currentMonth;
 	}
 
+	// adds a specified number of months to the end of the list
+	private void addFutureMonths(int numberOfMonths) {
+		Month month = months.get(months.size()-1);
+		LocalDate date = month.getDay(1).getDay();
+		for (int i = 0; i < numberOfMonths; i++) {
+			months.add(new Month(date.plusMonths(i)));
+		}
+	}
+	
 	private void addPastMonths(int numberOfMonths) throws IllegalStateException {
 		Month month = months.get(0);
 		LocalDate date = month.getDay(month.getDays().length).getDay();
@@ -117,14 +96,5 @@ public class Calendar {
 			}
 		}
 	}
-
-	// adds a specified number of months to the end of the list
-	private void addFutureMonths(int numberOfMonths) {
-		Month month = months.get(months.size()-1);
-		LocalDate date = month.getDay(1).getDay();
-		for (int i = 0; i < numberOfMonths; i++) {
-			months.add(new Month(date.plusMonths(i)));
-		}
-	}
-
+	
 }
