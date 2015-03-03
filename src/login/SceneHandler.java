@@ -33,8 +33,8 @@ public class SceneHandler {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 			Parent root = loader.load();
 			Scene scene = new Scene(root,width,height);
-			ControllerInterface confirmController = (ControllerInterface) loader.getController();
-			confirmController.setData();
+			ControllerInterface monthController = (ControllerInterface) loader.getController();
+			monthController.setData();
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
