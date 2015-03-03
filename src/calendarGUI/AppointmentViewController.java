@@ -175,8 +175,8 @@ public class AppointmentViewController extends Application implements Controller
 	}
 
 	@Override
-	public void getData() {
+	public Calendar getData() {
 		// TODO Auto-generated method stub
-		
+		return this.calendar;
 	}
 }

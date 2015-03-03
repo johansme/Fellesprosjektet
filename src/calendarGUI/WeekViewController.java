@@ -2,39 +2,22 @@ package calendarGUI;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import calendar.Appointment;
 import calendar.Calendar;
-import calendar.Day;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import login.SceneHandler;
@@ -351,11 +334,14 @@ public class WeekViewController extends Application implements ControllerInterfa
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-	@Override
-	public void setData(Calendar c) {
-		setView(c);
 				
+	public void setData(Calendar calendar) {
+		if (calendar != null) {
+			this.calendar = calendar;
+		} else {
+			this.calendar = new Calendar();
+		}
+		setView(this.calendar);
 	}
 	
 	@Override
@@ -364,9 +350,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 	}
 
 	@Override
-	public void getData() {
-		// TODO Auto-generated method stub
-		
+	public Calendar getData() {
+		return this.calendar;
 	}
 }
 
