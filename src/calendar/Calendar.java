@@ -66,9 +66,10 @@ public class Calendar {
 	
 	public Month getPastMonth(int numberOfMonths) throws IllegalStateException {
 		int i = months.indexOf(currentMonth);
-		if (i < numberOfMonths) {
+		if (i <= numberOfMonths) {
 			addPastMonths(numberOfMonths);
 		}
+		i = months.indexOf(currentMonth);
 		currentMonth = months.get(i - numberOfMonths);
 		currentDate = currentDate.minusMonths(numberOfMonths);
 		currentDate = currentDate.plusDays(currentDate.lengthOfMonth()-currentDate.getDayOfMonth());
@@ -79,7 +80,7 @@ public class Calendar {
 	private void addFutureMonths(int numberOfMonths) {
 		Month month = months.get(months.size()-1);
 		LocalDate date = month.getDay(1).getDay();
-		for (int i = 0; i < numberOfMonths; i++) {
+		for (int i = 1; i <= numberOfMonths; i++) {
 			months.add(new Month(date.plusMonths(i)));
 		}
 	}
