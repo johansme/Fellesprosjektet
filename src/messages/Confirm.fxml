@@ -5,18 +5,22 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="150" prefWidth="300">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="150"
+	prefWidth="300" stylesheets="resources/defaultTheme.css" styleClass="backgroundA"
+	fx:controller="messages/ConfirmController" >
 	<children>
-		<HBox prefHeight="20" prefWidth="300" style="-fx-background-color:dodgerblue;">
+		<HBox prefHeight="20" prefWidth="300" alignment="CENTER_LEFT"
+			style="-fx-background-color:dodgerblue;">
 			<children>
-				<Label text="Confirm" />
+				<Label text="Confirm" prefWidth="50" alignment="CENTER_RIGHT" />
 			</children>
 		</HBox>
-		<Label fx:id="confirmationInfo" text="test" layoutY="50" />
-		<Button fx:id="okButton" text="OK" onAction="#okButtonPressed" 
-		layoutX="110" layoutY="120" prefWidth="80" />
+		<Label fx:id="confirmationInfo" text="test" layoutY="50"
+			layoutX="15" styleClass="messageText" />
+		<Button fx:id="okButton" text="OK" onAction="#okButtonPressed"
+			layoutX="130" layoutY="120" prefWidth="80" />
 		<Button fx:id="cancelButton" text="Cancel" onAction="#cancelButtonPressed"
-		layoutX="200" layoutY="120" prefWidth="80" />
+			layoutX="215" layoutY="120" prefWidth="80" />
 	</children>
 </AnchorPane>
 
