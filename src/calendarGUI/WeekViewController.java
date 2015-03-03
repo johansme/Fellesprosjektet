@@ -328,15 +328,18 @@ public class WeekViewController extends Application implements ControllerInterfa
 	}
 
 	@Override
-	public void setData() {
-		// TODO Auto-generated method stub
-		
+	public void setData(Calendar calendar) {
+		if (calendar != null) {
+			this.calendar = calendar;
+		} else {
+			this.calendar = new Calendar();
+		}
+		setView(this.calendar);
 	}
 
 	@Override
-	public void getData() {
-		// TODO Auto-generated method stub
-		
+	public Calendar getData() {
+		return this.calendar;
 	}
 }
 
