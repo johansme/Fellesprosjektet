@@ -152,7 +152,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	@FXML
 	public void monthClicked(Event e) {
 		sceneHandler = new SceneHandler();
-		sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml", 800, 600, calendar);
 	}
 	
 	@FXML
@@ -238,9 +238,9 @@ public class WeekViewController extends Application implements ControllerInterfa
 
 	
 	private void setAppointments(LocalDate d) {
-		monAppointments.getChildren().add(drawAppointment(example("18:30", "20:00", 0), 1));
-		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00", 1), 1));
-		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00", 2), 0));
+		monAppointments.getChildren().add(drawAppointment(example("18:30", "20:00", 0, true, false), 1));
+		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00", 1, true, true), 1));
+		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00", 2, false, false), 0));
 //		int i = (d.getDayOfWeek().getValue()-1);
 //		LocalDate day = d.minusDays(i);
 //		for (int j=1; j<8; j++) {
@@ -295,7 +295,15 @@ public class WeekViewController extends Application implements ControllerInterfa
 				90, Math.max(14+(overlapNum*14), end-start), 
 				0, Math.max(14+(overlapNum*14), end-start));
 		box.setStroke(Color.BLACK);
-		box.setFill(Color.AQUAMARINE);
+		if (a.getAdmin()) {
+			box.setFill(Color.AQUAMARINE);
+		}
+		else {
+			box.setFill(Color.PALEGREEN);
+		}
+		if (!a.getOpened()) {
+			box.setFill(Color.RED);
+		}
 		
 		Label description = new Label();
 		description.setPrefWidth(90);
@@ -325,7 +333,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
 	}
 	
-	private Appointment example(String start, String end, int id) {
+	private Appointment example(String start, String end, int id, boolean opened, boolean admin) {
 		Appointment a = new Appointment();
 		a.setID(id);
 		a.setDescription("barneTV");
@@ -334,6 +342,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 		a.setStartTime(LocalTime.parse(start));
 		a.setEndTime(LocalTime.parse(end));
 		a.setLocation("mars");
+		a.setAdmin(admin);
+		a.setOpened(opened);
 		appointments.put(a.getID(), a);
 		return a;
 	}	
@@ -344,13 +354,13 @@ public class WeekViewController extends Application implements ControllerInterfa
 
 	@Override
 	public void setData(Calendar c) {
-		// TODO Auto-generated method stub
-		
+		setView(c);
+				
 	}
 	
 	@Override
 	public void setData(Calendar c, Appointment a) {
-		
+		setView(c);
 	}
 
 	@Override

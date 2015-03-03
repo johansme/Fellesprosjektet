@@ -15,6 +15,8 @@ public class Appointment {
 	private String location;
 	private ArrayList<String> participants;
 	private int overlap;
+	private boolean opened=false;
+	private boolean admin;
 	
 	public Appointment() {
 		
@@ -164,6 +166,22 @@ public class Appointment {
 	
 	public int getID() {
 		return id;
+	}
+	
+	public boolean getOpened() {
+		return opened;
+	}
+	
+	public void setOpened(boolean b) {
+		opened = b;
+	}
+	
+	public boolean getAdmin() {
+		return admin;
+	}
+	
+	public void setAdmin(boolean b) {
+		admin = b;
 	}
 	
 
