@@ -29,6 +29,7 @@ public class NewAppointmentController {
 	@FXML DatePicker fromDate;
 	@FXML DatePicker toDate;
 	@FXML TextField otherField;
+	@FXML Button saveButton;
 	@FXML Button cancelButton;
 	
 	
@@ -64,6 +65,9 @@ public class NewAppointmentController {
 			appoint.setRoomCapasity(Integer.valueOf( capasityField.textProperty().getValue()));
 			appoint.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
 			appoint.printData();
+			// get a handle to the stage
+		    Stage stage = (Stage) saveButton.getScene().getWindow();
+		    stage.close();
 		}
 	}
 	
