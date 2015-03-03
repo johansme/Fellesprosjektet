@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
-public class WeekViewController extends Application {
+public class WeekViewController extends Application implements ControllerInterface{
 
 	public void start(Stage primaryStage) {
 		try {
@@ -215,6 +215,18 @@ public class WeekViewController extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	@Override
+	public void setData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getData() {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

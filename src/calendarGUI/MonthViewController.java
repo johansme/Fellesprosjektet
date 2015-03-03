@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import login.SceneHandler;
 
-public class MonthViewController {
+public class MonthViewController implements ControllerInterface {
 	
 	private Calendar calendar;
 	private Month month;
@@ -352,6 +352,18 @@ public class MonthViewController {
 	private void newAppointmentAction() {
 		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
 		sceneHandler.popUpConfirmation("/messages/confirm.fxml", 300, 150, "Du har no trykket pa ny avtale!:D");
+	}
+
+	@Override
+	public void setData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getData() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

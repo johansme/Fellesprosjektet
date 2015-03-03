@@ -1,5 +1,6 @@
 package login;
 
+import calendarGUI.ControllerInterface;
 import messages.ConfirmController;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,22 @@ public class SceneHandler {
 		
 	}
 	
+	public void changeMonthRelatedScene(String fxmlPath, int width, int height /* extra data */){
+		Stage primaryStage = new Stage();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+			Parent root = loader.load();
+			Scene scene = new Scene(root,width,height);
+			ControllerInterface confirmController = (ControllerInterface) loader.getController();
+			confirmController.setData();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void popUpScene(String fxmlPath, int width,int height){
 		Stage primaryStage = new Stage();
 		try {
@@ -38,6 +55,8 @@ public class SceneHandler {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public void popUpConfirmation(String fxmlPath, int width,int height,String message){
 		Stage primaryStage = new Stage();
