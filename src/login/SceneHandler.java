@@ -29,7 +29,7 @@ public class SceneHandler {
 		
 	}
 	
-	public void changeMonthRelatedScene(Event e, String fxmlPath, int width, int height, Calendar calendar /* extra data */){
+	public void changeMonthRelatedScene(Event e, String fxmlPath, int width, int height, Calendar calendar){
 		try{
 			Node node=(Node) e.getSource();
 			Stage stage=(Stage) node.getScene().getWindow();

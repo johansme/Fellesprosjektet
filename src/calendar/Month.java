@@ -33,11 +33,8 @@ public class Month {
 	
 	// returns day i of the month
 	public Day getDay(int i) {
-		if (i >0 && i <= month.lengthOfMonth()) {
-			return days[i-1];			
-		} else {
-			throw new IllegalArgumentException(i + " is not a date in " + getMonth());
-		}
+		//TODO add validation
+		return days[i-1];
 	}
 	
 	public Day[] getDays() {
