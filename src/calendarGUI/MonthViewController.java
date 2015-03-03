@@ -3,6 +3,7 @@ package calendarGUI;
 import java.util.ArrayList;
 import java.util.List;
 
+import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Day;
 import calendar.Month;
@@ -369,6 +370,12 @@ public class MonthViewController implements ControllerInterface {
 	@Override
 	public Calendar getData() {
 		return this.calendar;
+	}
+
+	@Override
+	public void setData(Calendar c, Appointment a) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
