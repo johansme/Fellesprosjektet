@@ -1,4 +1,4 @@
-package server;
+package server.httpserver;
 
 class HttpSession {
 	private int uid;

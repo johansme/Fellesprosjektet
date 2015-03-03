@@ -1,4 +1,4 @@
-package server;
+package server.httpserver;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import server.User;
 
 public class HttpSessionManager extends Thread {
 //	private static final int SESSION_TIMEOUT = 60 * 60 * 5;
