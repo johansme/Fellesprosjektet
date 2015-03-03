@@ -214,8 +214,6 @@ public class MonthViewController implements ControllerInterface {
 		weekList6.add(week6Day1Controller);
 		weekList6.add(week6Day2Controller);
 		weekList6.add(week6Day3Controller);
-
-		setCalendar(new Calendar()); //TODO fix connection to existing calendar
 	}
 	
 	private void monthChanged() {
@@ -272,61 +270,64 @@ public class MonthViewController implements ControllerInterface {
 		}
 	}
 	
-	public void setCalendar(Calendar calendar) {
-		if (calendar != null) {
-			this.calendar = calendar;
-			month = this.calendar.getCurrentMonth();
-			monthChanged();
-		}
-	}
 	
 	// element in 1st week is mouse clicked. Equivalent for the below
 	@FXML
 	private void week1Clicked(Event e) {
+		calendar.setCurrentDate(weekList1.get(7).getDay().getDay());
 		for (MonthDayViewController day : weekList1) {
 			day.changeDiscovered();
 		}
-		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
 	}
 	
 	@FXML
 	private void week2Clicked(Event e) {
+		calendar.setCurrentDate(weekList2.get(0).getDay().getDay());
 		for (MonthDayViewController day : weekList2) {
 			day.changeDiscovered();
 		}
-		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
 	}
 	
 	@FXML
 	private void week3Clicked(Event e) {
+		calendar.setCurrentDate(weekList3.get(0).getDay().getDay());
 		for (MonthDayViewController day : weekList3) {
 			day.changeDiscovered();
 		}
-		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
 	}
 	
 	@FXML
 	private void week4Clicked(Event e) {
+		calendar.setCurrentDate(weekList4.get(0).getDay().getDay());
 		for (MonthDayViewController day : weekList4) {
 			day.changeDiscovered();
 		}
-		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
 	}
 	
 	@FXML
 	private void week5Clicked(Event e) {
+		calendar.setCurrentDate(weekList5.get(0).getDay().getDay());
 		for (MonthDayViewController day : weekList5) {
 			day.changeDiscovered();
 		}
-		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
 	}
 	
 	@FXML
 	private void week6Clicked(Event e) {
-		for (MonthDayViewController day : weekList6) {
-			day.changeDiscovered();
+		int i = weekList1.get(0).getDay().getDay().getDayOfWeek().getValue() - 1;
+		i += month.getDays().length;
+		if (i/7 <= 5) {
+			calendar.setCurrentDate(weekList6.get(0).getDay().getDay());
+			for (MonthDayViewController day : weekList6) {
+				day.changeDiscovered();
+			}
+			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());			
 		}
-		sceneHandler.changeScene("/calendarGUI/WeekView.fxml", e);
 	}
 	
 	// when "Previous"-button is pressed
@@ -355,15 +356,19 @@ public class MonthViewController implements ControllerInterface {
 	}
 
 	@Override
-	public void setData() {
-		// TODO Auto-generated method stub
-		
+	public void setData(Calendar calendar) {
+		if (calendar != null) {
+			this.calendar = calendar;
+		} else {
+			this.calendar = new Calendar();
+		}
+		month = this.calendar.getCurrentMonth();
+		monthChanged();
 	}
 
 	@Override
-	public void getData() {
-		// TODO Auto-generated method stub
-		
+	public Calendar getData() {
+		return this.calendar;
 	}
 	
 }
