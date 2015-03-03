@@ -61,6 +61,7 @@ public class NewAppointmentController {
 			appoint.setRoom("NTNU"); // this needs fixing:)
 			appoint.setStartTime(fromField.textProperty().getValue());
 			appoint.setEndTime(toField.textProperty().getValue());
+			appoint.setRoomCapasity(Integer.valueOf( capasityField.textProperty().getValue()));
 			appoint.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
 			appoint.printData();
 		}
@@ -217,7 +218,7 @@ private boolean validToTime(){
 		toField.setText(currentDate.getTime().getHours() + 2 + ":00" );
 		
 		
-		
+		capasityField.textProperty().setValue("1");
 		
 		fromDate.setValue(LocalDate.now());
 		disableDates(fromDate, LocalDate.now());
@@ -229,8 +230,8 @@ private boolean validToTime(){
 	
 	// method for checking if necesary fields are filled out
 	public boolean checkFieldsFill(){
-		System.out.println(capasityField.textProperty().getValue() );
-		if(descriptionField.textProperty().getName() != "" &&
+		
+		if(!descriptionField.textProperty().getValue().isEmpty() &&
 				toField.textProperty().getValue() != "" &&
 				fromField.textProperty().getValue() != "" &&
 				capasityField.textProperty().getValue() != ""
