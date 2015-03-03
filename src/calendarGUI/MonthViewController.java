@@ -222,7 +222,7 @@ public class MonthViewController implements ControllerInterface {
 		monthName.setText(month.getMonth() + " " + month.getYear());
 		Day[] days = month.getDays();
 		// the first weekday of the month as an int from 1 to 7
-		int firstDayStarts = days[0].getDay().getDayOfWeek().getValue();
+		int firstDayStarts = days[0].getDate().getDayOfWeek().getValue();
 		int dayNo = 0;
 		for (int i = 0; i < firstDayStarts-1; i++) {
 			weekList1.get(i).setBlank();
@@ -259,14 +259,14 @@ public class MonthViewController implements ControllerInterface {
 				weekList6.get(i).setBlank();
 			}
 		}
-		week1.setText("" + Calendar.getWeekNumber(week1Day7Controller.getDay().getDay()));
-		week2.setText("" + Calendar.getWeekNumber(week2Day1Controller.getDay().getDay()));
-		week3.setText("" + Calendar.getWeekNumber(week3Day1Controller.getDay().getDay()));
-		week4.setText("" + Calendar.getWeekNumber(week4Day1Controller.getDay().getDay()));
-		week5.setText("" + Calendar.getWeekNumber(week5Day1Controller.getDay().getDay()));
-		if (week6Day1Controller.getDay().getDay().isEqual(week4Day1Controller.getDay().getDay().plusDays(14))) {
+		week1.setText("" + Calendar.getWeekNumber(week1Day7Controller.getDay().getDate()));
+		week2.setText("" + Calendar.getWeekNumber(week2Day1Controller.getDay().getDate()));
+		week3.setText("" + Calendar.getWeekNumber(week3Day1Controller.getDay().getDate()));
+		week4.setText("" + Calendar.getWeekNumber(week4Day1Controller.getDay().getDate()));
+		week5.setText("" + Calendar.getWeekNumber(week5Day1Controller.getDay().getDate()));
+		if (week6Day1Controller.getDay().getDate().isEqual(week4Day1Controller.getDay().getDate().plusDays(14))) {
 			week6.setVisible(true);
-			week6.setText("" + Calendar.getWeekNumber(week6Day1Controller.getDay().getDay()));
+			week6.setText("" + Calendar.getWeekNumber(week6Day1Controller.getDay().getDate()));
 		} else {
 			week6.setVisible(false);
 		}
@@ -276,7 +276,7 @@ public class MonthViewController implements ControllerInterface {
 	// element in 1st week is mouse clicked. Equivalent for the below
 	@FXML
 	private void week1Clicked(Event e) {
-		calendar.setCurrentDate(weekList1.get(6).getDay().getDay());
+		calendar.setCurrentDate(weekList1.get(6).getDay().getDate());
 		for (MonthDayViewController day : weekList1) {
 			day.changeDiscovered();
 		}
@@ -285,7 +285,7 @@ public class MonthViewController implements ControllerInterface {
 	
 	@FXML
 	private void week2Clicked(Event e) {
-		calendar.setCurrentDate(weekList2.get(0).getDay().getDay());
+		calendar.setCurrentDate(weekList2.get(0).getDay().getDate());
 		for (MonthDayViewController day : weekList2) {
 			day.changeDiscovered();
 		}
@@ -294,7 +294,7 @@ public class MonthViewController implements ControllerInterface {
 	
 	@FXML
 	private void week3Clicked(Event e) {
-		calendar.setCurrentDate(weekList3.get(0).getDay().getDay());
+		calendar.setCurrentDate(weekList3.get(0).getDay().getDate());
 		for (MonthDayViewController day : weekList3) {
 			day.changeDiscovered();
 		}
@@ -303,7 +303,7 @@ public class MonthViewController implements ControllerInterface {
 	
 	@FXML
 	private void week4Clicked(Event e) {
-		calendar.setCurrentDate(weekList4.get(0).getDay().getDay());
+		calendar.setCurrentDate(weekList4.get(0).getDay().getDate());
 		for (MonthDayViewController day : weekList4) {
 			day.changeDiscovered();
 		}
@@ -312,7 +312,7 @@ public class MonthViewController implements ControllerInterface {
 	
 	@FXML
 	private void week5Clicked(Event e) {
-		calendar.setCurrentDate(weekList5.get(0).getDay().getDay());
+		calendar.setCurrentDate(weekList5.get(0).getDay().getDate());
 		for (MonthDayViewController day : weekList5) {
 			day.changeDiscovered();
 		}
@@ -324,8 +324,8 @@ public class MonthViewController implements ControllerInterface {
 		LocalDate date = calendar.getCurrentDate();
 		int i = LocalDate.of(date.getYear(), date.getMonthValue(), 1).getDayOfWeek().getValue() - 1;
 		i += month.getDays().length;
-		if (i/7 <= 5) {
-			calendar.setCurrentDate(weekList6.get(0).getDay().getDay());
+		if (i/7 < 5) {
+			calendar.setCurrentDate(weekList6.get(0).getDay().getDate());
 			for (MonthDayViewController day : weekList6) {
 				day.changeDiscovered();
 			}
@@ -355,7 +355,7 @@ public class MonthViewController implements ControllerInterface {
 	@FXML
 	private void newAppointmentAction() {
 		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
-		sceneHandler.popUpConfirmation("/messages/confirm.fxml", 300, 150, "Du har no trykket pa ny avtale!:D");
+		sceneHandler.popUpMessage("/messages/confirm.fxml", 300, 150, "Du har no trykket pa ny avtale!:D");
 	}
 
 	@Override

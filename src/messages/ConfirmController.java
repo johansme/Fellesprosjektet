@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class ConfirmController {
+public class ConfirmController implements MessageController {
 	
 	@FXML private Label confirmationInfo;
 	@FXML private Button okButton;

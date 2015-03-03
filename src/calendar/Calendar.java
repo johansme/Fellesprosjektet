@@ -31,7 +31,7 @@ public class Calendar {
 	}
 	
 	public void setCurrentDate(LocalDate date) {
-		if (date != null) {
+		if (date != null && date.isAfter(LocalDate.of(1999, 12, 31))) {
 			currentDate = date;
 		}
 	}
@@ -85,7 +85,7 @@ public class Calendar {
 	// adds a specified number of months to the end of the list
 	private void addFutureMonths(int numberOfMonths) {
 		Month month = months.get(months.size()-1);
-		LocalDate date = month.getDay(1).getDay();
+		LocalDate date = month.getDay(1).getDate();
 		for (int i = 1; i <= numberOfMonths; i++) {
 			months.add(new Month(date.plusMonths(i)));
 		}
@@ -93,7 +93,7 @@ public class Calendar {
 	
 	private void addPastMonths(int numberOfMonths) throws IllegalStateException {
 		Month month = months.get(0);
-		LocalDate date = month.getDay(month.getDays().length).getDay();
+		LocalDate date = month.getDay(month.getDays().length).getDate();
 		for (int i = 0; i < numberOfMonths; i++) {
 			if (date.isAfter(LocalDate.of(2000, 1, 31))) {
 				date = date.minusMonths(1);

@@ -24,7 +24,7 @@ public class MonthDayViewController implements DayChangeListener {
 	@FXML
 	private void initialize() {
 		day = new Day(LocalDate.now());
-		dayNo.setText(String.valueOf(day.getDay().getDayOfMonth()));
+		dayNo.setText(String.valueOf(day.getDate().getDayOfMonth()));
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
 	}
 
@@ -39,9 +39,9 @@ public class MonthDayViewController implements DayChangeListener {
 		dayApp.visibleProperty().set(true);
 		dayArc.visibleProperty().set(true);
 		dayNo.visibleProperty().set(true);
-		dayNo.setText(String.valueOf(day.getDay().getDayOfMonth()));
+		dayNo.setText(String.valueOf(day.getDate().getDayOfMonth()));
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
-		if (day.getDay().isEqual(LocalDate.now())) {
+		if (day.getDate().isEqual(LocalDate.now())) {
 			background.setStyle("-fx-background-color:#7FFFD4;");
 		} else {
 			background.setStyle("-fx-background-color:#FFFFFF;");			

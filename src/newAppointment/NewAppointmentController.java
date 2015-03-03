@@ -13,6 +13,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import login.SceneHandler;
 
 public class NewAppointmentController {
 	
@@ -65,7 +66,8 @@ public class NewAppointmentController {
 			appoint.setRoomCapasity(Integer.valueOf( capasityField.textProperty().getValue()));
 			appoint.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
 			appoint.printData();
-			
+			SceneHandler sh = new SceneHandler();
+			sh.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved");
 			// get a handle to the stage
 		    Stage stage = (Stage) saveButton.getScene().getWindow();
 		    // do what you got to do :)

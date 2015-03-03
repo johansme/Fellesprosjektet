@@ -3,7 +3,7 @@ package login;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;
-import messages.ConfirmController;
+import messages.MessageController;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -79,14 +79,14 @@ public class SceneHandler {
 	
 	
 	
-	public void popUpConfirmation(String fxmlPath, int width,int height,String message){
+	public void popUpMessage(String fxmlPath, int width,int height,String message){
 		Stage primaryStage = new Stage();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 			Parent root = loader.load();
 			Scene scene = new Scene(root,width,height);
-			ConfirmController confirmController = (ConfirmController) loader.getController();
-			confirmController.setMessage(message);
+			MessageController messageController = (MessageController) loader.getController();
+			messageController.setMessage(message);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

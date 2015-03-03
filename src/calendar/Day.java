@@ -15,7 +15,7 @@ public class Day {
 		appointments = new ArrayList<Appointment>();
 	}
 
-	public LocalDate getDay() {
+	public LocalDate getDate() {
 		return day;
 	}
 	
