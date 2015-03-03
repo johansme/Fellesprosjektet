@@ -1,5 +1,6 @@
 package login;
 
+import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;
 import messages.ConfirmController;
@@ -45,6 +46,23 @@ public class SceneHandler {
 		
 		
 	}
+	
+	public void changeAppointmentRelatedScene(String fxmlPath, int width, int height, Calendar calendar, Appointment appointment){
+		Stage primaryStage = new Stage();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+			Parent root = loader.load();
+			Scene scene = new Scene(root,width,height);
+			ControllerInterface monthController = (ControllerInterface) loader.getController();
+			monthController.setData(calendar, appointment);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 	
 	public void popUpScene(String fxmlPath, int width,int height){
 		Stage primaryStage = new Stage();

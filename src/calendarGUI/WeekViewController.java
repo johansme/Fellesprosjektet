@@ -2,37 +2,22 @@ package calendarGUI;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashMap;
 import calendar.Appointment;
 import calendar.Calendar;
-import calendar.Day;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import login.SceneHandler;
@@ -52,6 +37,9 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	private Calendar calendar = new Calendar();
 	private SceneHandler sceneHandler;
+	private HashMap<Integer, Appointment> appointments = new HashMap<Integer, Appointment>();
+	private HashMap<Polygon, Integer> polygons = new HashMap<Polygon, Integer>();
+	private HashMap<Label, Integer> labels = new HashMap<Label, Integer>();
 
 	
 	@FXML
@@ -233,14 +221,15 @@ public class WeekViewController extends Application implements ControllerInterfa
 
 	
 	private void setAppointments(LocalDate d) {
-		monAppointments.getChildren().add(drawAppointment(example("18:30", "20:00"), 1));
-		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00"), 1));
-		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00"), 0));
+		monAppointments.getChildren().add(drawAppointment(example("18:30", "20:00", 0), 1));
+		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00", 1), 1));
+		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00", 2), 0));
 //		int i = (d.getDayOfWeek().getValue()-1);
 //		LocalDate day = d.minusDays(i);
 //		for (int j=1; j<8; j++) {
 //			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
 //			for (int x = appointments.size()-1; x>=0; x--) {
+//				this.appointments.put(appointments.get(x).getDescription(), appointments.get(x));
 //				AnchorPane aView = drawAppointment(appointments.get(x), appointments.get(x).getOverlap());
 //				if (day.getDayOfWeek().getValue()==1) {
 //					monAppointments.getChildren().add(aView);
@@ -281,12 +270,12 @@ public class WeekViewController extends Application implements ControllerInterfa
 		
 		Polygon box = new Polygon(
 				0, 0, 
-				94, 0, 
-				95, (0+(overlapNum*14)), 
+				89, 0, 
+				90, (0+(overlapNum*14)), 
 				100, (2+(overlapNum*14)), 
 				100, (12+(overlapNum*14)), 
-				95, (14+(overlapNum*14)), 
-				95, Math.max(14+(overlapNum*14), end-start), 
+				90, (14+(overlapNum*14)), 
+				90, Math.max(14+(overlapNum*14), end-start), 
 				0, Math.max(14+(overlapNum*14), end-start));
 		box.setStroke(Color.BLACK);
 		box.setFill(Color.AQUAMARINE);
@@ -298,28 +287,37 @@ public class WeekViewController extends Application implements ControllerInterfa
 		description.setText(a.getDescription());	
 		description.setFont(Font.font(10));
 		appointment.getChildren().addAll(box, description);
-		box.setOnMouseClicked(this::appointmentClicked);
+		polygons.put(box, a.getID());
+		labels.put(description, a.getID());
 		appointment.setPickOnBounds(false);
-		description.setOnMouseClicked(this::appointmentClicked);
+		box.setOnMouseClicked(this::appointmentBoxClicked);
+		description.setOnMouseClicked(this::appointmentLabelClicked);
 		
 		return appointment;
 	}
 	
-	private void appointmentClicked(MouseEvent e) {
+	private void appointmentBoxClicked(MouseEvent e) {
+		int id = polygons.get(e.getSource());
 		sceneHandler = new SceneHandler();
-		sceneHandler.popUpScene("/calendarGUI/AppointmentView.fxml", 600, 480);
-//		sceneHandler.setAppointmentView(example(), calendar);
-		
+		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
 	}
 	
-	private Appointment example(String start, String end) {
+	private void appointmentLabelClicked(MouseEvent e) {
+		int id = labels.get(e.getSource());
+		sceneHandler = new SceneHandler();
+		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
+	}
+	
+	private Appointment example(String start, String end, int id) {
 		Appointment a = new Appointment();
+		a.setID(id);
 		a.setDescription("barneTV");
 		a.setStartDate(calendar.getCurrentDate());
 		a.setEndDate(calendar.getCurrentDate());
 		a.setStartTime(LocalTime.parse(start));
 		a.setEndTime(LocalTime.parse(end));
 		a.setLocation("mars");
+		appointments.put(a.getID(), a);
 		return a;
 	}	
 
@@ -335,6 +333,11 @@ public class WeekViewController extends Application implements ControllerInterfa
 			this.calendar = new Calendar();
 		}
 		setView(this.calendar);
+	}
+	
+	@Override
+	public void setData(Calendar c, Appointment a) {
+		
 	}
 
 	@Override
