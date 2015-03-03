@@ -165,8 +165,6 @@ public class MonthViewController implements ControllerInterface {
 	
 	@FXML
 	private void initialize() {
-		setCalendar(new Calendar()); //TODO fix connection to existing calendar
-		month = calendar.getCurrentMonth();
 		weekList1 = new ArrayList<MonthDayViewController>();
 		weekList1.add(week1Day1Controller);
 		weekList1.add(week1Day2Controller);
@@ -216,8 +214,8 @@ public class MonthViewController implements ControllerInterface {
 		weekList6.add(week6Day1Controller);
 		weekList6.add(week6Day2Controller);
 		weekList6.add(week6Day3Controller);
-		
-		monthChanged();
+
+		setCalendar(new Calendar()); //TODO fix connection to existing calendar
 	}
 	
 	private void monthChanged() {
@@ -277,6 +275,8 @@ public class MonthViewController implements ControllerInterface {
 	public void setCalendar(Calendar calendar) {
 		if (calendar != null) {
 			this.calendar = calendar;
+			month = this.calendar.getCurrentMonth();
+			monthChanged();
 		}
 	}
 	
