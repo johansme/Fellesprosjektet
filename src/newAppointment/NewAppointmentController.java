@@ -65,8 +65,10 @@ public class NewAppointmentController {
 			appoint.setRoomCapasity(Integer.valueOf( capasityField.textProperty().getValue()));
 			appoint.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
 			appoint.printData();
+			
 			// get a handle to the stage
 		    Stage stage = (Stage) saveButton.getScene().getWindow();
+		    // do what you got to do :)
 		    stage.close();
 		}
 	}
