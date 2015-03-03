@@ -3,6 +3,7 @@ package calendarGUI;
 import java.util.ArrayList;
 import java.util.List;
 
+import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Day;
 import calendar.Month;
@@ -354,14 +355,21 @@ public class MonthViewController implements ControllerInterface {
 		sceneHandler.popUpConfirmation("/messages/confirm.fxml", 300, 150, "Du har no trykket pa ny avtale!:D");
 	}
 
+
 	@Override
-	public void setData() {
+	public void setData(Calendar calendar) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void getData() {
+	public Calendar getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setData(Calendar c, Appointment a) {
 		// TODO Auto-generated method stub
 		
 	}

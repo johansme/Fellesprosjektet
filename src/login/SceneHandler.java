@@ -29,7 +29,7 @@ public class SceneHandler {
 		
 	}
 	
-	public void changeMonthRelatedScene(Event e, String fxmlPath, int width, int height /* extra data */){
+	public void changeMonthRelatedScene(Event e, String fxmlPath, int width, int height, Calendar calendar){
 		try{
 			Node node=(Node) e.getSource();
 			Stage stage=(Stage) node.getScene().getWindow();
@@ -37,7 +37,7 @@ public class SceneHandler {
 			Parent root = loader.load();
 			Scene scene = new Scene(root,width,height);
 			ControllerInterface monthController = (ControllerInterface) loader.getController();
-			monthController.setData();
+			monthController.setData(calendar);
 			  stage.setScene(scene);
 			  stage.show();
 			} catch(Exception er) {
