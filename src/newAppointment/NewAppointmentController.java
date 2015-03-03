@@ -213,8 +213,8 @@ private boolean validToTime(){
 		currentDate = Calendar.getInstance();
 		descriptionField.setPromptText("Appointment Description...");
 		
-		fromField.setPromptText(currentDate.getTime().getHours() + 1+":00" );
-		toField.setPromptText(currentDate.getTime().getHours() + 2 + ":00" );
+		fromField.setText(currentDate.getTime().getHours() + 1+":00" );
+		toField.setText(currentDate.getTime().getHours() + 2 + ":00" );
 		
 		
 		
@@ -229,10 +229,11 @@ private boolean validToTime(){
 	
 	// method for checking if necesary fields are filled out
 	public boolean checkFieldsFill(){
+		System.out.println(capasityField.textProperty().getValue() );
 		if(descriptionField.textProperty().getName() != "" &&
 				toField.textProperty().getValue() != "" &&
 				fromField.textProperty().getValue() != "" &&
-				capasityField.textProperty().getValue() != "0"
+				capasityField.textProperty().getValue() != ""
 				){
 			return true;
 		}
