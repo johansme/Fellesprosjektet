@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Appointment {
 	
+	private int id;
 	private String description;
 	private LocalDate startDate;
 	private LocalDate endDate;
@@ -155,6 +156,14 @@ public class Appointment {
 	
 	public void setOverlap(int o) {
 		overlap=o;
+	}
+	
+	public void setID(int id) {
+		this.id=id;
+	}
+	
+	public int getID() {
+		return id;
 	}
 	
 

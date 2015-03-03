@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import calendar.Appointment;
+import calendar.Calendar;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
-public class AppointmentViewController extends Application {
+public class AppointmentViewController extends Application implements ControllerInterface{
 
 	public void start(Stage primaryStage) {
 		try {
@@ -31,6 +32,7 @@ public class AppointmentViewController extends Application {
 	}
 	
 	private SceneHandler sceneHandler;
+	private Calendar calendar;
 	private Appointment appointment;
 	//TODO SCALING
 	@FXML
@@ -96,12 +98,12 @@ public class AppointmentViewController extends Application {
 	
 	public void setView(Appointment a) {
 		appointment=a;
-		purpose.setText("appointment.getDescription()");
-		startDate.setText("dateToString(appointment.getStartDate())");
-		endDate.setText("dateToString(appointment.getEndDate())");
-		from.setText("appointment.getStartTime().toString()");
-		until.setText("appointment.getEndTime().toString()");
-		room.setText("appointment.getLocation()");
+		purpose.setText(appointment.getDescription());
+		startDate.setText(dateToString(appointment.getStartDate()));
+		endDate.setText(dateToString(appointment.getEndDate()));
+		from.setText(appointment.getStartTime().toString());
+		until.setText(appointment.getEndTime().toString());
+		room.setText(appointment.getLocation());
 //		ArrayList<String> partpts = appointment.getParticipants();
 		//TODO useraccepted usercreated
 //		for (String p : partpts) {
@@ -158,5 +160,23 @@ public class AppointmentViewController extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	@Override
+	public void setData(Calendar c, Appointment a) {
+		calendar=c;
+		setView(a);
+		
+	}
+	
+	@Override
+	public void setData(Calendar c) {
+		
+	}
+
+	@Override
+	public void getData() {
+		// TODO Auto-generated method stub
+		
 	}
 }
