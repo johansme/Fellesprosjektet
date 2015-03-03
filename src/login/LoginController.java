@@ -42,7 +42,7 @@ public class LoginController {
 		// changing stage fxml file to calendar
 			
 			
-			sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
+			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",800,600);
 			
 			
 		

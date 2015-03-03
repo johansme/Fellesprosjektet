@@ -27,19 +27,21 @@ public class SceneHandler {
 		
 	}
 	
-	public void changeMonthRelatedScene(String fxmlPath, int width, int height /* extra data */){
-		Stage primaryStage = new Stage();
-		try {
+	public void changeMonthRelatedScene(Event e, String fxmlPath, int width, int height /* extra data */){
+		try{
+			Node node=(Node) e.getSource();
+			Stage stage=(Stage) node.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 			Parent root = loader.load();
 			Scene scene = new Scene(root,width,height);
 			ControllerInterface monthController = (ControllerInterface) loader.getController();
 			monthController.setData();
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+			  stage.setScene(scene);
+			  stage.show();
+			} catch(Exception er) {
+				er.printStackTrace();
+			}
+		
 		
 	}
 	
