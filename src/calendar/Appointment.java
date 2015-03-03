@@ -13,6 +13,7 @@ public class Appointment {
 	private LocalTime endTime;
 	private String location;
 	private ArrayList<String> participants;
+	private int overlap;
 	
 	public Appointment() {
 		
@@ -146,6 +147,14 @@ public class Appointment {
 	
 	private boolean participantIsValid(String participant) {
 		return true;
+	}
+	
+	public int getOverlap() {
+		return overlap;
+	}
+	
+	public void setOverlap(int o) {
+		overlap=o;
 	}
 	
 

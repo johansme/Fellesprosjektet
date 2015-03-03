@@ -125,39 +125,39 @@ stylesheets="resources/defaultTheme.css">
 						prefHeight='476' prefWidth='100'>
 							<children>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='06:00'/>
+								alignment='TOP_CENTER' text='06:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='07:00'/>
+								alignment='TOP_CENTER' text='07:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='08:00'/>
+								alignment='TOP_CENTER' text='08:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='09:00'/>
+								alignment='TOP_CENTER' text='09:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='10:00'/>
+								alignment='TOP_CENTER' text='10:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='11:00'/>
+								alignment='TOP_CENTER' text='11:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='12:00'/>
+								alignment='TOP_CENTER' text='12:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='13:00'/>
+								alignment='TOP_CENTER' text='13:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='14:00'/>
+								alignment='TOP_CENTER' text='14:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='15:00'/>
+								alignment='TOP_CENTER' text='15:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='16:00'/>
+								alignment='TOP_CENTER' text='16:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='17:00'/>
+								alignment='TOP_CENTER' text='17:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='18:00'/>
+								alignment='TOP_CENTER' text='18:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='19:00'/>
+								alignment='TOP_CENTER' text='19:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='20:00'/>
+								alignment='TOP_CENTER' text='20:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='21:00'/>
+								alignment='TOP_CENTER' text='21:00'/>
 								<Label prefHeight='28' prefWidth='100'
-								alignment='CENTER' text='22:00'/>
+								alignment='TOP_CENTER' text='22:00'/>
 							</children>
 						</VBox>
 						<AnchorPane fx:id='monAppointments' prefHeight='476' prefWidth='100'

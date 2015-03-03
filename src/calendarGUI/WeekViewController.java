@@ -1,20 +1,39 @@
 package calendarGUI;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Day;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
@@ -32,16 +51,21 @@ public class WeekViewController extends Application implements ControllerInterfa
 	}
 	
 	private Calendar calendar = new Calendar();
-	private SceneHandler sceneHandler = new SceneHandler();
+	private SceneHandler sceneHandler;
 
 	
 	@FXML
 	private void initialize() {
+		setView(calendar);
+	}
+	
+	public void setView(Calendar c) {
+		calendar=c;
 		setWeek(calendar.getCurrentDate());
 		setYear(calendar.getCurrentDate());
 		setDates(calendar.getCurrentDate());
-		
-	}
+		setAppointments(calendar.getCurrentDate());
+		}
 	
 	@FXML
 	private Label weekNum;
@@ -101,6 +125,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		calendar.changeWeek(false);
 		setYear(calendar.getCurrentDate());
 		setDates(calendar.getCurrentDate());
+		setAppointments(calendar.getCurrentDate());
 
 	}
 	
@@ -113,6 +138,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		calendar.changeWeek(true);
 		setYear(calendar.getCurrentDate());
 		setDates(calendar.getCurrentDate());
+		setAppointments(calendar.getCurrentDate());
 	}
 	
 	@FXML
@@ -120,6 +146,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void monthClicked(Event e) {
+		sceneHandler = new SceneHandler();
 		sceneHandler.changeScene("/calendarGUI/MonthView.fxml", e);
 	}
 	
@@ -128,6 +155,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void newAction() {
+		sceneHandler = new SceneHandler();
 		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
 	}
 	
@@ -204,14 +232,96 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 
 	
-	public void setAppointments(ArrayList<Day> days) {
-		for (Day day : days) {
-			for (Appointment a : day.getAppointments()) {
-				//TODO lag appointment i GUI
-			}
-		}
+	private void setAppointments(LocalDate d) {
+		monAppointments.getChildren().add(drawAppointment(example("18:30", "20:00"), 1));
+		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00"), 1));
+		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00"), 0));
+//		int i = (d.getDayOfWeek().getValue()-1);
+//		LocalDate day = d.minusDays(i);
+//		for (int j=1; j<8; j++) {
+//			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
+//			for (int x = appointments.size()-1; x>=0; x--) {
+//				AnchorPane aView = drawAppointment(appointments.get(x), appointments.get(x).getOverlap());
+//				if (day.getDayOfWeek().getValue()==1) {
+//					monAppointments.getChildren().add(aView);
+//				}
+//				else if (day.getDayOfWeek().getValue()==2) {
+//					tuesAppointments.getChildren().add(aView);
+//				}
+//				else if (day.getDayOfWeek().getValue()==3) {
+//					wedAppointments.getChildren().add(aView);
+//				}
+//				else if (day.getDayOfWeek().getValue()==4) {
+//					thurAppointments.getChildren().add(aView);
+//				}
+//				else if (day.getDayOfWeek().getValue()==5) {
+//					friAppointments.getChildren().add(aView);
+//				}
+//				else if (day.getDayOfWeek().getValue()==6) {
+//					satAppointments.getChildren().add(aView);
+//				}
+//				else if (day.getDayOfWeek().getValue()==7) {
+//					sunAppointments.getChildren().add(aView);
+//				}
+//				
+//			}
+//			day=day.plusDays(1);			
+//		}
 	}
 	
+	private AnchorPane drawAppointment(Appointment a, int overlapNum) {
+		int start = (((a.getStartTime().getHour())-6)*28)+(((a.getStartTime().getMinute())/2));
+		int end = (((a.getEndTime().getHour())-6)*28)+(((a.getEndTime().getMinute())/2));
+
+		AnchorPane appointment = new AnchorPane();
+		appointment.setLayoutX(0);
+		appointment.setPrefWidth(95);
+		appointment.setLayoutY(start);
+		appointment.setPrefHeight(Math.max(14, end-start));
+		
+		Polygon box = new Polygon(
+				0, 0, 
+				94, 0, 
+				95, (0+(overlapNum*14)), 
+				100, (2+(overlapNum*14)), 
+				100, (12+(overlapNum*14)), 
+				95, (14+(overlapNum*14)), 
+				95, Math.max(14+(overlapNum*14), end-start), 
+				0, Math.max(14+(overlapNum*14), end-start));
+		box.setStroke(Color.BLACK);
+		box.setFill(Color.AQUAMARINE);
+		
+		Label description = new Label();
+		description.setPrefWidth(90);
+		description.setLayoutY(0+(overlapNum*14));
+		description.setAlignment(Pos.TOP_CENTER);
+		description.setText(a.getDescription());	
+		description.setFont(Font.font(10));
+		appointment.getChildren().addAll(box, description);
+		box.setOnMouseClicked(this::appointmentClicked);
+		appointment.setPickOnBounds(false);
+		description.setOnMouseClicked(this::appointmentClicked);
+		
+		return appointment;
+	}
+	
+	private void appointmentClicked(MouseEvent e) {
+		sceneHandler = new SceneHandler();
+		sceneHandler.popUpScene("/calendarGUI/AppointmentView.fxml", 600, 480);
+//		sceneHandler.setAppointmentView(example(), calendar);
+		
+	}
+	
+	private Appointment example(String start, String end) {
+		Appointment a = new Appointment();
+		a.setDescription("barneTV");
+		a.setStartDate(calendar.getCurrentDate());
+		a.setEndDate(calendar.getCurrentDate());
+		a.setStartTime(LocalTime.parse(start));
+		a.setEndTime(LocalTime.parse(end));
+		a.setLocation("mars");
+		return a;
+	}	
 
 	public static void main(String[] args) {
 		launch(args);
