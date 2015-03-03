@@ -1,5 +1,6 @@
 package calendarGUI;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -275,7 +276,7 @@ public class MonthViewController implements ControllerInterface {
 	// element in 1st week is mouse clicked. Equivalent for the below
 	@FXML
 	private void week1Clicked(Event e) {
-		calendar.setCurrentDate(weekList1.get(7).getDay().getDay());
+		calendar.setCurrentDate(weekList1.get(6).getDay().getDay());
 		for (MonthDayViewController day : weekList1) {
 			day.changeDiscovered();
 		}
@@ -320,7 +321,8 @@ public class MonthViewController implements ControllerInterface {
 	
 	@FXML
 	private void week6Clicked(Event e) {
-		int i = weekList1.get(0).getDay().getDay().getDayOfWeek().getValue() - 1;
+		LocalDate date = calendar.getCurrentDate();
+		int i = LocalDate.of(date.getYear(), date.getMonthValue(), 1).getDayOfWeek().getValue() - 1;
 		i += month.getDays().length;
 		if (i/7 <= 5) {
 			calendar.setCurrentDate(weekList6.get(0).getDay().getDay());
