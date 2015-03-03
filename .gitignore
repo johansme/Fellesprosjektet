@@ -1,4 +1,4 @@
 bin/*
 /bin/
 hs_err_*
-/classpath/*
+/.classpath
