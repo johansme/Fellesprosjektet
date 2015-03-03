@@ -7,7 +7,7 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="150"
 	prefWidth="300" stylesheets="resources/defaultTheme.css" styleClass="backgroundA"
-	fx:controller="messages/ConfirmController" >
+	fx:controller="messages.ConfirmController" >
 	<children>
 		<HBox prefHeight="20" prefWidth="300" alignment="CENTER_LEFT"
 			style="-fx-background-color:dodgerblue;">

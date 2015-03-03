@@ -351,7 +351,7 @@ public class MonthViewController {
 	@FXML
 	private void newAppointmentAction() {
 		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
-		sceneHandler.popUpConfirmation("/messages/confirm.fxml", 150, 300, "Du har no trykket pa ny avtale!:D");
+		sceneHandler.popUpConfirmation("/messages/confirm.fxml", 300, 150, "Du har no trykket pa ny avtale!:D");
 	}
 	
 }
