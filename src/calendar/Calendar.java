@@ -25,6 +25,12 @@ public class Calendar {
 	public LocalDate getCurrentDate() {
 		return currentDate;
 	}
+	
+	public void setCurrentDate(LocalDate date) {
+		if (date != null) {
+			currentDate = date;
+		}
+	}
 
 	public Month getCurrentMonth() {
 		return currentMonth;
