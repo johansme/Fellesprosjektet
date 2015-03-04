@@ -191,7 +191,6 @@ public class NewAppointmentController implements ControllerInterface {
 	//date handling
 	@FXML
 	private void fromDate(){
-
 		disableDates(toDate, fromDate.getValue());
 		toDate.setValue(fromDate.getValue());
 		//appoint.setDato(fromDate.getValue());
