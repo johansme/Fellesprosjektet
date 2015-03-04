@@ -354,7 +354,7 @@ public class MonthViewController implements ControllerInterface {
 	// when "New appointment"-button is pressed
 	@FXML
 	private void newAppointmentAction() {
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData());
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(), null);
 	}
 
 	@Override
@@ -375,6 +375,12 @@ public class MonthViewController implements ControllerInterface {
 
 	@Override
 	public void setData(Calendar c, Appointment a) {
+		
+	}
+
+	@Override
+	public void setFeedback() {
+		// TODO Auto-generated method stub
 		
 	}
 	

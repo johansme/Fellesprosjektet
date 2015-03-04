@@ -367,6 +367,12 @@ public class WeekViewController extends Application implements ControllerInterfa
 		appointments.put(a.getID(), a);
 		return a;
 	}
+
+	@Override
+	public void setFeedback() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 

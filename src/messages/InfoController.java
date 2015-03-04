@@ -1,5 +1,6 @@
 package messages;
 
+import calendarGUI.ControllerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,6 +20,12 @@ public class InfoController implements MessageController {
 		// get a handle to the stage
 	    Stage stage = (Stage) okButton.getScene().getWindow();
 	    stage.close();
+	}
+
+	@Override
+	public void setReferenceController(ControllerInterface controller) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
