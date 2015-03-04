@@ -83,7 +83,7 @@ public class Calendar {
 	}
 
 	// adds a specified number of months to the end of the list
-	private void addFutureMonths(int numberOfMonths) {
+	public void addFutureMonths(int numberOfMonths) {
 		Month month = months.get(months.size()-1);
 		LocalDate date = month.getDay(1).getDate();
 		for (int i = 1; i <= numberOfMonths; i++) {
@@ -91,7 +91,7 @@ public class Calendar {
 		}
 	}
 	
-	private void addPastMonths(int numberOfMonths) throws IllegalStateException {
+	public void addPastMonths(int numberOfMonths) throws IllegalStateException {
 		Month month = months.get(0);
 		LocalDate date = month.getDay(month.getDays().length).getDate();
 		for (int i = 0; i < numberOfMonths; i++) {

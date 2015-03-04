@@ -23,6 +23,12 @@ public class Day {
 		return appointments;
 	}
 	
+	public void addAppointment(Appointment appointment) {
+		if (appointment != null && ! appointments.contains(appointment)) {
+			appointments.add(appointment);
+		}
+	}
+	
 	public int getWeekNumber() {
 		return weekNumber;
 	}
