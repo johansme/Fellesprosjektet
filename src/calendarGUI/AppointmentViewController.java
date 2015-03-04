@@ -158,6 +158,7 @@ public class AppointmentViewController extends Application implements Controller
 	private String dateToString(LocalDate date) {
 		int day = date.getDayOfMonth();
 		int month = date.getMonthValue();
+		
 		if (month==1) {
 			return day+". January";
 		}
