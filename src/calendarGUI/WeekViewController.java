@@ -223,17 +223,21 @@ public class WeekViewController extends Application implements ControllerInterfa
 
 	
 	private void setAppointments(LocalDate d) {
-//		wedAppointments.getChildren().add(drawAppointment(example("11:00", "15:00", 0, true, true), 2));
-//		wedAppointments.getChildren().add(drawAppointment(example("11:00", "14:00", 1, true, false), 1));
-//		wedAppointments.getChildren().add(drawAppointment(example("11:00", "13:00", 2, false, false), 0));
-
+		monAppointments.getChildren().clear();
+		tuesAppointments.getChildren().clear();
+		wedAppointments.getChildren().clear();
+		thurAppointments.getChildren().clear();
+		friAppointments.getChildren().clear();
+		satAppointments.getChildren().clear();
+		sunAppointments.getChildren().clear();
 		int i = (d.getDayOfWeek().getValue()-1);
 		LocalDate day = d.minusDays(i);
 		for (int j=1; j<8; j++) {
 			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
 			for (int x = appointments.size()-1; x>=0; x--) {
-				this.appointments.put(appointments.get(x).getID(), appointments.get(x));
-				AnchorPane aView = drawAppointment(appointments.get(x), appointments.get(x).getOverlap());
+				Appointment a = appointments.get(x);
+				this.appointments.put(a.getID(), a);
+				AnchorPane aView = drawAppointment(a, a.getOverlap());
 				if (day.getDayOfWeek().getValue()==1) {
 					monAppointments.getChildren().add(aView);
 				}
@@ -346,32 +350,11 @@ public class WeekViewController extends Application implements ControllerInterfa
 		return this.calendar;
 	}
 	
-	public void setFeedback(boolean b) {
-		if (b) {
-			
-		}
-	}
 	
-	private Appointment example(String start, String end, int id, boolean opened, boolean admin) {
-		Appointment a= new Appointment();
-		a.setID(id);
-		a.setDescription("Voksen-TV");
-		a.setStartDate(calendar.getCurrentDate());
-		a.setEndDate(calendar.getCurrentDate());
-		a.setStartTime(LocalTime.parse(start));
-		a.setEndTime(LocalTime.parse(end));
-		a.setLocation("Færøyene");
-		a.setAdmin(admin);
-		a.setOpened(opened);
-		a.setParticipants(null);
-		a.setAttending("None");
-		appointments.put(a.getID(), a);
-		return a;
-	}
 
 	@Override
 	public void setFeedback() {
-		// TODO Auto-generated method stub
+		setView(calendar);
 		
 	}
 }
