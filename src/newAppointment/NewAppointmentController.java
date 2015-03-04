@@ -3,6 +3,7 @@ package newAppointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+
 import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -262,6 +264,7 @@ public class NewAppointmentController implements ControllerInterface {
 		if (calendar != null) {
 			this.calendar = calendar;
 		}
+		header.setText("New appointment");
 	}
 
 	@Override
@@ -274,12 +277,15 @@ public class NewAppointmentController implements ControllerInterface {
 		if (c != null) {
 			if (a != null) {
 				this.appointment = a;
+				header.setText("Edit appointment");
 				descriptionField.setText(a.getDescription());
 
 				fromField.setText(a.getStartTime().toString());
 				toField.setText(a.getEndTime().toString());
 
-				capasityField.textProperty().setValue("" + a.getParticipants().size());
+				if (a.getParticipants()!=null) {
+					capasityField.textProperty().setValue("" + a.getParticipants().size());
+				}
 
 				fromDate.setValue(a.getStartDate());
 				disableDates(fromDate, LocalDate.now());
@@ -298,6 +304,9 @@ public class NewAppointmentController implements ControllerInterface {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@FXML
+	private Label header;
 
 
 
