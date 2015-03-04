@@ -36,9 +36,9 @@ public class MonthDayViewController implements DayChangeListener {
 	}
 
 	private void updateView() {
-		dayApp.visibleProperty().set(true);
-		dayArc.visibleProperty().set(true);
-		dayNo.visibleProperty().set(true);
+		dayApp.opacityProperty().set(1.0);
+		dayArc.opacityProperty().set(1.0);
+		dayNo.opacityProperty().set(1.0);
 		dayNo.setText(String.valueOf(day.getDate().getDayOfMonth()));
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
 		if (day.getDate().isEqual(LocalDate.now())) {
@@ -53,10 +53,10 @@ public class MonthDayViewController implements DayChangeListener {
 		updateView();
 	}
 	
-	public void setBlank() {
-		dayApp.visibleProperty().set(false);
-		dayArc.visibleProperty().set(false);
-		dayNo.visibleProperty().set(false);
+	public void setTransparent() {
+		dayApp.opacityProperty().set(0.5);
+		dayArc.opacityProperty().set(0.5);
+		dayNo.opacityProperty().set(0.5);
 	}
 	
 	public Day getDay() {

@@ -224,8 +224,13 @@ public class MonthViewController implements ControllerInterface {
 		// the first weekday of the month as an int from 1 to 7
 		int firstDayStarts = days[0].getDate().getDayOfWeek().getValue();
 		int dayNo = 0;
-		for (int i = 0; i < firstDayStarts-1; i++) {
-			weekList1.get(i).setBlank();
+		ArrayList<Month> months = new ArrayList<Month>();
+		months.addAll(calendar.getMonths());
+		int now = months.indexOf(calendar.getCurrentMonth());
+		Month prevMonth = months.get(now - 1);
+		for (int i = 2; i < firstDayStarts+1; i++) {
+			weekList1.get(firstDayStarts-i).monthChange(prevMonth.getDays()[prevMonth.getDays().length - i + 1]);
+			weekList1.get(firstDayStarts-i).setTransparent();
 		}
 		for (int i = firstDayStarts-1; i < weekList1.size(); i++) {
 			weekList1.get(i).monthChange(days[dayNo]);
@@ -248,7 +253,7 @@ public class MonthViewController implements ControllerInterface {
 				weekList5.get(i).monthChange(days[dayNo]);
 				dayNo++;				
 			} else {
-				weekList5.get(i).setBlank();
+				weekList5.get(i).setTransparent();
 			}
 		}
 		for (int i = 0; i < weekList6.size(); i++) {
@@ -256,7 +261,7 @@ public class MonthViewController implements ControllerInterface {
 				weekList6.get(i).monthChange(days[dayNo]);
 				dayNo++;				
 			} else {
-				weekList6.get(i).setBlank();
+				weekList6.get(i).setTransparent();
 			}
 		}
 		week1.setText("" + Calendar.getWeekNumber(week1Day7Controller.getDay().getDate()));
