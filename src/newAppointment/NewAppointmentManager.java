@@ -15,7 +15,6 @@ private int roomCapasity;
 private String room;
 private List<String> participants;
 
-
 // setters for private variables:
 
 public void setDescription(String desc){
