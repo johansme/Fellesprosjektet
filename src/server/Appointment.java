@@ -3,7 +3,6 @@ package server;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
-
 import org.json.JSONObject;
 
 public class Appointment {
