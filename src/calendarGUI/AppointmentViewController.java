@@ -118,7 +118,7 @@ public class AppointmentViewController extends Application implements Controller
 	public void editAction() {
 		sceneHandler = new SceneHandler();
 		closeAction();
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData());
 		
 	}
 	

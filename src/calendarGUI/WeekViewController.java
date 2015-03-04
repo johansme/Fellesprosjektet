@@ -145,7 +145,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	@FXML
 	public void newAction() {
 		sceneHandler = new SceneHandler();
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData());
 	}
 	
 	@FXML
