@@ -32,6 +32,7 @@ public class AppointmentViewController extends Application implements Controller
 		}
 	}
 	
+	
 	private SceneHandler sceneHandler;
 	private Calendar calendar;
 	private Appointment appointment;
@@ -113,7 +114,7 @@ public class AppointmentViewController extends Application implements Controller
 	public void editAction() {
 		sceneHandler = new SceneHandler();
 		closeAction();
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData());
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(), appointment);
 		
 	}
 	
@@ -128,6 +129,7 @@ public class AppointmentViewController extends Application implements Controller
 	
 	public void setView(Appointment a) {
 		appointment=a;
+		appointment.setOpened(true);
 		purpose.setText(appointment.getDescription());
 		startDate.setText(dateToString(appointment.getStartDate()));
 		endDate.setText(dateToString(appointment.getEndDate()));
@@ -236,5 +238,14 @@ public class AppointmentViewController extends Application implements Controller
 	public Calendar getData() {
 		// TODO Auto-generated method stub
 		return this.calendar;
+	}
+
+	@Override
+	public void setFeedback() {
+	    // get a handle to the stage
+	    Stage stage = (Stage) close.getScene().getWindow();
+	    // do what you have to do
+	    stage.close();
+		
 	}
 }

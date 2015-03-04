@@ -145,7 +145,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	@FXML
 	public void newAction() {
 		sceneHandler = new SceneHandler();
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData());
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(), null);
 	}
 	
 	@FXML
@@ -273,11 +273,11 @@ public class WeekViewController extends Application implements ControllerInterfa
 		Polygon box = new Polygon(
 				0, 0, 
 				79, 0, 
-				80+(overlapNum*4), (0+(overlapNum*14)), 
-				85+(overlapNum*4), (2+(overlapNum*14)), 
-				85+(overlapNum*4), (12+(overlapNum*14)), 
-				80+(overlapNum*4), (14+(overlapNum*14)), 
-				80+(overlapNum*4), Math.max(14+(overlapNum*14), end-start), 
+				Math.min(95, 80+(overlapNum*5)), (0+(overlapNum*14)), 
+				Math.min(100, 85+(overlapNum*5)), (2+(overlapNum*14)), 
+				Math.min(100, 85+(overlapNum*5)), (12+(overlapNum*14)), 
+				Math.min(95, 80+(overlapNum*5)), (14+(overlapNum*14)), 
+				Math.min(95, 80+(overlapNum*5)), Math.max(14+(overlapNum*14), end-start), 
 				0, Math.max(14+(overlapNum*14), end-start));
 		box.setStroke(Color.BLACK);
 		if (a.getAdmin()) {
@@ -309,12 +309,16 @@ public class WeekViewController extends Application implements ControllerInterfa
 	private void appointmentBoxClicked(MouseEvent e) {
 		int id = polygons.get(e.getSource());
 		sceneHandler = new SceneHandler();
+		appointments.get(id).setOpened(true);
+		setView(calendar);
 		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
 	}
 	
 	private void appointmentLabelClicked(MouseEvent e) {
 		int id = labels.get(e.getSource());
 		sceneHandler = new SceneHandler();
+		appointments.get(id).setOpened(true);
+		setView(calendar);
 		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
 	}
 	
@@ -341,6 +345,12 @@ public class WeekViewController extends Application implements ControllerInterfa
 		return this.calendar;
 	}
 	
+	public void setFeedback(boolean b) {
+		if (b) {
+			
+		}
+	}
+	
 	private Appointment example(String start, String end, int id, boolean opened, boolean admin) {
 		Appointment a= new Appointment();
 		a.setID(id);
@@ -352,6 +362,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 		a.setLocation("Færøyene");
 		a.setAdmin(admin);
 		a.setOpened(opened);
+		a.setParticipants(null);
+		a.setAttending("None");
 		appointments.put(a.getID(), a);
 		return a;
 	}
