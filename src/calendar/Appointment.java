@@ -91,6 +91,10 @@ public class Appointment {
 		}
 	}
 	
+	public void addParticipant(String user) {
+		participants.add(user);
+	}
+	
 	public ArrayList<String> getParticipants() {
 		return participants;
 	}

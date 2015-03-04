@@ -1,7 +1,6 @@
 package calendarGUI;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import calendar.Appointment;
@@ -85,11 +84,18 @@ public class AppointmentViewController extends Application implements Controller
 	@FXML
 	public void confirmAnswer() {
 		if (confirmButton.getText()=="Change") {
-			appointment.setAttending("None");
+			confirmButton.setText("Confirm");
+			yes.setDisable(false);
+			no.setDisable(false);
+			appointment.setAttending(null);
+
 		}
 		else {
 			if (toggleAnswer.getSelectedToggle()==yes) {
 				appointment.setAttending("Y");
+				if (!appointment.getParticipants().isEmpty()) {
+					appointment.addParticipant("TestUser");
+				}
 			}
 			else if (toggleAnswer.getSelectedToggle()==no) {
 				appointment.setAttending("N");
@@ -138,13 +144,13 @@ public class AppointmentViewController extends Application implements Controller
 			confirmButton.setText("Change");
 		}
 		else if (a.getAttending()=="None") {
-			attendBox.getChildren().removeAll();
+			attendBox.getChildren().clear();
 		}
 		else {
 			toggleAnswer.selectToggle(yes);
 		}
-		if (a.getParticipants().isEmpty()) {
-			participantsBox.getChildren().removeAll();
+		if (a.getParticipants()==null) {
+			participantsBox.getChildren().clear();
 		}
 		else {
 			List<String> partpts = appointment.getParticipants();
