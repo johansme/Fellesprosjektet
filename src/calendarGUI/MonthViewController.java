@@ -354,7 +354,7 @@ public class MonthViewController implements ControllerInterface {
 	// when "New appointment"-button is pressed
 	@FXML
 	private void newAppointmentAction() {
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(), null);
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(),null);
 	}
 
 	@Override
