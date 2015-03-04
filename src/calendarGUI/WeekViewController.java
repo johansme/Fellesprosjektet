@@ -3,6 +3,8 @@ package calendarGUI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.List;
+
 import calendar.Appointment;
 import calendar.Calendar;
 import javafx.application.Application;
@@ -221,41 +223,38 @@ public class WeekViewController extends Application implements ControllerInterfa
 
 	
 	private void setAppointments(LocalDate d) {
-		monAppointments.getChildren().add(drawAppointment(example("18:30", "20:00", 0, true, false), 1));
-		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00", 1, true, true), 1));
-		monAppointments.getChildren().add(drawAppointment(example("18:00", "19:00", 2, false, false), 0));
-//		int i = (d.getDayOfWeek().getValue()-1);
-//		LocalDate day = d.minusDays(i);
-//		for (int j=1; j<8; j++) {
-//			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
-//			for (int x = appointments.size()-1; x>=0; x--) {
-//				this.appointments.put(appointments.get(x).getDescription(), appointments.get(x));
-//				AnchorPane aView = drawAppointment(appointments.get(x), appointments.get(x).getOverlap());
-//				if (day.getDayOfWeek().getValue()==1) {
-//					monAppointments.getChildren().add(aView);
-//				}
-//				else if (day.getDayOfWeek().getValue()==2) {
-//					tuesAppointments.getChildren().add(aView);
-//				}
-//				else if (day.getDayOfWeek().getValue()==3) {
-//					wedAppointments.getChildren().add(aView);
-//				}
-//				else if (day.getDayOfWeek().getValue()==4) {
-//					thurAppointments.getChildren().add(aView);
-//				}
-//				else if (day.getDayOfWeek().getValue()==5) {
-//					friAppointments.getChildren().add(aView);
-//				}
-//				else if (day.getDayOfWeek().getValue()==6) {
-//					satAppointments.getChildren().add(aView);
-//				}
-//				else if (day.getDayOfWeek().getValue()==7) {
-//					sunAppointments.getChildren().add(aView);
-//				}
-//				
-//			}
-//			day=day.plusDays(1);			
-//		}
+		int i = (d.getDayOfWeek().getValue()-1);
+		LocalDate day = d.minusDays(i);
+		for (int j=1; j<8; j++) {
+			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
+			for (int x = appointments.size()-1; x>=0; x--) {
+				this.appointments.put(appointments.get(x).getID(), appointments.get(x));
+				AnchorPane aView = drawAppointment(appointments.get(x), appointments.get(x).getOverlap());
+				if (day.getDayOfWeek().getValue()==1) {
+					monAppointments.getChildren().add(aView);
+				}
+				else if (day.getDayOfWeek().getValue()==2) {
+					tuesAppointments.getChildren().add(aView);
+				}
+				else if (day.getDayOfWeek().getValue()==3) {
+					wedAppointments.getChildren().add(aView);
+				}
+				else if (day.getDayOfWeek().getValue()==4) {
+					thurAppointments.getChildren().add(aView);
+				}
+				else if (day.getDayOfWeek().getValue()==5) {
+					friAppointments.getChildren().add(aView);
+				}
+				else if (day.getDayOfWeek().getValue()==6) {
+					satAppointments.getChildren().add(aView);
+				}
+				else if (day.getDayOfWeek().getValue()==7) {
+					sunAppointments.getChildren().add(aView);
+				}
+				
+			}
+			day=day.plusDays(1);			
+		}
 	}
 	
 	private AnchorPane drawAppointment(Appointment a, int overlapNum) {
@@ -316,21 +315,6 @@ public class WeekViewController extends Application implements ControllerInterfa
 		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
 	}
 	
-	private Appointment example(String start, String end, int id, boolean opened, boolean admin) {
-		Appointment a = new Appointment();
-		a.setID(id);
-		a.setDescription("barneTV");
-		a.setStartDate(calendar.getCurrentDate());
-		a.setEndDate(calendar.getCurrentDate());
-		a.setStartTime(LocalTime.parse(start));
-		a.setEndTime(LocalTime.parse(end));
-		a.setLocation("mars");
-		a.setAdmin(admin);
-		a.setOpened(opened);
-		appointments.put(a.getID(), a);
-		return a;
-	}	
-
 	public static void main(String[] args) {
 		launch(args);
 	}
