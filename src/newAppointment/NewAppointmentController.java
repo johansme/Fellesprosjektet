@@ -18,7 +18,7 @@ import login.SceneHandler;
 
 public class NewAppointmentController implements ControllerInterface {
 
-	private Appointment appoint = new Appointment();
+	private Appointment appointment = new Appointment();
 
 	private Calendar calendar;
 
@@ -58,17 +58,17 @@ public class NewAppointmentController implements ControllerInterface {
 	private void saveButtonPressed(){
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
-			appoint.setDescription(descriptionField.textProperty().getValue());
-			appoint.setStartDate(fromDate.getValue());
-			appoint.setEndDate(toDate.getValue());
+			appointment.setDescription(descriptionField.textProperty().getValue());
+			appointment.setStartDate(fromDate.getValue());
+			appointment.setEndDate(toDate.getValue());
 			String[] fromTime = fromField.textProperty().getValue().split(":");
-			appoint.setStartTime(LocalTime.of(Integer.valueOf(fromTime[0]), Integer.valueOf(fromTime[1])));
+			appointment.setStartTime(LocalTime.of(Integer.valueOf(fromTime[0]), Integer.valueOf(fromTime[1])));
 			String[] toTime = toField.textProperty().getValue().split(":");
-			appoint.setEndTime(LocalTime.of(Integer.valueOf(toTime[0]), Integer.valueOf(toTime[1])));
-			appoint.setLocation("NTNU"); // this needs fixing:)
-			appoint.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
-			appoint.setData(calendar);
-			appoint.addAppointmentToDay();
+			appointment.setEndTime(LocalTime.of(Integer.valueOf(toTime[0]), Integer.valueOf(toTime[1])));
+			appointment.setLocation("NTNU"); // this needs fixing:)
+			appointment.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
+			appointment.setData(calendar);
+			appointment.addAppointmentToDay();
 			SceneHandler sh = new SceneHandler();
 			sh.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved");
 			// get a handle to the stage
@@ -92,17 +92,17 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	private void fromTime(){
 		if(!fromField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !fromField.textProperty().getValue().matches("\\d\\d") ){
-			fromField.setText(LocalTime.now().getHour() +":" + LocalTime.now().getMinute());
+			fromField.setText(toTwoDigits(LocalTime.now().getHour()) +":" + toTwoDigits(LocalTime.now().getMinute()));
 		}else if(fromField.textProperty().getValue().matches("\\d\\d")){
 
 			fromField.setText(fromField.getText() + ":00");
 		}
 		if(!validFromTime()){
-			fromField.setText(LocalTime.now().getHour() +":" + LocalTime.now().getMinute());
+			fromField.setText(toTwoDigits(LocalTime.now().getHour()) +":" + toTwoDigits(LocalTime.now().getMinute()));
 
 		}
-
 	}
+	
 	@FXML
 	private void toTime(){
 		String value = toField.textProperty().getValue();
@@ -120,8 +120,14 @@ public class NewAppointmentController implements ControllerInterface {
 
 	}
 
+	private String toTwoDigits(int timeElement) {
+		if (timeElement < 10) {
+			return 0 + "" + timeElement;
+		}
+		return timeElement + "";
+	}
+	
 	//validating of time
-
 	private boolean validToTime(){
 
 		//casting to more approtiate data for handling time
@@ -188,7 +194,9 @@ public class NewAppointmentController implements ControllerInterface {
 	private void fromDate(){
 
 		disableDates(toDate, fromDate.getValue());
-		toDate.setValue(fromDate.getValue());
+		if (toDate.getValue().isBefore(fromDate.getValue())) {
+			toDate.setValue(fromDate.getValue());
+		}
 		//appoint.setDato(fromDate.getValue());
 	}
 
@@ -267,7 +275,7 @@ public class NewAppointmentController implements ControllerInterface {
 	public void setData(Calendar c, Appointment a) {
 		if (c != null) {
 			if (a != null) {
-				this.appoint = a;
+				this.appointment = a;
 				descriptionField.setPromptText(a.getDescription());
 
 				fromField.setText(a.getStartTime().toString());
