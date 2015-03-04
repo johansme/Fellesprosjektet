@@ -124,7 +124,7 @@ public class AppointmentViewController extends Application implements Controller
 	@FXML
 	public void deleteAction() {
 		sceneHandler = new SceneHandler();
-		sceneHandler.popUpMessage("/messages/Confirm.fxml", 300, 150, "Are you sure you want to delete?");
+		sceneHandler.popUpMessage("/messages/Confirm.fxml", 300, 150, "Are you sure you want to delete?", this);
 	}
 	
 	public void setView(Appointment a) {
