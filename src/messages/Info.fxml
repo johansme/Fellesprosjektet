@@ -16,8 +16,8 @@
 					styleClass="messageHeader" />
 			</children>
 		</HBox>
-		<Label fx:id="infoMessage" layoutY="50"
-			layoutX="15" styleClass="messageText" />
+		<Label fx:id="infoMessage" layoutY="50" wrapText="true"
+			layoutX="15" prefWidth="270" styleClass="messageText" />
 		<Button fx:id="okButton" text="OK" onAction="#okButtonPressed"
 			layoutX="110" layoutY="120" prefWidth="80" />
 	</children>
