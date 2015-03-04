@@ -355,7 +355,6 @@ public class MonthViewController implements ControllerInterface {
 	@FXML
 	private void newAppointmentAction() {
 		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
-		sceneHandler.popUpMessage("/messages/confirm.fxml", 300, 150, "Du har no trykket pa ny avtale!:D");
 	}
 
 	@Override
@@ -376,7 +375,6 @@ public class MonthViewController implements ControllerInterface {
 
 	@Override
 	public void setData(Calendar c, Appointment a) {
-		// TODO Auto-generated method stub
 		
 	}
 	

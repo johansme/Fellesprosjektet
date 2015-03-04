@@ -84,6 +84,7 @@ public class AppointmentViewController extends Application implements Controller
 	@FXML
 	public void confirmAnswer() {
 		if (confirmButton.getText()=="Change") {
+			System.out.println("dayyuuum");
 			confirmButton.setText("Confirm");
 			yes.setDisable(false);
 			no.setDisable(false);
