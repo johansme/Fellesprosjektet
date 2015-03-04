@@ -81,7 +81,7 @@ public class SceneHandler {
 	
 	
 	
-	public void popUpMessage(String fxmlPath, int width,int height,String message){
+	public void popUpMessage(String fxmlPath, int width,int height,String message, ControllerInterface contrInt ){
 		Stage primaryStage = new Stage();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -89,6 +89,7 @@ public class SceneHandler {
 			Scene scene = new Scene(root,width,height);
 			MessageController messageController = (MessageController) loader.getController();
 			messageController.setMessage(message);
+			messageController.setReferenceController(contrInt);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
