@@ -339,7 +339,7 @@ public class MonthViewController implements ControllerInterface {
 		try {
 			month = calendar.getPreviousMonth();
 		} catch (IllegalStateException isl) {
-			//TODO create pop-up with out of bounds-info
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, isl.getMessage(), this);
 		}
 		monthChanged();
 	}
