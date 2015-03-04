@@ -84,12 +84,7 @@ public class AppointmentViewController extends Application implements Controller
 	@FXML
 	public void confirmAnswer() {
 		if (confirmButton.getText()=="Change") {
-			System.out.println("dayyuuum");
-			confirmButton.setText("Confirm");
-			yes.setDisable(false);
-			no.setDisable(false);
-			appointment.setAttending(null);
-
+			appointment.setAttending("notAnswered");
 		}
 		else {
 			if (toggleAnswer.getSelectedToggle()==yes) {
@@ -127,7 +122,8 @@ public class AppointmentViewController extends Application implements Controller
 	
 	@FXML
 	public void deleteAction() {
-		
+		sceneHandler = new SceneHandler();
+		sceneHandler.popUpMessage("/messages/Confirm.fxml", 300, 150, "Are you sure you want to delete?");
 	}
 	
 	public void setView(Appointment a) {
@@ -140,6 +136,12 @@ public class AppointmentViewController extends Application implements Controller
 		room.setText(appointment.getLocation());
 		edit.setDisable(!a.getAdmin());
 		if (a.getAttending()=="Y" || a.getAttending()=="N") {
+			if (a.getAttending()=="Y") {
+				toggleAnswer.selectToggle(yes);
+			}
+			else {
+				toggleAnswer.selectToggle(no);
+			}
 			yes.setDisable(true);
 			no.setDisable(true);
 			confirmButton.setText("Change");
@@ -147,8 +149,14 @@ public class AppointmentViewController extends Application implements Controller
 		else if (a.getAttending()=="None") {
 			attendBox.getChildren().clear();
 		}
+		else if (a.getAttending()=="notAnswered"){
+			yes.setDisable(false);
+			no.setDisable(false);
+			confirmButton.setText("Confirm");
+		}
 		else {
 			toggleAnswer.selectToggle(yes);
+
 		}
 		if (a.getParticipants()==null) {
 			participantsBox.getChildren().clear();

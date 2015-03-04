@@ -3,7 +3,6 @@ package newAppointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
-
 import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;

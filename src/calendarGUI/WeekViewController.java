@@ -222,9 +222,9 @@ public class WeekViewController extends Application implements ControllerInterfa
 
 	
 	private void setAppointments(LocalDate d) {
-		wedAppointments.getChildren().add(drawAppointment(example("13:00", "15:00", 0, true, true), 0));
-		wedAppointments.getChildren().add(drawAppointment(example("12:00", "15:00", 1, true, false), 0));
-		wedAppointments.getChildren().add(drawAppointment(example("11:00", "15:00", 2, false, false), 0));
+		wedAppointments.getChildren().add(drawAppointment(example("11:00", "15:00", 0, true, true), 2));
+		wedAppointments.getChildren().add(drawAppointment(example("11:00", "14:00", 1, true, false), 1));
+		wedAppointments.getChildren().add(drawAppointment(example("11:00", "13:00", 2, false, false), 0));
 
 //		int i = (d.getDayOfWeek().getValue()-1);
 //		LocalDate day = d.minusDays(i);
@@ -272,12 +272,12 @@ public class WeekViewController extends Application implements ControllerInterfa
 		
 		Polygon box = new Polygon(
 				0, 0, 
-				89, 0, 
-				90, (0+(overlapNum*14)), 
-				100, (2+(overlapNum*14)), 
-				100, (12+(overlapNum*14)), 
-				90, (14+(overlapNum*14)), 
-				90, Math.max(14+(overlapNum*14), end-start), 
+				79, 0, 
+				80+(overlapNum*4), (0+(overlapNum*14)), 
+				85+(overlapNum*4), (2+(overlapNum*14)), 
+				85+(overlapNum*4), (12+(overlapNum*14)), 
+				80+(overlapNum*4), (14+(overlapNum*14)), 
+				80+(overlapNum*4), Math.max(14+(overlapNum*14), end-start), 
 				0, Math.max(14+(overlapNum*14), end-start));
 		box.setStroke(Color.BLACK);
 		if (a.getAdmin()) {
