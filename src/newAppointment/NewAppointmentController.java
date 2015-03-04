@@ -22,6 +22,7 @@ public class NewAppointmentController implements ControllerInterface {
 	private Appointment appointment = new Appointment();
 
 	private Calendar calendar;
+	private SceneHandler sceneHandler = new SceneHandler();
 
 	// rigging up fxml variables
 
@@ -76,6 +77,9 @@ public class NewAppointmentController implements ControllerInterface {
 			Stage stage = (Stage) saveButton.getScene().getWindow();
 			// do what you got to do :)
 			stage.close();
+		}
+		else {
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "You suck", this);
 		}
 	}
 
