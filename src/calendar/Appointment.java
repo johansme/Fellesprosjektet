@@ -242,7 +242,7 @@ public class Appointment {
 	}
 
 	public void setAttending(String a) {
-		if (a=="Y" || a=="N" || a=="None") {
+		if (a=="Y" || a=="N" || a=="None" || a=="notAnswered") {
 			attending=a;
 		}
 	}
