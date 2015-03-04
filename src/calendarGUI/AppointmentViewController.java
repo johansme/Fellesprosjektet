@@ -2,6 +2,7 @@ package calendarGUI;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
@@ -15,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
@@ -75,8 +77,25 @@ public class AppointmentViewController extends Application implements Controller
 	private ToggleGroup toggleAnswer;
 	
 	@FXML
+	private HBox attendBox;
+	
+	@FXML
+	private HBox participantsBox;
+	
+	@FXML
 	public void confirmAnswer() {
-		
+		if (confirmButton.getText()=="Change") {
+			appointment.setAttending("None");
+		}
+		else {
+			if (toggleAnswer.getSelectedToggle()==yes) {
+				appointment.setAttending("Y");
+			}
+			else if (toggleAnswer.getSelectedToggle()==no) {
+				appointment.setAttending("N");
+			}
+		}
+		setView(appointment);
 	}
 	
 	@FXML
@@ -96,6 +115,14 @@ public class AppointmentViewController extends Application implements Controller
 		
 	}
 	
+	@FXML
+	private Button delete;
+	
+	@FXML
+	public void deleteAction() {
+		
+	}
+	
 	public void setView(Appointment a) {
 		appointment=a;
 		purpose.setText(appointment.getDescription());
@@ -104,12 +131,28 @@ public class AppointmentViewController extends Application implements Controller
 		from.setText(appointment.getStartTime().toString());
 		until.setText(appointment.getEndTime().toString());
 		room.setText(appointment.getLocation());
-//		ArrayList<String> partpts = appointment.getParticipants();
-		//TODO useraccepted usercreated
-//		for (String p : partpts) {
-//			participants.getItems().add(p);
-//		}
-		
+		edit.setDisable(!a.getAdmin());
+		if (a.getAttending()=="Y" || a.getAttending()=="N") {
+			yes.setDisable(true);
+			no.setDisable(true);
+			confirmButton.setText("Change");
+		}
+		else if (a.getAttending()=="None") {
+			attendBox.getChildren().removeAll();
+		}
+		else {
+			toggleAnswer.selectToggle(yes);
+		}
+		if (a.getParticipants().isEmpty()) {
+			participantsBox.getChildren().removeAll();
+		}
+		else {
+			List<String> partpts = appointment.getParticipants();
+			for (String p : partpts) {
+				participants.getItems().add(p);
+			}
+
+		}
 	}
 	
 	private String dateToString(LocalDate date) {

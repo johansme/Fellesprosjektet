@@ -17,6 +17,7 @@ public class Appointment {
 	private int overlap;
 	private boolean opened=false;
 	private boolean admin;
+	private String attending;
 	
 	public Appointment() {
 		
@@ -182,6 +183,16 @@ public class Appointment {
 	
 	public void setAdmin(boolean b) {
 		admin = b;
+	}
+	
+	public void setAttending(String a) {
+		if (a=="Y" || a=="N" || a=="None") {
+			attending=a;
+		}
+	}
+	
+	public String getAttending() {
+		return attending;
 	}
 	
 

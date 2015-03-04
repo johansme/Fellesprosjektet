@@ -1,15 +1,15 @@
 .backgroundA {
-	-fx-background-color: #cccccc;
+	-fx-background-color: #FFFFFF;
 }
 
 .backgroundB {
-	-fx-background-color: #cccccc;
+	-fx-background-color: #FFFFFF;
 }
 
 .attributeValue {
-	-fx-font-size: 20pt;
+	-fx-font-size: 15pt;
 	-fx-text-fill: #000000;
-	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
+	-fx-font-family: "Arial", Helvetica, sans-serif;
 }
 
 
@@ -26,10 +26,10 @@
 }
 
 .description {
-	-fx-font-size: 20pt;
+	-fx-font-size: 15pt;
 	-fx-text-fill: #000000;
 	-fx-font-weight: bold;
-	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
+	-fx-font-family: "Arial", Helvetica, sans-serif;
 }
 
 .messageText {
@@ -51,5 +51,5 @@
 .header {
 	-fx-text-fill: #000000;
 	-fx-font-size: 30pt;
-	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
+	-fx-font-family: "Arial", Helvetica, sans-serif;
 }
