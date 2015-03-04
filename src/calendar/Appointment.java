@@ -21,6 +21,8 @@ public class Appointment {
 
 	private Calendar calendar;
 
+	private String attending;
+	
 	public Appointment() {
 		participants = new ArrayList<String>();
 	}
@@ -234,5 +236,14 @@ public class Appointment {
 		admin = b;
 	}
 
+	public void setAttending(String a) {
+		if (a=="Y" || a=="N" || a=="None") {
+			attending=a;
+		}
+	}
+	
+	public String getAttending() {
+		return attending;
+	}
 
 }
