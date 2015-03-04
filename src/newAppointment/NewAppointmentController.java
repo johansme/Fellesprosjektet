@@ -286,6 +286,9 @@ public class NewAppointmentController implements ControllerInterface {
 				toDate.setValue(a.getEndDate());
 				disableDates(toDate, LocalDate.now());
 			}
+			else {
+				this.appointment = new Appointment();
+			}
 			this.calendar = c;
 		}
 	}
