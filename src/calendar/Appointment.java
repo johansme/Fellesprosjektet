@@ -18,6 +18,7 @@ public class Appointment {
 	private int overlap;
 	private boolean opened=false;
 	private boolean admin;
+	private Day day;
 
 	private Calendar calendar;
 
@@ -30,13 +31,14 @@ public class Appointment {
 	public void addAppointmentToDay() {
 		boolean added = false;
 		if (calendar.getCurrentDate().getYear() == startDate.getYear() && calendar.getCurrentDate().getMonthValue() == startDate.getMonthValue()) {
-			Day day = calendar.getCurrentMonth().getDay(startDate.getDayOfMonth());
+			this.day = calendar.getCurrentMonth().getDay(startDate.getDayOfMonth());
 			day.addAppointment(this);
 			added = true;
 		} else {
 			for (Month month : calendar.getMonths()) {
 				if (month.getYear() == startDate.getYear() && month.getMonth().equals(startDate.getMonth().toString())) {
-					month.getDay(startDate.getDayOfMonth()).addAppointment(this);
+					this.day = month.getDay(startDate.getDayOfMonth());
+					day.addAppointment(this);
 					added = true;
 				}
 			}
@@ -50,7 +52,8 @@ public class Appointment {
 					i = startDate.getMonthValue() + (calendar.getMonths().get(0).getYear() - startDate.getYear() - 1)*12 + (12 - calendar.getMonths().get(0).getDay(1).getDate().getMonthValue());
 				}
 				calendar.addPastMonths(i);
-				calendar.getMonths().get(0).getDay(startDate.getDayOfMonth()).addAppointment(this);
+				this.day = calendar.getMonths().get(0).getDay(startDate.getDayOfMonth());
+				day.addAppointment(this);
 			} else {
 				int i = 0;
 				if (startDate.getYear() == calendar.getMonths().get(0).getYear()) {
@@ -59,7 +62,8 @@ public class Appointment {
 					i = calendar.getMonths().get(0).getDay(1).getDate().getMonthValue() + (startDate.getYear() - calendar.getMonths().get(0).getYear() - 1)*12 + (12 - startDate.getMonthValue());
 				}
 				calendar.addFutureMonths(i);
-				calendar.getMonths().get(calendar.getMonths().size()-1).getDay(startDate.getDayOfMonth()).addAppointment(this);
+				this.day = calendar.getMonths().get(calendar.getMonths().size()-1).getDay(startDate.getDayOfMonth());
+				day.addAppointment(this);
 			}
 		}
 	}
@@ -254,6 +258,10 @@ public class Appointment {
 	
 	public String getAttending() {
 		return attending;
+	}
+	
+	public Day getDay() {
+		return day;
 	}
 
 }

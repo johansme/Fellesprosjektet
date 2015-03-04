@@ -23,6 +23,10 @@ public class Day {
 		return appointments;
 	}
 	
+	public void removeAppointment(Appointment a) {
+		appointments.remove(a);
+	}
+	
 	public void addAppointment(Appointment appointment) {
 		if (appointment != null && ! appointments.contains(appointment)) {
 			appointments.add(appointment);
