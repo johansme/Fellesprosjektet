@@ -67,7 +67,15 @@ public class NewAppointmentController implements ControllerInterface {
 			String[] toTime = toField.textProperty().getValue().split(":");
 			appoint.setEndTime(LocalTime.of(Integer.valueOf(toTime[0]), Integer.valueOf(toTime[1])));
 			appoint.setLocation("NTNU"); // this needs fixing:)
+<<<<<<< HEAD
 			appoint.setParticipants((ArrayList<String>) Arrays.asList("birk","terje","johannes","alex","einar"));
+=======
+			appoint.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
+			appoint.setData(calendar);
+			appoint.addAppointmentToDay();
+			SceneHandler sh = new SceneHandler();
+			sh.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved");
+>>>>>>> d4e7547dfaf8cd72a33c5368c1d0686930daafb9
 			// get a handle to the stage
 			Stage stage = (Stage) saveButton.getScene().getWindow();
 			// do what you got to do :)
@@ -283,4 +291,8 @@ public class NewAppointmentController implements ControllerInterface {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d4e7547dfaf8cd72a33c5368c1d0686930daafb9

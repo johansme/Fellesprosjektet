@@ -29,6 +29,12 @@ public class Calendar {
 	public Month getCurrentMonth() {
 		return currentMonth;
 	}
+	
+	public void setCurrentDate(LocalDate date) {
+		if (date != null && date.isAfter(LocalDate.of(1999, 12, 31))) {
+			currentDate = date;
+		}
+	}
 
 	public int getCurrentWeekNumber() {	
 		return getWeekNumber(currentDate);
@@ -66,9 +72,10 @@ public class Calendar {
 	
 	public Month getPastMonth(int numberOfMonths) throws IllegalStateException {
 		int i = months.indexOf(currentMonth);
-		if (i < numberOfMonths) {
+		if (i <= numberOfMonths) {
 			addPastMonths(numberOfMonths);
 		}
+		i = months.indexOf(currentMonth);
 		currentMonth = months.get(i - numberOfMonths);
 		currentDate = currentDate.minusMonths(numberOfMonths);
 		currentDate = currentDate.plusDays(currentDate.lengthOfMonth()-currentDate.getDayOfMonth());
@@ -76,17 +83,17 @@ public class Calendar {
 	}
 
 	// adds a specified number of months to the end of the list
-	private void addFutureMonths(int numberOfMonths) {
+	public void addFutureMonths(int numberOfMonths) {
 		Month month = months.get(months.size()-1);
-		LocalDate date = month.getDay(1).getDay();
-		for (int i = 0; i < numberOfMonths; i++) {
+		LocalDate date = month.getDay(1).getDate();
+		for (int i = 1; i <= numberOfMonths; i++) {
 			months.add(new Month(date.plusMonths(i)));
 		}
 	}
 	
-	private void addPastMonths(int numberOfMonths) throws IllegalStateException {
+	public void addPastMonths(int numberOfMonths) throws IllegalStateException {
 		Month month = months.get(0);
-		LocalDate date = month.getDay(month.getDays().length).getDay();
+		LocalDate date = month.getDay(month.getDays().length).getDate();
 		for (int i = 0; i < numberOfMonths; i++) {
 			if (date.isAfter(LocalDate.of(2000, 1, 31))) {
 				date = date.minusMonths(1);
@@ -97,12 +104,26 @@ public class Calendar {
 		}
 	}
 	
-	public void setCurrentDate(boolean b) { //boolean avgjor om det er next week eller previous
+	public void changeWeek(boolean b) throws IllegalStateException { //boolean avgjor om det er next week eller previous
 		if (b==true) {
 			currentDate = currentDate.plusWeeks(1);
+			if (! currentDate.getMonth().toString().equals(currentMonth.getMonth())) {
+				int i = months.indexOf(currentMonth);
+				if (i == months.size()-1) {
+					addFutureMonths(3);
+				}
+				currentMonth = months.get(i + 1);
+			}
 		}
 		else {
 			currentDate = currentDate.minusWeeks(1);
+			if (! currentDate.getMonth().toString().equals(currentMonth.getMonth())) {
+				int i = months.indexOf(currentMonth);
+				if (i == 0) {
+					addPastMonths(1);
+				}
+				currentMonth = months.get(0);
+			}
 		}
 	}
 	

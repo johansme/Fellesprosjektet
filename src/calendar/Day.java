@@ -15,12 +15,18 @@ public class Day {
 		appointments = new ArrayList<Appointment>();
 	}
 
-	public LocalDate getDay() {
+	public LocalDate getDate() {
 		return day;
 	}
 	
 	public List<Appointment> getAppointments() {
 		return appointments;
+	}
+	
+	public void addAppointment(Appointment appointment) {
+		if (appointment != null && ! appointments.contains(appointment)) {
+			appointments.add(appointment);
+		}
 	}
 	
 	public int getWeekNumber() {

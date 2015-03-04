@@ -13,6 +13,7 @@ public class User {
 	private String surname = null;
 	private String username = null;
 	private String email = null;
+	private String password = null;
 	
 	public String getName() {
 		return name;
@@ -69,31 +70,38 @@ public class User {
 		return success;
 	}
 	
-	public static boolean checkPassword(String username, String password) {
-		
+	public static boolean removeUser(int id) {
 		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM User WHERE id=?";
+		
 		PreparedStatement stm = null;
-		ResultSet rs = null;
-		String db_pwd = null;
 		try {
 			db = new DBConnection();
-			final String stm_str = "SELECT password FROM User WHERE username=?";
 			stm = db.getConnection().prepareStatement(stm_str);
-			stm.setString(1, username);
-			stm.execute();
-			rs = stm.getResultSet();
-			if(rs.next()) {
-				db_pwd = rs.getString("password");
-			}
+			stm.setInt(1, id);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			try{ if(rs != null) rs.close(); } catch(Exception e) {}
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}
 			db.close();
 		}
-		if(db_pwd == null) return false;
-		else return BCrypt.checkpw(password, db_pwd);
+		return success;
+	}
+	
+	public static boolean removeUser(String username) {
+		User u = new User(username);
+		return removeUser(u.id);
+	}
+	
+	public static boolean checkPassword(String username, String password) {
+		User u = new User(username);
+		if(u.password == null) return false;
+		else return BCrypt.checkpw(password, u.password);
 	}
 	
 	public static boolean exists(String username) {
@@ -121,7 +129,7 @@ public class User {
 	
 	public User(int id) {
 		DBConnection db = null;
-		final String str_fmt = "SELECT surname,name,username,email FROM User WHERE id=?";
+		final String str_fmt = "SELECT id,surname,name,username,email,password FROM User WHERE id=?";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
@@ -131,10 +139,40 @@ public class User {
 			stm.execute();
 			rs = stm.getResultSet();
 			if(rs.next()) {
+				this.id = rs.getInt("id");
 				surname = rs.getString("surname");
 				name = rs.getString("name");
 				username = rs.getString("username");
 				email = rs.getString("email");
+				password = rs.getString("password");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+	}
+	
+	public User(String username) {
+		DBConnection db = null;
+		final String str_fmt = "SELECT id,surname,name,username,email,password FROM User WHERE username=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setString(1, username);
+			stm.execute();
+			rs = stm.getResultSet();
+			if(rs.next()) {
+				id = rs.getInt("id");
+				surname = rs.getString("surname");
+				name = rs.getString("name");
+				this.username = rs.getString("username");
+				email = rs.getString("email");
+				password = rs.getString("password");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -147,6 +185,7 @@ public class User {
 	
 	public JSONObject toJSON() {
 		JSONObject obj = new JSONObject();
+		obj.put("id", id);
 		obj.put("name", name);
 		obj.put("surname", surname);
 		obj.put("username", username);
@@ -161,6 +200,6 @@ public class User {
 	}
 	
 	public static void main(String []args) {
-		
+
 	}
 }

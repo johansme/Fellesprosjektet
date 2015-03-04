@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="150"
+	prefWidth="300" stylesheets="resources/defaultTheme.css" styleClass="backgroundA"
+	fx:controller="messages.InfoController" >
+	<children>
+		<HBox prefHeight="20" prefWidth="300" alignment="CENTER_LEFT"
+			style="-fx-background-color:dodgerblue;">
+			<children>
+				<Label text="Information" prefWidth="90" alignment="CENTER_RIGHT"
+					styleClass="messageHeader" />
+			</children>
+		</HBox>
+		<Label fx:id="infoMessage" layoutY="50" wrapText="true"
+			layoutX="15" prefWidth="270" styleClass="messageText" />
+		<Button fx:id="okButton" text="OK" onAction="#okButtonPressed"
+			layoutX="110" layoutY="120" prefWidth="80" />
+	</children>
+</AnchorPane>
+

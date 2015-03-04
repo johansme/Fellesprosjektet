@@ -10,102 +10,107 @@
 
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-prefWidth='800' prefHeight='600'
+prefWidth='600' prefHeight='480'
 fx:controller='calendarGUI.AppointmentViewController'
 styleClass='backgroundA'
 stylesheets='resources/defaultTheme.css'>
 	<children>
 		<Label fx:id="purpose" text="Here shall be displayed thy appointment description"
-		prefWidth='800' prefHeight='150' alignment='TOP_LEFT'
+		prefWidth='600' prefHeight='140' alignment='CENTER'
 		styleClass='header'
 		wrapText="true"/>
-		<HBox prefWidth='800' prefHeight='40'
+		<HBox prefWidth='600' prefHeight='34'
 		styleClass='backroundB'>
 			<children>
-				<Label text='Start date:' prefWidth='400' prefHeight='40'
+				<Label text='Start date:' prefWidth='300' prefHeight='34'
 				styleClass='description'/>
-				<Label fx:id='startDate' text='30. February 1234' prefWidth='400' prefHeight='40'
+				<Label fx:id='startDate' text='30. February 1234' prefWidth='300' prefHeight='34'
 				styleClass='attributeValue'/>
 			</children>
 		</HBox>
-		<HBox prefWidth='800' prefHeight='40'
+		<HBox prefWidth='600' prefHeight='34'
 		styleClass='backroundB'>
 			<children>
-				<Label text='End date:' prefWidth='400' prefHeight='40'
+				<Label text='End date:' prefWidth='300' prefHeight='34'
 				styleClass='description'/>
-				<Label fx:id='endDate' text='30. February 1234' prefWidth='400' prefHeight='40'
+				<Label fx:id='endDate' text='30. February 1234' prefWidth='300' prefHeight='34'
 				styleClass='attributeValue'/>
 			</children>
 		</HBox>
 		
-		<HBox prefWidth='800' prefHeight='40'
+		<HBox prefWidth='600' prefHeight='34'
 		styleClass='backgroundB'>
 			<children>
-				<Label text='From:' prefWidth='400' prefHeight='40'
+				<Label text='From:' prefWidth='300' prefHeight='34'
 				styleClass='description'/>
-				<Label fx:id='from' text='hh:mm' prefWidth='400' prefHeight='40'
+				<Label fx:id='from' text='hh:mm' prefWidth='300' prefHeight='34'
 				styleClass='attributeValue'/>
 			</children>
 		</HBox>
-		<HBox prefWidth='800' prefHeight='40'
+		<HBox prefWidth='600' prefHeight='34'
 		styleClass='backgroundB'>
 			<children>
-				<Label text='To:' prefWidth='400' prefHeight='40'
+				<Label text='To:' prefWidth='300' prefHeight='34'
 				styleClass='description'/>
-				<Label fx:id='until' text='hh:mm' prefWidth='400' prefHeight='40'
+				<Label fx:id='until' text='hh:mm' prefWidth='300' prefHeight='34'
 				styleClass='attributeValue'/>
 			</children>
 		</HBox>
-		<HBox prefWidth='800' prefHeight='40'
+		<HBox prefWidth='600' prefHeight='34'
 		styleClass='backgroundB'>
 			<children>
-				<Label text='Location:' prefWidth='400' prefHeight='40'
+				<Label text='Location:' prefWidth='300' prefHeight='34'
 				styleClass='description'/>
-				<Label fx:id='room' text='Moon' prefWidth='400' prefHeight='40'
+				<Label fx:id='room' text='Moon' prefWidth='300' prefHeight='34'
 				styleClass='attributeValue'/>
 			</children>
 		</HBox>
-		<HBox prefWidth='800' prefHeight='40'
-		styleClass='backgorundB'>
+		<HBox prefWidth='600' prefHeight='40'
+		styleClass='backgorundB'
+		fx:id="attendBox">
 			<fx:define>
 				<ToggleGroup fx:id="toggleAnswer"/>
 			</fx:define>
 			<children>
-				<Label text='Attend:' prefWidth='400' prefHeight='40'
+				<Label text='Attend:' prefWidth='300' prefHeight='40'
 				styleClass='description'/>
-				<Label text='Yes' prefWidth='50' prefHeight='40'
+				<Label text='Yes' prefWidth='40' prefHeight='40'
 				styleClass='attributeValue'/>
-				<RadioButton fx:id='yes' prefWidth='50' prefHeight='40' toggleGroup="$toggleAnswer"/>
-				<Label text='No' prefWidth='50' prefHeight='40'
+				<RadioButton fx:id='yes' prefWidth='40' prefHeight='40' toggleGroup="$toggleAnswer"/>
+				<Label text='No' prefWidth='40' prefHeight='40'
 				styleClass='attributeValue'/>
-				<RadioButton fx:id='no' prefWidth='50' prefHeight='40' toggleGroup="$toggleAnswer"/>
-				<Button fx:id='confirmButton' text='Confirm' prefWidth='200' prefHeight='40'
+				<RadioButton fx:id='no' prefWidth='40' prefHeight='40' toggleGroup="$toggleAnswer"/>
+				<Button fx:id='confirmButton' text='Confirm' prefWidth='140' prefHeight='40'
 				onAction="#confirmAnswer"/>
 			</children>
 		</HBox>
-		<HBox prefWidth='800' prefHeight='210'
-		styleClass='backgroundB'>
+		<HBox prefWidth='600' prefHeight='100'
+		styleClass='backgroundB'
+		fx:id="participantsBox">
 			<padding>
 				<Insets top='10'/>
 			</padding>
 			<children>
-				<Label text='Participants:' prefHeight='40' prefWidth='400'
+				<Label text='Participants:' prefHeight='40' prefWidth='300'
 				styleClass='description'/>
-				<ScrollPane prefWidth='400' prefHeight='210'>
+				<ScrollPane prefWidth='300' prefHeight='100'>
 					<content>
-						<ListView fx:id="participants" prefWidth='400' prefHeight='210'
+						<ListView fx:id="participants" prefWidth='300' prefHeight='100'
 						styleClass='attributeValue'/>
 					</content>					
 				</ScrollPane>
 			</children>
 		</HBox>
-		<HBox prefWidth='800' prefHeight='40'
+		<HBox prefWidth='600' prefHeight='40'
 		styleClass='backgroundB' alignment='BOTTOM_LEFT'>
 			<children>
-				<Button fx:id='back' text='Back'
-				prefWidth='400' prefHeight='40' onAction="#backAction"/>
+				<Button fx:id='close' text='Close'
+				prefWidth='200' prefHeight='40' onAction="#closeAction"/>
 				<Button fx:id='edit' text='Edit'
-				prefWidth='400' prefHeight='40' onAction="#editAction"/>
+				prefWidth='200' prefHeight='40' onAction="#editAction"/>
+				<Button fx:id='delete' text='Delete'
+				prefWidth='200' prefHeight='40' onAction="#deleteAction"/>
+				
 			</children>
 		</HBox>
 	</children>

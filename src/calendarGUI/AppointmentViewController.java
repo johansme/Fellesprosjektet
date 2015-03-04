@@ -1,9 +1,10 @@
 package calendarGUI;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 import calendar.Appointment;
+import calendar.Calendar;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import login.SceneHandler;
 
-public class AppointmentViewController extends Application {
+public class AppointmentViewController extends Application implements ControllerInterface{
 
 	public void start(Stage primaryStage) {
 		try {
@@ -28,6 +31,9 @@ public class AppointmentViewController extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	private SceneHandler sceneHandler;
+	private Calendar calendar;
 	private Appointment appointment;
 	//TODO SCALING
 	@FXML
@@ -61,7 +67,7 @@ public class AppointmentViewController extends Application {
 	private ListView<String> participants;
 	
 	@FXML
-	private Button back;
+	private Button close;
 	
 	@FXML
 	private Button edit;
@@ -70,33 +76,90 @@ public class AppointmentViewController extends Application {
 	private ToggleGroup toggleAnswer;
 	
 	@FXML
+	private HBox attendBox;
+	
+	@FXML
+	private HBox participantsBox;
+	
+	@FXML
 	public void confirmAnswer() {
-		
+		if (confirmButton.getText()=="Change") {
+			System.out.println("dayyuuum");
+			confirmButton.setText("Confirm");
+			yes.setDisable(false);
+			no.setDisable(false);
+			appointment.setAttending(null);
+
+		}
+		else {
+			if (toggleAnswer.getSelectedToggle()==yes) {
+				appointment.setAttending("Y");
+				if (!appointment.getParticipants().isEmpty()) {
+					appointment.addParticipant("TestUser");
+				}
+			}
+			else if (toggleAnswer.getSelectedToggle()==no) {
+				appointment.setAttending("N");
+			}
+		}
+		setView(appointment);
 	}
 	
 	@FXML
-	public void backAction() {
-		
+	public void closeAction() {
+	    // get a handle to the stage
+	    Stage stage = (Stage) close.getScene().getWindow();
+	    // do what you have to do
+	    stage.close();
+
 	}
 	
 	@FXML
 	public void editAction() {
+		sceneHandler = new SceneHandler();
+		closeAction();
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480);
 		
 	}
 	
-	public void setView() {
+	@FXML
+	private Button delete;
+	
+	@FXML
+	public void deleteAction() {
+		
+	}
+	
+	public void setView(Appointment a) {
+		appointment=a;
 		purpose.setText(appointment.getDescription());
 		startDate.setText(dateToString(appointment.getStartDate()));
 		endDate.setText(dateToString(appointment.getEndDate()));
 		from.setText(appointment.getStartTime().toString());
 		until.setText(appointment.getEndTime().toString());
 		room.setText(appointment.getLocation());
-		ArrayList<String> partpts = appointment.getParticipants();
-		//TODO useraccepted usercreated
-		for (String p : partpts) {
-			participants.getItems().add(p);
+		edit.setDisable(!a.getAdmin());
+		if (a.getAttending()=="Y" || a.getAttending()=="N") {
+			yes.setDisable(true);
+			no.setDisable(true);
+			confirmButton.setText("Change");
 		}
-		
+		else if (a.getAttending()=="None") {
+			attendBox.getChildren().clear();
+		}
+		else {
+			toggleAnswer.selectToggle(yes);
+		}
+		if (a.getParticipants()==null) {
+			participantsBox.getChildren().clear();
+		}
+		else {
+			List<String> partpts = appointment.getParticipants();
+			for (String p : partpts) {
+				participants.getItems().add(p);
+			}
+
+		}
 	}
 	
 	private String dateToString(LocalDate date) {
@@ -147,5 +210,23 @@ public class AppointmentViewController extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	@Override
+	public void setData(Calendar c, Appointment a) {
+		calendar=c;
+		setView(a);
+		
+	}
+	
+	@Override
+	public void setData(Calendar c) {
+		
+	}
+
+	@Override
+	public Calendar getData() {
+		// TODO Auto-generated method stub
+		return this.calendar;
 	}
 }

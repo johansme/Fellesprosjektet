@@ -10,7 +10,7 @@ public class Month {
 //	month is in range 1-12, year from 2000 and up
 	public Month(int year, int month) {
 		if (year < 2000 || month < 1 || month > 12) {
-			throw new IllegalArgumentException("Month out of range");
+			throw new IllegalArgumentException("This calendar does not support dates prior to the year 2000");
 		}
 		this.month = LocalDate.of(year, month, 1);
 		this.days = new Day[this.month.lengthOfMonth()];
@@ -33,8 +33,11 @@ public class Month {
 	
 	// returns day i of the month
 	public Day getDay(int i) {
-		//TODO add validation
-		return days[i-1];
+		if (i > 0 && i <= month.lengthOfMonth()) {
+			return days[i-1];
+		} else {
+			throw new IllegalArgumentException(i + " is not a date in " + getMonth());
+		}
 	}
 	
 	public Day[] getDays() {
