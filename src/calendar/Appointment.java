@@ -141,6 +141,11 @@ public class Appointment {
 			}
 		}
 	}
+	
+	public void addParticipant(String user) {
+		participants.add(user);
+	}
+	
 
 	public List<String> getParticipants() {
 		return participants;
