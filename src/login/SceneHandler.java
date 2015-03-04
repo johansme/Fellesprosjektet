@@ -64,14 +64,14 @@ public class SceneHandler {
 	}
 
 	
-	public void popUpScene(String fxmlPath, int width,int height, Calendar cal){
+	public void popUpScene(String fxmlPath, int width,int height, Calendar cal, Appointment a){
 		Stage primaryStage = new Stage();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 			Parent root = loader.load();
 			Scene scene = new Scene(root,width,height);
 			ControllerInterface controll = loader.getController();
-			controll.setData(cal);
+			controll.setData(cal, a);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

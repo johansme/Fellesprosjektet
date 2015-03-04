@@ -135,10 +135,15 @@ public class Appointment {
 	}
 
 	public void setParticipants(List<String> p) {
-		for (String participant : p) {
-			if (participantIsValid(participant)) {
-				participants.add(participant);
+		if (p!=null) {
+			for (String participant : p) {
+				if (participantIsValid(participant)) {
+					participants.add(participant);
+				}
 			}
+		}
+		else {
+			participants=null;
 		}
 	}
 	

@@ -274,7 +274,7 @@ public class NewAppointmentController implements ControllerInterface {
 		if (c != null) {
 			if (a != null) {
 				this.appointment = a;
-				descriptionField.setPromptText(a.getDescription());
+				descriptionField.setText(a.getDescription());
 
 				fromField.setText(a.getStartTime().toString());
 				toField.setText(a.getEndTime().toString());
