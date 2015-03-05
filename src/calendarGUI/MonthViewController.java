@@ -383,8 +383,8 @@ public class MonthViewController implements ControllerInterface {
 	}
 
 	@Override
-	public void setFeedback() {
-		// TODO Auto-generated method stub
+	public void setFeedback(Calendar c) {
+		calendar = c;
 
 	}
 

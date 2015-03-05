@@ -353,7 +353,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 
 	@Override
-	public void setFeedback() {
+	public void setFeedback(Calendar c) {
+		calendar = c;
 		setView(calendar);
 		
 	}

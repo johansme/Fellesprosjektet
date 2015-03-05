@@ -71,6 +71,8 @@ public class NewAppointmentController implements ControllerInterface {
 			appointment.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
 			appointment.setData(calendar);
 			appointment.addAppointmentToDay();
+			appointment.setAdmin(true);
+			appointment.setOpened(true);
 			SceneHandler sh = new SceneHandler();
 			sh.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved", this);
 			// get a handle to the stage
@@ -304,8 +306,8 @@ public class NewAppointmentController implements ControllerInterface {
 	}
 
 	@Override
-	public void setFeedback() {
-		// TODO Auto-generated method stub
+	public void setFeedback(Calendar c) {
+		calendar = c;
 		
 	}
 	
