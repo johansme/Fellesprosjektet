@@ -14,6 +14,7 @@ public class Server {
 		sessionMgr = new HttpSessionManager();
 		sessionMgr.start();
 		server = HttpServer.create(new InetSocketAddress(8000), 200);
+		server.createContext("/login", new HttpLogin(this));
 		server.setExecutor(null);
 	}
 
