@@ -3,6 +3,7 @@ package calendar;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -27,6 +28,7 @@ public class Appointment {
 	private Calendar calendar;
 	private String attending;
 	private List<String> roomList;
+	private int roomCapacity;
 	
 	
 	public Appointment() {
@@ -276,14 +278,45 @@ public class Appointment {
 		return day;
 	}
 	
+	public void setCapacity(int capacity) {
+		
+		this.roomCapacity = capacity;
+	}
+	public int getCapacity() {
+		
+		return roomCapacity;
+		
+	}
 	
 	public void setRoomList(List<String> roomList)
 	{
+		//show only rooms that matches user specified capacity
+		
+		List<Integer> checkCapList = new ArrayList<Integer>();
+		List<String> newRoomList = new ArrayList<String>();
+		
+		for(int i = 0; i < roomList.size(); i++)
+		{
+			      
+			String thisRoom = roomList.get(i);
+			thisRoom = thisRoom.replaceAll("[^0-9]+", " ");
+			int specifiedRoomCap = Integer.parseInt(Arrays.asList(thisRoom.trim().split(" ")).get(0)); //det e baerre lekkert!
+			if(getCapacity() <= specifiedRoomCap)
+			{
+				checkCapList.add(specifiedRoomCap);
+			}
+			System.out.println(specifiedRoomCap);
+		}	
+		
+	
 		this.roomList = roomList; 
+		 
 	}
 	
-	public List<String> getRoom(){
+	public List<String> getRoomList(){
 		return roomList;
 	}
 
+	
+	
 }
