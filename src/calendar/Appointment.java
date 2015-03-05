@@ -28,6 +28,8 @@ public class Appointment {
 	public Appointment() {
 		participants = new ArrayList<String>();
 		//hahahahhahahahah:D
+		//TODO
+		
 		Random rand = new Random();
 
 		id = rand.nextInt(57436) + 1;
