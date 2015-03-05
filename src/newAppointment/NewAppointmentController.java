@@ -298,6 +298,7 @@ public class NewAppointmentController implements ControllerInterface {
 	@Override
 	public void setData(Calendar c, Appointment a) {
 		if (c != null) {
+			this.calendar = c;
 			if (a != null) {
 				this.appointment = a;
 				header.setText("Edit appointment");
@@ -317,8 +318,11 @@ public class NewAppointmentController implements ControllerInterface {
 			}
 			else {
 				this.appointment = new Appointment();
+				fromDate.setValue(calendar.getCurrentDate());
+				disableDates(fromDate, LocalDate.now());
+				toDate.setValue(calendar.getCurrentDate());
+				disableDates(toDate, LocalDate.now());
 			}
-			this.calendar = c;
 		}
 	}
 
