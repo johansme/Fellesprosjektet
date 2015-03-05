@@ -7,12 +7,17 @@ import java.util.Arrays;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import login.SceneHandler;
@@ -35,6 +40,7 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private TextField otherField;
 	@FXML private Button saveButton;
 	@FXML private Button cancelButton;
+	@FXML private Pane screen;
 
 
 	@FXML
@@ -57,7 +63,13 @@ public class NewAppointmentController implements ControllerInterface {
 	}
 
 	@FXML
-	private void saveButtonPressed(){
+	private void saveButtonPressed(Event e){
+		
+		if (e.getSource().equals(screen)) {
+			if (!(((KeyEvent) e).getCode()==KeyCode.ENTER)) {
+				return;
+			}
+		}
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
 			appointment.setDescription(descriptionField.textProperty().getValue());
