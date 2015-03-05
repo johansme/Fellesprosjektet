@@ -164,6 +164,7 @@ public class AppointmentViewController extends Application implements Controller
 			participantsBox.getChildren().clear();
 		}
 		else {
+			participants.getItems().clear();
 			List<String> partpts = appointment.getParticipants();
 			for (String p : partpts) {
 				participants.getItems().add(p);
