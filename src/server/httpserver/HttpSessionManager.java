@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import server.User;
 
 public class HttpSessionManager extends Thread {
-	private static final int SESSION_TIMEOUT = 60 * 60 * 5;
+	private static final int SESSION_TIMEOUT = 60 * 60 * 5 * 1000;
 	private static final int HARVEST_INTERVAL = 1000;
 	
 	private Map<String, HttpSession> sessions = new HashMap<String, HttpSession>();
