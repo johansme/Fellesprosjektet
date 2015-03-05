@@ -31,7 +31,6 @@ public class MonthDayViewController implements DayChangeListener {
 	@Override
 	public void dayChanged(Day day, List<Appointment> oldAppointments,
 			List<Appointment> newAppointment) {
-		dayArc.setFill(Color.RED);
 		updateView();
 	}
 
@@ -41,6 +40,11 @@ public class MonthDayViewController implements DayChangeListener {
 		dayNo.opacityProperty().set(1.0);
 		dayNo.setText(String.valueOf(day.getDate().getDayOfMonth()));
 		dayApp.setText(String.valueOf(day.getAppointments().size()));
+		if (day.getDirty()) {
+			dayArc.setFill(Color.RED);
+		} else {
+			changeDiscovered();
+		}
 		if (day.getDate().isEqual(LocalDate.now())) {
 			background.setStyle("-fx-background-color:#7FFFD4;");
 		} else {
@@ -49,8 +53,13 @@ public class MonthDayViewController implements DayChangeListener {
 	}
 	
 	public void monthChange(Day day) {
+		if (getDay() != null) {
+			getDay().removeChangeListener(this);
+		}
 		this.day = day;
+		getDay().addChangeListener(this);
 		updateView();
+		
 	}
 	
 	public void setTransparent() {
