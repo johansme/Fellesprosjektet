@@ -35,6 +35,7 @@ public class MonthDayViewController implements DayChangeListener {
 	}
 
 	private void updateView() {
+		setVisible();
 		dayApp.opacityProperty().set(1.0);
 		dayArc.opacityProperty().set(1.0);
 		dayNo.opacityProperty().set(1.0);
@@ -60,6 +61,18 @@ public class MonthDayViewController implements DayChangeListener {
 		getDay().addChangeListener(this);
 		updateView();
 		
+	}
+	
+	public void setBlank() {
+		dayApp.setVisible(false);
+		dayArc.setVisible(false);
+		dayNo.setVisible(false);
+	}
+	
+	public void setVisible() {
+		dayApp.setVisible(true);
+		dayArc.setVisible(true);
+		dayNo.setVisible(true);
 	}
 	
 	public void setTransparent() {
