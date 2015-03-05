@@ -1,5 +1,6 @@
 package calendarGUI;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -226,15 +227,21 @@ public class MonthViewController implements ControllerInterface {
 		ArrayList<Month> months = new ArrayList<Month>();
 		months.addAll(calendar.getMonths());
 		int now = months.indexOf(calendar.getCurrentMonth());
-		if (now == 0) {
-			calendar.addPastMonths(1);
-			now = months.indexOf(calendar.getCurrentMonth());
-			months = (ArrayList<Month>) calendar.getMonths();
-		}
-		Month prevMonth = months.get(now - 1);
-		for (int i = 2; i < firstDayStarts+1; i++) {
-			weekList1.get(firstDayStarts-i).monthChange(prevMonth.getDays()[prevMonth.getDays().length - i + 1]);
-			weekList1.get(firstDayStarts-i).setTransparent();
+		if (calendar.getCurrentDate().isAfter(LocalDate.of(2000, 1, 31))) {
+			if (now == 0) {
+				calendar.addPastMonths(1);
+				months = (ArrayList<Month>) calendar.getMonths();
+				now = months.indexOf(calendar.getCurrentMonth());
+			}
+			Month prevMonth = months.get(now - 1);
+			for (int i = 2; i < firstDayStarts+1; i++) {
+				weekList1.get(firstDayStarts-i).monthChange(prevMonth.getDays()[prevMonth.getDays().length - i + 1]);
+				weekList1.get(firstDayStarts-i).setTransparent();
+			}
+		} else {
+			for (int i = 2; i < firstDayStarts+1; i++) {
+				weekList1.get(firstDayStarts-i).setBlank();
+			}
 		}
 		for (int i = firstDayStarts-1; i < weekList1.size(); i++) {
 			weekList1.get(i).monthChange(days[dayNo]);
