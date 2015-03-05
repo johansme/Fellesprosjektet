@@ -226,6 +226,10 @@ public class MonthViewController implements ControllerInterface {
 		ArrayList<Month> months = new ArrayList<Month>();
 		months.addAll(calendar.getMonths());
 		int now = months.indexOf(calendar.getCurrentMonth());
+		if (now == 0) {
+			calendar.addPastMonths(1);
+			now = months.indexOf(calendar.getCurrentMonth());
+		}
 		Month prevMonth = months.get(now - 1);
 		for (int i = 2; i < firstDayStarts+1; i++) {
 			weekList1.get(firstDayStarts-i).monthChange(prevMonth.getDays()[prevMonth.getDays().length - i + 1]);
