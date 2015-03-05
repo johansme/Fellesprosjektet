@@ -201,7 +201,7 @@
 								<Font size="16.0" />
 							</font>
 						</Label>
-						<MenuButton mnemonicParsing="false" prefHeight="25.0"
+						<MenuButton fx:id="room" onFocusedChange="#getRoomFromDB" mnemonicParsing="false" prefHeight="25.0"
 							prefWidth="110.0" text="Choose room" GridPane.columnIndex="1"
 							GridPane.halignment="LEFT">
 							<items>

@@ -7,13 +7,15 @@ import java.util.Arrays;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -41,7 +43,8 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private Button saveButton;
 	@FXML private Button cancelButton;
 	@FXML private Pane screen;
-	
+	@FXML private MenuButton room; 
+	ObservableList<MenuItem> roomValueList;
 	
 
 	@FXML
@@ -86,6 +89,7 @@ public class NewAppointmentController implements ControllerInterface {
 			appointment.addAppointmentToDay();
 			appointment.setAdmin(true);
 			appointment.setOpened(true);
+			
 			SceneHandler sh = new SceneHandler();
 			sh.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved", this);
 			// get a handle to the stage
@@ -326,6 +330,11 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	private Label header;
 
-
+	@FXML
+	public void getRoomFromDB(){
+		
+		roomValueList = appointment.getRoom();
+		room.getItems().addAll(roomValueList);
+	}
 
 }

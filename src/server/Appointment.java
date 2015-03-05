@@ -3,6 +3,8 @@ package server;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
+
+
 import org.json.JSONObject;
 
 public class Appointment {
@@ -13,6 +15,7 @@ public class Appointment {
 	private Date start = null;
 	private Date end = null;
 	private Date modified = null;
+
 
 	public int getId() {
 		return id;
@@ -53,7 +56,8 @@ public class Appointment {
 	public Date getModified() {
 		return modified;
 	}
-
+	
+	
 	public Appointment(int id) {
 		DBConnection db = null;
 		final String str_fmt = "SELECT * FROM Appointment WHERE id=?";

@@ -3,16 +3,18 @@ package newAppointment;
 import java.time.LocalDate;
 import java.util.List;
 
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+
 public class NewAppointmentManager {
 
-	// rigging up variables;
+// rigging up variables;
 private String description;
 private LocalDate startDate;
 private LocalDate endDate;
 private String startTime;
 private String endTime;
 private int roomCapasity;
-private String room;
 private List<String> participants;
 
 // setters for private variables:
@@ -35,9 +37,7 @@ public void setEndTime(String endTime){
 public void setRoomCapasity(int cap){
 	roomCapasity = cap;
 }
-public void setRoom(String room){
-	this.room = room;
-}
+
 public void setParticipants(List<String> partc){
 	participants = partc;
 }
@@ -59,10 +59,9 @@ public String getStartTime(){
 public String getEndTime(){
 	return endTime;
 }
-public String getRoom(){
-	return room;
-}
-public int getRoomCapasity(){
+
+//roomCapacity from user input
+public int getRoomCapacity(){
 	return roomCapasity;
 }
 public List<String> getParticipants(){
@@ -75,7 +74,7 @@ public void printData(){
 	System.out.println("startTime : " + startTime);
 	System.out.println("end date : "+ endDate.toString());
 	System.out.println("end Time : " + endTime);
-	System.out.println("room: " + room);
+	System.out.println("room: " );
 	System.out.println("capasity: " + roomCapasity);
 	System.out.println("participants: " + participants);
 }

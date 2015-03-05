@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import newAppointment.ReceiveRoom;
+import javafx.collections.ObservableList;
+import javafx.scene.control.MenuItem;
+
 public class Appointment {
 
 	private int id;
@@ -20,10 +24,9 @@ public class Appointment {
 	private boolean opened=false;
 	private boolean admin;
 	private Day day;
-
 	private Calendar calendar;
-
 	private String attending;
+	private ReceiveRoom room; 
 	
 	public Appointment() {
 		participants = new ArrayList<String>();
@@ -270,6 +273,12 @@ public class Appointment {
 	
 	public Day getDay() {
 		return day;
+	}
+	
+	
+	public ObservableList<MenuItem> getRoom()
+	{
+		return room.getRoomValues(); 
 	}
 
 }
