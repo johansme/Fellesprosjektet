@@ -205,8 +205,7 @@
 							prefWidth="110.0" text="Choose room" GridPane.columnIndex="1"
 							GridPane.halignment="LEFT">
 							<items>
-								<MenuItem mnemonicParsing="false" text="Action 1" />
-								<MenuItem mnemonicParsing="false" text="Action 2" />
+							
 							</items>
 						</MenuButton>
 					</children>

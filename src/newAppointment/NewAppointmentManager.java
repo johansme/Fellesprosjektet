@@ -3,10 +3,7 @@ package newAppointment;
 import java.time.LocalDate;
 import java.util.List;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 0027625a53e9d96d21c50a63896e59ab9b86ae9c
 public class NewAppointmentManager {
 
 // rigging up variables;

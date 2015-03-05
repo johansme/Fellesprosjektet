@@ -26,7 +26,8 @@ public class Appointment {
 	private Day day;
 	private Calendar calendar;
 	private String attending;
-	private ReceiveRoom room; 
+	private List<String> roomList;
+	
 	
 	public Appointment() {
 		participants = new ArrayList<String>();
@@ -276,9 +277,13 @@ public class Appointment {
 	}
 	
 	
-	public ObservableList<MenuItem> getRoom()
+	public void setRoomList(List<String> roomList)
 	{
-		return room.getRoomValues(); 
+		this.roomList = roomList; 
+	}
+	
+	public List<String> getRoom(){
+		return roomList;
 	}
 
 }

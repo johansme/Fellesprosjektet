@@ -334,11 +334,25 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	private Label header;
 
-	@FXML
+	@FXML //adding rooms to NewAppointment, MenuButton
 	public void getRoomFromDB(){
 		
-		roomValueList = appointment.getRoom();
-		room.getItems().addAll(roomValueList);
+		ReceiveRoom rr = new ReceiveRoom();
+		rr.makeRoomQuery();
+		for(int i = 0; i < rr.getRoomList().size(); i++)
+		{
+			room.getItems().add(new MenuItem(rr.getRoomList().get(i)));
+		}
+		
+		
+		//might be handy!!
+//		MenuItem menuItem = new MenuItem("Open");
+//		menuItem.setOnAction(new EventHandler<ActionEvent>() {
+//		    @Override public void handle(ActionEvent e) {
+//		        System.out.println("Opening Database Connection...");
+//		    }
+//		});
+		
 	}
 
 }
