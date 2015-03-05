@@ -383,8 +383,7 @@ public class MonthViewController implements ControllerInterface {
 	}
 
 	@Override
-	public void setFeedback(Calendar c) {
-		calendar = c;
+	public void setFeedback() {
 
 	}
 

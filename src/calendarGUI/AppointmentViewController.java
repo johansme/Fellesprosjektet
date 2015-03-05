@@ -241,9 +241,8 @@ public class AppointmentViewController extends Application implements Controller
 	}
 
 	@Override
-	public void setFeedback(Calendar c) {
+	public void setFeedback() {
 		appointment.getDay().removeAppointment(appointment);
-		calendar = c;
 	    // get a handle to the stage
 	    Stage stage = (Stage) close.getScene().getWindow();
 	    // do what you have to do
