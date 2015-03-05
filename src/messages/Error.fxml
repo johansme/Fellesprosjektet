@@ -12,7 +12,7 @@
 		<HBox prefHeight="20" prefWidth="300" alignment="CENTER_LEFT"
 			style="-fx-background-color:#DC143C;">
 			<children>
-				<Label text="Error" prefWidth="90" alignment="CENTER_RIGHT"
+				<Label text="Error" prefWidth="45" alignment="CENTER_RIGHT"
 					styleClass="messageHeader" />
 			</children>
 		</HBox>
