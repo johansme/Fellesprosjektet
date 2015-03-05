@@ -117,12 +117,13 @@ public class Calendar {
 		}
 		else {
 			currentDate = currentDate.minusWeeks(1);
-			if (! currentDate.getMonth().toString().equals(currentMonth.getMonth())) {
-				int i = months.indexOf(currentMonth);
+			if (! getCurrentDate().getMonth().toString().equals(getCurrentMonth().getMonth())) {
+				int i = months.indexOf(getCurrentMonth());
 				if (i == 0) {
 					addPastMonths(1);
+					months.indexOf(getCurrentMonth());
 				}
-				currentMonth = months.get(0);
+				currentMonth = months.get(i-1);
 			}
 		}
 	}
