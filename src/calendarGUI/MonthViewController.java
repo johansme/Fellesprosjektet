@@ -229,6 +229,7 @@ public class MonthViewController implements ControllerInterface {
 		if (now == 0) {
 			calendar.addPastMonths(1);
 			now = months.indexOf(calendar.getCurrentMonth());
+			months = (ArrayList<Month>) calendar.getMonths();
 		}
 		Month prevMonth = months.get(now - 1);
 		for (int i = 2; i < firstDayStarts+1; i++) {
@@ -250,6 +251,10 @@ public class MonthViewController implements ControllerInterface {
 		for (int i = 0; i < weekList4.size(); i++) {
 			weekList4.get(i).monthChange(days[dayNo]);
 			dayNo++;
+		}
+		if (now == months.size()-1) {
+			calendar.addFutureMonths(1);
+			months = (ArrayList<Month>) calendar.getMonths();
 		}
 		Month nextMonth = months.get(now + 1);
 		int nextNo = 1;
