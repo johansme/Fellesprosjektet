@@ -3,8 +3,6 @@ package newAppointment;
 import java.time.LocalDate;
 import java.util.List;
 
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 
 public class NewAppointmentManager {
 
