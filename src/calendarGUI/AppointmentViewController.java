@@ -96,6 +96,9 @@ public class AppointmentViewController extends Application implements Controller
 			}
 			else if (toggleAnswer.getSelectedToggle()==no) {
 				appointment.setAttending("N");
+				if (appointment.getParticipants().contains("TestUser")) {
+					appointment.getParticipants().remove("TestUser");
+				}
 			}
 		}
 		setView(appointment);
