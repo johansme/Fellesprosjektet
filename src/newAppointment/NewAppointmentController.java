@@ -41,7 +41,8 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private Button saveButton;
 	@FXML private Button cancelButton;
 	@FXML private Pane screen;
-
+	
+	
 
 	@FXML
 	private void description(){
@@ -260,7 +261,7 @@ public class NewAppointmentController implements ControllerInterface {
 		disableDates(fromDate, LocalDate.now());
 		toDate.setValue(LocalDate.now());
 		disableDates(toDate, LocalDate.now());
-
+		
 
 	}
 

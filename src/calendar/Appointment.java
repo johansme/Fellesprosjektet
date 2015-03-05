@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Appointment {
 
@@ -26,6 +27,11 @@ public class Appointment {
 	
 	public Appointment() {
 		participants = new ArrayList<String>();
+		//hahahahhahahahah:D
+		Random rand = new Random();
+
+		id = rand.nextInt(57436) + 1;
+		
 	}
 
 	public void addAppointmentToDay() {
