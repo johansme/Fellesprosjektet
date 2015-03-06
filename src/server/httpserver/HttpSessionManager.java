@@ -2,6 +2,7 @@ package server.httpserver;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,7 +33,8 @@ public class HttpSessionManager extends Thread {
 		else {
 			HttpSession s = sessions.get(sessionId);
 			s.touch();
-			return new User(s.getUid());
+			try { return new User(s.getUid()); }
+			catch(SQLException e) { return null; }
 		}
 	}
 

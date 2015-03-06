@@ -98,17 +98,21 @@ public class User {
 	}
 	
 	public static boolean removeUser(String username) {
-		User u = new User(username);
+		User u;
+		try { u = new User(username); }
+		catch(Exception e) { return false; }
 		return removeUser(u.id);
 	}
 	
 	public static boolean checkPassword(String username, String password) {
-		User u = new User(username);
+		User u;
+		try { u = new User(username); }
+		catch(Exception e) { return false; }
 		if(u.password == null) return false;
 		else return BCrypt.checkpw(password, u.password);
 	}
 	
-	public static boolean exists(String username) {
+	public static boolean exists(String username) throws SQLException {
 		DBConnection db = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -123,6 +127,7 @@ public class User {
 			exists = rs.first();
 		} catch(Exception e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			try{ if(rs != null) rs.close(); } catch(Exception e) {}
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}
@@ -131,7 +136,7 @@ public class User {
 		return exists;
 	}
 	
-	public User(int id) {
+	public User(int id) throws SQLException {
 		DBConnection db = null;
 		final String str_fmt = "SELECT id,surname,name,username,email,password FROM User WHERE id=?";
 		PreparedStatement stm = null;
@@ -152,6 +157,7 @@ public class User {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			try{ if(rs != null) rs.close(); } catch(Exception e) {}
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}
@@ -159,7 +165,7 @@ public class User {
 		}
 	}
 	
-	public User(String username) {
+	public User(String username) throws SQLException {
 		DBConnection db = null;
 		final String str_fmt = "SELECT id,surname,name,username,email,password FROM User WHERE username=?";
 		PreparedStatement stm = null;
@@ -180,6 +186,7 @@ public class User {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			try{ if(rs != null) rs.close(); } catch(Exception e) {}
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}

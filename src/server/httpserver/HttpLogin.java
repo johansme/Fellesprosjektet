@@ -27,7 +27,8 @@ public class HttpLogin implements HttpHandler {
 		
 			if(obj != null && (username != null && password != null)) {
 				if(User.checkPassword(username, password)) {
-					User u = new User(username);
+					User u = null;
+					try { u = new User(username); } catch(Exception e) {}
 					response.put("status", true);
 					response.put("session", (String)server.getSessionManager().getNewSession(u.getId()));
 				} else {
