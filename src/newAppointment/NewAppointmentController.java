@@ -3,6 +3,7 @@ package newAppointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
@@ -49,6 +50,8 @@ public class NewAppointmentController implements ControllerInterface {
 	ObservableList<MenuItem> roomValueList;
 	
 
+	ReceiveRoom rr = new ReceiveRoom();
+	
 	@FXML
 	private void description(){
 		/* System.out.println("YOLO"); */
@@ -111,7 +114,24 @@ public class NewAppointmentController implements ControllerInterface {
 			capasityField.setPromptText("Invalid");
 			capasityField.setText("1");
 		}
+		Tuple rm = bestRoom(Integer.valueOf(capasityField.textProperty().getValue()));
+		room.setText(rm.room +" (" + rm.capasity+")");
 
+	}
+	
+	public Tuple bestRoom(int cap){
+		List<Tuple> rooms = rr.getRoomList();
+		int min = 100000;
+		Tuple room = null;
+		for (Tuple tup: rooms){
+			int as = tup.capasity - cap;
+			if( as < min && as >0){
+				min = as;
+				room = tup;
+			}
+		}
+		return room;
+		
 	}
 
 	// methods for handling input in time fields
@@ -350,11 +370,11 @@ public class NewAppointmentController implements ControllerInterface {
 	
 	public void getRoomFromDB(){
 		
-		ReceiveRoom rr = new ReceiveRoom();
+		
 		rr.makeRoomQuery();
 		for(int i = 0; i < rr.getRoomList().size(); i++)
 		{
-			MenuItem it = new MenuItem(rr.getRoomList().get(i));
+			MenuItem it = new MenuItem(rr.getRoomList().get(i).room +" (" + rr.getRoomList().get(i).capasity+")");
 			it.setOnAction(new EventHandler<ActionEvent>() {
 			    public void handle(ActionEvent t) {
 			        room.setText(it.getText());
