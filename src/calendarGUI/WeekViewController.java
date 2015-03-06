@@ -101,6 +101,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		}
 		int i = (d.getDayOfWeek().getValue()-1);
 		LocalDate date = d.minusDays(i);
+		//To get real-time updates of the view, regarding appointments
 		Month month = calendar.getCurrentMonth();
 		for (Month mon : calendar.getMonths()) {
 			if (date.getYear() == mon.getYear() && date.getMonth().toString().equals(mon.getMonth())) {
@@ -413,7 +414,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	@Override
 	public void dayChanged(Day day, List<Appointment> oldAppointments,
 			List<Appointment> newAppointment) {
-		setView(getData());
+		setAppointments(getData().getCurrentDate());
 	}
 }
 
