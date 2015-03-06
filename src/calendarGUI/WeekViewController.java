@@ -115,7 +115,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 				daysAdded++;
 			}
 		}
-		if (calendar.getMonths().indexOf(month) == calendar.getMonths().size()) {
+		if (calendar.getMonths().indexOf(month) == calendar.getMonths().size()-1) {
 			calendar.addFutureMonths(3);
 		}
 		month = calendar.getMonths().get(calendar.getMonths().indexOf(month)+1);
