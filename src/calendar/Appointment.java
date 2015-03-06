@@ -294,31 +294,7 @@ public class Appointment {
 		return roomCapacity;
 		
 	}
-	
-	public void setRoomList(List<String> roomList)
-	{
-		//show only rooms that matches user specified capacity
-		
-		List<Integer> checkCapList = new ArrayList<Integer>();
-		List<String> newRoomList = new ArrayList<String>();
-		
-		for(int i = 0; i < roomList.size(); i++)
-		{
-			      
-			String thisRoom = roomList.get(i);
-			thisRoom = thisRoom.replaceAll("[^0-9]+", " ");
-			int specifiedRoomCap = Integer.parseInt(Arrays.asList(thisRoom.trim().split(" ")).get(0)); //det e baerre lekkert!
-			if(getCapacity() <= specifiedRoomCap)
-			{
-				checkCapList.add(specifiedRoomCap);
-			}
-			System.out.println(specifiedRoomCap);
-		}	
-		
-	
-		this.roomList = roomList; 
-		 
-	}
+
 	
 	public List<String> getRoomList(){
 		return roomList;
