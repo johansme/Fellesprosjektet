@@ -128,7 +128,7 @@ public class NewAppointmentController implements ControllerInterface {
 		Tuple room = null;
 		for (Tuple tup: rooms){
 			int as = tup.capasity - cap;
-			if( as < min && as >0){
+			if( as < min && as >=0){
 				min = as;
 				room = tup;
 			}
