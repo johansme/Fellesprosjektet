@@ -209,8 +209,4 @@ public class User {
 		createUser("Stephenson", "Bob", "bobstep", "bobstep", "bob@step.meme");
 		createUser("Cage", "Nicolas", "nicage", "nicage", "einhov@gmail.com");
 	}
-	
-	public static void main(String []args) {
-
-	}
 }

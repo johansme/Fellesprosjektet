@@ -99,13 +99,4 @@ public class Appointment {
 		obj.put("modified", modified.toString());
 		return obj;
 	}
-	
-	public static void main(String[] args) {
-		Appointment app = new Appointment(1);
-		User u = new User(4);
-		JSONObject obj = app.toJSON();
-		obj.put("creator", app.getCreator().getUsername());
-		System.out.println(obj.toString());
-		Notification.send(u, "Appointment information", "JSON for appointment:\r\n" + obj.toString());
-	}
 }
