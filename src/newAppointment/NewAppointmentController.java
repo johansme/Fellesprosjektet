@@ -53,6 +53,7 @@ public class NewAppointmentController implements ControllerInterface {
 
 	ReceiveRoom rr = new ReceiveRoom();
 	
+	
 	@FXML
 	private void description(){
 		/* System.out.println("YOLO"); */
@@ -113,19 +114,28 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	private void checkCapasity(){
 		String value = capasityField.textProperty().getValue();
-		if( !value.matches("\\d+") ){
+		if( !value.matches("\\d+") || value.length() >5 ){
 			capasityField.setPromptText("Invalid");
 			capasityField.setText("1");
-		}
+		}else{
 		Tuple rm = bestRoom(Integer.valueOf(capasityField.textProperty().getValue()));
-		room.setText(rm.room +" (" + rm.capasity+")");
-
+		
+		
+		if(rm.room == "Other"){
+			room.setText("Other");
+			otherField.setDisable(false);
+		}else{
+			room.setText(rm.room +" (" + rm.capasity +")");
+			otherField.setDisable(true);
+			otherField.textProperty().setValue("");
+		}
+	}
 	}
 	
 	public Tuple bestRoom(int cap){
 		List<Tuple> rooms = rr.getRoomList();
 		int min = 100000;
-		Tuple room = null;
+		Tuple room = new Tuple("Other",0);
 		for (Tuple tup: rooms){
 			int as = tup.capasity - cap;
 			if( as < min && as >=0){
@@ -133,6 +143,7 @@ public class NewAppointmentController implements ControllerInterface {
 				room = tup;
 			}
 		}
+		
 		return room;
 		
 	}
@@ -381,11 +392,22 @@ public class NewAppointmentController implements ControllerInterface {
 			it.setOnAction(new EventHandler<ActionEvent>() {
 			    public void handle(ActionEvent t) {
 			        room.setText(it.getText());
+			        otherField.setDisable(true);
+			        otherField.textProperty().setValue("");
 			    }
 			});
 			
+			
 			room.getItems().add(it);
 		}
+		MenuItem other = new MenuItem("Other");
+		other.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent t) {
+		        room.setText(other.getText());
+		        otherField.setDisable(false);
+		    }
+		});
+		room.getItems().add(other);
 				
 		//might be handy!!
 //		MenuItem menuItem = new MenuItem("Open");
