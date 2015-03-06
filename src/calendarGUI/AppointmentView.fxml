@@ -16,7 +16,7 @@ styleClass='backgroundA'
 stylesheets='resources/defaultTheme.css'>
 	<children>
 		<Label fx:id="purpose" text="Here shall be displayed thy appointment description"
-		prefWidth='600' prefHeight='140' alignment='CENTER'
+		prefWidth='600' prefHeight='100' alignment='CENTER'
 		styleClass='header'
 		wrapText="true"/>
 		<HBox prefWidth='600' prefHeight='34'
@@ -84,7 +84,7 @@ stylesheets='resources/defaultTheme.css'>
 				onAction="#confirmAnswer"/>
 			</children>
 		</HBox>
-		<HBox prefWidth='600' prefHeight='100'
+		<HBox prefWidth='600' prefHeight='140'
 		styleClass='backgroundB'
 		fx:id="participantsBox">
 			<padding>
@@ -93,12 +93,8 @@ stylesheets='resources/defaultTheme.css'>
 			<children>
 				<Label text='Participants:' prefHeight='40' prefWidth='300'
 				styleClass='description'/>
-				<ScrollPane prefWidth='300' prefHeight='100'>
-					<content>
-						<ListView fx:id="participants" prefWidth='300' prefHeight='100'
-						styleClass='attributeValue'/>
-					</content>					
-				</ScrollPane>
+				<ListView fx:id="participants" prefWidth='300' prefHeight='100'
+				styleClass='attributeValue'/>
 			</children>
 		</HBox>
 		<HBox prefWidth='600' prefHeight='40'

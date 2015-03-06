@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -20,7 +21,6 @@ public class Appointment {
 	private LocalTime startTime;
 	private LocalTime endTime;
 	private String location;
-	private List<String> participants;
 	private int overlap;
 	private boolean opened=false;
 	private boolean admin;
@@ -29,10 +29,10 @@ public class Appointment {
 	private String attending;
 	private List<String> roomList;
 	private int roomCapacity;
+	private HashMap<User, Boolean> users = new HashMap<User, Boolean>();
 	
 	
 	public Appointment() {
-		participants = new ArrayList<String>();
 		//hahahahhahahahah:D
 		//TODO
 		
@@ -155,26 +155,30 @@ public class Appointment {
 		return location;
 	}
 
-	public void setParticipants(List<String> p) {
+	public void setUsers(List<User> p) {
 		if (p!=null) {
-			for (String participant : p) {
+			for (User participant : p) {
 				if (participantIsValid(participant)) {
-					participants.add(participant);
+					users.put(participant, false);
 				}
 			}
 		}
 		else {
-			participants=null;
+			users=null;
 		}
 	}
 	
-	public void addParticipant(String user) {
-		participants.add(user);
+	public void addUser(User user) {
+		users.put(user, false);
 	}
 	
 
-	public List<String> getParticipants() {
-		return participants;
+	public List<User> getUsers() {
+		List<User> userList= new ArrayList<User>();
+		for (User u : users.keySet()) {
+			userList.add(u);
+		}
+		return userList;
 	}
 
 	private boolean descriptionIsValid(String d) {
@@ -231,7 +235,7 @@ public class Appointment {
 		return true;
 	}
 
-	private boolean participantIsValid(String participant) {
+	private boolean participantIsValid(User participant) {
 		return true;
 	}
 
@@ -318,6 +322,16 @@ public class Appointment {
 	
 	public List<String> getRoomList(){
 		return roomList;
+	}
+
+	public boolean getUserAttending(User p) {
+		return users.get(p);
+	}
+	
+	public void setUserAttending(User p, boolean b) {
+		if (users.get(p)!=b) {
+			users.replace(p, !b, b);
+		}
 	}
 
 	

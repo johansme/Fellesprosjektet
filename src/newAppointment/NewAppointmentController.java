@@ -7,6 +7,7 @@ import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.User;
 import calendarGUI.ControllerInterface;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -89,7 +90,9 @@ public class NewAppointmentController implements ControllerInterface {
 			String[] toTime = toField.textProperty().getValue().split(":");
 			appointment.setEndTime(LocalTime.of(Integer.valueOf(toTime[0]), Integer.valueOf(toTime[1])));
 			appointment.setLocation("NTNU"); // this needs fixing:)
-			appointment.setParticipants(Arrays.asList("birk","terje","johannes","alex","einar"));
+			User gruppe2 = new User();
+			gruppe2.setUsername("Gruppe 2");
+			appointment.setUsers(Arrays.asList(gruppe2));
 			appointment.setData(calendar);
 			appointment.addAppointmentToDay();
 			appointment.setAdmin(true);
@@ -331,8 +334,8 @@ public class NewAppointmentController implements ControllerInterface {
 				fromField.setText(a.getStartTime().toString());
 				toField.setText(a.getEndTime().toString());
 
-				if (a.getParticipants()!=null) {
-					capasityField.textProperty().setValue("" + a.getParticipants().size());
+				if (!a.getUsers().isEmpty()) {
+					capasityField.textProperty().setValue("" + a.getUsers().size());
 				}
 
 				fromDate.setValue(a.getStartDate());
