@@ -6,15 +6,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import calendar.Appointment;
 import server.*;
 
 
 public class ReceiveRoom extends DBConnection{
 	
 	 
-	List<String> roomList = new ArrayList<String>();
-	Appointment app = new Appointment();
+	private List<Tuple> roomList = new ArrayList<Tuple>();
+	
 	
 	public Connection recvConnection(){
 
@@ -36,10 +35,10 @@ public class ReceiveRoom extends DBConnection{
 			while(rs.next()){
 				
 				String roomName = rs.getString(2);
-				String roomCapacity = rs.getString(3);
-				if(roomName != "" && roomCapacity != "" && roomName != null && roomCapacity != null)
+				int roomCapacity = Integer.valueOf( rs.getString(3));
+				if(roomName != "" && roomCapacity != 0 && roomName != null)
 				{
-					String item = roomName + " (" + roomCapacity + ")";
+					Tuple item = new Tuple(roomName,  roomCapacity );
 					roomList.add(item);
 				}
 			}
@@ -48,7 +47,7 @@ public class ReceiveRoom extends DBConnection{
 			e.printStackTrace();
 			System.err.println("DB could not get room values");
 		}
-		app.setRoomList(roomList);
+		
 
 	}
 	
@@ -80,11 +79,11 @@ public class ReceiveRoom extends DBConnection{
 		}
 	}
 	
-	public void setRoomList(List<String> roomList)
+	public void setRoomList(List<Tuple> roomList)
 	{
 		this.roomList = roomList;
 	}
-	public List<String> getRoomList(){
+	public List<Tuple> getRoomList(){
 		
 		return this.roomList; 
 	}
