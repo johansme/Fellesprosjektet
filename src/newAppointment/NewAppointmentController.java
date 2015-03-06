@@ -8,7 +8,9 @@ import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
@@ -257,7 +259,9 @@ public class NewAppointmentController implements ControllerInterface {
 
 		fromField.setText(LocalTime.now().getHour() + 1+":00" );
 		toField.setText(LocalTime.now().getHour() + 2 + ":00" );
-
+		
+		getRoomFromDB();
+		
 
 		capasityField.textProperty().setValue("1");
 
@@ -335,21 +339,31 @@ public class NewAppointmentController implements ControllerInterface {
 	public void setFeedback() {
 		
 	}
+	@FXML
+	public void menuButton(Event e){
+		room.setText(e.getSource().getClass().getName());
+	}
 	
 	@FXML
 	private Label header;
 
-	@FXML //adding rooms to NewAppointment, MenuButton
+	
 	public void getRoomFromDB(){
 		
 		ReceiveRoom rr = new ReceiveRoom();
 		rr.makeRoomQuery();
 		for(int i = 0; i < rr.getRoomList().size(); i++)
 		{
-			room.getItems().add(new MenuItem(rr.getRoomList().get(i)));
+			MenuItem it = new MenuItem(rr.getRoomList().get(i));
+			it.setOnAction(new EventHandler<ActionEvent>() {
+			    public void handle(ActionEvent t) {
+			        room.setText(it.getText());
+			    }
+			});
+			
+			room.getItems().add(it);
 		}
-		
-		
+				
 		//might be handy!!
 //		MenuItem menuItem = new MenuItem("Open");
 //		menuItem.setOnAction(new EventHandler<ActionEvent>() {
