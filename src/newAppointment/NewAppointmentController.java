@@ -318,9 +318,14 @@ public class NewAppointmentController implements ControllerInterface {
 			}
 			else {
 				this.appointment = new Appointment();
-				fromDate.setValue(calendar.getCurrentDate());
+				if (calendar.getCurrentDate().isBefore(LocalDate.now())) {
+					fromDate.setValue(LocalDate.now());
+					toDate.setValue(LocalDate.now());
+				} else {
+					fromDate.setValue(calendar.getCurrentDate());
+					toDate.setValue(calendar.getCurrentDate());
+				}
 				disableDates(fromDate, LocalDate.now());
-				toDate.setValue(calendar.getCurrentDate());
 				disableDates(toDate, LocalDate.now());
 			}
 		}

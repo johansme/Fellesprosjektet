@@ -43,6 +43,9 @@ public class Appointment {
 	}
 
 	public void addAppointmentToDay() {
+		if (getDay() != null) {
+			day.removeAppointment(this);
+		}
 		boolean added = false;
 		if (calendar.getCurrentDate().getYear() == startDate.getYear() && calendar.getCurrentDate().getMonthValue() == startDate.getMonthValue()) {
 			this.day = calendar.getCurrentMonth().getDay(startDate.getDayOfMonth());
