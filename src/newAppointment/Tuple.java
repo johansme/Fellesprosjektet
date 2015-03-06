@@ -2,8 +2,8 @@ package newAppointment;
 
 public class Tuple {
 	
-	public String room;
-	public int capasity;
+	public final String room;
+	public final int capasity;
 	
 	public Tuple(String rm,int cap){
 		room = rm;
