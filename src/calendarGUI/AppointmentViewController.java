@@ -1,16 +1,21 @@
 package calendarGUI;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.User;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -65,7 +70,7 @@ public class AppointmentViewController extends Application implements Controller
 	private Button confirmButton;
 	
 	@FXML
-	private ListView<String> participants;
+	private ListView<HBox> participants;
 	
 	@FXML
 	private Button close;
@@ -88,16 +93,20 @@ public class AppointmentViewController extends Application implements Controller
 			appointment.setAttending("notAnswered");
 		}
 		else {
+			User u = new User();
+			u.setUsername("TestUser");
+
 			if (toggleAnswer.getSelectedToggle()==yes) {
 				appointment.setAttending("Y");
-				if (!appointment.getParticipants().isEmpty()) {
-					appointment.addParticipant("TestUser");
+				if (!appointment.getUsers().isEmpty()) {
+					appointment.addUser(u);
+					appointment.setUserAttending(u, true);
 				}
 			}
 			else if (toggleAnswer.getSelectedToggle()==no) {
 				appointment.setAttending("N");
-				if (appointment.getParticipants().contains("TestUser")) {
-					appointment.getParticipants().remove("TestUser");
+				if (appointment.getUsers().contains(u)) {
+					appointment.setUserAttending(u, false);
 				}
 			}
 		}
@@ -163,18 +172,45 @@ public class AppointmentViewController extends Application implements Controller
 			toggleAnswer.selectToggle(yes);
 
 		}
-		if (a.getParticipants()==null) {
+		if (a.getUsers().isEmpty()) {
 			participantsBox.getChildren().clear();
 		}
 		else {
 			participants.getItems().clear();
-			List<String> partpts = appointment.getParticipants();
-			for (String p : partpts) {
-				participants.getItems().add(p);
+			List<User> partpts = appointment.getUsers();
+			for (User p : partpts) {
+				//TODO
+				HBox line = new HBox();
+				line.setPrefWidth(participants.getPrefWidth()-35);
+				Label userLabel = new Label();
+				userLabel.setText(p.getUsername());
+				CheckBox checkBox = new CheckBox();
+				checkBox.setSelected(appointment.getUserAttending(p));
+				userLabel.setPrefWidth(line.getPrefWidth()-checkBox.getWidth());
+				line.getChildren().addAll(userLabel, checkBox);
+				attendMap.put(checkBox, p);
+				participants.getItems().add(line);
+				checkBox.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						if (checkBox.isSelected()) {
+							appointment.setUserAttending(attendMap.get(checkBox), true);
+						}
+						else {
+							appointment.setUserAttending(attendMap.get(checkBox), false);
+						}
+					}
+				});
+
+				if (!appointment.getAdmin()) {
+					checkBox.setDisable(true);
+				}
+				
 			}
 
 		}
 	}
+	
+	private HashMap<CheckBox, User> attendMap = new HashMap<CheckBox, User>();
 	
 	private String dateToString(LocalDate date) {
 		int day = date.getDayOfMonth();
