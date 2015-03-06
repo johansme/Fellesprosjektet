@@ -12,6 +12,8 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import login.SceneHandler;
 
@@ -33,6 +35,9 @@ public class MonthViewController implements ControllerInterface {
 	@FXML private Label week4;
 	@FXML private Label week5;
 	@FXML private Label week6;
+	
+	@FXML
+	private AnchorPane screen;
 
 
 
@@ -378,6 +383,20 @@ public class MonthViewController implements ControllerInterface {
 
 	@Override
 	public void setFeedback() {
+
+	}
+	
+	@FXML
+	private void prevOrNext(KeyEvent e) {
+		if (e.getCode()==KeyCode.LEFT) {
+			previousClicked(e);
+		}
+		else if (e.getCode()==KeyCode.RIGHT) {
+			nextClicked(e);
+		}
+		else {
+			return;
+		}
 
 	}
 

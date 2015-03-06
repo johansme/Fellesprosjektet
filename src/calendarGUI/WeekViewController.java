@@ -19,6 +19,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -163,6 +165,22 @@ public class WeekViewController extends Application implements ControllerInterfa
 		setYear(calendar.getCurrentDate());
 		setDates(calendar.getCurrentDate());
 		setAppointments(calendar.getCurrentDate());
+	}
+	
+	@FXML
+	private AnchorPane screen;
+	
+	@FXML
+	public void prevOrNext(KeyEvent e) {
+		if (e.getCode()==KeyCode.LEFT) {
+			prevAction();
+		}
+		else if (e.getCode()==KeyCode.RIGHT) {
+			nextAction();
+		}
+		else {
+			return;
+		}
 	}
 	
 	@FXML

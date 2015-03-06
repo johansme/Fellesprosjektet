@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="calendarGUI.MonthViewController" stylesheets="resources/defaultTheme.css">
+	fx:controller="calendarGUI.MonthViewController" stylesheets="resources/defaultTheme.css"
+	fx:id='screen' onKeyPressed="#prevOrNext">
 	<children>
 		<HBox alignment="CENTER" prefHeight="50" prefWidth="800">
 			<children>
