@@ -4,11 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User {
-	private int id = 0;
-	private String name = null;
-	private String surname = null;
-	private String username = null;
-	private String email = null;
+	protected int id = 0;
+	protected String name = null;
+	protected String surname = null;
+	protected String username = null;
+	protected String email = null;
 	
 	public int getId() {
 		return id;

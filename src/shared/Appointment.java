@@ -5,23 +5,23 @@ import java.util.Date;
 import org.json.JSONObject;
 
 public class Appointment {
-	private int id = 0;
-	private User creator = null;
-	private String description = null;
-	private String location = null;
-	private Date start = null;
-	private Date end = null;
-	private Date modified = null;
+	protected int id = 0;
+	protected int creator = 0;
+	protected String description = null;
+	protected String location = null;
+	protected Date start = null;
+	protected Date end = null;
+	protected Date modified = null;
 
 	public int getId() {
 		return id;
 	}
 	
-	public User getCreator() {
+	public int getCreator() {
 		return creator;
 	}
 	
-	public void setCreator(User creator) {
+	public void setCreator(int creator) {
 		this.creator = creator; 
 	}
 
