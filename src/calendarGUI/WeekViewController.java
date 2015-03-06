@@ -1,11 +1,15 @@
 package calendarGUI;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.Day;
+import calendar.DayChangeListener;
+import calendar.Month;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -23,7 +27,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
-public class WeekViewController extends Application implements ControllerInterface{
+public class WeekViewController extends Application implements ControllerInterface, DayChangeListener {
 
 	public void start(Stage primaryStage) {
 		try {
@@ -38,6 +42,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	private Calendar calendar = new Calendar();
 	private SceneHandler sceneHandler;
+	private List<Day> days = new ArrayList<Day>();
 	private HashMap<Integer, Appointment> appointments = new HashMap<Integer, Appointment>();
 	private HashMap<Polygon, Integer> polygons = new HashMap<Polygon, Integer>();
 	private HashMap<Label, Integer> labels = new HashMap<Label, Integer>();
@@ -86,23 +91,53 @@ public class WeekViewController extends Application implements ControllerInterfa
 	}
 	
 	private void setDates(LocalDate d) {
+		if (days.size() != 0) {
+			for (Day day : days) {
+				day.removeChangeListener(this);
+			}
+			days.clear();
+		}
 		int i = (d.getDayOfWeek().getValue()-1);
-		LocalDate day = d.minusDays(i);
-		monDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day=day.plusDays(1);
-		tuesDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day=day.plusDays(1);
-		wedDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day=day.plusDays(1);
-		thurDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day=day.plusDays(1);
-		friDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day=day.plusDays(1);
-		satDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day=day.plusDays(1);
-		sunDate.setText(day.getDayOfMonth()+". "+monthToString(day.getMonthValue()));
-		day=day.plusDays(1);
-
+		LocalDate date = d.minusDays(i);
+		Month month = calendar.getCurrentMonth();
+		for (Month mon : calendar.getMonths()) {
+			if (date.getYear() == mon.getYear() && date.getMonth().toString().equals(mon.getMonth())) {
+				month = mon;
+			}
+		}
+		int daysAdded = 0;
+		for (int j = 0; j < 7; j++) {
+			if (date.getDayOfMonth() + j <= month.getDays().length) {
+				days.add(month.getDay(date.getDayOfMonth() + j));
+				daysAdded++;
+			}
+		}
+		if (calendar.getMonths().indexOf(month) == calendar.getMonths().size()) {
+			calendar.addFutureMonths(3);
+		}
+		month = calendar.getMonths().get(calendar.getMonths().indexOf(month)+1);
+		for (int j = 0; j < 7-daysAdded; j++) {
+			days.add(month.getDay(j+1));
+		}
+		
+		monDate.setText(date.getDayOfMonth()+". "+monthToString(date.getMonthValue()));
+		date=date.plusDays(1);
+		tuesDate.setText(date.getDayOfMonth()+". "+monthToString(date.getMonthValue()));
+		date=date.plusDays(1);
+		wedDate.setText(date.getDayOfMonth()+". "+monthToString(date.getMonthValue()));
+		date=date.plusDays(1);
+		thurDate.setText(date.getDayOfMonth()+". "+monthToString(date.getMonthValue()));
+		date=date.plusDays(1);
+		friDate.setText(date.getDayOfMonth()+". "+monthToString(date.getMonthValue()));
+		date=date.plusDays(1);
+		satDate.setText(date.getDayOfMonth()+". "+monthToString(date.getMonthValue()));
+		date=date.plusDays(1);
+		sunDate.setText(date.getDayOfMonth()+". "+monthToString(date.getMonthValue()));
+		date=date.plusDays(1);
+		
+		for (Day day : days) {
+			day.addChangeListener(this);
+		}
 	}
 	
 	@FXML
@@ -355,6 +390,12 @@ public class WeekViewController extends Application implements ControllerInterfa
 	public void setFeedback() {
 		setView(calendar);
 		
+	}
+
+	@Override
+	public void dayChanged(Day day, List<Appointment> oldAppointments,
+			List<Appointment> newAppointment) {
+		setView(getData());
 	}
 }
 
