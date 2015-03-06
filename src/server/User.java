@@ -4,49 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class User {
-	private int id = 0;
-	private String name = null;
-	private String surname = null;
-	private String username = null;
-	private String email = null;
-	private String password = null;
+public class User extends shared.User {
+
+	private String password;
 	
-	public int getId() {
-		return id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getSurname() {
-		return name;
-	}
-
-	public void setSurname(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
 	public static boolean createUser(String surname, String name, String username, String password, String email) {
 		DBConnection db = null;
 		boolean success = true;
@@ -192,21 +155,5 @@ public class User {
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}
 			db.close();
 		}
-	}
-	
-	public JSONObject toJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("id", id);
-		obj.put("name", name);
-		obj.put("surname", surname);
-		obj.put("username", username);
-		obj.put("email", email);
-		return obj;
-	}
-	
-	static void CreateTestUsers() {
-		createUser("Stalin", "Joseph", "staljo", "staljo", "staljo@sovjet.ru");
-		createUser("Stephenson", "Bob", "bobstep", "bobstep", "bob@step.meme");
-		createUser("Cage", "Nicolas", "nicage", "nicage", "einhov@gmail.com");
 	}
 }
