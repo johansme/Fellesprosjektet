@@ -13,7 +13,8 @@
 prefWidth='600' prefHeight='480'
 fx:controller='calendarGUI.AppointmentViewController'
 styleClass='backgroundA'
-stylesheets='resources/defaultTheme.css'>
+stylesheets='resources/defaultTheme.css'
+fx:id='screen' onKeyPressed='#keyPressed'>
 	<children>
 		<Label fx:id="purpose" text="Here shall be displayed thy appointment description"
 		prefWidth='600' prefHeight='100' alignment='CENTER'
