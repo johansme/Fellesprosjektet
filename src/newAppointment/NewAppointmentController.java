@@ -505,7 +505,7 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	public void addPerson(){
 		
-		LoginMain.launch("AddParticipants.fxml");
+		
 		
 	}
 
