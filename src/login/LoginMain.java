@@ -18,7 +18,8 @@ public class LoginMain extends Application {
 			Scene scene = new Scene(root,307,258);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch(Exception e) 
+		{
 			e.printStackTrace();
 		}
 	}

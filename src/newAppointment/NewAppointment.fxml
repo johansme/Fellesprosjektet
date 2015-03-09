@@ -127,7 +127,7 @@
 							maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
 							prefHeight="25.0" prefWidth="59.0" text="Add"
 							GridPane.halignment="LEFT" />
-						<Button mnemonicParsing="false" text="Remove"
+						<Button fx:id="removeUserButton" onAction="#removeUser" mnemonicParsing="false" text="Remove"
 							GridPane.columnIndex="1" GridPane.halignment="LEFT"
 							GridPane.valignment="CENTER" />
 					</children>
@@ -153,7 +153,7 @@
 								<Font size="16.0" />
 							</font>
 						</Label>
-						<ListView maxWidth="-Infinity" prefHeight="150.0"
+						<ListView fx:id ="listView" maxWidth="-Infinity" prefHeight="150.0"
 							prefWidth="318.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS"
 							GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 					</children>

@@ -8,6 +8,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 
+
+
+
+import javax.swing.text.View;
+
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
@@ -30,6 +35,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -56,6 +62,7 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private Pane screen;
 	@FXML private MenuButton room; 
 	@FXML private ListView<String> listView; 
+	@FXML private Button removeUserButton; 
 	private ObservableList<String> listViewData = FXCollections.observableArrayList();
 	ObservableList<MenuItem> roomValueList;
 	
@@ -437,7 +444,15 @@ public class NewAppointmentController implements ControllerInterface {
 		
 		listView.setItems(listViewData);
 		
+	}
+	
+	@FXML
+	public void removeUser()
+	{
+		String[] removeUserArray;
 		
+		listViewData.remove(listView.getSelectionModel().getSelectedItem());
+		System.out.println(listView.getSelectionModel().getSelectedItem() + " was removed from the list.");
 		
 	}
 
