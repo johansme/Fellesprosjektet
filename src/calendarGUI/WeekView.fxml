@@ -9,7 +9,7 @@
 
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	prefWidth='800' prefHeight='600' fx:controller='calendarGUI.WeekViewController'
+	prefWidth='950' prefHeight='600' fx:controller='calendarGUI.WeekViewController'
 	stylesheets="resources/defaultTheme.css" fx:id="screen" onKeyPressed='#prevOrNext'>
 	<children>
 		<fx:include fx:id="filter" source="GroupView.fxml" />
