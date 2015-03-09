@@ -21,6 +21,7 @@ public class SceneHandler {
 			  Stage stage=(Stage) node.getScene().getWindow();
 			  Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
 			  Scene scene = new Scene(root);
+			  
 			  stage.setScene(scene);
 			  stage.centerOnScreen();
 			  stage.show();
