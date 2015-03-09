@@ -8,31 +8,30 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id='screen' maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/8" fx:controller = "login.LoginController" xmlns:fx="http://javafx.com/fxml/1"  
-onKeyPressed='#login'>
+<Pane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#login" prefHeight="250.0" prefWidth="300.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginController">
    <children>
-      <Pane layoutX="239.0" layoutY="163.0"  style="-fx-background-color: BFF; -fx-border-width: 5; -fx-border-color: GREY;">
+      <Pane prefHeight="258.0" prefWidth="307.0" style="-fx-background-color: BFF; -fx-border-width: 5; -fx-border-color: GREY;">
          <children>
-            <TextField fx:id = "username" layoutX="145.0" layoutY="85.0" prefHeight="35.0" prefWidth="153.0" promptText="Username..." />
+            <TextField fx:id="username" layoutX="139.0" layoutY="85.0" prefHeight="35.0" prefWidth="153.0" promptText="Username..." />
            
-           <PasswordField fx:id = "password" layoutX="145.0" layoutY="136.0" prefHeight="35.0" prefWidth="153.0" promptText="Password..." />
-           	<Label fx:id = "errorMessage" layoutX="80.0" layoutY="185.0" text="" />
-            <Button onAction = '#login' fx:id = "loginButton" layoutX="205.0" layoutY="203.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="93.0" style="-fx-font-weight: BOLD; -fx-font-size: 16;" text="Login">
+           <PasswordField fx:id="password" layoutX="139.0" layoutY="136.0" prefHeight="35.0" prefWidth="153.0" promptText="Password..." />
+           	<Label fx:id="errorMessage" layoutX="80.0" layoutY="185.0" text="" />
+            <Button fx:id="loginButton" layoutX="199.0" layoutY="203.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="93.0" style="-fx-font-weight: BOLD; -fx-font-size: 16;" text="Login">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Label layoutX="97.0" layoutY="22.0" text="Welcome">
+            <Label layoutX="91.0" layoutY="22.0" text="Welcome">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <Label layoutX="25.0" layoutY="90.0" text="Username:">
+            <Label layoutX="19.0" layoutY="90.0" text="Username:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="25.0" layoutY="141.0" text="Password:">
+            <Label layoutX="19.0" layoutY="141.0" text="Password:">
                <font>
                   <Font size="20.0" />
                </font>

@@ -23,6 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
@@ -172,12 +173,18 @@ public class WeekViewController extends Application implements ControllerInterfa
 	private AnchorPane screen;
 	
 	@FXML
-	public void prevOrNext(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {
 		if (e.getCode()==KeyCode.LEFT) {
 			prevAction();
 		}
 		else if (e.getCode()==KeyCode.RIGHT) {
 			nextAction();
+		}
+		else if (e.getCode()==KeyCode.PLUS) {
+			newAction();
+		}
+		else if (e.getCode()==KeyCode.ESCAPE) {
+			monthClicked((Event) e);
 		}
 		else {
 			return;
@@ -190,7 +197,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	@FXML
 	public void monthClicked(Event e) {
 		sceneHandler = new SceneHandler();
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml", 800, 600, calendar);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml", 950, 600, calendar);
 	}
 	
 	@FXML
@@ -414,8 +421,11 @@ public class WeekViewController extends Application implements ControllerInterfa
 	@Override
 	public void dayChanged(Day day, List<Appointment> oldAppointments,
 			List<Appointment> newAppointment) {
-		setAppointments(getData().getCurrentDate());
+		calendar.setCurrentDate(day.getDate());
+		setView(calendar);
 	}
+	
+	@FXML private Pane filter;
+	@FXML private GroupViewController filterController;
+	
 }
-
-

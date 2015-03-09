@@ -20,7 +20,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
@@ -88,6 +91,22 @@ public class AppointmentViewController extends Application implements Controller
 	private HBox participantsBox;
 	
 	@FXML
+	private VBox screen;
+	
+	@FXML
+	public void keyPressed(KeyEvent e) {
+		if (e.getCode()==KeyCode.ESCAPE) {
+			closeAction();
+		}
+		else if (e.getCode()==KeyCode.ENTER) {
+			editAction();
+		}
+		else if (e.getCode()==KeyCode.DELETE) {
+			deleteAction();
+		}
+	}
+	
+	@FXML
 	public void confirmAnswer() {
 		if (confirmButton.getText()=="Change") {
 			appointment.setAttending("notAnswered");
@@ -145,8 +164,8 @@ public class AppointmentViewController extends Application implements Controller
 		purpose.setText(appointment.getDescription());
 		startDate.setText(dateToString(appointment.getStartDate()));
 		endDate.setText(dateToString(appointment.getEndDate()));
-		from.setText(appointment.getStartTime().toString());
-		until.setText(appointment.getEndTime().toString());
+		from.setText(appointment.getStartStartTime().toString());
+		until.setText(appointment.getEndEndTime().toString());
 		room.setText(appointment.getLocation());
 		edit.setDisable(!a.getAdmin());
 		if (a.getAttending()=="Y" || a.getAttending()=="N") {

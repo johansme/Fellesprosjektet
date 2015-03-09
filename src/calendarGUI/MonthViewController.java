@@ -1,6 +1,7 @@
 package calendarGUI;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import login.SceneHandler;
 
 public class MonthViewController implements ControllerInterface {
@@ -159,9 +161,14 @@ public class MonthViewController implements ControllerInterface {
 
 	@FXML private AnchorPane week6Day3;
 	@FXML private MonthDayViewController week6Day3Controller;
+	
+	
+	@FXML private Pane filter;
+	@FXML private GroupViewController filterController;
 
 
 	@FXML private Button newAppointment;
+	@FXML private Button newGroup;
 
 	private List<MonthDayViewController> weekList1;
 	private List<MonthDayViewController> weekList2;
@@ -303,37 +310,37 @@ public class MonthViewController implements ControllerInterface {
 	@FXML
 	private void week1Clicked(Event e) {
 		calendar.setCurrentDate(weekList1.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
 	}
 
 	@FXML
 	private void week2Clicked(Event e) {
 		calendar.setCurrentDate(weekList2.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
 	}
 
 	@FXML
 	private void week3Clicked(Event e) {
 		calendar.setCurrentDate(weekList3.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
 	}
 
 	@FXML
 	private void week4Clicked(Event e) {
 		calendar.setCurrentDate(weekList4.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
 	}
 
 	@FXML
 	private void week5Clicked(Event e) {
 		calendar.setCurrentDate(weekList5.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
 	}
 
 	@FXML
 	private void week6Clicked(Event e) {
 		calendar.setCurrentDate(weekList6.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());			
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());			
 	}
 
 	// when "Previous"-button is pressed
@@ -387,17 +394,29 @@ public class MonthViewController implements ControllerInterface {
 	}
 	
 	@FXML
-	private void prevOrNext(KeyEvent e) {
+	private void keyPressed(KeyEvent e) {
 		if (e.getCode()==KeyCode.LEFT) {
 			previousClicked(e);
 		}
 		else if (e.getCode()==KeyCode.RIGHT) {
 			nextClicked(e);
 		}
+		else if (e.getCode()==KeyCode.PLUS) {
+			newAppointmentAction();
+		}
+		else if (e.getCode()==KeyCode.ENTER) {
+			calendar.setCurrentDate(LocalDate.now());
+			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
+		}
 		else {
 			return;
 		}
 
+	}
+	
+	@FXML
+	private void newGroupAction() {
+		//TODO add new group
 	}
 
 }
