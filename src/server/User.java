@@ -10,13 +10,7 @@ public class User extends shared.User {
 
 	private String password;
 	
-	public static boolean createUser(
-			String surname,
-			String name,
-			String username,
-			String password,
-			String email,
-			boolean admin) {
+	public static boolean createUser(User u, String password) {
 		DBConnection db = null;
 		boolean success = true;
 		final String stm_str = "INSERT INTO User VALUES(0, ?, ?, ?, ?, ?, ?)";
@@ -25,12 +19,12 @@ public class User extends shared.User {
 		try {
 			db = new DBConnection();
 			stm = db.getConnection().prepareStatement(stm_str);
-			stm.setString(1, surname);
-			stm.setString(2, name);
-			stm.setString(3, username);
+			stm.setString(1, u.surname);
+			stm.setString(2, u.name);
+			stm.setString(3, u.username);
 			stm.setString(4, BCrypt.hashpw(password, BCrypt.gensalt()));
-			stm.setString(5, email);
-			stm.setBoolean(6, admin);
+			stm.setString(5, u.email);
+			stm.setBoolean(6, u.admin);
 			
 			stm.executeUpdate();
 		} catch(SQLException e) {
