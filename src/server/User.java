@@ -10,10 +10,16 @@ public class User extends shared.User {
 
 	private String password;
 	
-	public static boolean createUser(String surname, String name, String username, String password, String email) {
+	public static boolean createUser(
+			String surname,
+			String name,
+			String username,
+			String password,
+			String email,
+			boolean admin) {
 		DBConnection db = null;
 		boolean success = true;
-		final String stm_str = "INSERT INTO User VALUES(0, ?, ?, ?, ?, ?)";
+		final String stm_str = "INSERT INTO User VALUES(0, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement stm = null;
 		try {
@@ -24,6 +30,8 @@ public class User extends shared.User {
 			stm.setString(3, username);
 			stm.setString(4, BCrypt.hashpw(password, BCrypt.gensalt()));
 			stm.setString(5, email);
+			stm.setBoolean(6, admin);
+			
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
@@ -101,7 +109,7 @@ public class User extends shared.User {
 	
 	public User(int id) throws SQLException {
 		DBConnection db = null;
-		final String str_fmt = "SELECT id,surname,name,username,email,password FROM User WHERE id=?";
+		final String str_fmt = "SELECT id,surname,name,username,email,password,admin FROM User WHERE id=?";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
@@ -117,6 +125,7 @@ public class User extends shared.User {
 				username = rs.getString("username");
 				email = rs.getString("email");
 				password = rs.getString("password");
+				admin = rs.getBoolean("admin");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -130,7 +139,7 @@ public class User extends shared.User {
 	
 	public User(String username) throws SQLException {
 		DBConnection db = null;
-		final String str_fmt = "SELECT id,surname,name,username,email,password FROM User WHERE username=?";
+		final String str_fmt = "SELECT id,surname,name,username,email,password,admin FROM User WHERE username=?";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
@@ -146,6 +155,7 @@ public class User extends shared.User {
 				this.username = rs.getString("username");
 				email = rs.getString("email");
 				password = rs.getString("password");
+				admin = rs.getBoolean("admin");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -5,6 +5,7 @@ CREATE TABLE User(
 	username VARCHAR(32) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL,
 	email VARCHAR(255) NOT NULL,
+	admin boolean NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(id)
 );
 
@@ -12,9 +13,11 @@ CREATE TABLE Group_(
 	id INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(255) NOT NULL,
 	parent INT,
+	createdby INT,
 	PRIMARY KEY(id),
 	FOREIGN KEY(parent) REFERENCES Group_(id)
-		ON DELETE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY(parent) REFERENCES User(id)
 );
 
 CREATE TABLE Appointment(
