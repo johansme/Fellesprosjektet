@@ -9,6 +9,7 @@ public class User {
 	protected String surname = null;
 	protected String username = null;
 	protected String email = null;
+	protected boolean admin = false;
 	
 	public int getId() {
 		return id;
@@ -41,6 +42,10 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
+	
+	public boolean isAdmin() {
+		return admin;
+	}
 
 	public JSONObject toJSON() {
 		JSONObject obj = new JSONObject();
@@ -50,6 +55,7 @@ public class User {
 			obj.put("surname", surname);
 			obj.put("username", username);
 			obj.put("email", email);
+			obj.put("admin", admin);
 		} catch(JSONException e) { return null; }
 		return obj;
 	}
@@ -62,6 +68,7 @@ public class User {
 			user.surname = obj.getString("surname");
 			user.username = obj.getString("username");
 			user.email = obj.getString("email");
+			user.admin = obj.getBoolean("admin");
 		} catch(JSONException e) { return null; }
 		return user;
 	}
