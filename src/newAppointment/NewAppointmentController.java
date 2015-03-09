@@ -2,23 +2,13 @@ package newAppointment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Observable;
-
-
-
-
-import javax.swing.text.View;
-
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
 import calendarGUI.ControllerInterface;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -28,14 +18,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -429,17 +417,16 @@ public class NewAppointmentController implements ControllerInterface {
 	public void addUsers()
 	{
 		
-		listViewData.add(new String("Lydia Kunz"));
-		listViewData.add(new String("Anna Best"));
-		listViewData.add(new String("Stefan Meier"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Steve Jobs"));
+		listViewData.add(new String("Mark Zuvkerberg"));
+		listViewData.add(new String("Bill gates"));
+		listViewData.add(new String("Edward Snowden"));
+		listViewData.add(new String("Steve Wozniak"));
+		listViewData.add(new String("Edward Snowden"));
+		listViewData.add(new String("Linus Torvalds"));
+		listViewData.add(new String("Sean Parker"));
+		listViewData.add(new String("Charles Babbage"));
+		listViewData.add(new String("Alan Turing"));
 		
 		
 		listView.setItems(listViewData);
@@ -449,10 +436,13 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	public void removeUser()
 	{
-		String[] removeUserArray;
+		String user = listView.getSelectionModel().getSelectedItem();
+		if(user != null){
+			listViewData.remove(user);
+			System.out.println(user + " was removed from the list.");
+		}
+		else System.out.println("No user selected");
 		
-		listViewData.remove(listView.getSelectionModel().getSelectedItem());
-		System.out.println(listView.getSelectionModel().getSelectedItem() + " was removed from the list.");
 		
 	}
 
