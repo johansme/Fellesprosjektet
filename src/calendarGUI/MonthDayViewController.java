@@ -51,6 +51,11 @@ public class MonthDayViewController implements DayChangeListener {
 		} else {
 			background.setStyle("-fx-background-color:#FFFFFF;");			
 		}
+		if (day.getDate().getDayOfWeek().getValue() == 7) {
+			dayNo.setTextFill(Color.RED);
+		} else {
+			dayNo.setTextFill(Color.BLACK);
+		}
 	}
 	
 	public void monthChange(Day day) {
