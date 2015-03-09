@@ -458,7 +458,6 @@ public class NewAppointmentController implements ControllerInterface {
 		listViewData.add(new String("Bill Gates"));
 		listViewData.add(new String("Edward Snowden"));
 		listViewData.add(new String("Steve Wozniak"));
-		listViewData.add(new String("Edward Snowden"));
 		listViewData.add(new String("Linus Torvalds"));
 		listViewData.add(new String("Sean Parker"));
 		listViewData.add(new String("Charles Babbage"));
