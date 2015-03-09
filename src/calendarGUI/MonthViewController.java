@@ -167,6 +167,7 @@ public class MonthViewController implements ControllerInterface {
 
 
 	@FXML private Button newAppointment;
+	@FXML private Button newGroup;
 
 	private List<MonthDayViewController> weekList1;
 	private List<MonthDayViewController> weekList2;
@@ -403,6 +404,11 @@ public class MonthViewController implements ControllerInterface {
 			return;
 		}
 
+	}
+	
+	@FXML
+	private void newGroupAction() {
+		//TODO add new group
 	}
 
 }

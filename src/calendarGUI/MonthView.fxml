@@ -233,6 +233,10 @@
 					prefHeight="41" prefWidth="415" onAction="#newAppointmentAction" 
 					GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="6"
 					GridPane.valignment="TOP"/>
+				<Button fx:id="newGroup" text="+ New group" alignment="CENTER"
+					prefHeight="41" prefWidth="415" onAction="#newGroupAction" 
+					GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="6"
+					GridPane.valignment="BOTTOM"/>
 			</children>
 		</GridPane>
 	</children>
