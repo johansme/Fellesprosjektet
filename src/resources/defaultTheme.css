@@ -48,6 +48,10 @@
 
 }
 
+.arrow {
+	-fx-font-size: 12pt;
+}
+
 .header {
 	-fx-text-fill: #000000;
 	-fx-font-size: 30pt;

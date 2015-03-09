@@ -8,21 +8,23 @@
 <?import javafx.scene.control.ListView?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="300"
-	prefWidth="500" fx:controller="AddParticipantController" stylesheets="resources/defaultTheme.css">
+	prefWidth="500" fx:controller="newAppointment.AddParticipantsController" stylesheets="resources/defaultTheme.css">
 	<children>
 		<HBox prefWidth="500" prefHeight="30"
 			style="-fx-background-color:dodgerblue;">
 			<children>
-				<Label text="Add participants" styleClass=".subheader" />
+				<Label text="Add participants" styleClass="subheader" />
 			</children>
 		</HBox>
 		<Label text="Search:" prefWidth="80" layoutY="40" />
 		<TextField fx:id="searchText" prefWidth="250" layoutY="40"
 			layoutX="50" onTextChange="#textChanged" />
 		<ListView fx:id="searchList" layoutX="50" layoutY="80" 
-			prefHeight="180" />
-		<Label text="->" layoutX="305" layoutY="150" />
-		<Label text="<-" layoutX="305" layoutY="160" /> //TODO fix!
+			prefHeight="180" prefWidth="242" />
+		<Button text="→" onAction="#addUserButtonPressed" 
+			layoutX="295" layoutY="145" styleClass="arrow" />
+		<Button text="←" layoutX="295" layoutY="175" styleClass="arrow"
+			onAction="#removeUserButtonPressed" />
 		<ListView fx:id="addList" layoutX="325" layoutY="80" 
 			prefHeight="180" prefWidth="170" />
 		<Button fx:id="addButton" text="Add" prefWidth="80" layoutX="330" 
