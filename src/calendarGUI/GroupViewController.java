@@ -15,15 +15,17 @@ import javafx.scene.layout.HBox;
 public class GroupViewController {
 
 	@FXML
-	private ListView<HBox> groups;
+	private ListView<HBox> groupList;
 	
 	@FXML
 	private void initialize(){
 		
 	List<String> groupies = new ArrayList<String>();
-	groupies.add("hei");
-	groupies.add("hei1");
-	groupies.add("hei2");
+	for( int i = 0; i <100;i++){
+		groupies.add("Abakus linjeforening" + i + "  ");
+		
+	}
+	
 	
 	//List<User> partpts = appointment.getUsers();
 	for (String g : groupies) {
@@ -31,6 +33,9 @@ public class GroupViewController {
 		HBox line = new HBox();
 		line.setPrefWidth(100);
 		Label groupLabel = new Label();
+		
+		groupLabel.wrapTextProperty().set(true);
+		
 		groupLabel.setText(g);
 		CheckBox checkBox = new CheckBox();
 		checkBox.setSelected(false);
@@ -47,7 +52,7 @@ public class GroupViewController {
 				}
 			}
 		});
-	
+		groupList.getItems().add(line);
 	
 	}
 	}

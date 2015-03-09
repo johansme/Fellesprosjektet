@@ -2,13 +2,18 @@ package newAppointment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Observable;
 
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
 import calendarGUI.ControllerInterface;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -18,6 +23,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -48,6 +55,8 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private Button cancelButton;
 	@FXML private Pane screen;
 	@FXML private MenuButton room; 
+	@FXML private ListView<String> listView; 
+	private ObservableList<String> listViewData = FXCollections.observableArrayList();
 	ObservableList<MenuItem> roomValueList;
 	
 
@@ -290,13 +299,11 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	public void initialize(){
 		descriptionField.setPromptText("Appointment Description...");
-
 		fromField.setText(LocalTime.now().getHour() + 1+":00" );
 		toField.setText(LocalTime.now().getHour() + 2 + ":00" );
 		
 		getRoomFromDB();
-		
-
+		addUsers();
 		capasityField.textProperty().setValue("1");
 
 		fromDate.setValue(LocalDate.now());
@@ -408,14 +415,29 @@ public class NewAppointmentController implements ControllerInterface {
 		    }
 		});
 		room.getItems().add(other);
-				
-		//might be handy!!
-//		MenuItem menuItem = new MenuItem("Open");
-//		menuItem.setOnAction(new EventHandler<ActionEvent>() {
-//		    @Override public void handle(ActionEvent e) {
-//		        System.out.println("Opening Database Connection...");
-//		    }
-//		});
+		
+	}
+	
+	@FXML
+	public void addUsers()
+	{
+		
+		listViewData.add(new String("Lydia Kunz"));
+		listViewData.add(new String("Anna Best"));
+		listViewData.add(new String("Stefan Meier"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		
+		
+		listView.setItems(listViewData);
+		
+		
 		
 	}
 
