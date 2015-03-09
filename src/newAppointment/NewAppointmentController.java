@@ -69,10 +69,10 @@ public class NewAppointmentController implements ControllerInterface {
 	
 	@FXML
 	private void keyPressed(KeyEvent e) {
-		if (e.getCode()==KeyCode.ENTER) {
+		if (e.getCode() == KeyCode.ENTER) {
 			saveButtonPressed((Event) e);
 		}
-		else if (e.getCode()==KeyCode.ESCAPE) {
+		else if (e.getCode() == KeyCode.ESCAPE) {
 			cancelButtonPressed();
 		}
 		else {
@@ -153,7 +153,7 @@ public class NewAppointmentController implements ControllerInterface {
 			stage.close();
 		}
 		else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input ;) :p XXX", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
 		}
 	}
 
@@ -335,11 +335,12 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void initialize(){
+		
+		getRoomFromDB();
 		descriptionField.setPromptText("Appointment Description...");
 		fromField.setText(LocalTime.now().getHour() + 1+":00" );
 		toField.setText(LocalTime.now().getHour() + 2 + ":00" );
 		
-		getRoomFromDB();
 		addUsers();
 		capasityField.textProperty().setValue("1");
 
@@ -357,7 +358,8 @@ public class NewAppointmentController implements ControllerInterface {
 		if(!descriptionField.textProperty().getValue().isEmpty() &&
 				toField.textProperty().getValue() != "" &&
 				fromField.textProperty().getValue() != "" &&
-				capasityField.textProperty().getValue() != ""
+				capasityField.textProperty().getValue() != "" &&
+				room.textProperty().getValue() != "Choose room"
 				){
 			return true;
 		}
@@ -441,7 +443,6 @@ public class NewAppointmentController implements ControllerInterface {
 			    }
 			});
 			
-			
 			room.getItems().add(it);
 		}
 		MenuItem other = new MenuItem("Other");
@@ -480,9 +481,11 @@ public class NewAppointmentController implements ControllerInterface {
 		String user = listView.getSelectionModel().getSelectedItem();
 		if(user != null){
 			listViewData.remove(user);
-			System.out.println(user + " was removed from the list.");
+			String msg = user + " removed";
+			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, msg, this);
+			
 		}
-		else System.out.println("No user selected");
+		else sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, "No participant selected.", this);
 		
 		
 	}
