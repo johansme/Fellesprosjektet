@@ -23,6 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
@@ -416,6 +417,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 			List<Appointment> newAppointment) {
 		setAppointments(getData().getCurrentDate());
 	}
+	
+	@FXML private Pane filter;
+	@FXML private GroupViewController filterController;
+	
 }
-
-
