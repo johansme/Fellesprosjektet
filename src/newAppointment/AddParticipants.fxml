@@ -18,7 +18,7 @@
 		</HBox>
 		<Label text="Search:" prefWidth="80" layoutY="40" />
 		<TextField fx:id="searchText" prefWidth="250" layoutY="40"
-			layoutX="50" onTextChange="#textChanged" />
+			layoutX="50" onTextChange="#searchTextChanged" />
 		<ListView fx:id="searchList" layoutX="50" layoutY="80" 
 			prefHeight="180" prefWidth="242" />
 		<Button text="→" onAction="#addUserButtonPressed" 
