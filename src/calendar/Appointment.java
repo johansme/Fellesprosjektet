@@ -16,8 +16,7 @@ public class Appointment {
 
 	private int id;
 	private String description;
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private LocalDate date;
 	private LocalTime startTime;
 	private LocalTime endTime;
 	private String location;
@@ -30,12 +29,15 @@ public class Appointment {
 	private List<String> roomList;
 	private int roomCapacity;
 	private HashMap<User, Boolean> users = new HashMap<User, Boolean>();
+	private Appointment prev;
+	private Appointment next;
 	
 	
 	public Appointment() {
 		//hahahahhahahahah:D
 		//TODO
-		
+		prev = null;
+		next = null;
 		Random rand = new Random();
 
 		id = rand.nextInt(57436) + 1;
@@ -47,39 +49,39 @@ public class Appointment {
 			day.removeAppointment(this);
 		}
 		boolean added = false;
-		if (calendar.getCurrentDate().getYear() == startDate.getYear() && calendar.getCurrentDate().getMonthValue() == startDate.getMonthValue()) {
-			this.day = calendar.getCurrentMonth().getDay(startDate.getDayOfMonth());
+		if (calendar.getCurrentDate().getYear() == date.getYear() && calendar.getCurrentDate().getMonthValue() == date.getMonthValue()) {
+			this.day = calendar.getCurrentMonth().getDay(date.getDayOfMonth());
 			day.addAppointment(this);
 			added = true;
 		} else {
 			for (Month month : calendar.getMonths()) {
-				if (month.getYear() == startDate.getYear() && month.getMonth().equals(startDate.getMonth().toString())) {
-					this.day = month.getDay(startDate.getDayOfMonth());
+				if (month.getYear() == date.getYear() && month.getMonth().equals(date.getMonth().toString())) {
+					this.day = month.getDay(date.getDayOfMonth());
 					day.addAppointment(this);
 					added = true;
 				}
 			}
 		}
 		if (added == false) {
-			if (startDate.isBefore(calendar.getMonths().get(0).getDay(1).getDate())) {
+			if (date.isBefore(calendar.getMonths().get(0).getDay(1).getDate())) {
 				int i = 0;
-				if (startDate.getYear() == calendar.getMonths().get(0).getYear()) {
-					i = calendar.getMonths().get(0).getDay(1).getDate().getMonthValue() - startDate.getMonthValue();
+				if (date.getYear() == calendar.getMonths().get(0).getYear()) {
+					i = calendar.getMonths().get(0).getDay(1).getDate().getMonthValue() - date.getMonthValue();
 				} else {
-					i = startDate.getMonthValue() + (calendar.getMonths().get(0).getYear() - startDate.getYear() - 1)*12 + (12 - calendar.getMonths().get(0).getDay(1).getDate().getMonthValue());
+					i = date.getMonthValue() + (calendar.getMonths().get(0).getYear() - date.getYear() - 1)*12 + (12 - calendar.getMonths().get(0).getDay(1).getDate().getMonthValue());
 				}
 				calendar.addPastMonths(i);
-				this.day = calendar.getMonths().get(0).getDay(startDate.getDayOfMonth());
+				this.day = calendar.getMonths().get(0).getDay(date.getDayOfMonth());
 				day.addAppointment(this);
 			} else {
 				int i = 0;
-				if (startDate.getYear() == calendar.getMonths().get(0).getYear()) {
-					i = startDate.getMonthValue() - calendar.getMonths().get(0).getDay(1).getDate().getMonthValue();
+				if (date.getYear() == calendar.getMonths().get(0).getYear()) {
+					i = date.getMonthValue() - calendar.getMonths().get(0).getDay(1).getDate().getMonthValue();
 				} else {
-					i = calendar.getMonths().get(0).getDay(1).getDate().getMonthValue() + (startDate.getYear() - calendar.getMonths().get(0).getYear() - 1)*12 + (12 - startDate.getMonthValue());
+					i = calendar.getMonths().get(0).getDay(1).getDate().getMonthValue() + (date.getYear() - calendar.getMonths().get(0).getYear() - 1)*12 + (12 - date.getMonthValue());
 				}
 				calendar.addFutureMonths(i);
-				this.day = calendar.getMonths().get(calendar.getMonths().size()-1).getDay(startDate.getDayOfMonth());
+				this.day = calendar.getMonths().get(calendar.getMonths().size()-1).getDay(date.getDayOfMonth());
 				day.addAppointment(this);
 			}
 		}
@@ -98,6 +100,16 @@ public class Appointment {
 	public void setDescription(String d) {
 		if (descriptionIsValid(d)) {
 			description = d;
+			if (prev!=null) {
+				if (prev.getDescription()!=d) {
+					prev.setDescription(d);
+				}
+			}
+			if (next!=null) {
+				if (next.getDescription()!=d) {
+					next.setDescription(d);
+				}
+			}
 		}
 	}
 
@@ -105,25 +117,16 @@ public class Appointment {
 		return description;
 	}
 
-	public void setStartDate(LocalDate d) {
-		if (startDateIsValid(d)) {
-			startDate = d;
+	public void setDate(LocalDate d) {
+		if (dateIsValid(d)) {
+			date = d;
 		}
 	}
 
-	public LocalDate getStartDate() {
-		return startDate;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setEndDate(LocalDate d) {
-		if (endDateIsValid(d)) {
-			endDate = d;
-		}
-	}
-
-	public LocalDate getEndDate() {
-		return endDate;
-	}
 
 	public void setStartTime(LocalTime t) {
 		if (startTimeIsValid(t)) {
@@ -131,6 +134,15 @@ public class Appointment {
 		}
 	}
 
+	public LocalTime getStartStartTime() {
+		if (prev==null) {
+			return startTime;
+		}
+		else {
+			return prev.getStartStartTime();
+		}
+	}
+	
 	public LocalTime getStartTime() {
 		return startTime;
 	}
@@ -141,6 +153,15 @@ public class Appointment {
 		}
 	}
 
+	public LocalTime getEndEndTime() {
+		if (next==null) {
+			return endTime;
+		}
+		else {
+			return next.getEndEndTime();
+		}
+	}
+	
 	public LocalTime getEndTime() {
 		return endTime;
 	}
@@ -148,6 +169,16 @@ public class Appointment {
 	public void setLocation(String l) {
 		if (locationIsValid(l)) {
 			location = l;
+			if (prev!=null) {
+				if (prev.getLocation()!=l) {
+					prev.setLocation(l);
+				}
+			}
+			if (next!=null) {
+				if (next.getLocation()!=l) {
+					next.setLocation(l);
+				}
+			}
 		}
 	}
 
@@ -160,16 +191,42 @@ public class Appointment {
 			for (User participant : p) {
 				if (participantIsValid(participant)) {
 					users.put(participant, false);
+					if (prev!=null) {
+						if (!prev.getUsers().contains(participant)) {
+							prev.addUser(participant);
+						}
+					}
+					if (next!=null) {
+						if (!next.getUsers().contains(participant)) {
+							next.addUser(participant);
+						}
+					}
 				}
 			}
 		}
 		else {
 			users=null;
+			if (prev!=null) {
+				prev.setUsers(null);
+			}
+			if (next!=null) {
+				next.setUsers(null);
+			}
 		}
 	}
 	
 	public void addUser(User user) {
 		users.put(user, false);
+		if (prev!=null) {
+			if (!prev.getUsers().contains(user)) {
+				prev.addUser(user);
+			}
+		}
+		if (next!=null) {
+			if (!next.getUsers().contains(user)) {
+				prev.addUser(user);
+			}
+		}
 	}
 	
 
@@ -185,47 +242,27 @@ public class Appointment {
 		return true;
 	}
 
-	private boolean startDateIsValid(LocalDate d) {
+	private boolean dateIsValid(LocalDate d) {
 		if (LocalDate.now().isAfter(d)) {
 			return false;
-		}
-		if (endDate!=null) {
-			if (d.isAfter(endDate)) {
-				return false;
-			}
 		}
 		return true;
 	}
 
-	private boolean endDateIsValid(LocalDate d) {
-		if (LocalDate.now().isAfter(d)) {
-			return false;
-		}
-		if (startDate!=null) {
-			if (startDate.isAfter(d)) {
-				return false;
-			}
-		}
-		return true;
-	}
 
 	private boolean startTimeIsValid(LocalTime t) {
-		if (startDate==endDate) {
-			if (endTime!=null) {
-				if (t.isAfter(endTime)) {
-					return false;
-				}
+		if (endTime!=null) {
+			if (t.isAfter(endTime)) {
+				return false;
 			}
 		}
 		return true;
 	}
 
 	private boolean endTimeIsValid(LocalTime t) {
-		if (startDate==endDate) {
-			if (startTime!=null) {
-				if (startTime.isAfter(t)) {
-					return false;
-				}
+		if (startTime!=null) {
+			if (startTime.isAfter(t)) {
+				return false;
 			}
 		}
 		return true;
@@ -249,6 +286,16 @@ public class Appointment {
 
 	public void setID(int id) {
 		this.id=id;
+		if (prev!=null) {
+			if (prev.getID()!=id) {
+				prev.setID(id);
+			}
+		}
+		if (next!=null) {
+			if (next.getID()!=id) {
+				next.setID(id);
+			}
+		}
 	}
 
 	public int getID() {
@@ -261,6 +308,16 @@ public class Appointment {
 
 	public void setOpened(boolean b) {
 		opened = b;
+		if (prev!=null) {
+			if (prev.getOpened()!=b) {
+				prev.setOpened(b);
+			}
+		}
+		if (next!=null) {
+			if (next.getOpened()!=b) {
+				next.setOpened(b);
+			}
+		}
 	}
 
 	public boolean getAdmin() {
@@ -269,12 +326,34 @@ public class Appointment {
 
 	public void setAdmin(boolean b) {
 		admin = b;
+		if (prev!=null) {
+			if (prev.getAdmin()!=b) {
+				prev.setAdmin(b);
+			}
+		}
+		if (next!=null) {
+			if (next.getAdmin()!=b) {
+				next.setAdmin(b);
+			}
+		}
+
 	}
 
-	public void setAttending(String a) {
-		if (a=="Y" || a=="N" || a=="None" || a=="notAnswered") {
-			attending=a;
+	public void setAttending(String s) {
+		if (s=="Y" || s=="N" || s=="None" || s=="notAnswered") {
+			attending=s;
 		}
+		if (prev!=null) {
+			if (prev.getAttending()!=s) {
+				prev.setAttending(s);
+			}
+		}
+		if (next!=null) {
+			if (next.getAttending()!=s) {
+				next.setAttending(s);
+			}
+		}
+
 	}
 	
 	public String getAttending() {
@@ -288,6 +367,17 @@ public class Appointment {
 	public void setCapacity(int capacity) {
 		
 		this.roomCapacity = capacity;
+		if (prev!=null) {
+			if (prev.getCapacity()!=capacity) {
+				prev.setCapacity(capacity);
+			}
+		}
+		if (next!=null) {
+			if (next.getCapacity()!=capacity) {
+				next.setCapacity(capacity);
+			}
+		}
+
 	}
 	public int getCapacity() {
 		
@@ -317,6 +407,18 @@ public class Appointment {
 		
 	
 		this.roomList = roomList; 
+		
+		if (prev!=null) {
+			if (prev.getRoomList()!=roomList) {
+				prev.setRoomList(roomList);
+			}
+		}
+		if (next!=null) {
+			if (next.getRoomList()!=roomList) {
+				next.setRoomList(roomList);
+			}
+		}
+
 		 
 	}
 	
@@ -331,8 +433,67 @@ public class Appointment {
 	public void setUserAttending(User p, boolean b) {
 		if (users.get(p)!=b) {
 			users.replace(p, !b, b);
+			if (prev!=null) {
+				if (prev.getUserAttending(p)!=b) {
+					prev.setUserAttending(p, b);
+				}
+			}
+			if (next!=null) {
+				if (next.getUserAttending(p)!=b) {
+					next.setUserAttending(p, b);
+				}
+			}
+		}
+
+	}
+	
+	public Appointment getPrev() {
+		return prev;
+	}
+	
+	public Appointment getNext() {
+		return next;
+	}
+	
+	public void setPrev(Appointment a) {
+		prev = a;
+	}
+	
+	public void setNext(Appointment a) {
+		next = a;
+	}
+	
+	
+	public LocalDate getStartDate() {
+		if (prev==null) {
+			return date;
+		}
+		else {
+			return prev.getStartDate();
 		}
 	}
+	
+	public LocalDate getEndDate() {
+		if (next==null) {
+			return date;
+		}
+		else {
+			return next.getEndDate();
+		}
+	}
+	
+	public void delete() {
+		if (prev!=null) {
+			prev.setNext(null);
+			prev.delete();
+		}
+		if (next!=null) {
+			next.setPrev(null);
+			next.delete();
+		}
+		day.getAppointments().remove(this);
+	}
+	
 
 	
 	

@@ -2,6 +2,7 @@ package newAppointment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import login.SceneHandler;
 
 public class NewAppointmentController implements ControllerInterface {
 
-	private Appointment appointment = new Appointment();
+	private Appointment appointment;
 
 	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
@@ -59,6 +60,19 @@ public class NewAppointmentController implements ControllerInterface {
 		//SMEGMABRO
 		//BiiiiiiRkyy
 	}
+	
+	@FXML
+	private void keyPressed(KeyEvent e) {
+		if (e.getCode()==KeyCode.ENTER) {
+			saveButtonPressed((Event) e);
+		}
+		else if (e.getCode()==KeyCode.ESCAPE) {
+			cancelButtonPressed();
+		}
+		else {
+			return;
+		}
+	}
 
 	@FXML
 	private void cancelButtonPressed(){
@@ -75,29 +89,50 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	private void saveButtonPressed(Event e){
 		
-		if (e.getSource().equals(screen)) {
-			if (!(((KeyEvent) e).getCode()==KeyCode.ENTER)) {
-				return;
-			}
-		}
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
-			appointment.setDescription(descriptionField.textProperty().getValue());
-			appointment.setStartDate(fromDate.getValue());
-			appointment.setEndDate(toDate.getValue());
-			String[] fromTime = fromField.textProperty().getValue().split(":");
-			appointment.setStartTime(LocalTime.of(Integer.valueOf(fromTime[0]), Integer.valueOf(fromTime[1])));
-			String[] toTime = toField.textProperty().getValue().split(":");
-			appointment.setEndTime(LocalTime.of(Integer.valueOf(toTime[0]), Integer.valueOf(toTime[1])));
-			appointment.setLocation("NTNU"); // this needs fixing:)
+			if (header.getText()=="Edit appointment") {
+				appointment.delete();
+			}
+			Appointment a = new Appointment();
+			LocalDate startDate = fromDate.getValue();
+			LocalDate endDate = toDate.getValue();
+			List<Appointment> days = new ArrayList<Appointment>();
+			int diff = Math.abs(endDate.getDayOfYear()-startDate.getDayOfYear());
+			for (int i=0; i<diff+1; i++) {
+				if (i==0) {
+					a.setStartTime(LocalTime.parse(fromField.getText()));
+					a.setPrev(null);
+				}
+				else {
+					a.setPrev(days.get(i-1));
+					days.get(i-1).setNext(a);
+					a.setStartTime(LocalTime.parse("06:00"));
+				}
+				if (i==diff) {
+					a.setEndTime(LocalTime.parse(toField.getText()));
+					a.setNext(null);
+				}
+				else {
+					a.setEndTime(LocalTime.parse("23:00"));
+				}
+				a.setDate(startDate.plusDays(i));
+				calendar.setCurrentDate(startDate.plusDays(i));
+				a.setData(calendar);
+				days.add(a);
+				a = new Appointment();
+			}
+			a = days.get(0);
+			a.setDescription(descriptionField.getText());
+			a.setLocation("NTNU"); // this needs fixing:)
 			User gruppe2 = new User();
 			gruppe2.setUsername("Gruppe 2");
-			appointment.setUsers(Arrays.asList(gruppe2));
-			appointment.setData(calendar);
-			appointment.addAppointmentToDay();
-			appointment.setAdmin(true);
-			appointment.setOpened(true);
-			
+			a.setUsers(Arrays.asList(gruppe2));
+			a.setAdmin(true);
+			a.setOpened(true);
+			for (Appointment ap : days) {
+				ap.addAppointmentToDay();
+			}
 			SceneHandler sh = new SceneHandler();
 			sh.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved", this);
 			// get a handle to the stage
@@ -106,7 +141,7 @@ public class NewAppointmentController implements ControllerInterface {
 			stage.close();
 		}
 		else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "You suck", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input ;) :p XXX", this);
 		}
 	}
 

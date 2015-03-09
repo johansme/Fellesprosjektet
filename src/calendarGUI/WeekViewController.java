@@ -172,12 +172,18 @@ public class WeekViewController extends Application implements ControllerInterfa
 	private AnchorPane screen;
 	
 	@FXML
-	public void prevOrNext(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {
 		if (e.getCode()==KeyCode.LEFT) {
 			prevAction();
 		}
 		else if (e.getCode()==KeyCode.RIGHT) {
 			nextAction();
+		}
+		else if (e.getCode()==KeyCode.PLUS) {
+			newAction();
+		}
+		else if (e.getCode()==KeyCode.ESCAPE) {
+			monthClicked((Event) e);
 		}
 		else {
 			return;
@@ -414,7 +420,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 	@Override
 	public void dayChanged(Day day, List<Appointment> oldAppointments,
 			List<Appointment> newAppointment) {
-		setAppointments(getData().getCurrentDate());
+		calendar.setCurrentDate(day.getDate());
+		setView(calendar);
 	}
 }
 

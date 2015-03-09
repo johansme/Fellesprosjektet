@@ -12,7 +12,7 @@
 prefWidth='800' prefHeight='600'
 fx:controller='calendarGUI.WeekViewController'
 stylesheets="resources/defaultTheme.css"
-fx:id="screen" onKeyPressed='#prevOrNext'>
+fx:id="screen" onKeyPressed='#keyPressed'>
 	<children>
 		<VBox prefWidth='800' prefHeight='600'
 		styleClass='background'>
