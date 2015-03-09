@@ -365,7 +365,7 @@ public class NewAppointmentController implements ControllerInterface {
 				toField.textProperty().getValue() != "" &&
 				fromField.textProperty().getValue() != "" &&
 				capasityField.textProperty().getValue() != "" &&
-				room.textProperty().getValue() != "Choose room"
+				!room.textProperty().getValue().equals("Choose room")
 				){
 			return true;
 		}
