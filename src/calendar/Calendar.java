@@ -121,7 +121,7 @@ public class Calendar {
 				int i = months.indexOf(getCurrentMonth());
 				if (i == 0) {
 					addPastMonths(1);
-					months.indexOf(getCurrentMonth());
+					i = months.indexOf(getCurrentMonth());
 				}
 				currentMonth = months.get(i-1);
 			}

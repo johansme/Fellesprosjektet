@@ -8,10 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import newAppointment.ReceiveRoom;
-import javafx.collections.ObservableList;
-import javafx.scene.control.MenuItem;
-
 public class Appointment {
 
 	private int id;

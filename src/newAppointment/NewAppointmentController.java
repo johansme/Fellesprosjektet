@@ -4,12 +4,21 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Observable;
+
+
+
+
+import javax.swing.text.View;
 
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
 import calendarGUI.ControllerInterface;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -19,11 +28,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -49,10 +61,14 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private Button cancelButton;
 	@FXML private Pane screen;
 	@FXML private MenuButton room; 
+	@FXML private ListView<String> listView; 
+	@FXML private Button removeUserButton; 
+	private ObservableList<String> listViewData = FXCollections.observableArrayList();
 	ObservableList<MenuItem> roomValueList;
 	
 
 	ReceiveRoom rr = new ReceiveRoom();
+	
 	
 	@FXML
 	private void description(){
@@ -148,26 +164,36 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	private void checkCapasity(){
 		String value = capasityField.textProperty().getValue();
-		if( !value.matches("\\d+") ){
+		if( !value.matches("\\d+") || value.length() >5 ){
 			capasityField.setPromptText("Invalid");
 			capasityField.setText("1");
-		}
+		}else{
 		Tuple rm = bestRoom(Integer.valueOf(capasityField.textProperty().getValue()));
-		room.setText(rm.room +" (" + rm.capasity+")");
-
+		
+		
+		if(rm.room == "Other"){
+			room.setText("Other");
+			otherField.setDisable(false);
+		}else{
+			room.setText(rm.room +" (" + rm.capasity +")");
+			otherField.setDisable(true);
+			otherField.textProperty().setValue("");
+		}
+	}
 	}
 	
 	public Tuple bestRoom(int cap){
 		List<Tuple> rooms = rr.getRoomList();
 		int min = 100000;
-		Tuple room = null;
+		Tuple room = new Tuple("Other",0);
 		for (Tuple tup: rooms){
 			int as = tup.capasity - cap;
-			if( as < min && as >0){
+			if( as < min && as >=0){
 				min = as;
 				room = tup;
 			}
 		}
+		
 		return room;
 		
 	}
@@ -314,13 +340,11 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	public void initialize(){
 		descriptionField.setPromptText("Appointment Description...");
-
 		fromField.setText(LocalTime.now().getHour() + 1+":00" );
 		toField.setText(LocalTime.now().getHour() + 2 + ":00" );
 		
 		getRoomFromDB();
-		
-
+		addUsers();
 		capasityField.textProperty().setValue("1");
 
 		fromDate.setValue(LocalDate.now());
@@ -416,19 +440,53 @@ public class NewAppointmentController implements ControllerInterface {
 			it.setOnAction(new EventHandler<ActionEvent>() {
 			    public void handle(ActionEvent t) {
 			        room.setText(it.getText());
+			        otherField.setDisable(true);
+			        otherField.textProperty().setValue("");
 			    }
 			});
 			
+			
 			room.getItems().add(it);
 		}
-				
-		//might be handy!!
-//		MenuItem menuItem = new MenuItem("Open");
-//		menuItem.setOnAction(new EventHandler<ActionEvent>() {
-//		    @Override public void handle(ActionEvent e) {
-//		        System.out.println("Opening Database Connection...");
-//		    }
-//		});
+		MenuItem other = new MenuItem("Other");
+		other.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent t) {
+		        room.setText(other.getText());
+		        otherField.setDisable(false);
+		    }
+		});
+		room.getItems().add(other);
+		
+	}
+	
+	@FXML
+	public void addUsers()
+	{
+		
+		listViewData.add(new String("Lydia Kunz"));
+		listViewData.add(new String("Anna Best"));
+		listViewData.add(new String("Stefan Meier"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Martin Mueller"));
+		
+		
+		listView.setItems(listViewData);
+		
+	}
+	
+	@FXML
+	public void removeUser()
+	{
+		String[] removeUserArray;
+		
+		listViewData.remove(listView.getSelectionModel().getSelectedItem());
+		System.out.println(listView.getSelectionModel().getSelectedItem() + " was removed from the list.");
 		
 	}
 

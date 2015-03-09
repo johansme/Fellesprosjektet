@@ -23,6 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
@@ -115,7 +116,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 				daysAdded++;
 			}
 		}
-		if (calendar.getMonths().indexOf(month) == calendar.getMonths().size()) {
+		if (calendar.getMonths().indexOf(month) == calendar.getMonths().size()-1) {
 			calendar.addFutureMonths(3);
 		}
 		month = calendar.getMonths().get(calendar.getMonths().indexOf(month)+1);
@@ -423,6 +424,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 		calendar.setCurrentDate(day.getDate());
 		setView(calendar);
 	}
+	
+	@FXML private Pane filter;
+	@FXML private GroupViewController filterController;
+	
 }
-
-

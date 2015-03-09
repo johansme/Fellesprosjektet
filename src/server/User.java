@@ -4,53 +4,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class User {
-	private int id = 0;
-	private String name = null;
-	private String surname = null;
-	private String username = null;
-	private String email = null;
-	private String password = null;
+public class User extends shared.User {
+
+	private String password;
 	
-	public int getId() {
-		return id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getSurname() {
-		return name;
-	}
-
-	public void setSurname(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public static boolean createUser(String surname, String name, String username, String password, String email) {
+	public static boolean createUser(
+			String surname,
+			String name,
+			String username,
+			String password,
+			String email,
+			boolean admin) {
 		DBConnection db = null;
 		boolean success = true;
-		final String stm_str = "INSERT INTO User VALUES(0, ?, ?, ?, ?, ?)";
+		final String stm_str = "INSERT INTO User VALUES(0, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement stm = null;
 		try {
@@ -61,6 +30,8 @@ public class User {
 			stm.setString(3, username);
 			stm.setString(4, BCrypt.hashpw(password, BCrypt.gensalt()));
 			stm.setString(5, email);
+			stm.setBoolean(6, admin);
+			
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
@@ -138,7 +109,7 @@ public class User {
 	
 	public User(int id) throws SQLException {
 		DBConnection db = null;
-		final String str_fmt = "SELECT id,surname,name,username,email,password FROM User WHERE id=?";
+		final String str_fmt = "SELECT id,surname,name,username,email,password,admin FROM User WHERE id=?";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
@@ -154,6 +125,7 @@ public class User {
 				username = rs.getString("username");
 				email = rs.getString("email");
 				password = rs.getString("password");
+				admin = rs.getBoolean("admin");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -167,7 +139,7 @@ public class User {
 	
 	public User(String username) throws SQLException {
 		DBConnection db = null;
-		final String str_fmt = "SELECT id,surname,name,username,email,password FROM User WHERE username=?";
+		final String str_fmt = "SELECT id,surname,name,username,email,password,admin FROM User WHERE username=?";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
@@ -183,6 +155,7 @@ public class User {
 				this.username = rs.getString("username");
 				email = rs.getString("email");
 				password = rs.getString("password");
+				admin = rs.getBoolean("admin");
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -192,21 +165,5 @@ public class User {
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}
 			db.close();
 		}
-	}
-	
-	public JSONObject toJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("id", id);
-		obj.put("name", name);
-		obj.put("surname", surname);
-		obj.put("username", username);
-		obj.put("email", email);
-		return obj;
-	}
-	
-	static void CreateTestUsers() {
-		createUser("Stalin", "Joseph", "staljo", "staljo", "staljo@sovjet.ru");
-		createUser("Stephenson", "Bob", "bobstep", "bobstep", "bob@step.meme");
-		createUser("Cage", "Nicolas", "nicage", "nicage", "einhov@gmail.com");
 	}
 }
