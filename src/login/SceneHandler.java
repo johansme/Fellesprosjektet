@@ -22,7 +22,9 @@ public class SceneHandler {
 			  Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
 			  Scene scene = new Scene(root);
 			  stage.setScene(scene);
+			  stage.centerOnScreen();
 			  stage.show();
+			 
 			} catch(Exception er) {
 				er.printStackTrace();
 			}
@@ -39,7 +41,9 @@ public class SceneHandler {
 			ControllerInterface monthController = (ControllerInterface) loader.getController();
 			monthController.setData(calendar);
 			  stage.setScene(scene);
+			  stage.centerOnScreen();
 			  stage.show();
+			  
 			} catch(Exception er) {
 				er.printStackTrace();
 			}
@@ -56,7 +60,9 @@ public class SceneHandler {
 			ControllerInterface monthController = (ControllerInterface) loader.getController();
 			monthController.setData(calendar, appointment);
 			primaryStage.setScene(scene);
+			primaryStage.centerOnScreen();
 			primaryStage.show();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -73,7 +79,9 @@ public class SceneHandler {
 			ControllerInterface controll = loader.getController();
 			controll.setData(cal, a);
 			primaryStage.setScene(scene);
+			primaryStage.centerOnScreen();
 			primaryStage.show();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -91,7 +99,9 @@ public class SceneHandler {
 			messageController.setMessage(message);
 			messageController.setReferenceController(contrInt);
 			primaryStage.setScene(scene);
+			primaryStage.centerOnScreen();
 			primaryStage.show();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
