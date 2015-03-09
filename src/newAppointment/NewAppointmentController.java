@@ -4,21 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Observable;
-
-
-
-
-import javax.swing.text.View;
 
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
 import calendarGUI.ControllerInterface;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -28,14 +20,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -79,10 +69,10 @@ public class NewAppointmentController implements ControllerInterface {
 	
 	@FXML
 	private void keyPressed(KeyEvent e) {
-		if (e.getCode()==KeyCode.ENTER) {
+		if (e.getCode() == KeyCode.ENTER) {
 			saveButtonPressed((Event) e);
 		}
-		else if (e.getCode()==KeyCode.ESCAPE) {
+		else if (e.getCode() == KeyCode.ESCAPE) {
 			cancelButtonPressed();
 		}
 		else {
@@ -107,6 +97,7 @@ public class NewAppointmentController implements ControllerInterface {
 		
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
+
 			if (header.getText()=="Edit appointment") {
 				appointment.delete();
 			}
@@ -114,7 +105,13 @@ public class NewAppointmentController implements ControllerInterface {
 			LocalDate startDate = fromDate.getValue();
 			LocalDate endDate = toDate.getValue();
 			List<Appointment> days = new ArrayList<Appointment>();
-			int diff = Math.abs(endDate.getDayOfYear()-startDate.getDayOfYear());
+			int diff = endDate.getDayOfYear()-startDate.getDayOfYear();
+			if (endDate.getYear()>startDate.getYear()) {
+				diff = diff+365;
+				if (startDate.isLeapYear()) {
+					diff++;
+				}
+			}
 			for (int i=0; i<diff+1; i++) {
 				if (i==0) {
 					a.setStartTime(LocalTime.parse(fromField.getText()));
@@ -140,7 +137,12 @@ public class NewAppointmentController implements ControllerInterface {
 			}
 			a = days.get(0);
 			a.setDescription(descriptionField.getText());
-			a.setLocation("NTNU"); // this needs fixing:)
+			if(room.textProperty().getValue() == "Other"){
+				a.setLocation(otherField.textProperty().getValue());
+				}else{
+				a.setLocation(room.textProperty().getValue()); 
+				}
+
 			User gruppe2 = new User();
 			gruppe2.setUsername("Gruppe 2");
 			a.setUsers(Arrays.asList(gruppe2));
@@ -157,7 +159,7 @@ public class NewAppointmentController implements ControllerInterface {
 			stage.close();
 		}
 		else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input ;) :p XXX", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
 		}
 	}
 
@@ -339,11 +341,12 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void initialize(){
+		
+		getRoomFromDB();
 		descriptionField.setPromptText("Appointment Description...");
 		fromField.setText(LocalTime.now().getHour() + 1+":00" );
 		toField.setText(LocalTime.now().getHour() + 2 + ":00" );
 		
-		getRoomFromDB();
 		addUsers();
 		capasityField.textProperty().setValue("1");
 
@@ -361,7 +364,8 @@ public class NewAppointmentController implements ControllerInterface {
 		if(!descriptionField.textProperty().getValue().isEmpty() &&
 				toField.textProperty().getValue() != "" &&
 				fromField.textProperty().getValue() != "" &&
-				capasityField.textProperty().getValue() != ""
+				capasityField.textProperty().getValue() != "" &&
+				room.textProperty().getValue() != "Choose room"
 				){
 			return true;
 		}
@@ -421,6 +425,7 @@ public class NewAppointmentController implements ControllerInterface {
 	public void setFeedback() {
 		
 	}
+	
 	@FXML
 	public void menuButton(Event e){
 		room.setText(e.getSource().getClass().getName());
@@ -445,7 +450,6 @@ public class NewAppointmentController implements ControllerInterface {
 			    }
 			});
 			
-			
 			room.getItems().add(it);
 		}
 		MenuItem other = new MenuItem("Other");
@@ -463,17 +467,15 @@ public class NewAppointmentController implements ControllerInterface {
 	public void addUsers()
 	{
 		
-		listViewData.add(new String("Lydia Kunz"));
-		listViewData.add(new String("Anna Best"));
-		listViewData.add(new String("Stefan Meier"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
-		listViewData.add(new String("Martin Mueller"));
+		listViewData.add(new String("Steve Jobs"));
+		listViewData.add(new String("Mark Zuckerberg"));
+		listViewData.add(new String("Bill Gates"));
+		listViewData.add(new String("Edward Snowden"));
+		listViewData.add(new String("Steve Wozniak"));
+		listViewData.add(new String("Linus Torvalds"));
+		listViewData.add(new String("Sean Parker"));
+		listViewData.add(new String("Charles Babbage"));
+		listViewData.add(new String("Alan Turing"));
 		
 		
 		listView.setItems(listViewData);
@@ -483,10 +485,15 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	public void removeUser()
 	{
-		String[] removeUserArray;
+		String user = listView.getSelectionModel().getSelectedItem();
+		if(user != null){
+			listViewData.remove(user);
+			String msg = user + " removed";
+			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, msg, this);
+			
+		}
+		else sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, "No participant selected.", this);
 		
-		listViewData.remove(listView.getSelectionModel().getSelectedItem());
-		System.out.println(listView.getSelectionModel().getSelectedItem() + " was removed from the list.");
 		
 	}
 

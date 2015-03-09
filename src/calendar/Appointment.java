@@ -487,7 +487,7 @@ public class Appointment {
 			next.setPrev(null);
 			next.delete();
 		}
-		day.getAppointments().remove(this);
+		day.removeAppointment(this);
 	}
 	
 
