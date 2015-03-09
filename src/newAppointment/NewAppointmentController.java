@@ -106,7 +106,11 @@ public class NewAppointmentController implements ControllerInterface {
 			appointment.setStartTime(LocalTime.of(Integer.valueOf(fromTime[0]), Integer.valueOf(fromTime[1])));
 			String[] toTime = toField.textProperty().getValue().split(":");
 			appointment.setEndTime(LocalTime.of(Integer.valueOf(toTime[0]), Integer.valueOf(toTime[1])));
-			appointment.setLocation("NTNU"); // this needs fixing:)
+			if(room.textProperty().getValue() == "Other"){
+			appointment.setLocation(otherField.textProperty().getValue());
+			}else{
+			appointment.setLocation(room.textProperty().getValue()); 
+			}
 			User gruppe2 = new User();
 			gruppe2.setUsername("Gruppe 2");
 			appointment.setUsers(Arrays.asList(gruppe2));
