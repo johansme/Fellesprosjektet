@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import login.SceneHandler;
 
 public class MonthViewController implements ControllerInterface {
@@ -159,6 +160,10 @@ public class MonthViewController implements ControllerInterface {
 
 	@FXML private AnchorPane week6Day3;
 	@FXML private MonthDayViewController week6Day3Controller;
+	
+	
+	@FXML private Pane filter;
+	@FXML private GroupViewController filterController;
 
 
 	@FXML private Button newAppointment;

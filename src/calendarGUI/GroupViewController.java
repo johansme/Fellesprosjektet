@@ -20,7 +20,6 @@ public class GroupViewController {
 	@FXML
 	private void initialize(){
 		
-	groups.getItems().clear();
 	List<String> groupies = new ArrayList<String>();
 	groupies.add("hei");
 	groupies.add("hei1");
