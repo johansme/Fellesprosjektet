@@ -423,6 +423,7 @@ public class NewAppointmentController implements ControllerInterface {
 	public void setFeedback() {
 		
 	}
+	
 	@FXML
 	public void menuButton(Event e){
 		room.setText(e.getSource().getClass().getName());

@@ -156,7 +156,6 @@ public class AppointmentViewController extends Application implements Controller
 	public void deleteAction() {
 		sceneHandler = new SceneHandler();
 		sceneHandler.popUpMessage("/messages/Confirm.fxml", 300, 150, "Are you sure you want to delete?", this);
-		appointment.delete();
 	}
 	
 	public void setView(Appointment a) {
@@ -302,7 +301,7 @@ public class AppointmentViewController extends Application implements Controller
 
 	@Override
 	public void setFeedback() {
-		appointment.getDay().removeAppointment(appointment);
+		appointment.delete();
 	    // get a handle to the stage
 	    Stage stage = (Stage) close.getScene().getWindow();
 	    // do what you have to do
