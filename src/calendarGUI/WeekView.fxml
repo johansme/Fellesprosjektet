@@ -9,180 +9,165 @@
 
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-prefWidth='800' prefHeight='600'
-fx:controller='calendarGUI.WeekViewController'
-stylesheets="resources/defaultTheme.css"
-fx:id="screen" onKeyPressed='#prevOrNext'>
+	prefWidth='950' prefHeight='600' fx:controller='calendarGUI.WeekViewController'
+	stylesheets="resources/defaultTheme.css" fx:id="screen" onKeyPressed='#prevOrNext'>
 	<children>
-		<VBox prefWidth='800' prefHeight='600'
-		styleClass='background'>
+		<fx:include fx:id="filter" source="GroupView.fxml" />
+		<VBox prefWidth='800' prefHeight='600' layoutX="150" styleClass='background'>
 			<children>
-				<HBox prefHeight='40' prefWidth='800'
-				styleClass="background">
+				<HBox prefHeight='40' prefWidth='800' styleClass="background">
 					<children>
 						<Button fx:id='prev' onAction='#prevAction' text='Week X-1'
-						alignment="CENTER" prefHeight='40' prefWidth='100'
-						styleClass='button'/>
-						<Label fx:id='weekNum' text='Week X'
-						alignment='CENTER_RIGHT' prefHeight='40' prefWidth='300'
-						styleClass='header'/>
-						<Label fx:id='year' text=' - 2000'
-						alignment='CENTER_LEFT' prefHeight='40' prefWidth='300'
-						styleClass='header'/>
+							alignment="CENTER" prefHeight='40' prefWidth='100' styleClass='button' />
+						<Label fx:id='weekNum' text='Week X' alignment='CENTER_RIGHT'
+							prefHeight='40' prefWidth='300' styleClass='header' />
+						<Label fx:id='year' text=' - 2000' alignment='CENTER_LEFT'
+							prefHeight='40' prefWidth='300' styleClass='header' />
 						<Button fx:id='next' onAction='#nextAction' text='Week X+1'
-						alignment='CENTER' prefHeight='40' prefWidth='100'/>
+							alignment='CENTER' prefHeight='40' prefWidth='100' />
 					</children>
 				</HBox>
 				<GridPane prefHeight='520' prefWidth='800'
-				alignment='TOP_LEFT' gridLinesVisible='true'
-				styleClass='background'>
+					alignment='TOP_LEFT' gridLinesVisible='true' styleClass='background'>
 					<columnConstraints>
-						<ColumnConstraints prefWidth='100'/>
-						<ColumnConstraints prefWidth='100'/>
-						<ColumnConstraints prefWidth='100'/>
-						<ColumnConstraints prefWidth='100'/>
-						<ColumnConstraints prefWidth='100'/>
-						<ColumnConstraints prefWidth='100'/>
-						<ColumnConstraints prefWidth='100'/>
-						<ColumnConstraints prefWidth='100'/>
+						<ColumnConstraints prefWidth='100' />
+						<ColumnConstraints prefWidth='100' />
+						<ColumnConstraints prefWidth='100' />
+						<ColumnConstraints prefWidth='100' />
+						<ColumnConstraints prefWidth='100' />
+						<ColumnConstraints prefWidth='100' />
+						<ColumnConstraints prefWidth='100' />
+						<ColumnConstraints prefWidth='100' />
 					</columnConstraints>
 					<rowConstraints>
-						<RowConstraints prefHeight='44'/>
-						<RowConstraints prefHeight='476'/>
+						<RowConstraints prefHeight='44' />
+						<RowConstraints prefHeight='476' />
 					</rowConstraints>
 					<children>
-						<VBox prefHeight='44' prefWidth='100'
-						GridPane.rowIndex='0' GridPane.columnIndex='1'
-						alignment='CENTER'
-						styleClass='background'>
+						<VBox prefHeight='44' prefWidth='100' GridPane.rowIndex='0'
+							GridPane.columnIndex='1' alignment='CENTER' styleClass='background'>
 							<children>
 								<Label text='dd. month' prefHeight='22' prefWidth='100'
-								alignment='CENTER' fx:id='monDate'/>
+									alignment='CENTER' fx:id='monDate' />
 								<Label text='Monday' prefHeight='22' prefWidth='100'
-								alignment='CENTER'/>
+									alignment='CENTER' />
 							</children>
 						</VBox>
-						<VBox prefHeight='44' prefWidth='100'
-						GridPane.rowIndex='0' GridPane.columnIndex='2'
-						alignment='CENTER'>
+						<VBox prefHeight='44' prefWidth='100' GridPane.rowIndex='0'
+							GridPane.columnIndex='2' alignment='CENTER'>
 							<children>
 								<Label text='dd. month' prefHeight='22' prefWidth='100'
-								alignment='CENTER' fx:id='tuesDate'/>
+									alignment='CENTER' fx:id='tuesDate' />
 								<Label text='Tuesday' prefHeight='22' prefWidth='100'
-								alignment='CENTER'/>
+									alignment='CENTER' />
 							</children>
 						</VBox>
-						<VBox prefHeight='44' prefWidth='100'
-						GridPane.rowIndex='0' GridPane.columnIndex='3'
-						alignment='CENTER'>
+						<VBox prefHeight='44' prefWidth='100' GridPane.rowIndex='0'
+							GridPane.columnIndex='3' alignment='CENTER'>
 							<children>
 								<Label text='dd. month' prefHeight='22' prefWidth='100'
-								alignment='CENTER' fx:id='wedDate'/>
+									alignment='CENTER' fx:id='wedDate' />
 								<Label text='Wednesday' prefHeight='22' prefWidth='100'
-								alignment='CENTER'/>
+									alignment='CENTER' />
 							</children>
 						</VBox>
-						<VBox prefHeight='44' prefWidth='100'
-						GridPane.rowIndex='0' GridPane.columnIndex='4'
-						alignment='CENTER'>
+						<VBox prefHeight='44' prefWidth='100' GridPane.rowIndex='0'
+							GridPane.columnIndex='4' alignment='CENTER'>
 							<children>
 								<Label text='dd. month' prefHeight='22' prefWidth='100'
-								alignment='CENTER' fx:id='thurDate'/>
+									alignment='CENTER' fx:id='thurDate' />
 								<Label text='Thursday' prefHeight='22' prefWidth='100'
-								alignment='CENTER'/>
+									alignment='CENTER' />
 							</children>
 						</VBox>
-						<VBox prefHeight='44' prefWidth='100'
-						GridPane.rowIndex='0' GridPane.columnIndex='5'
-						alignment='CENTER'>
+						<VBox prefHeight='44' prefWidth='100' GridPane.rowIndex='0'
+							GridPane.columnIndex='5' alignment='CENTER'>
 							<children>
 								<Label text='dd. month' prefHeight='22' prefWidth='100'
-								alignment='CENTER' fx:id='friDate'/>
+									alignment='CENTER' fx:id='friDate' />
 								<Label text='Friday' prefHeight='22' prefWidth='100'
-								alignment='CENTER'/>
+									alignment='CENTER' />
 							</children>
 						</VBox>
-						<VBox prefHeight='44' prefWidth='100'
-						GridPane.rowIndex='0' GridPane.columnIndex='6'
-						alignment='CENTER'>
+						<VBox prefHeight='44' prefWidth='100' GridPane.rowIndex='0'
+							GridPane.columnIndex='6' alignment='CENTER'>
 							<children>
 								<Label text='dd. month' prefHeight='22' prefWidth='100'
-								alignment='CENTER' fx:id='satDate'/>
+									alignment='CENTER' fx:id='satDate' />
 								<Label text='Saturday' prefHeight='22' prefWidth='100'
-								alignment='CENTER'/>
+									alignment='CENTER' />
 							</children>
 						</VBox>
-						<VBox prefHeight='44' prefWidth='100'
-						GridPane.rowIndex='0' GridPane.columnIndex='7'
-						alignment='CENTER'>
+						<VBox prefHeight='44' prefWidth='100' GridPane.rowIndex='0'
+							GridPane.columnIndex='7' alignment='CENTER'>
 							<children>
 								<Label text='dd. month' prefHeight='22' prefWidth='100'
-								alignment='CENTER' fx:id='sunDate'/>
+									alignment='CENTER' fx:id='sunDate' />
 								<Label text='Sunday' prefHeight='22' prefWidth='100'
-								alignment='CENTER'/>
+									alignment='CENTER' />
 							</children>
 						</VBox>
-					<VBox GridPane.columnIndex='0' GridPane.rowIndex='1'
-						prefHeight='476' prefWidth='100'>
+						<VBox GridPane.columnIndex='0' GridPane.rowIndex='1'
+							prefHeight='476' prefWidth='100'>
 							<children>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='06:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='07:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='08:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='09:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='10:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='11:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='12:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='13:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='14:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='15:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='16:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='17:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='18:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='19:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='20:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='21:00'/>
-								<Label prefHeight='28' prefWidth='100'
-								alignment='TOP_CENTER' text='22:00'/>
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='06:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='07:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='08:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='09:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='10:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='11:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='12:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='13:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='14:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='15:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='16:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='17:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='18:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='19:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='20:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='21:00' />
+								<Label prefHeight='28' prefWidth='100' alignment='TOP_CENTER'
+									text='22:00' />
 							</children>
 						</VBox>
-						<AnchorPane fx:id='monAppointments' prefHeight='476' prefWidth='100'
-						GridPane.rowIndex='1' GridPane.columnIndex='1'/>
-						<AnchorPane fx:id='tuesAppointments' prefHeight='476' prefWidth='100'
-						GridPane.rowIndex='1' GridPane.columnIndex='2'/>
-						<AnchorPane fx:id='wedAppointments' prefHeight='476' prefWidth='100'
-						GridPane.rowIndex='1' GridPane.columnIndex='3'/>
-						<AnchorPane fx:id='thurAppointments' prefHeight='476' prefWidth='100'
-						GridPane.rowIndex='1' GridPane.columnIndex='4'/>
-						<AnchorPane fx:id='friAppointments' prefHeight='476' prefWidth='100'
-						GridPane.rowIndex='1' GridPane.columnIndex='5'/>
-						<AnchorPane fx:id='satAppointments' prefHeight='476' prefWidth='100'
-						GridPane.rowIndex='1' GridPane.columnIndex='6'/>
-						<AnchorPane fx:id='sunAppointments' prefHeight='476' prefWidth='100'
-						GridPane.rowIndex='1' GridPane.columnIndex='7'/>
+						<AnchorPane fx:id='monAppointments' prefHeight='476'
+							prefWidth='100' GridPane.rowIndex='1' GridPane.columnIndex='1' />
+						<AnchorPane fx:id='tuesAppointments' prefHeight='476'
+							prefWidth='100' GridPane.rowIndex='1' GridPane.columnIndex='2' />
+						<AnchorPane fx:id='wedAppointments' prefHeight='476'
+							prefWidth='100' GridPane.rowIndex='1' GridPane.columnIndex='3' />
+						<AnchorPane fx:id='thurAppointments' prefHeight='476'
+							prefWidth='100' GridPane.rowIndex='1' GridPane.columnIndex='4' />
+						<AnchorPane fx:id='friAppointments' prefHeight='476'
+							prefWidth='100' GridPane.rowIndex='1' GridPane.columnIndex='5' />
+						<AnchorPane fx:id='satAppointments' prefHeight='476'
+							prefWidth='100' GridPane.rowIndex='1' GridPane.columnIndex='6' />
+						<AnchorPane fx:id='sunAppointments' prefHeight='476'
+							prefWidth='100' GridPane.rowIndex='1' GridPane.columnIndex='7' />
 					</children>
 				</GridPane>
 				<HBox prefHeight='40' prefWidth='800'>
 					<children>
 						<Button fx:id='month' onAction='#monthClicked' text='Month'
-						alignment='CENTER' prefHeight='40' prefWidth='400'/>
+							alignment='CENTER' prefHeight='40' prefWidth='400' />
 						<Button fx:id='newAppointment' onAction='#newAction' text='+ new appointment'
-						alignment='CENTER' prefHeight='40' prefWidth='400'/>
+							alignment='CENTER' prefHeight='40' prefWidth='400' />
 					</children>
 				</HBox>
 			</children>
