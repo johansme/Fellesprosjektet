@@ -123,7 +123,7 @@
 							prefHeight="49.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<Button alignment="CENTER" contentDisplay="CENTER"
+						<Button fx:id="addButton" onAction="#addPerson" alignment="CENTER" contentDisplay="CENTER"
 							maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
 							prefHeight="25.0" prefWidth="59.0" text="Add"
 							GridPane.halignment="LEFT" />

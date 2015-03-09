@@ -16,6 +16,9 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -29,6 +32,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import login.LoginMain;
 import login.SceneHandler;
 
 public class NewAppointmentController implements ControllerInterface {
@@ -53,6 +57,7 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private MenuButton room; 
 	@FXML private ListView<String> listView; 
 	@FXML private Button removeUserButton; 
+	@FXML private Button addButton; 
 	private ObservableList<String> listViewData = FXCollections.observableArrayList();
 	ObservableList<MenuItem> roomValueList;
 	
@@ -85,7 +90,7 @@ public class NewAppointmentController implements ControllerInterface {
 		// canselbutton pressed: close the stage
 
 		// get a handle to the stage
-		Stage stage = (Stage) cancelButton.getScene().getWindow();
+		Stage stage = (Stage)cancelButton.getScene().getWindow();
 		// do what you have to do
 		stage.close();
 
@@ -148,11 +153,11 @@ public class NewAppointmentController implements ControllerInterface {
 			a.setUsers(Arrays.asList(gruppe2));
 			a.setAdmin(true);
 			a.setOpened(true);
-			for (Appointment ap : days) {
+			for (Appointment ap : days) 
+			{
 				ap.addAppointmentToDay();
 			}
-			SceneHandler sh = new SceneHandler();
-			sh.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved", this);
+			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved", this);
 			// get a handle to the stage
 			Stage stage = (Stage) saveButton.getScene().getWindow();
 			// do what you got to do :)
@@ -494,6 +499,13 @@ public class NewAppointmentController implements ControllerInterface {
 		}
 		else sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, "No participant selected.", this);
 		
+		
+	}
+	
+	@FXML
+	public void addPerson(){
+		
+		LoginMain.launch("AddParticipants.fxml");
 		
 	}
 
