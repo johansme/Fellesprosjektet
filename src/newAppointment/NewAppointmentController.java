@@ -105,7 +105,13 @@ public class NewAppointmentController implements ControllerInterface {
 			LocalDate startDate = fromDate.getValue();
 			LocalDate endDate = toDate.getValue();
 			List<Appointment> days = new ArrayList<Appointment>();
-			int diff = Math.abs(endDate.getDayOfYear()-startDate.getDayOfYear());
+			int diff = endDate.getDayOfYear()-startDate.getDayOfYear();
+			if (endDate.getYear()>startDate.getYear()) {
+				diff = diff+365;
+				if (startDate.isLeapYear()) {
+					diff++;
+				}
+			}
 			for (int i=0; i<diff+1; i++) {
 				if (i==0) {
 					a.setStartTime(LocalTime.parse(fromField.getText()));

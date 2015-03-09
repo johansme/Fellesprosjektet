@@ -24,16 +24,25 @@ public class InfoController implements MessageController {
 	
 	@FXML
 	private void okButtonPressed(Event e) {
-		if (e.getSource().equals(screen)) {
-			if (!(((KeyEvent) e).getCode()==KeyCode.ENTER)) {
-				return;
-			}
-		}
 
 		// get a handle to the stage
 	    Stage stage = (Stage) okButton.getScene().getWindow();
 	    stage.close();
 	}
+	
+	@FXML
+	private void keyPressed(KeyEvent e) {
+		if (e.getCode()==KeyCode.ENTER) {
+			okButtonPressed((Event) e);
+		}
+		else if (e.getCode()==KeyCode.ESCAPE) {
+			okButtonPressed((Event) e);
+		}
+		else {
+			return;
+		}
+	}
+
 
 	@Override
 	public void setReferenceController(ControllerInterface controller) {

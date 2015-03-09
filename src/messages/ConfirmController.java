@@ -24,12 +24,20 @@ public class ConfirmController implements MessageController {
 	}
 	
 	@FXML
-	private void okButtonPressed(Event e) {
-		if (e.getSource().equals(screen)) {
-			if (!(((KeyEvent) e).getCode()==KeyCode.ENTER)) {
-				return;
-			}
+	private void keyPressed(KeyEvent e) {
+		if (e.getCode()==KeyCode.ENTER) {
+			okButtonPressed((Event) e);
 		}
+		else if (e.getCode()==KeyCode.ESCAPE) {
+			cancelButtonPressed();
+		}
+		else {
+			return;
+		}
+	}
+	
+	@FXML
+	private void okButtonPressed(Event e) {
 		//TODO Fix functionality for confirming action 
 		// get a handle to the stage
 	    Stage stage = (Stage) okButton.getScene().getWindow();
