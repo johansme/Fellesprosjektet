@@ -2,8 +2,10 @@ package newAppointment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
@@ -452,8 +454,8 @@ public class NewAppointmentController implements ControllerInterface {
 	{
 		
 		listViewData.add(new String("Steve Jobs"));
-		listViewData.add(new String("Mark Zuvkerberg"));
-		listViewData.add(new String("Bill gates"));
+		listViewData.add(new String("Mark Zuckerberg"));
+		listViewData.add(new String("Bill Gates"));
 		listViewData.add(new String("Edward Snowden"));
 		listViewData.add(new String("Steve Wozniak"));
 		listViewData.add(new String("Edward Snowden"));
