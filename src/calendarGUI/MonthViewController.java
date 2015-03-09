@@ -1,6 +1,7 @@
 package calendarGUI;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,6 +168,7 @@ public class MonthViewController implements ControllerInterface {
 
 
 	@FXML private Button newAppointment;
+	@FXML private Button newGroup;
 
 	private List<MonthDayViewController> weekList1;
 	private List<MonthDayViewController> weekList2;
@@ -392,17 +394,29 @@ public class MonthViewController implements ControllerInterface {
 	}
 	
 	@FXML
-	private void prevOrNext(KeyEvent e) {
+	private void keyPressed(KeyEvent e) {
 		if (e.getCode()==KeyCode.LEFT) {
 			previousClicked(e);
 		}
 		else if (e.getCode()==KeyCode.RIGHT) {
 			nextClicked(e);
 		}
+		else if (e.getCode()==KeyCode.PLUS) {
+			newAppointmentAction();
+		}
+		else if (e.getCode()==KeyCode.ENTER) {
+			calendar.setCurrentDate(LocalDate.now());
+			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
+		}
 		else {
 			return;
 		}
 
+	}
+	
+	@FXML
+	private void newGroupAction() {
+		//TODO add new group
 	}
 
 }

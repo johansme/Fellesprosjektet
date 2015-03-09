@@ -13,7 +13,7 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="calendarGUI.MonthViewController" stylesheets="resources/defaultTheme.css"
-	fx:id='screen' onKeyPressed="#prevOrNext">
+	fx:id='screen' onKeyPressed="#keyPressed">
 	<children>
 		<HBox alignment="CENTER" prefHeight="50" prefWidth="800" layoutX="150">
 			<children>
@@ -233,6 +233,10 @@
 					prefHeight="41" prefWidth="415" onAction="#newAppointmentAction" 
 					GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="6"
 					GridPane.valignment="TOP"/>
+				<Button fx:id="newGroup" text="+ New group" alignment="CENTER"
+					prefHeight="41" prefWidth="415" onAction="#newGroupAction" 
+					GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="6"
+					GridPane.valignment="BOTTOM"/>
 			</children>
 		</GridPane>
 	</children>
