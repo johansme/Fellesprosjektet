@@ -2,6 +2,7 @@ package shared;
 
 import java.util.Date;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Appointment {
@@ -63,11 +64,28 @@ public class Appointment {
 	
 	public JSONObject toJSON() {
 		JSONObject obj = new JSONObject();
-		obj.put("description", description);
-		obj.put("location", location);
-		obj.put("start", start.toString());
-		obj.put("end", end.toString());
-		obj.put("modified", modified.toString());
+		try {
+			obj.put("id", id);
+			obj.put("description", description);
+			obj.put("location", location);
+			obj.put("start", start.getTime());
+			obj.put("end", end.getTime());
+			obj.put("modified", modified.getTime());
+		} catch(JSONException e) { return null; }
 		return obj;
+	}
+	
+	public Appointment fromJSON(JSONObject obj) {
+		Appointment app = new Appointment();
+		try {
+			app.id = obj.getInt("id");
+			app.description = obj.getString("description");
+			app.location = obj.getString("location");
+			start = new Date(obj.getInt("start"));
+			end = new Date(obj.getInt("end"));
+			modified = new Date(obj.getInt("modified"));
+			
+		} catch(JSONException e) { return null; }
+		return app;
 	}
 }
