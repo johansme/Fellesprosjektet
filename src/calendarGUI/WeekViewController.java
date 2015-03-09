@@ -197,7 +197,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	@FXML
 	public void monthClicked(Event e) {
 		sceneHandler = new SceneHandler();
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml", 800, 600, calendar);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml", 950, 600, calendar);
 	}
 	
 	@FXML
