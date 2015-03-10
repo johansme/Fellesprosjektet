@@ -5,7 +5,7 @@ import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
-import calendar.User;
+import calendar.Participant;
 import calendarGUI.ControllerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,27 +24,27 @@ public class AddParticipantsController implements ControllerInterface {
 	@FXML private Button addButton;
 	@FXML private Button cancelButton;
 	
-	private List<User> searchListItems = new ArrayList<User>();
-	private List<User> addListItems = new ArrayList<User>();
+	private List<Participant> searchListItems = new ArrayList<Participant>();
+	private List<Participant> addListItems = new ArrayList<Participant>();
 	
 	private Calendar calendar;
 	private NewAppointmentController newAppointmentController;
 	
 	@FXML
 	private void initialize() {
-		List<User> users = new ArrayList<User>();
+		List<Participant> participants = new ArrayList<Participant>();
 		//TODO get users from server, add to searchList
-		for (User user : users) {
+		for (Participant participant : participants) {
 			HBox line = new HBox();
 			Label userLabel = new Label();
 			
 			userLabel.wrapTextProperty().set(true);
 			
-			userLabel.setText(user.toString());
+			userLabel.setText(participant.toString());
 			line.getChildren().add(userLabel);
 			
 			searchList.getItems().add(line);
-			searchListItems.add(user);
+			searchListItems.add(participant);
 		}
 	}
 	
@@ -52,9 +52,9 @@ public class AddParticipantsController implements ControllerInterface {
 	@FXML
 	private void addUserButtonPressed() {
 		int i = searchList.getFocusModel().getFocusedIndex();
-		User addedUser = searchListItems.remove(i);
+		Participant addedParticipant = searchListItems.remove(i);
 		HBox userLabel = searchList.getItems().remove(i);
-		addListItems.add(addedUser);
+		addListItems.add(addedParticipant);
 		addList.getItems().add(userLabel);
 	}
 	
@@ -62,16 +62,16 @@ public class AddParticipantsController implements ControllerInterface {
 	@FXML
 	private void removeUserButtonPressed() {
 		int i = addList.getFocusModel().getFocusedIndex();
-		User removedUser = addListItems.remove(i);
+		Participant removedParticipant = addListItems.remove(i);
 		HBox userLabel = addList.getItems().remove(i);
-		searchListItems.add(removedUser);
+		searchListItems.add(removedParticipant);
 		searchList.getItems().add(userLabel);
 	}
 	
 	@FXML
 	private void addButtonPressed() {
-		for (User user : addListItems) {
-			newAppointmentController.addParticipant(user);
+		for (Participant participant : addListItems) {
+			newAppointmentController.addParticipant(participant);
 		}
 		SceneHandler sh = new SceneHandler();
 		sh.popUpMessage("/messages/Info.fxml", 300, 150, "The participants have been added", this);
@@ -90,9 +90,28 @@ public class AddParticipantsController implements ControllerInterface {
 	@FXML
 	private void searchTextChanged() {
 		String search = searchText.getText();
-		int i = searchListItems.size()/2;
-		//TODO decide order for name sorting
-		
+		int index = 0;
+		for (int i = 0; i < searchListItems.size(); i++) {
+			String s = searchListItems.get(i).toString();
+			s = s.replaceAll(",", "");
+			s = s.replaceAll(";", "");
+			String[] sa = s.split(" ");
+			search = search.replaceAll(",", "");
+			String[] searchArray = search.split(" ");
+			if (sa[0].startsWith(searchArray[0])) {
+				if (sa[0].equalsIgnoreCase(searchArray[0]) && searchArray.length > 1) {
+					if (sa[1].startsWith(searchArray[1])) {
+						index = i;
+						if (sa[1].equalsIgnoreCase(searchArray[1])) {
+							break;
+						}
+					}
+				} else {
+					index = i;
+				}
+			}
+		}
+		searchList.getFocusModel().focus(index);
 	}
 
 	@Override
