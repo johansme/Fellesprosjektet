@@ -16,9 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -32,7 +29,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import login.LoginMain;
 import login.SceneHandler;
 
 public class NewAppointmentController implements ControllerInterface {
@@ -59,6 +55,7 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private Button removeUserButton; 
 	@FXML private Button addButton; 
 	private ObservableList<String> listViewData = FXCollections.observableArrayList();
+	private List<User> participantList = new ArrayList<User>();
 	ObservableList<MenuItem> roomValueList;
 	
 
@@ -149,7 +146,6 @@ public class NewAppointmentController implements ControllerInterface {
 				}
 
 			User gruppe2 = new User();
-			gruppe2.setUsername("Gruppe 2");
 			a.setUsers(Arrays.asList(gruppe2));
 			a.setAdmin(true);
 			a.setOpened(true);
@@ -505,8 +501,14 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML
 	public void addPerson(){
 		
-		
-		
+	}
+	
+	public void addParticipant(User user) {
+		if (user != null && ! participantList.contains(user)) {
+			participantList.add(user);
+			listViewData.add(user.toString());
+			listView.getItems().add(user.toString());
+		}
 	}
 
 }
