@@ -75,7 +75,7 @@ public class Appointment {
 		return obj;
 	}
 	
-	public Appointment fromJSON(JSONObject obj) {
+	public static Appointment fromJSON(JSONObject obj) {
 		Appointment app = new Appointment();
 		try {
 			app.id = obj.getInt("id");

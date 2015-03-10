@@ -18,7 +18,7 @@ public class Room {
 		return obj;
 	}
 	
-	public Room fromJSON(JSONObject obj) {
+	public static Room fromJSON(JSONObject obj) {
 		Room room = new Room();
 		try {
 			room.id = obj.getInt("id");
