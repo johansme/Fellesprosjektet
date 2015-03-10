@@ -14,7 +14,7 @@ fx:controller='calendarGUI.WeekViewController'
 stylesheets="resources/defaultTheme.css"
 fx:id="screen" onKeyPressed='#keyPressed'>
 	<children>
-		<fx:include fx:id="filter" source="GroupView.fxml" />
+		<fx:include fx:id="filter" source="GroupView.fxml"/>
 		<VBox prefWidth='800' prefHeight='600' layoutX="150" styleClass='background'>
 			<children>
 				<HBox prefHeight='40' prefWidth='800' styleClass="background">
