@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.Headers;
+
+import server.User;
 
 public class Server {
 	private HttpSessionManager sessionMgr;
@@ -20,6 +24,11 @@ public class Server {
 
 	public HttpSessionManager getSessionManager() {
 		return sessionMgr;
+	}
+	
+	public User getUserFromExchange(HttpExchange t) {
+		Headers h = t.getRequestHeaders();		
+		return sessionMgr.getUserFromSession(h.getFirst("X-FP-Session"));
 	}
 
 	private void run() {

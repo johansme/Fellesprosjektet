@@ -406,7 +406,7 @@ public class MonthViewController implements ControllerInterface {
 		}
 		else if (e.getCode()==KeyCode.ENTER) {
 			calendar.setCurrentDate(LocalDate.now());
-			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 800, 600, getData());
+			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
 		}
 		else {
 			return;

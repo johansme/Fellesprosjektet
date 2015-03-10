@@ -149,12 +149,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void prevAction() {
-		setWeek(calendar.getCurrentDate().minusWeeks(1));
 		calendar.changeWeek(false);
-		setYear(calendar.getCurrentDate());
-		setDates(calendar.getCurrentDate());
-		setAppointments(calendar.getCurrentDate());
-
+		setView(calendar);
 	}
 	
 	@FXML
@@ -162,11 +158,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void nextAction() {
-		setWeek(calendar.getCurrentDate().plusWeeks(1));
 		calendar.changeWeek(true);
-		setYear(calendar.getCurrentDate());
-		setDates(calendar.getCurrentDate());
-		setAppointments(calendar.getCurrentDate());
+		setView(calendar);
 	}
 	
 	@FXML

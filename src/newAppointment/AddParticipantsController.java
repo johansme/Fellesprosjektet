@@ -2,7 +2,6 @@ package newAppointment;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;

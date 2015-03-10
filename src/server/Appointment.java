@@ -34,10 +34,41 @@ public class Appointment extends shared.Appointment {
 			db.close();
 		}
 	}
-	
+
+	public static boolean createAppointment(Appointment a) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "INSERT INTO Appointment VALUES(0, ?, ?, ?, ?, NOW(), ?)";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setString(1, a.location);
+			stm.setString(2, a.description);
+			stm.setDate(3, new java.sql.Date(a.start.getTime()));
+			stm.setDate(4, new java.sql.Date(a.end.getTime()));
+			stm.setInt(5, a.creator);
+						
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
 	
 	public User getCreatorUser() {
 		try { return new User(creator);	}
 		catch(SQLException e) { return null; }
+	}
+	
+	public Appointment() {
+		
 	}
 }

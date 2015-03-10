@@ -27,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import login.SceneHandler;
@@ -490,6 +491,7 @@ public class NewAppointmentController implements ControllerInterface {
 		if(user != null){
 			listViewData.remove(user);
 			String msg = user + " removed";
+			
 			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, msg, this);
 			
 		}
