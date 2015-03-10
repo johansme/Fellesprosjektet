@@ -118,7 +118,7 @@ public class Calendar {
 	public void addFutureMonths(int numberOfMonths) {
 		Month month = months.get(months.size()-1);
 		LocalDate date = month.getDay(1).getDate();
-		for (int i = 1; i <= numberOfMonths; i++) {
+		for (int i = 1; i < numberOfMonths+1; i++) {
 			months.add(new Month(date.plusMonths(i)));
 		}
 	}
