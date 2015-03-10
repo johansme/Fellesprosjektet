@@ -81,9 +81,9 @@ public class Appointment {
 			app.id = obj.getInt("id");
 			app.description = obj.getString("description");
 			app.location = obj.getString("location");
-			start = new Date(obj.getInt("start"));
-			end = new Date(obj.getInt("end"));
-			modified = new Date(obj.getInt("modified"));
+			app.start = new Date(obj.getInt("start"));
+			app.end = new Date(obj.getInt("end"));
+			app.modified = new Date(obj.getInt("modified"));
 			
 		} catch(JSONException e) { return null; }
 		return app;
