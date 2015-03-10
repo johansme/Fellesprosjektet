@@ -113,7 +113,6 @@ public class AppointmentViewController extends Application implements Controller
 		}
 		else {
 			User u = new User();
-			u.setUsername("TestUser");
 
 			if (toggleAnswer.getSelectedToggle()==yes) {
 				appointment.setAttending("Y");
