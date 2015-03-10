@@ -26,5 +26,6 @@ public abstract class HttpAPIHandler implements HttpHandler{
 		t.sendResponseHeaders(200, response_str.length());
 		OutputStream out = t.getResponseBody();
 		out.write(response_str.getBytes());
+		t.close();
 	}
 }
