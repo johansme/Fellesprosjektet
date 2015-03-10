@@ -136,5 +136,11 @@ public class AddParticipantsController implements ControllerInterface {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setNewAppointmentController(NewAppointmentController controller) {
+		if (controller != null) {
+			this.newAppointmentController = controller;
+		}
+	}
 
 }
