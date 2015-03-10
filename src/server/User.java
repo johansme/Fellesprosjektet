@@ -170,7 +170,7 @@ public class User extends shared.User {
 		ArrayList<User> list = new ArrayList<User>();
 		
 		DBConnection db = null;
-		final String str_fmt = "SELECT id,name,surname,email,admin FROM User";
+		final String str_fmt = "SELECT id,name,surname,email,admin,username FROM User";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
@@ -185,6 +185,7 @@ public class User extends shared.User {
 				u.surname = rs.getString("surname");
 				u.email = rs.getString("email");
 				u.admin = rs.getBoolean("admin");
+				u.username = rs.getString("username");
 				list.add(u);
 			}
 		} catch(Exception e) {
