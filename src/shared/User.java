@@ -60,7 +60,7 @@ public class User {
 		return obj;
 	}
 
-	public User fromJSON(JSONObject obj) {
+	public static User fromJSON(JSONObject obj) {
 		User user = new User();
 		try {
 			user.id = obj.getInt("id");
