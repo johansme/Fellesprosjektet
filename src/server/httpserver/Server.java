@@ -19,6 +19,7 @@ public class Server {
 		sessionMgr.start();
 		server = HttpServer.create(new InetSocketAddress(8000), 200);
 		server.createContext("/login", new HttpLogin(this));
+		server.createContext("/rooms", new HttpRooms(this));
 		server.setExecutor(null);
 	}
 
