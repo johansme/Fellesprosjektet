@@ -44,6 +44,10 @@ public class Month {
 		return days;
 	}
 	
+	public LocalDate getMonthValue() {
+		return month;
+	}
+	
 	// inputting days into the attribute array.
 	private void createDays() {
 		for (int i = 0; i < days.length; i++) {
