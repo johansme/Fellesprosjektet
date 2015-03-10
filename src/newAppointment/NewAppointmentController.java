@@ -111,9 +111,11 @@ public class NewAppointmentController implements ControllerInterface {
 			List<Appointment> days = new ArrayList<Appointment>();
 			int diff = endDate.getDayOfYear()-startDate.getDayOfYear();
 			if (endDate.getYear()>startDate.getYear()) {
-				diff = diff+365;
-				if (startDate.isLeapYear()) {
-					diff++;
+				for (int i=0; i<endDate.getYear()-startDate.getYear(); i++) {
+					diff+=365;
+					if (startDate.plusYears(i).isLeapYear()) {
+						diff++;
+					}
 				}
 			}
 			for (int i=0; i<diff+1; i++) {
@@ -147,8 +149,6 @@ public class NewAppointmentController implements ControllerInterface {
 				a.setLocation(room.textProperty().getValue()); 
 				}
 
-			User gruppe2 = new User();
-			a.setUsers(Arrays.asList(gruppe2));
 			a.setAdmin(true);
 			a.setOpened(true);
 			for (Appointment ap : days) 
