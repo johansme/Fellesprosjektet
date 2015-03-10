@@ -8,6 +8,7 @@ import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.Participant;
 import calendar.User;
 import calendarGUI.ControllerInterface;
 import javafx.collections.FXCollections;
@@ -56,7 +57,7 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private Button removeUserButton; 
 	@FXML private Button addButton; 
 	private ObservableList<String> listViewData = FXCollections.observableArrayList();
-	private List<User> participantList = new ArrayList<User>();
+	private List<Participant> participantList = new ArrayList<Participant>();
 	ObservableList<MenuItem> roomValueList;
 	
 
@@ -505,11 +506,11 @@ public class NewAppointmentController implements ControllerInterface {
 		
 	}
 	
-	public void addParticipant(User user) {
-		if (user != null && ! participantList.contains(user)) {
-			participantList.add(user);
-			listViewData.add(user.toString());
-			listView.getItems().add(user.toString());
+	public void addParticipant(Participant participant) {
+		if (participant != null && ! participantList.contains(participant)) {
+			participantList.add(participant);
+			listViewData.add(participant.toString());
+			listView.getItems().add(participant.toString());
 		}
 	}
 
