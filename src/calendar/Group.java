@@ -2,14 +2,15 @@ package calendar;
 
 import java.util.List;
 
-public class Group {
+public class Group implements Participant {
 	
 	private List<User> users;
 	private User admin;
 	private int id;
 	private String name;
 	
-	public Group(List<User> u, User a, String n) {
+	public Group(int id, List<User> u, User a, String n) {
+		this.id = id;
 		setUsers(u);
 		admin = a;
 		name = n;
@@ -46,7 +47,7 @@ public class Group {
 	}
 	
 	public void addUser(User user) {
-		if (!users.contains(user)) {
+		if (user != null && ! users.contains(user)) {
 			users.add(user);
 		}
 	}
@@ -55,6 +56,11 @@ public class Group {
 		if (users.contains(user)) {
 			users.remove(user);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 }
