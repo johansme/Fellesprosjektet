@@ -2,6 +2,7 @@ package newAppointment;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
@@ -91,6 +92,7 @@ public class AddParticipantsController implements ControllerInterface {
 		String search = searchText.getText();
 		int i = searchListItems.size()/2;
 		//TODO decide order for name sorting
+		
 	}
 
 	@Override
