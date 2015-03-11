@@ -12,9 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import login.SceneHandler;
 
 public class AddParticipantsController implements ControllerInterface {
 	
@@ -33,7 +34,7 @@ public class AddParticipantsController implements ControllerInterface {
 	@FXML
 	private void initialize() {
 		List<Participant> participants = new ArrayList<Participant>();
-		//TODO get users from server, add to searchList
+		//TODO get participants from server, add to searchList
 		for (Participant participant : participants) {
 			HBox line = new HBox();
 			Label userLabel = new Label();
@@ -73,8 +74,6 @@ public class AddParticipantsController implements ControllerInterface {
 		for (Participant participant : addListItems) {
 			newAppointmentController.addParticipant(participant);
 		}
-		SceneHandler sh = new SceneHandler();
-		sh.popUpMessage("/messages/Info.fxml", 300, 150, "The participants have been added", this);
 		// get a handle to the stage
 	    Stage stage = (Stage) cancelButton.getScene().getWindow();
 	    stage.close();
@@ -133,13 +132,28 @@ public class AddParticipantsController implements ControllerInterface {
 
 	@Override
 	public void setFeedback() {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	public void setNewAppointmentController(NewAppointmentController controller) {
 		if (controller != null) {
 			this.newAppointmentController = controller;
+		}
+	}
+	
+	@FXML
+	private void keyPressed(KeyEvent e) {
+		if (e.getCode()==KeyCode.LEFT) {
+			removeUserButtonPressed();
+		}
+		else if (e.getCode()==KeyCode.RIGHT) {
+			addUserButtonPressed();
+		}
+		else if (e.getCode()==KeyCode.ENTER) {
+			addButtonPressed();
+		}
+		else {
+			return;
 		}
 	}
 
