@@ -3,7 +3,6 @@ package calendarGUI;
 import java.util.ArrayList;
 import java.util.List;
 
-import calendar.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
