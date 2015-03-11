@@ -26,9 +26,11 @@ public class GroupViewController {
 	private void refreshGroups(List<Integer> groups){
 		//flush current AppointmentList
 		//get new List;
+		System.out.println("::::::_____:::::::");
 		for (Integer i : groupIDs) {
 			System.out.println(i);
 		}
+		System.out.println("::::::_____:::::::");
 		
 	}
 	
@@ -72,7 +74,8 @@ public class GroupViewController {
 				}
 				else {
 					// remove focused groupID
-					groupIDs.remove(g.getId());
+					
+					groupIDs.remove(groupIDs.indexOf( g.getId()));
 					refreshGroups(groupIDs);
 					
 				}
