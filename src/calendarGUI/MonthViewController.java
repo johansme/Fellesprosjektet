@@ -29,6 +29,7 @@ public class MonthViewController implements ControllerInterface {
 
 	@FXML private Button previous;
 	@FXML private Button next;
+	
 
 	@FXML private Label week1;
 	@FXML private Label week2;
@@ -180,6 +181,7 @@ public class MonthViewController implements ControllerInterface {
 
 	@FXML
 	private void initialize() {
+		
 		weekList1 = new ArrayList<MonthDayViewController>();
 		weekList1.add(week1Day1Controller);
 		weekList1.add(week1Day2Controller);
