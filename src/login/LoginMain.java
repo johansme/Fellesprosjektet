@@ -17,6 +17,7 @@ public class LoginMain extends Application {
 			Parent root = (Parent)FXMLLoader.load(getClass().getResource("/login/loginScreen.fxml"));
 			Scene scene = new Scene(root,307,258);
 			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch(Exception e) 
 		{
@@ -27,6 +28,5 @@ public class LoginMain extends Application {
 	public static void main(String[] args) {
 		new ReceiveRoom();
 		launch(args);
-		
 	}
 }
