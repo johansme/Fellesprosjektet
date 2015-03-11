@@ -21,10 +21,12 @@ public class Group implements Participant {
 	}
 
 	public void setUsers(List<User> users) {
+		if(users != null){
 		for (User user: users) {
 			if (!this.users.contains(user)) {
 				this.users.add(user);
 			}
+		}
 		}
 	}
 
