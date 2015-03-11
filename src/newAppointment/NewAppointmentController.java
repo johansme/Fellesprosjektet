@@ -3,13 +3,11 @@ package newAppointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Participant;
-import calendar.User;
 import calendarGUI.ControllerInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +26,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import login.SceneHandler;
@@ -101,12 +98,7 @@ public class NewAppointmentController implements ControllerInterface {
 
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
-<<<<<<< HEAD
-
-			if(header.getText()=="Edit appointment") {
-=======
 			if (header.getText()=="Edit appointment") {
->>>>>>> bc91b1544075b8edaedcad5cfd50ca4a82b5a198
 				appointment.delete();
 			}
 			Appointment a = new Appointment();
@@ -365,10 +357,6 @@ public class NewAppointmentController implements ControllerInterface {
 	//adding 30 minutes to fromTimeHours:fromTimeMin
 	//checking if hours or mins are >= 0 and <= 9, if yes add "0"
 	private String getRoundHalfHour(int fromTimeHour, int fromTimeMin){
-		
-		if(fromTimeHour >= 1 && fromTimeHour <= 9){
-			String s = "0" + fromTimeHour;
-		}
 		
 		if(fromTimeMin == 0){
 			return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + fromTimeHour + ":" + (fromTimeMin + 30) : fromTimeHour + ":" + (fromTimeMin + 30); 
@@ -663,12 +651,7 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void addPerson(){
-<<<<<<< HEAD
-
-
-
-=======
-		
+		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getData(), this);
 	}
 	
 	public void addParticipant(Participant participant) {
@@ -677,7 +660,6 @@ public class NewAppointmentController implements ControllerInterface {
 			listViewData.add(participant.toString());
 			listView.getItems().add(participant.toString());
 		}
->>>>>>> bc91b1544075b8edaedcad5cfd50ca4a82b5a198
 	}
 
 }
