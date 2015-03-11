@@ -98,11 +98,8 @@ public class NewAppointmentController implements ControllerInterface {
 
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
-<<<<<<< HEAD
 
 			if(header.getText()=="Edit appointment") {
-=======
->>>>>>> 321b8400ce75a7d625483cbb65d798ab4eae0bcb
 			if (header.getText()=="Edit appointment") {
 				appointment.delete();
 			}
@@ -207,101 +204,145 @@ public class NewAppointmentController implements ControllerInterface {
 		sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, msg, this);
 	}
 	
-	// methods for handling input in time fields
-	@FXML
-	private void fromTime(){
+	private boolean checkValidFromField(){
+
 		
-		String fromTime = fromField.textProperty().getValue();
-		int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
-		int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
-		
-		if(!fromField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !fromField.textProperty().getValue().matches("\\d\\d") ){
-			fromField.setText(toTwoDigits(LocalTime.now().getHour()) +":" + toTwoDigits(LocalTime.now().getMinute()));
-			toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+		if(!fromField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !fromField.textProperty().getValue().matches("\\d\\d") && !fromField.textProperty().getValue().matches("\\d") ){
+			
+			fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
+			return true;
 			
 		}else if(fromField.textProperty().getValue().matches("\\d\\d")){
 
 			fromField.setText(fromField.getText() + ":00");
+			return true;
+		}
+		 if(fromField.textProperty().getValue().matches("\\d")){
+			System.out.println("0" + fromField.getText() + ":00");
+			fromField.setText("0" + fromField.getText() + ":00");
+			return true;
+		}
+		return true; 
+		
+	}
+	
+	private boolean checkValidToField(){
+
+		
+		if(!toField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !toField.textProperty().getValue().matches("\\d\\d") && !toField.textProperty().getValue().matches("\\d") ){
+			
+			toField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
+			return true;
+			
+		}else if(toField.textProperty().getValue().matches("\\d\\d")){
+
+			toField.setText(toField.getText() + ":00");
+			return true;
+		}
+		 if(toField.textProperty().getValue().matches("\\d")){
+			System.out.println("0" + toField.getText() + ":00");
+			toField.setText("0" + toField.getText() + ":00");
+			return true;
+		}
+		return true; 
+		
+	}
+	
+	// methods for handling input in time fields
+	@FXML
+	private void fromTime(){
+		
+		if(checkValidFromField()){
+			System.out.println(fromField.textProperty().getValue());
+			String fromTime = fromField.textProperty().getValue();
+			int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
+			int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
+			
 			toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-		}
-		if(!validFromTime()){
-			fromField.setText(toTwoDigits(LocalTime.now().getHour()) +":" + toTwoDigits(LocalTime.now().getMinute()));
-			String ftm = fromTimeMin + "";
-			if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin) + "0");
-			else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-		}
-
-		if(minAndMaxAllowedStartTime())
-		{
 			
-			String ftm = fromTimeMin + "";
-			if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-			else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-		}
-		else{
+			if(!validFromTime())
+			{
+				fromField.setText(toTwoDigits(LocalTime.now().getHour()) +":" + toTwoDigits(LocalTime.now().getMinute()));
+				String ftm = fromTimeMin + "";
+				if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin) + "0");
+				else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+			}
 			
-			if(fromTimeHour >= 22 && fromTimeMin > 30){
-				fromField.setText("22:30");
-				toField.setText("23:00");
-				printErrorMessage();
+			
+			if(minAndMaxAllowedStartTime())
+			{
+				String ftm = fromTimeMin + "";
+				if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 			}
-			else if(fromTimeHour < 6 && fromTimeHour >= 0){
-				fromField.setText("06:00");
-				toField.setText("06:30");
-				printErrorMessage();
+			else{
+				
+				if(fromTimeHour >= 22 && fromTimeMin > 30){
+					fromField.setText("22:30");
+					toField.setText("23:00");
+					printErrorMessage();
+				}
+				else if(fromTimeHour < 6 && fromTimeHour >= 0){
+					fromField.setText("06:00");
+					toField.setText("06:30");
+					printErrorMessage();
+				}
 			}
 		}
-
+		else System.out.println("BiG shitty error!");
+	
 	}
 
 	@FXML
 	private void toTime(){
-
-		String fromTime = fromField.textProperty().getValue();
-		int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
-		int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
 		
-		String value = toField.textProperty().getValue();
-		
-		
-		if( !value.matches("\\d\\d:\\d\\d") && !toField.textProperty().getValue().matches("\\d\\d") ){
+		if(checkValidToField()){
 			
-			toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-			toField.setPromptText("Ugyldig");
+			String fromTime = fromField.textProperty().getValue();
+			int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
+			int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
 			
-		}else if(value.matches("\\d\\d")){
+			String toTime = toField.textProperty().getValue();
+			int toTimeHour = Integer.parseInt(toTime.split(":")[0]);
+			int toTimeMin = Integer.parseInt(toTime.split(":")[1]);
 
-			toField.setText(toField.getText());
-		}
-		if(!validToTime()){
-			String ftm = fromTimeMin + "";
-			if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-			else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-
-		}
-
-		if(minAndMaxAllowedToTime())
-		{
+			int timeHourToMinDiff = (toTimeHour - fromTimeHour) * 60;
+			int timeMinDiff = toTimeMin - fromTimeMin;
+			int timeDiffInMin;
+			if (timeHourToMinDiff > timeMinDiff)
+				timeDiffInMin = timeHourToMinDiff - timeMinDiff;
+			else 
+				timeDiffInMin = timeMinDiff - timeHourToMinDiff;
 			
-		}
-		
-		else
-		{
-			
-			String ftm = fromTimeMin + "";
-			if(fromTimeHour == 22 && fromTimeMin > 30){
-				toField.setText("23:00");
+			if(!validToTime()){
+				String ftm = fromTimeMin + "";
+				if(ftm.equals("0") && timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				//else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				
 			}
-			else if(ftm.equals("0")) 
+			
+			if(!minAndMaxAllowedToTime())
 			{
-				toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				
+				String ftm = fromTimeMin + "";
+				
+				if(fromTimeHour >= 22 && fromTimeMin > 30){
+					fromField.setText("22:30");
+					toField.setText("23:00");
+					printErrorMessage();
+				}
+				else if(fromTimeHour > 22 && fromTimeMin >= 0){
+					fromField.setText("22:30");
+					toField.setText("23:00");
+					printErrorMessage();
+				}
+				else if(ftm.equals("0") && timeDiffInMin < 30) 
+				{
+					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				}
+				//else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				
 			}
-			else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-			
-			
-			printErrorMessage();
-			
-			
 		}
 
 	}
@@ -655,13 +696,8 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void addPerson(){
-<<<<<<< HEAD
 
-
-		
-=======
 		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getData(), this);
->>>>>>> 321b8400ce75a7d625483cbb65d798ab4eae0bcb
 	}
 	
 	public void addParticipant(Participant participant) {
