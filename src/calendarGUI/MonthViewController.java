@@ -168,6 +168,8 @@ public class MonthViewController implements ControllerInterface {
 
 	@FXML private Button newAppointment;
 	@FXML private Button newGroup;
+	
+	@FXML private Button admin;
 
 	private List<MonthDayViewController> weekList1;
 	private List<MonthDayViewController> weekList2;
@@ -302,6 +304,15 @@ public class MonthViewController implements ControllerInterface {
 		week4.setText("" + Calendar.getWeekNumber(week4Day1Controller.getDay().getDate()));
 		week5.setText("" + Calendar.getWeekNumber(week5Day1Controller.getDay().getDate()));
 		week6.setText("" + Calendar.getWeekNumber(week6Day1Controller.getDay().getDate()));
+		
+		if (calendar.getLoggedInUser() != null) {
+			if (calendar.getLoggedInUser().isAdmin()) {
+				newAppointment.setPrefWidth(310);
+				newGroup.setPrefWidth(310);
+				admin.setVisible(true);
+				admin.setDisable(false);
+			}
+		}
 	}
 
 
@@ -416,6 +427,11 @@ public class MonthViewController implements ControllerInterface {
 	@FXML
 	private void newGroupAction() {
 		//TODO add new group
+	}
+	
+	@FXML
+	private void adminPressed() {
+		
 	}
 
 }
