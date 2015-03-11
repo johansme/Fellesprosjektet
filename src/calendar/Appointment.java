@@ -16,7 +16,7 @@ public class Appointment {
 	private LocalTime startTime;
 	private LocalTime endTime;
 	private String location;
-	private int overlap;
+	private int[] overlap = new int[2];
 	private boolean opened=false;
 	private boolean admin;
 	private Day day;
@@ -274,12 +274,23 @@ public class Appointment {
 		return true;
 	}
 
-	public int getOverlap() {
+	public void calculateOverlap() {
+		day.calculateOverlap();
+	}
+	
+	public int[] getOverlap() {
 		return overlap;
 	}
-
-	public void setOverlap(int o) {
-		overlap=o;
+	
+	public void clearOverlap() {
+		overlap[0]=0;
+		overlap[1]=0;
+	}
+	
+	
+	public void addOverlap(int[] i) {
+		overlap[0]+=i[0];
+		overlap[1]+=i[1];
 	}
 
 	public void setID(int id) {

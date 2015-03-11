@@ -75,4 +75,64 @@ public class Day {
 		return dirty;
 	}
 
+	public void calculateOverlap() {
+		if (!appointments.isEmpty() || appointments!=null) {
+			for (Appointment a : appointments) {
+				a.clearOverlap();
+			}
+			if(appointments.size()>1) {
+				sortAppointments();
+				int[] overlap = new int[2];
+				overlap[0]=0;
+				overlap[1]=0;
+				int t1;
+				int t2;
+				if (appointments.size()>1) {
+					for (int i=0; i<appointments.size()-1; i++) {
+						t1 = appointments.get(i).getStartTime().getHour()+((appointments.get(i).getStartTime().getMinute())/60);
+						for (int j=i+1; j<appointments.size(); j++) {
+							t2 = appointments.get(j).getStartTime().getHour()+((appointments.get(j).getStartTime().getMinute())/60);
+							if (t2-t1<0.5) {
+								overlap[0]=1;
+								overlap[1]=1;
+							}
+							else if (appointments.get(j).getStartTime().isBefore(appointments.get(i).getEndTime())) {
+								overlap[1]=1;
+							}
+							appointments.get(j).addOverlap(overlap);
+							overlap[0]=0;
+							overlap[1]=0;
+							
+						}
+					}
+				}
+			}
+		}
+		
+	}
+	
+	private void sortAppointments() {
+		List<Appointment> newAppointments = new ArrayList<Appointment>();
+		newAppointments.add(appointments.get(0));
+		for (int i=1; i<appointments.size(); i++) {
+			int t2 = appointments.get(i).getStartTime().getHour()+((appointments.get(i).getStartTime().getMinute())/60);
+			for (int j=0; j<appointments.size()-i; j++) {
+				int t1 = newAppointments.get(j).getStartTime().getHour()+((newAppointments.get(j).getStartTime().getMinute())/60);
+				if (t2<=t1) {
+					newAppointments.add(j, appointments.get(i));
+					break;
+				}
+				else {
+					if (j==appointments.size()-1) {
+						newAppointments.add(appointments.get(i));
+					}
+				}
+			}
+		}
+		appointments.clear();
+		for (int i=0; i<newAppointments.size(); i++) {
+			appointments.add(newAppointments.get(i));
+		}
+	}
+
 }
