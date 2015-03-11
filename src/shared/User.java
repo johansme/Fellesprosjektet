@@ -24,11 +24,11 @@ public class User {
 	}
 	
 	public String getSurname() {
-		return name;
+		return surname;
 	}
 
 	public void setSurname(String name) {
-		this.name = name;
+		this.name = surname;
 	}
 
 	public String getEmail() {
@@ -60,7 +60,7 @@ public class User {
 		return obj;
 	}
 
-	public User fromJSON(JSONObject obj) {
+	public static User fromJSON(JSONObject obj) {
 		User user = new User();
 		try {
 			user.id = obj.getInt("id");

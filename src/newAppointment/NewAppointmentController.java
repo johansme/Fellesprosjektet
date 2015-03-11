@@ -8,6 +8,7 @@ import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.Participant;
 import calendar.User;
 import calendarGUI.ControllerInterface;
 import javafx.collections.FXCollections;
@@ -16,9 +17,6 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -33,7 +31,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import login.LoginMain;
 import login.SceneHandler;
 
 public class NewAppointmentController implements ControllerInterface {
@@ -60,6 +57,7 @@ public class NewAppointmentController implements ControllerInterface {
 	@FXML private Button removeUserButton; 
 	@FXML private Button addButton; 
 	private ObservableList<String> listViewData = FXCollections.observableArrayList();
+	private List<Participant> participantList = new ArrayList<Participant>();
 	ObservableList<MenuItem> roomValueList;
 
 
@@ -103,8 +101,12 @@ public class NewAppointmentController implements ControllerInterface {
 
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
+<<<<<<< HEAD
 
 			if(header.getText()=="Edit appointment") {
+=======
+			if (header.getText()=="Edit appointment") {
+>>>>>>> bc91b1544075b8edaedcad5cfd50ca4a82b5a198
 				appointment.delete();
 			}
 			Appointment a = new Appointment();
@@ -113,9 +115,11 @@ public class NewAppointmentController implements ControllerInterface {
 			List<Appointment> days = new ArrayList<Appointment>();
 			int diff = endDate.getDayOfYear()-startDate.getDayOfYear();
 			if (endDate.getYear()>startDate.getYear()) {
-				diff = diff+365;
-				if (startDate.isLeapYear()) {
-					diff++;
+				for (int i=0; i<endDate.getYear()-startDate.getYear(); i++) {
+					diff+=365;
+					if (startDate.plusYears(i).isLeapYear()) {
+						diff++;
+					}
 				}
 			}
 			for (int i=0; i < diff+1; i++) {
@@ -136,7 +140,6 @@ public class NewAppointmentController implements ControllerInterface {
 					a.setEndTime(LocalTime.parse("23:00"));
 				}
 				a.setDate(startDate.plusDays(i));
-				calendar.setCurrentDate(startDate.plusDays(i));
 				a.setData(calendar);
 				days.add(a);
 				a = new Appointment();
@@ -149,9 +152,6 @@ public class NewAppointmentController implements ControllerInterface {
 				a.setLocation(room.textProperty().getValue()); 
 			}
 
-			User gruppe2 = new User();
-			gruppe2.setUsername("Gruppe 2");
-			a.setUsers(Arrays.asList(gruppe2));
 			a.setAdmin(true);
 			a.setOpened(true);
 			for (Appointment ap : days) 
@@ -663,9 +663,21 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void addPerson(){
+<<<<<<< HEAD
 
 
 
+=======
+		
+	}
+	
+	public void addParticipant(Participant participant) {
+		if (participant != null && ! participantList.contains(participant)) {
+			participantList.add(participant);
+			listViewData.add(participant.toString());
+			listView.getItems().add(participant.toString());
+		}
+>>>>>>> bc91b1544075b8edaedcad5cfd50ca4a82b5a198
 	}
 
 }

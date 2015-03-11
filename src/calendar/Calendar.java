@@ -12,8 +12,10 @@ public class Calendar {
 	private LocalDate currentDate;
 	private Month currentMonth;
 	private List<Month> months;
+	private User loggedInUser;
 
-	public Calendar() {
+	public Calendar(User loggedIn) {
+		this.loggedInUser = loggedIn;
 		currentDate = LocalDate.now();
 		currentMonth = new Month(currentDate);
 		months = new ArrayList<Month>();
@@ -30,9 +32,45 @@ public class Calendar {
 		return currentMonth;
 	}
 	
+	public User getLoggedInUser() {
+		return loggedInUser;
+	}
+	
 	public void setCurrentDate(LocalDate date) {
 		if (date != null && date.isAfter(LocalDate.of(1999, 12, 31))) {
 			currentDate = date;
+			Month tempMonth = currentMonth;
+			if (! currentDate.getMonth().toString().equals(currentMonth.getMonth())) {
+				int i = months.indexOf(currentMonth);
+				if (currentMonth.getMonthValue().isBefore(currentDate)) {
+					for (int j=1; j<12; j++) {
+						if (i == months.size()-1) {
+							addFutureMonths(3);
+						}
+						tempMonth = months.get(i + 1);
+						if (currentDate.getMonth()==months.get(i+1).getMonthValue().getMonth()) {
+							currentMonth = tempMonth;
+							return;
+						}
+						i++;
+
+					}
+				}
+				else {
+					for (int j=1; j<12; j++) {
+						if (i==0) {
+							addPastMonths(3);
+							i=months.indexOf(tempMonth);
+						}
+						tempMonth = months.get(i - 1);
+						if (currentDate.getMonth()==months.get(i-1).getMonthValue().getMonth()) {
+							currentMonth = tempMonth;
+							return;
+						}
+						i--;
+					}
+				}
+			}
 		}
 	}
 
@@ -86,7 +124,7 @@ public class Calendar {
 	public void addFutureMonths(int numberOfMonths) {
 		Month month = months.get(months.size()-1);
 		LocalDate date = month.getDay(1).getDate();
-		for (int i = 1; i <= numberOfMonths; i++) {
+		for (int i = 1; i < numberOfMonths+1; i++) {
 			months.add(new Month(date.plusMonths(i)));
 		}
 	}
@@ -104,28 +142,5 @@ public class Calendar {
 		}
 	}
 	
-	public void changeWeek(boolean b) throws IllegalStateException { //boolean avgjor om det er next week eller previous
-		if (b==true) {
-			currentDate = currentDate.plusWeeks(1);
-			if (! currentDate.getMonth().toString().equals(currentMonth.getMonth())) {
-				int i = months.indexOf(currentMonth);
-				if (i == months.size()-1) {
-					addFutureMonths(3);
-				}
-				currentMonth = months.get(i + 1);
-			}
-		}
-		else {
-			currentDate = currentDate.minusWeeks(1);
-			if (! getCurrentDate().getMonth().toString().equals(getCurrentMonth().getMonth())) {
-				int i = months.indexOf(getCurrentMonth());
-				if (i == 0) {
-					addPastMonths(1);
-					i = months.indexOf(getCurrentMonth());
-				}
-				currentMonth = months.get(i-1);
-			}
-		}
-	}
 	
 }

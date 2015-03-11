@@ -3,12 +3,17 @@ package server;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 public class User extends shared.User {
 
 	private String password;
+	
+	public User() {
+		
+	}
 	
 	public static boolean createUser(User u, String password) {
 		DBConnection db = null;
@@ -160,4 +165,37 @@ public class User extends shared.User {
 			db.close();
 		}
 	}
+
+	public static ArrayList<User> getAllUsers() {
+		ArrayList<User> list = new ArrayList<User>();
+		
+		DBConnection db = null;
+		final String str_fmt = "SELECT id,name,surname,email,admin,username FROM User";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {
+				User u = new User();
+				u.id = rs.getInt("id");
+				u.name = rs.getString("name");
+				u.surname = rs.getString("surname");
+				u.email = rs.getString("email");
+				u.admin = rs.getBoolean("admin");
+				u.username = rs.getString("username");
+				list.add(u);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return list;
+}
 }

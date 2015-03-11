@@ -1,5 +1,7 @@
 package login;
 
+import newAppointment.AddParticipantsController;
+import newAppointment.NewAppointmentController;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;
@@ -108,10 +110,23 @@ public class SceneHandler {
 		}
 	}
 	
-	
-	
-	
-		
-	
+	// for use when adding participants in NewAppointmentController
+	public void popUpParticipants(String fxmlPath, int width,int height,Calendar calendar, NewAppointmentController controller ){
+		Stage primaryStage = new Stage();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+			Parent root = loader.load();
+			Scene scene = new Scene(root,width,height);
+			AddParticipantsController addPartController = (AddParticipantsController) loader.getController();
+			addPartController.setNewAppointmentController(controller);
+			addPartController.setData(calendar);
+			primaryStage.setScene(scene);
+			primaryStage.centerOnScreen();
+			primaryStage.show();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

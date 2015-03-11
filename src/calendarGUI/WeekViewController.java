@@ -43,7 +43,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		}
 	}
 	
-	private Calendar calendar = new Calendar();
+	private Calendar calendar = new Calendar(null);
 	private SceneHandler sceneHandler;
 	private List<Day> days = new ArrayList<Day>();
 	private HashMap<Integer, Appointment> appointments = new HashMap<Integer, Appointment>();
@@ -58,9 +58,9 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	public void setView(Calendar c) {
 		calendar=c;
+		setDates(calendar.getCurrentDate());
 		setWeek(calendar.getCurrentDate());
 		setYear(calendar.getCurrentDate());
-		setDates(calendar.getCurrentDate());
 		setAppointments(calendar.getCurrentDate());
 		}
 	
@@ -149,12 +149,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void prevAction() {
-		setWeek(calendar.getCurrentDate().minusWeeks(1));
-		calendar.changeWeek(false);
-		setYear(calendar.getCurrentDate());
-		setDates(calendar.getCurrentDate());
-		setAppointments(calendar.getCurrentDate());
-
+		calendar.setCurrentDate(calendar.getCurrentDate().minusWeeks(1));
+		setView(calendar);
 	}
 	
 	@FXML
@@ -162,11 +158,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void nextAction() {
-		setWeek(calendar.getCurrentDate().plusWeeks(1));
-		calendar.changeWeek(true);
-		setYear(calendar.getCurrentDate());
-		setDates(calendar.getCurrentDate());
-		setAppointments(calendar.getCurrentDate());
+		calendar.setCurrentDate(calendar.getCurrentDate().plusWeeks(1));
+		setView(calendar);
 	}
 	
 	@FXML
@@ -292,6 +285,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		sunAppointments.getChildren().clear();
 		int i = (d.getDayOfWeek().getValue()-1);
 		LocalDate day = d.minusDays(i);
+		calendar.setCurrentDate(day);
 		for (int j=1; j<8; j++) {
 			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
 			for (int x = appointments.size()-1; x>=0; x--) {
@@ -321,8 +315,10 @@ public class WeekViewController extends Application implements ControllerInterfa
 				}
 				
 			}
-			day=day.plusDays(1);			
+			day=day.plusDays(1);
+			calendar.setCurrentDate(day);
 		}
+		calendar.setCurrentDate(calendar.getCurrentDate().minusDays(6));
 	}
 	
 	private AnchorPane drawAppointment(Appointment a, int overlapNum) {
@@ -395,7 +391,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		if (calendar != null) {
 			this.calendar = calendar;
 		} else {
-			this.calendar = new Calendar();
+			this.calendar = new Calendar(null);
 		}
 		setView(this.calendar);
 	}

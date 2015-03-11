@@ -1,4 +1,4 @@
-package server;
+package shared;
 
 import java.io.IOException;
 import java.io.InputStream;

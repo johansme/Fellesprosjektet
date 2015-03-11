@@ -51,7 +51,7 @@ public class Appointment {
 			added = true;
 		} else {
 			for (Month month : calendar.getMonths()) {
-				if (month.getYear() == date.getYear() && month.getMonth().equals(date.getMonth().toString())) {
+				if (month.getYear() == date.getYear() && month.getMonthValue().getMonth()==date.getMonth()) {
 					this.day = month.getDay(date.getDayOfMonth());
 					day.addAppointment(this);
 					added = true;
@@ -71,10 +71,12 @@ public class Appointment {
 				day.addAppointment(this);
 			} else {
 				int i = 0;
-				if (date.getYear() == calendar.getMonths().get(0).getYear()) {
-					i = date.getMonthValue() - calendar.getMonths().get(0).getDay(1).getDate().getMonthValue();
+				if (date.getYear() == calendar.getMonths().get(calendar.getMonths().size()-1).getYear()) {
+					i = date.getMonthValue() - calendar.getMonths().get(calendar.getMonths().size()-1).getMonthValue().getMonthValue();
 				} else {
-					i = calendar.getMonths().get(0).getDay(1).getDate().getMonthValue() + (date.getYear() - calendar.getMonths().get(0).getYear() - 1)*12 + (12 - date.getMonthValue());
+					i = (12-(calendar.getMonths().get(calendar.getMonths().size()-1).getMonthValue().getMonthValue()))
+							+(date.getMonthValue())
+							+(12*((date.getYear()-1)-(calendar.getMonths().get(calendar.getMonths().size()-1).getYear())));
 				}
 				calendar.addFutureMonths(i);
 				this.day = calendar.getMonths().get(calendar.getMonths().size()-1).getDay(date.getDayOfMonth());

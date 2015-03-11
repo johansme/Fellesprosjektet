@@ -44,7 +44,7 @@ public class AppointmentViewController extends Application implements Controller
 	private SceneHandler sceneHandler;
 	private Calendar calendar;
 	private Appointment appointment;
-	//TODO SCALING
+
 	@FXML
 	private Label purpose;
 	
@@ -113,7 +113,6 @@ public class AppointmentViewController extends Application implements Controller
 		}
 		else {
 			User u = new User();
-			u.setUsername("TestUser");
 
 			if (toggleAnswer.getSelectedToggle()==yes) {
 				appointment.setAttending("Y");
@@ -198,7 +197,6 @@ public class AppointmentViewController extends Application implements Controller
 			participants.getItems().clear();
 			List<User> partpts = appointment.getUsers();
 			for (User p : partpts) {
-				//TODO
 				HBox line = new HBox();
 				line.setPrefWidth(participants.getPrefWidth()-35);
 				Label userLabel = new Label();
@@ -295,7 +293,6 @@ public class AppointmentViewController extends Application implements Controller
 
 	@Override
 	public Calendar getData() {
-		// TODO Auto-generated method stub
 		return this.calendar;
 	}
 

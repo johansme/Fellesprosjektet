@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.Headers;
+
+import server.User;
 
 public class Server {
 	private HttpSessionManager sessionMgr;
@@ -15,11 +19,17 @@ public class Server {
 		sessionMgr.start();
 		server = HttpServer.create(new InetSocketAddress(8000), 200);
 		server.createContext("/login", new HttpLogin(this));
+		server.createContext("/rooms", new HttpRooms(this));
 		server.setExecutor(null);
 	}
 
 	public HttpSessionManager getSessionManager() {
 		return sessionMgr;
+	}
+	
+	public User getUserFromExchange(HttpExchange t) {
+		Headers h = t.getRequestHeaders();		
+		return sessionMgr.getUserFromSession(h.getFirst("X-FP-Session"));
 	}
 
 	private void run() {
