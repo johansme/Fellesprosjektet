@@ -24,11 +24,11 @@ public class User {
 	}
 	
 	public String getSurname() {
-		return name;
+		return surname;
 	}
 
 	public void setSurname(String name) {
-		this.name = name;
+		this.name = surname;
 	}
 
 	public String getEmail() {

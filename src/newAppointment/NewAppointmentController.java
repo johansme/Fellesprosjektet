@@ -101,7 +101,6 @@ public class NewAppointmentController implements ControllerInterface {
 		
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
-
 			if (header.getText()=="Edit appointment") {
 				appointment.delete();
 			}
@@ -136,7 +135,6 @@ public class NewAppointmentController implements ControllerInterface {
 					a.setEndTime(LocalTime.parse("23:00"));
 				}
 				a.setDate(startDate.plusDays(i));
-				calendar.setCurrentDate(startDate.plusDays(i));
 				a.setData(calendar);
 				days.add(a);
 				a = new Appointment();
