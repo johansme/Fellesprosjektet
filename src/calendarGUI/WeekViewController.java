@@ -295,6 +295,9 @@ public class WeekViewController extends Application implements ControllerInterfa
 		calendar.setCurrentDate(day);
 		for (int j=1; j<8; j++) {
 			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
+			if (!appointments.isEmpty()) {
+				appointments.get(0).calculateOverlap();
+			}
 			for (int x = appointments.size()-1; x>=0; x--) {
 				Appointment a = appointments.get(x);
 				this.appointments.put(a.getID(), a);
@@ -328,7 +331,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		calendar.setCurrentDate(calendar.getCurrentDate().minusDays(6));
 	}
 	
-	private AnchorPane drawAppointment(Appointment a, int overlapNum) {
+	private AnchorPane drawAppointment(Appointment a, int[] overlapNum) {
 		int start = (((a.getStartTime().getHour())-6)*28)+(((a.getStartTime().getMinute())/2));
 		int end = (((a.getEndTime().getHour())-6)*28)+(((a.getEndTime().getMinute())/2));
 
@@ -341,12 +344,12 @@ public class WeekViewController extends Application implements ControllerInterfa
 		Polygon box = new Polygon(
 				0, 0, 
 				79, 0, 
-				Math.min(95, 80+(overlapNum*5)), (0+(overlapNum*14)), 
-				Math.min(100, 85+(overlapNum*5)), (2+(overlapNum*14)), 
-				Math.min(100, 85+(overlapNum*5)), (12+(overlapNum*14)), 
-				Math.min(95, 80+(overlapNum*5)), (14+(overlapNum*14)), 
-				Math.min(95, 80+(overlapNum*5)), Math.max(14+(overlapNum*14), end-start), 
-				0, Math.max(14+(overlapNum*14), end-start));
+				Math.min(95, 80+(overlapNum[1]*5)), (0+(overlapNum[0]*14)), 
+				Math.min(100, 85+(overlapNum[1]*5)), (2+(overlapNum[0]*14)), 
+				Math.min(100, 85+(overlapNum[1]*5)), (12+(overlapNum[0]*14)), 
+				Math.min(95, 80+(overlapNum[1]*5)), (14+(overlapNum[0]*14)), 
+				Math.min(95, 80+(overlapNum[1]*5)), Math.max(14+(overlapNum[0]*14), end-start), 
+				0, Math.max(14+(overlapNum[0]*14), end-start));
 		box.setStroke(Color.BLACK);
 		if (a.getAdmin()) {
 			box.setFill(Color.AQUAMARINE);
@@ -360,7 +363,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		
 		Label description = new Label();
 		description.setPrefWidth(90);
-		description.setLayoutY(0+(overlapNum*14));
+		description.setLayoutY(overlapNum[0]*14);
 		description.setAlignment(Pos.TOP_CENTER);
 		description.setText(a.getDescription());	
 		description.setFont(Font.font(10));

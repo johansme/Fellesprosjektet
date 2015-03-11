@@ -156,8 +156,7 @@ public class NewAppointmentController implements ControllerInterface {
 			// do what you got to do :)
 			stage.close();
 		}
-		else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
+		else { sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
 		}
 	}
 

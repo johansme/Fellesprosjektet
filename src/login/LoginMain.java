@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 
 public class LoginMain extends Application {
 	
-	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
