@@ -341,7 +341,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 				Math.min(100, 85+(overlapNum[1]*5)), (2+(overlapNum[0]*14)), 
 				Math.min(100, 85+(overlapNum[1]*5)), (12+(overlapNum[0]*14)), 
 				Math.min(95, 80+(overlapNum[1]*5)), (14+(overlapNum[0]*14)), 
-				Math.min(95, 80+(overlapNum[1]*5)), Math.max(14+(overlapNum[1]*14), end-start), 
+				Math.min(95, 80+(overlapNum[1]*5)), Math.max(14+(overlapNum[0]*14), end-start), 
 				0, Math.max(14+(overlapNum[0]*14), end-start));
 		box.setStroke(Color.BLACK);
 		if (a.getAdmin()) {
@@ -356,7 +356,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		
 		Label description = new Label();
 		description.setPrefWidth(90);
-		description.setLayoutY(0+(overlapNum[1]*14));
+		description.setLayoutY(overlapNum[0]*14);
 		description.setAlignment(Pos.TOP_CENTER);
 		description.setText(a.getDescription());	
 		description.setFont(Font.font(10));
