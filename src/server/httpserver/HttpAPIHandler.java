@@ -30,14 +30,22 @@ public abstract class HttpAPIHandler implements HttpHandler{
 	}
 	
 	static protected void sendUnauthorised(HttpExchange t) throws IOException {
-		send(t, new JSONObject().append("status", false).append("error", "Not authorised"));
+		send(t, new JSONObject().put("status", false).put("error", "Not authorised"));
 	}
 	
 	static protected void sendUnauthenticated(HttpExchange t) throws IOException {
-		send(t, new JSONObject().append("status", false).append("error", "Not authenticated"));
+		send(t, new JSONObject().put("status", false).put("error", "Not authenticated"));
 	}
 	
 	static protected void sendInvalidCommand(HttpExchange t) throws IOException {
-		send(t, new JSONObject().append("status", false).append("error", "Invalid command"));
+		send(t, new JSONObject().put("status", false).put("error", "Invalid command"));
+	}
+	
+	static protected void sendError(HttpExchange t, String error) throws IOException) {
+		send(t, new JSONObject().put("status", false).put("error", error));
+	}
+	
+	static protected void sendOK(HttpExchange t) throws IOException {
+		send(t, new JSONObject().put("status", "OK"));
 	}
 }
