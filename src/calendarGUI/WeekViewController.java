@@ -58,6 +58,13 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	public void setView(Calendar c) {
 		calendar=c;
+		if (calendar.getLoggedInUser() != null) {
+			if (calendar.getLoggedInUser().isAdmin()) {
+				newAppointment.setPrefWidth(315);
+				admin.setVisible(true);
+				admin.setDisable(false);
+			}
+		}
 		setDates(calendar.getCurrentDate());
 		setWeek(calendar.getCurrentDate());
 		setYear(calendar.getCurrentDate());
@@ -422,6 +429,13 @@ public class WeekViewController extends Application implements ControllerInterfa
 	}
 	
 	@FXML private Pane filter;
-	@FXML private GroupViewController filterController;
+	@FXML private FilterViewController filterController;
+	
+	@FXML private Button admin;
+	
+	@FXML
+	private void adminPressed() {
+		
+	}
 	
 }

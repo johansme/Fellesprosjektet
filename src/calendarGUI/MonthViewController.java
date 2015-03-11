@@ -164,7 +164,7 @@ public class MonthViewController implements ControllerInterface {
 	
 	
 	@FXML private Pane filter;
-	@FXML private GroupViewController filterController;
+	@FXML private FilterViewController filterController;
 
 
 	@FXML private Button newAppointment;
@@ -309,8 +309,7 @@ public class MonthViewController implements ControllerInterface {
 		
 		if (calendar.getLoggedInUser() != null) {
 			if (calendar.getLoggedInUser().isAdmin()) {
-				newAppointment.setPrefWidth(310);
-				newGroup.setPrefWidth(310);
+				newAppointment.setPrefWidth(315);
 				admin.setVisible(true);
 				admin.setDisable(false);
 			}
