@@ -3,13 +3,11 @@ package newAppointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Participant;
-import calendar.User;
 import calendarGUI.ControllerInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +26,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import login.SceneHandler;
@@ -101,8 +98,11 @@ public class NewAppointmentController implements ControllerInterface {
 
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
+<<<<<<< HEAD
 
 			if(header.getText()=="Edit appointment") {
+=======
+>>>>>>> 321b8400ce75a7d625483cbb65d798ab4eae0bcb
 			if (header.getText()=="Edit appointment") {
 				appointment.delete();
 			}
@@ -655,9 +655,13 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void addPerson(){
+<<<<<<< HEAD
 
 
 		
+=======
+		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getData(), this);
+>>>>>>> 321b8400ce75a7d625483cbb65d798ab4eae0bcb
 	}
 	
 	public void addParticipant(Participant participant) {
