@@ -101,12 +101,9 @@ public class NewAppointmentController implements ControllerInterface {
 
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
-<<<<<<< HEAD
 
 			if(header.getText()=="Edit appointment") {
-=======
 			if (header.getText()=="Edit appointment") {
->>>>>>> bc91b1544075b8edaedcad5cfd50ca4a82b5a198
 				appointment.delete();
 			}
 			Appointment a = new Appointment();
@@ -164,8 +161,7 @@ public class NewAppointmentController implements ControllerInterface {
 			// do what you got to do :)
 			stage.close();
 		}
-		else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
+		else sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
 		}
 	}
 
@@ -365,10 +361,6 @@ public class NewAppointmentController implements ControllerInterface {
 	//adding 30 minutes to fromTimeHours:fromTimeMin
 	//checking if hours or mins are >= 0 and <= 9, if yes add "0"
 	private String getRoundHalfHour(int fromTimeHour, int fromTimeMin){
-		
-		if(fromTimeHour >= 1 && fromTimeHour <= 9){
-			String s = "0" + fromTimeHour;
-		}
 		
 		if(fromTimeMin == 0){
 			return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + fromTimeHour + ":" + (fromTimeMin + 30) : fromTimeHour + ":" + (fromTimeMin + 30); 
@@ -663,11 +655,8 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void addPerson(){
-<<<<<<< HEAD
 
 
-
-=======
 		
 	}
 	
@@ -677,7 +666,6 @@ public class NewAppointmentController implements ControllerInterface {
 			listViewData.add(participant.toString());
 			listView.getItems().add(participant.toString());
 		}
->>>>>>> bc91b1544075b8edaedcad5cfd50ca4a82b5a198
 	}
 
 }
