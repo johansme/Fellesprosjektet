@@ -12,8 +12,10 @@ public class Calendar {
 	private LocalDate currentDate;
 	private Month currentMonth;
 	private List<Month> months;
+	private User loggedInUser;
 
-	public Calendar() {
+	public Calendar(User loggedIn) {
+		this.loggedInUser = loggedIn;
 		currentDate = LocalDate.now();
 		currentMonth = new Month(currentDate);
 		months = new ArrayList<Month>();
@@ -28,6 +30,10 @@ public class Calendar {
 
 	public Month getCurrentMonth() {
 		return currentMonth;
+	}
+	
+	public User getLoggedInUser() {
+		return loggedInUser;
 	}
 	
 	public void setCurrentDate(LocalDate date) {

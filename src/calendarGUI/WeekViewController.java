@@ -43,7 +43,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		}
 	}
 	
-	private Calendar calendar = new Calendar();
+	private Calendar calendar = new Calendar(null);
 	private SceneHandler sceneHandler;
 	private List<Day> days = new ArrayList<Day>();
 	private HashMap<Integer, Appointment> appointments = new HashMap<Integer, Appointment>();
@@ -391,7 +391,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		if (calendar != null) {
 			this.calendar = calendar;
 		} else {
-			this.calendar = new Calendar();
+			this.calendar = new Calendar(null);
 		}
 		setView(this.calendar);
 	}
