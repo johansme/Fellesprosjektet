@@ -31,6 +31,10 @@
 	get
 		In: gid(int)[]
 		Out: groups(Group)[]
+	add_user
+		In: gid(int),uid(int)
+	remove_user
+		In: gid(int),uid(int)
 
 /room
 	get_available
