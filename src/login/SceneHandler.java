@@ -1,7 +1,6 @@
 package login;
 
 import newAppointment.AddParticipantsController;
-import newAppointment.NewAppointmentController;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendarGUI.ControllerInterface;
@@ -44,9 +43,10 @@ public class SceneHandler {
 			Scene scene = new Scene(root,width,height);
 			ControllerInterface monthController = (ControllerInterface) loader.getController();
 			monthController.setData(calendar);
-			  stage.setScene(scene);
-			  stage.centerOnScreen();
-			  stage.show();
+			stage.hide();
+			stage.setScene(scene);
+			stage.centerOnScreen();
+			stage.show();
 			  
 			} catch(Exception er) {
 				er.printStackTrace();
