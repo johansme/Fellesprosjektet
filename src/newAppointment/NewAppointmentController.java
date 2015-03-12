@@ -98,11 +98,8 @@ public class NewAppointmentController implements ControllerInterface {
 
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
-<<<<<<< HEAD
 
-			if(header.getText()=="Edit appointment") {
-=======
->>>>>>> 1b03a9522b545aee19dc1d695ae38c019b63bca4
+			
 			if (header.getText()=="Edit appointment") {
 				appointment.delete();
 			}
@@ -161,9 +158,37 @@ public class NewAppointmentController implements ControllerInterface {
 			// do what you got to do :)
 			stage.close();
 		}
-		else { sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
+		else 
+		{
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
 		}
+
+		
 	}
+	
+	// method for checking if necessary fields are filled out @Birk
+		public boolean checkFieldsFill()
+		{
+			System.out.println(!descriptionField.textProperty().getValue().isEmpty());
+			System.out.println(!toField.textProperty().getValue().equals(""));
+			System.out.println(!fromField.textProperty().getValue().equals(""));
+			System.out.println(capasityField.textProperty().getValue() != "");
+			System.out.println(!room.textProperty().getValue().equals("Choose room"));
+			 
+			
+			
+			
+			if(!descriptionField.textProperty().getValue().isEmpty() &&
+				!toField.textProperty().getValue().equals("") &&
+				!fromField.textProperty().getValue().equals("") &&
+				capasityField.textProperty().getValue() != "" &&
+				!room.textProperty().getValue().equals("Choose room"))
+			{
+				
+				return true;
+			}
+			return false;
+		}
 
 	@FXML
 	private void checkCapasity(){
@@ -215,13 +240,17 @@ public class NewAppointmentController implements ControllerInterface {
 			fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
 			return true;
 			
-		}else if(fromField.textProperty().getValue().matches("\\d\\d")){
+		}
+		else if(fromField.textProperty().getValue().matches("\\d\\d:\\d")){
+			fromField.setText(fromField.getText() + "0");
+			return true;
+		}
+		else if(fromField.textProperty().getValue().matches("\\d\\d")){
 
 			fromField.setText(fromField.getText() + ":00");
 			return true;
 		}
 		 if(fromField.textProperty().getValue().matches("\\d")){
-			System.out.println("0" + fromField.getText() + ":00");
 			fromField.setText("0" + fromField.getText() + ":00");
 			return true;
 		}
@@ -232,18 +261,23 @@ public class NewAppointmentController implements ControllerInterface {
 	private boolean checkValidToField(){
 
 		
-		if(!toField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !toField.textProperty().getValue().matches("\\d\\d") && !toField.textProperty().getValue().matches("\\d") ){
+		if(!toField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !toField.textProperty().getValue().matches("\\d\\d") && !toField.textProperty().getValue().matches("\\d") )
+		{
 			
 			toField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
 			return true;
 			
-		}else if(toField.textProperty().getValue().matches("\\d\\d")){
+		}
+		else if(toField.textProperty().getValue().matches("\\d\\d:\\d")){
+			toField.setText(toField.getText() + "0");
+			return true;
+		}
+		else if(toField.textProperty().getValue().matches("\\d\\d")){
 
 			toField.setText(toField.getText() + ":00");
 			return true;
 		}
 		 if(toField.textProperty().getValue().matches("\\d")){
-			System.out.println("0" + toField.getText() + ":00");
 			toField.setText("0" + toField.getText() + ":00");
 			return true;
 		}
@@ -256,10 +290,13 @@ public class NewAppointmentController implements ControllerInterface {
 	private void fromTime(){
 		
 		if(checkValidFromField()){
-			System.out.println(fromField.textProperty().getValue());
 			String fromTime = fromField.textProperty().getValue();
 			int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
 			int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
+			
+			String toTime = toField.textProperty().getValue();
+			int toTimeHour = Integer.parseInt(toTime.split(":")[0]);
+			int toTimeMin = Integer.parseInt(toTime.split(":")[1]);
 			
 			toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 			
@@ -278,21 +315,31 @@ public class NewAppointmentController implements ControllerInterface {
 				if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 				else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 			}
-			else{
-				
-				if(fromTimeHour >= 22 && fromTimeMin > 30){
-					fromField.setText("22:30");
-					toField.setText("23:00");
-					printErrorMessage();
-				}
-				else if(fromTimeHour < 6 && fromTimeHour >= 0){
-					fromField.setText("06:00");
-					toField.setText("06:30");
-					printErrorMessage();
-				}
+			else 
+			{
+					
+					if(fromTimeHour >= 22 && fromTimeMin > 30 || toTimeHour >= 22 && toTimeMin >= 0 )
+					{
+						fromField.setText("22:30");
+						toField.setText("23:00");
+						printErrorMessage();
+					}
+					else if(fromTimeHour > 22 && fromTimeMin >= 0 || toTimeHour > 22 && toTimeMin >= 0){
+						fromField.setText("22:30");
+						toField.setText("23:00");
+						printErrorMessage();
+					}
+					else if(fromTimeHour < 6 && fromTimeHour >= 0)
+					{
+						fromField.setText("06:00");
+						toField.setText("06:30");
+						printErrorMessage();
+					}
+					
+					
 			}
 		}
-		else System.out.println("BiG shitty error!");
+		else System.out.println("BiG shitty error!"); //TODO do we need this shitty error? =O
 	
 	}
 
@@ -324,17 +371,24 @@ public class NewAppointmentController implements ControllerInterface {
 				
 			}
 			
+			if(fromTimeHour > toTimeHour)
+			{
+				toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				printErrorMessage();
+			}
+			
+			
 			if(!minAndMaxAllowedToTime())
 			{
 				
 				String ftm = fromTimeMin + "";
 				
-				if(fromTimeHour >= 22 && fromTimeMin > 30){
+				if(fromTimeHour >= 22 && fromTimeMin > 30 || toTimeHour >= 22 && toTimeMin >= 0 ){
 					fromField.setText("22:30");
 					toField.setText("23:00");
 					printErrorMessage();
 				}
-				else if(fromTimeHour > 22 && fromTimeMin >= 0){
+				else if(fromTimeHour > 22 && fromTimeMin >= 0 || toTimeHour > 22 && toTimeMin >= 0 ){
 					fromField.setText("22:30");
 					toField.setText("23:00");
 					printErrorMessage();
@@ -470,7 +524,6 @@ public class NewAppointmentController implements ControllerInterface {
 		String fraTid = fromField.textProperty().getValue();
 		int fraTidTime = Integer.parseInt(fraTid.split(":")[0]);
 		int fraTidMin = Integer.parseInt(fraTid.split(":")[1]);
-		System.out.println(fraTid);
 
 
 		// arithmetics for checking correct time
@@ -480,7 +533,7 @@ public class NewAppointmentController implements ControllerInterface {
 
 
 
-			// arithmetics for checking if fromTime is >= 06:00 and <= 22:30 //Alex
+			// arithmetics for checking if fromTime is >= 06:00 and <= 22:30 @Alex
 			if(LocalTime.now().getHour() < fraTidTime){
 				//appoint.setFra(LocalTime.of(fraTidTime,fraTidMin));
 				return true;
@@ -534,21 +587,30 @@ public class NewAppointmentController implements ControllerInterface {
 		datepicker.setDayCellFactory(dayCellFactory);
 
 	}
-
-
-	// set default data in fields to help user
-
+	
+	//On initialize, set from- and toField. add "0" if hour/minute is btwn 0 and 9 @Alex
+	
+	private void checkTodaysHourAndMin(){
+		
+		int todayHour = LocalTime.now().getHour();
+		int todayMinute = LocalTime.now().getMinute();
+		
+		//add "0" to hour and/or min
+		if(todayHour >= 0 && todayHour <= 9 && todayMinute >= 0 && todayMinute <= 9) fromField.setText("0" + (todayHour + 1) + ":" + "0" + todayMinute);
+		else if(todayHour >= 0 && todayHour <= 9) fromField.setText("0" + (todayHour + 1) + ":" + todayMinute);
+		else fromField.setText("0" + (todayHour + 1) + ":" + todayMinute);
+		toField.setText(getRoundHalfHour(LocalTime.now().getHour() + 1, LocalTime.now().getMinute()));
+	}
+	
+	// set default data in fields to help user @Birk
 	@FXML
 	public void initialize(){
 
 		getRoomFromDB();
 		descriptionField.setPromptText("Appointment Description...");
-		fromField.setText(LocalTime.now().getHour() + 1+":00" );
-		toField.setText(LocalTime.now().getHour() + 2 + ":00" );
-
+		checkTodaysHourAndMin();
 		addUsers();
 		capasityField.textProperty().setValue("1");
-
 		fromDate.setValue(LocalDate.now());
 		disableDates(fromDate, LocalDate.now());
 		toDate.setValue(LocalDate.now());
@@ -557,19 +619,6 @@ public class NewAppointmentController implements ControllerInterface {
 
 	}
 
-	// method for checking if necessary fields are filled out
-	public boolean checkFieldsFill(){
-
-		if(!descriptionField.textProperty().getValue().isEmpty() &&
-				toField.textProperty().getValue() != "" &&
-				fromField.textProperty().getValue() != "" &&
-				capasityField.textProperty().getValue() != "" &&
-				!room.textProperty().getValue().equals("Choose room")
-				){
-			return true;
-		}
-		return false;
-	}
 
 	@Override
 	public void setData(Calendar calendar) {
@@ -699,10 +748,7 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void addPerson(){
-<<<<<<< HEAD
 
-=======
->>>>>>> 1b03a9522b545aee19dc1d695ae38c019b63bca4
 		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getData(), this);
 	}
 	
