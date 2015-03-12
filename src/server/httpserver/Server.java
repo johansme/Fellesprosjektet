@@ -23,6 +23,7 @@ public class Server {
 		server.createContext("/user", new HttpUser(this));
 		server.createContext("/appointment", new HttpAppointment(this));
 		server.createContext("/invitation", new HttpInvitation(this));
+		server.createContext("/group", new HttpGroup(this));
 		server.setExecutor(null);
 	}
 
