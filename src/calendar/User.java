@@ -19,7 +19,10 @@ public class User extends shared.User implements Participant {
 	}
 	
 	public List<Group> getGroups() {
-		return groups;
+		if (groups!=null && !groups.isEmpty()) {
+			return groups;
+		}
+		return null;
 	}
 	
 	public User() {

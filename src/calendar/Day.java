@@ -146,7 +146,7 @@ public class Day {
 	public void setActiveAppointments() {
 		activeAppointments.clear();
 		for (Appointment a : appointments) {
-			if (a.getActive()) {
+			if (a.getActive(true)) {
 				activeAppointments.add(a);
 			}
 		}

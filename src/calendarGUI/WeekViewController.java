@@ -69,12 +69,13 @@ public class WeekViewController extends Application implements ControllerInterfa
 				admin.setDisable(true);
 			}
 		}
-		filterController.setData(calendar);
-		filterController.setParent(this);
 		setDates(calendar.getCurrentDate());
 		setWeek(calendar.getCurrentDate());
 		setYear(calendar.getCurrentDate());
 		setAppointments(calendar.getCurrentDate());
+		filterController.setData(calendar);
+		filterController.setParent(this);
+
 		}
 	
 	@FXML
