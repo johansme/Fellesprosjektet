@@ -149,6 +149,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 
 			a.setAdmin(true);
 			a.setOpened(true);
+			a.setPersonal(true);
 			for (Appointment ap : days) 
 			{
 				ap.addAppointmentToDay();

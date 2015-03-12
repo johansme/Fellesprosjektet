@@ -505,8 +505,19 @@ public class Appointment {
 		day.removeAppointment(this);
 	}
 	
-	public void addGroups(Group g) {
+	public void addGroup(Group g) {
 		groups.add(g);
+		if (prev!=null) {
+			if (!prev.getGroups().contains(g)) {
+				prev.addGroup(g);
+			}
+		}
+		if (next!=null) {
+			if (!next.getGroups().contains(g)) {
+				next.addGroup(g);
+			}
+		}
+
 	}
 	
 	public void setGroups(List<Group> gr) {
@@ -514,7 +525,19 @@ public class Appointment {
 		if (gr!=null && !gr.isEmpty()) {
 			for (Group g : gr) {
 				groups.add(g);
+				if (prev!=null) {
+					if (!prev.getGroups().contains(g)) {
+						prev.addGroup(g);
+					}
+				}
+				if (next!=null) {
+					if (!next.getGroups().contains(g)) {
+						next.addGroup(g);
+					}
+				}
+
 			}
+
 		}
 	}
 	
@@ -522,15 +545,21 @@ public class Appointment {
 		return groups;
 	}
 	
-	public boolean getActive() {
+	public boolean getActive(boolean b) {
 		if (personal) {
 			return personal;
 		}
-		setActive();
+		if (b) {
+			findActive();
+		}
 		return active;
 	}
 	
-	public void setActive() {
+	public void setActive(boolean b) {
+		active = b;
+	}
+	
+	public void findActive() {
 		if (groups!=null && !groups.isEmpty()) {
 			for (Group g : groups) {
 				if (g.getActive()) {
@@ -541,8 +570,38 @@ public class Appointment {
 					active = false;
 				}
 			}
+			if (prev!=null) {
+				if (prev.getActive(false)!=active) {
+					prev.setActive(active);
+				}
+			}
+			if (next!=null) {
+				if (next.getActive(false)!=active) {
+					next.setActive(active);
+				}
+			}
+
 			day.setActiveAppointments();
 		}
+	}
+	
+	public boolean getPersonal() {
+		return personal;
+	}
+	
+	public void setPersonal(boolean b) {
+		personal = b;
+		if (prev!=null) {
+			if (prev.getPersonal()!=b) {
+				prev.setPersonal(b);
+			}
+		}
+		if (next!=null) {
+			if (next.getPersonal()!=b) {
+				next.setPersonal(b);
+			}
+		}
+
 	}
 	
 	
