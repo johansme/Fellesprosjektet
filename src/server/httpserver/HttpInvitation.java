@@ -85,7 +85,34 @@ public class HttpInvitation extends HttpAPIHandler {
 	}
 	
 	private void getAllForGroup(HttpExchange t, User u, JSONObject request) throws IOException {
-		sendError(t, "Not implemented");
+		int gid;
+		try {
+			gid = request.getInt("gid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		// TODO: Check that user is in group
+		if(/*u.getId() != uid*/ false && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		ArrayList<Integer> invitations = Invitation.getInvitationsForGroup(gid);
+		JSONArray jarr = new JSONArray();
+		for(int i : invitations) {
+			Appointment a;
+			try {
+				a = new Appointment(i);
+			} catch(Exception e) {
+				System.out.println("Failed to fetch appointment (" + i
+						+ ") from invitation (" + i + "," + gid + ")");
+				continue;
+			}
+			jarr.put(new JSONObject().put("aid", i).put("appointment", a.toJSON()));
+		}
+		sendOK(t, new JSONObject().put("invitations", jarr));
 	}
 	
 	private void inviteUser(HttpExchange t, JSONObject request) throws IOException {
@@ -94,7 +121,6 @@ public class HttpInvitation extends HttpAPIHandler {
 			uid = request.getInt("uid");
 			aid = request.getInt("aid");
 		} catch(Exception e) {
-			System.out.println(request.toString());
 			sendInvalidCommand(t);
 			return;
 		}
@@ -109,6 +135,22 @@ public class HttpInvitation extends HttpAPIHandler {
 	}
 	
 	private void inviteGroup(HttpExchange t, JSONObject request) throws IOException {
-		sendError(t, "Not implemented");
+		int gid, aid;
+		try {
+			gid = request.getInt("gid");
+			aid = request.getInt("aid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		// TODO: Invite all members of group
+		if(Invitation.inviteGroup(aid, gid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error inviting group");
+			return;
+		}
 	}
 }
