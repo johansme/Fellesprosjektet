@@ -20,7 +20,7 @@ public class Appointment extends shared.Appointment {
 			stm.execute();
 			rs = stm.getResultSet();
 			if(rs.next()) {
-				id = rs.getInt("id");
+				this.id = rs.getInt("id");
 				location = rs.getString("location");
 				description = rs.getString("description");
 				start = rs.getDate("starttime");
