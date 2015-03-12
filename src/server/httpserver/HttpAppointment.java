@@ -83,7 +83,7 @@ public class HttpAppointment extends HttpAPIHandler {
 				return;
 			}
 		} else {
-			sendError(t, "User not authorised to modify appointment");
+			sendUnauthorised(t);
 			return;
 		}
 		
