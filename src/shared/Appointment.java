@@ -74,6 +74,7 @@ public class Appointment {
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put("id", id);
+			obj.put("creator", creator);
 			obj.put("description", description);
 			obj.put("location", location);
 			obj.put("start", start.getTime());
@@ -86,6 +87,7 @@ public class Appointment {
 	public boolean fromJSON(JSONObject obj) {
 		try {
 			id = obj.getInt("id");
+			creator = obj.getInt("creator");
 			description = obj.getString("description");
 			location = obj.getString("location");
 			start = new Date(obj.getInt("start"));

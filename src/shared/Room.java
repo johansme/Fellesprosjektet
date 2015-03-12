@@ -43,13 +43,12 @@ public class Room {
 		return obj;
 	}
 	
-	public static Room fromJSON(JSONObject obj) {
-		Room room = new Room();
+	public boolean fromJSON(JSONObject obj) {
 		try {
-			room.id = obj.getInt("id");
-			room.name = obj.getString("name");
-			room.capacity = obj.getInt("capacity");
-		} catch(JSONException e) { return null; }
-		return room;
+			id = obj.getInt("id");
+			name = obj.getString("name");
+			capacity = obj.getInt("capacity");
+		} catch(JSONException e) { return false; }
+		return true;
 	}
 }

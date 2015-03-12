@@ -60,16 +60,15 @@ public class User {
 		return obj;
 	}
 
-	public static User fromJSON(JSONObject obj) {
-		User user = new User();
+	public boolean fromJSON(JSONObject obj) {
 		try {
-			user.id = obj.getInt("id");
-			user.name = obj.getString("name");
-			user.surname = obj.getString("surname");
-			user.username = obj.getString("username");
-			user.email = obj.getString("email");
-			user.admin = obj.getBoolean("admin");
-		} catch(JSONException e) { return null; }
-		return user;
+			id = obj.getInt("id");
+			name = obj.getString("name");
+			surname = obj.getString("surname");
+			username = obj.getString("username");
+			email = obj.getString("email");
+			admin = obj.getBoolean("admin");
+		} catch(JSONException e) { return false; }
+		return true;
 	}
 }
