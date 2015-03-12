@@ -29,11 +29,12 @@ public class Appointment {
 	private Appointment next;
 	private List<Group> groups = new ArrayList<Group>();
 	private boolean active;
+	private boolean personal;
 	
 	
 	public Appointment() {
 		//hahahahhahahahah:D
-		//TODO
+		//TODO set boolean personal=user invited directly
 		prev = null;
 		next = null;
 		Random rand = new Random();
@@ -522,6 +523,9 @@ public class Appointment {
 	}
 	
 	public boolean getActive() {
+		if (personal) {
+			return personal;
+		}
 		setActive();
 		return active;
 	}
