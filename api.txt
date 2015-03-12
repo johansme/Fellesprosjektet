@@ -28,11 +28,18 @@
 		Out: groups(Group)[]
 
 /room
+	get_available
+		In: start(Date), end(Date)
+		Out: rooms(Room)[]
 	get_all
 		Out: rooms(Room)[]
 	get
 		In: rid(int)[]
 		Out: rooms(Room)[]
+	reserve
+		In: aid(int), rid(int) 
+	cancel
+		In: aid(int)
 
 /user
 	create
