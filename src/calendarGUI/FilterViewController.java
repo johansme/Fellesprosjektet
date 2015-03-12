@@ -46,10 +46,10 @@ public class FilterViewController {
 
 //		TODO remove testcode
 		List<Group> groupies = new ArrayList<Group>();
-		for( int i = 0; i <10;i++){
-			Group g = new Group(i,null, null, "group: " +i);		
-			groupies.add(g);		
-		}
+//		for( int i = 0; i <10;i++){
+//			Group g = new Group(i,null, null, "group: " +i);		
+//			groupies.add(g);		
+//		}
 		
 		
 		if (groupies!=null && !groupies.isEmpty()) {
@@ -88,8 +88,14 @@ public class FilterViewController {
 		
 		}
 		else {
-			screen.getChildren().clear();
-			screen.setPrefSize(0, 0);
+			groupList.getItems().clear();
+			Label label = new Label("Join a group");
+			label.setFocusTraversable(false);
+			HBox line = new HBox();
+			line.setFocusTraversable(false);
+			line.setPrefWidth(100);
+			line.getChildren().add(label);
+			groupList.getItems().add(line);
 		}
 	}
 	
