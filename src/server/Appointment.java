@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.Statement;
+
 public class Appointment extends shared.Appointment {
 
 	public Appointment(int id) {
@@ -35,24 +37,26 @@ public class Appointment extends shared.Appointment {
 		}
 	}
 
-	public static boolean createAppointment(Appointment a) {
+	public static int createAppointment(Appointment a) {
 		DBConnection db = null;
-		boolean success = true;
+		int id = 0;
 		final String stm_str = "INSERT INTO Appointment VALUES(0, ?, ?, ?, ?, NOW(), ?)";
 		
 		PreparedStatement stm = null;
 		try {
 			db = new DBConnection();
-			stm = db.getConnection().prepareStatement(stm_str);
+			stm = db.getConnection().prepareStatement(stm_str, Statement.RETURN_GENERATED_KEYS);
 			stm.setString(1, a.location);
 			stm.setString(2, a.description);
 			stm.setDate(3, new java.sql.Date(a.start.getTime()));
 			stm.setDate(4, new java.sql.Date(a.end.getTime()));
 			stm.setInt(5, a.creator);
-						
 			stm.executeUpdate();
+			ResultSet keys = stm.getGeneratedKeys();
+			if(keys.next()) {
+				id = (int)keys.getLong(1);
+			}
 		} catch(SQLException e) {
-			success = false;
 			System.out.println(e.getMessage());
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -60,7 +64,7 @@ public class Appointment extends shared.Appointment {
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}
 			db.close();
 		}
-		return success;
+		return id;
 	}
 	
 	public static boolean changeAppointment(Appointment a) {

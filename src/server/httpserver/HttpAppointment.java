@@ -102,8 +102,9 @@ public class HttpAppointment extends HttpAPIHandler {
 		}
 		
 		app.setCreator(u.getId());
-		if(Appointment.createAppointment(app)) {
-			sendOK(t);
+		int id = Appointment.createAppointment(app);
+		if(id != 0) {
+			sendOK(t, new JSONObject().put("aid", id));
 			return;
 		} else {
 			sendError(t, "Error creating appointment");
