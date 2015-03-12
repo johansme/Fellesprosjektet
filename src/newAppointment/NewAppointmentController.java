@@ -9,6 +9,7 @@ import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Participant;
 import calendarGUI.ControllerInterface;
+import calendarGUI.ParticipantController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +31,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import login.SceneHandler;
 
-public class NewAppointmentController implements ControllerInterface {
+public class NewAppointmentController implements ControllerInterface, ParticipantController {
 
 	private Appointment appointment;
 

@@ -7,6 +7,7 @@ import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Participant;
 import calendarGUI.ControllerInterface;
+import calendarGUI.ParticipantController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,7 +30,7 @@ public class AddParticipantsController implements ControllerInterface {
 	private List<Participant> addListItems = new ArrayList<Participant>();
 	
 	private Calendar calendar;
-	private NewAppointmentController newAppointmentController;
+	private ParticipantController participantController;
 	
 	@FXML
 	private void initialize() {
@@ -72,7 +73,7 @@ public class AddParticipantsController implements ControllerInterface {
 	@FXML
 	private void addButtonPressed() {
 		for (Participant participant : addListItems) {
-			newAppointmentController.addParticipant(participant);
+			participantController.addParticipant(participant);
 		}
 		// get a handle to the stage
 	    Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -135,9 +136,9 @@ public class AddParticipantsController implements ControllerInterface {
 		
 	}
 	
-	public void setNewAppointmentController(NewAppointmentController controller) {
+	public void setParticipantController(ParticipantController controller) {
 		if (controller != null) {
-			this.newAppointmentController = controller;
+			this.participantController = controller;
 		}
 	}
 	
