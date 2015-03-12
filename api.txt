@@ -1,0 +1,45 @@
+/appointment
+	create
+		In: app(Appointment)
+	modify
+		In: app(Appointment)
+	delete
+		In: aid(int)
+
+/invitation
+	get_all_for_user
+		In: uid(int)
+		Out: (app(Appointment), invitation(UserInvitation))[]
+	get_all_for_group
+		In: gid(int)
+		Out: (app(Appointment), invitation(GroupInvitation))[]
+
+/group
+	create
+		In: group(Group)
+	modify
+		In: group(Group)
+	delete:
+		In: gid(int)
+	get_all
+		Out: groups(Group)[]
+	get
+		In: gid(int)[]
+		Out: groups(Group)[]
+
+/room
+	get_all
+		Out: rooms(Room)[]
+	get
+		In: rid(int)[]
+		Out: rooms(Room)[]
+
+/user
+	create
+		In: user(User)
+	modify
+		In: user(User)
+	delete
+		In: uid(int)
+	get_all
+		Out: users(User)[]
