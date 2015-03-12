@@ -13,7 +13,7 @@
 		Out: (app(Appointment), invitation(UserInvitation))[]
 	get_all_for_group
 		In: gid(int)
-		Out: (app(Appointment), invitation(GroupInvitation))[]
+		Out: app(Appointment)[]
 
 /group
 	create
