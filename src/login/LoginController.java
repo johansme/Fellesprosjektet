@@ -18,7 +18,7 @@ public class LoginController {
 	private LoginManager lman = new LoginManager();
 	private SceneHandler sceneHandler = new SceneHandler();
 
-	private User loggingIn;
+	private User loggingIn;// = new User(true);
 
 	@FXML private TextField username;
 	@FXML private TextField password;

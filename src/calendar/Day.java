@@ -85,19 +85,22 @@ public class Day {
 				int[] overlap = new int[2];
 				overlap[0]=0;
 				overlap[1]=0;
-				int t1;
-				int t2;
+				double t1;
+				double t2;
 				if (appointments.size()>1) {
 					for (int i=0; i<appointments.size()-1; i++) {
-						t1 = appointments.get(i).getStartTime().getHour()+((appointments.get(i).getStartTime().getMinute())/60);
+						t1 = (double)appointments.get(i).getStartTime().getHour()+((double)((double)appointments.get(i).getStartTime().getMinute())/(double)60);
 						for (int j=i+1; j<appointments.size(); j++) {
-							t2 = appointments.get(j).getStartTime().getHour()+((appointments.get(j).getStartTime().getMinute())/60);
+							t2 = (double)appointments.get(j).getStartTime().getHour()+((double)((double)appointments.get(j).getStartTime().getMinute())/(double)60);
 							if (t2-t1<0.5) {
-								overlap[0]=1;
-								overlap[1]=1;
+								overlap[0]+=1;
+								overlap[1]+=1;
+								overlap[0]+=appointments.get(i).getOverlap()[0];
+								overlap[1]+=appointments.get(i).getOverlap()[1];
 							}
 							else if (appointments.get(j).getStartTime().isBefore(appointments.get(i).getEndTime())) {
-								overlap[1]=1;
+								overlap[1]+=1;
+								overlap[1]+=appointments.get(i).getOverlap()[1];
 							}
 							appointments.get(j).addOverlap(overlap);
 							overlap[0]=0;
@@ -115,15 +118,15 @@ public class Day {
 		List<Appointment> newAppointments = new ArrayList<Appointment>();
 		newAppointments.add(appointments.get(0));
 		for (int i=1; i<appointments.size(); i++) {
-			int t2 = appointments.get(i).getStartTime().getHour()+((appointments.get(i).getStartTime().getMinute())/60);
-			for (int j=0; j<appointments.size()-i; j++) {
-				int t1 = newAppointments.get(j).getStartTime().getHour()+((newAppointments.get(j).getStartTime().getMinute())/60);
+			double t2 = (double)appointments.get(i).getStartTime().getHour()+(double)(((double)appointments.get(i).getStartTime().getMinute())/(double)60);
+			for (int j=0; j<i; j++) {
+				double t1 = (double)newAppointments.get(j).getStartTime().getHour()+(double)(((double)newAppointments.get(j).getStartTime().getMinute())/(double)60);
 				if (t2<=t1) {
 					newAppointments.add(j, appointments.get(i));
 					break;
 				}
 				else {
-					if (j==appointments.size()-1) {
+					if (j==i-1) {
 						newAppointments.add(appointments.get(i));
 					}
 				}

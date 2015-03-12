@@ -6,6 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
 
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
@@ -14,7 +15,7 @@ fx:controller='calendarGUI.WeekViewController'
 stylesheets="resources/defaultTheme.css"
 fx:id="screen" onKeyPressed='#keyPressed'>
 	<children>
-		<fx:include fx:id="filter" source="GroupView.fxml"/>
+		<fx:include fx:id="filter" source="FilterView.fxml"/>
 		<VBox prefWidth='800' prefHeight='600' layoutX="150" styleClass='background'>
 			<children>
 				<HBox prefHeight='40' prefWidth='800' styleClass="background">
@@ -170,6 +171,9 @@ fx:id="screen" onKeyPressed='#keyPressed'>
 							alignment='CENTER' prefHeight='40' prefWidth='400' />
 						<Button fx:id='newAppointment' onAction='#newAction' text='+ new appointment'
 							alignment='CENTER' prefHeight='40' prefWidth='400' />
+						<Button fx:id="admin" onAction="#adminPressed" text="Admin"
+							alignment="CENTER" prefHeight="40" prefWidth="100"
+							disable="true" visible="false" />
 					</children>
 				</HBox>
 			</children>

@@ -1,89 +1,28 @@
 package calendarGUI;
 
-import java.util.ArrayList;
-import java.util.List;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-
-import calendar.Group;
-import calendar.User;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
-
-public class GroupViewController {
-
-	@FXML
-	private ListView<HBox> groupList;
+public class GroupViewController extends Application {
 	
-	
-	private List<Integer> groupIDs = new ArrayList<Integer>(); 
-	
-	private void refreshGroups(List<Integer> groups){
-		//flush current AppointmentList
-		//get new List;
-		System.out.println("::::::_____:::::::");
-		for (Integer i : groupIDs) {
-			System.out.println(i);
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			Parent root = (Parent)FXMLLoader.load(getClass().getResource("/calendarGUI/GroupView.fxml"));
+			Scene scene = new Scene(root,600,350);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) 
+		{
+			e.printStackTrace();
 		}
-		System.out.println("::::::_____:::::::");
-		
 	}
 	
-	@FXML
-	private void initialize(){
-		
-	List<Group> groupies = new ArrayList<Group>();
-	for( int i = 0; i <10;i++){
-		Group g = new Group(i,null, null, "group: " +i);
-		
-		groupies.add( g);
-		
+	public static void main(String[] args) {
+		launch(args);
 	}
-	
-	
-	//List<User> partpts = appointment.getUsers();
-	for (Group g : groupies) {
-		//TODO
-		groupIDs.add(g.getId());
-		HBox line = new HBox();
-		line.setPrefWidth(100);
-		Label groupLabel = new Label();
-		
-		groupLabel.wrapTextProperty().set(true);
-		
-		groupLabel.setText(g.getName());
-		CheckBox checkBox = new CheckBox();
-		
-		checkBox.setSelected(true);
-		
-		groupLabel.setPrefWidth(line.getPrefWidth()-checkBox.getWidth());
-		line.getChildren().addAll(groupLabel, checkBox);
-		
-		checkBox.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
-				if (checkBox.isSelected()) {
-					//Request group Appointments
-					groupIDs.add(g.getId());
-					refreshGroups(groupIDs);
-					
-				}
-				else {
-					// remove focused groupID
-					
-					groupIDs.remove(groupIDs.indexOf( g.getId()));
-					refreshGroups(groupIDs);
-					
-				}
-			}
-		});
-		groupList.getItems().add(line);
-	
-	}
-	}
-	
+
 }
