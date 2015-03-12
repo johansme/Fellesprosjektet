@@ -10,12 +10,10 @@
 
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-prefWidth='950' prefHeight='600'
-fx:controller='calendarGUI.WeekViewController'
-stylesheets="resources/defaultTheme.css"
-fx:id="screen" onKeyPressed='#keyPressed'>
+	prefWidth='950' prefHeight='600' fx:controller='calendarGUI.WeekViewController'
+	stylesheets="resources/defaultTheme.css" fx:id="screen" onKeyPressed='#keyPressed'>
 	<children>
-		<fx:include fx:id="filter" source="FilterView.fxml"/>
+		<fx:include fx:id="filter" source="/calendarGUI/FilterView.fxml" />
 		<VBox prefWidth='800' prefHeight='600' layoutX="150" styleClass='background'>
 			<children>
 				<HBox prefHeight='40' prefWidth='800' styleClass="background">
@@ -30,8 +28,8 @@ fx:id="screen" onKeyPressed='#keyPressed'>
 							alignment='CENTER' prefHeight='40' prefWidth='100' />
 					</children>
 				</HBox>
-				<GridPane prefHeight='520' prefWidth='800'
-					alignment='TOP_LEFT' gridLinesVisible='true' styleClass='background'>
+				<GridPane prefHeight='520' prefWidth='800' alignment='TOP_LEFT'
+					gridLinesVisible='true' styleClass='background'>
 					<columnConstraints>
 						<ColumnConstraints prefWidth='100' />
 						<ColumnConstraints prefWidth='100' />
@@ -171,12 +169,12 @@ fx:id="screen" onKeyPressed='#keyPressed'>
 							alignment='CENTER' prefHeight='40' prefWidth='400' />
 						<Button fx:id='newAppointment' onAction='#newAction' text='+ new appointment'
 							alignment='CENTER' prefHeight='40' prefWidth='400' />
-						<Button fx:id="admin" onAction="#adminPressed" text="Admin"
-							alignment="CENTER" prefHeight="40" prefWidth="100"
-							disable="true" visible="false" />
 					</children>
 				</HBox>
 			</children>
 		</VBox>
+		<Button fx:id="admin" onAction="#adminPressed" text="Admin"
+			alignment="CENTER" prefHeight="40" prefWidth="100" disable="true"
+			visible="false" layoutX="850" layoutY="560" />
 	</children>
 </AnchorPane>
