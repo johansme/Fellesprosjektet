@@ -10,10 +10,11 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Button?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="calendarGUI.GroupViewController" stylesheets="/resources/defaultTheme.css">
 	<children>
 		<TabPane tabClosingPolicy="UNAVAILABLE" prefHeight="350"
-			prefWidth="600">
+			prefWidth="600" >
 			<Tab fx:id="newGroup" text="+ New group">
 				<content>
 					<Pane>
@@ -22,11 +23,11 @@
 							<TextField fx:id="nameFieldNew" prefWidth="250"
 								layoutY="25" layoutX="100" promptText="Group name" />
 							<Label text="Creator:" layoutY="60" layoutX="5" />
-							<Label fx:id="adminLabelNew" layoutX="5" layoutY="60" />
+							<Label fx:id="creatorLabelNew" layoutX="5" layoutY="60" />
 							<Label text="Group members:" layoutX="5" layoutY="100" />
 							<ListView fx:id="memberListNew" prefHeight="165"
 								prefWidth="318" layoutX="5" layoutY="120" />
-							<Button fx:id="addMemberButtonNew" onAction="#addMembers"
+							<Button fx:id="addMembersButtonNew" onAction="#addMembers"
 								alignment="CENTER" prefWidth="80" text="Add..." layoutX="5"
 								layoutY="290" />
 							<Button fx:id="removeMemberButtonNew" onAction="#removeMember"
@@ -52,11 +53,11 @@
 							<TextField fx:id="nameField" prefWidth="250" layoutY="25"
 								layoutX="100" visible="false" disable="true" />
 							<Label text="Creator:" layoutY="60" layoutX="5" />
-							<Label fx:id="adminLabel" layoutX="5" layoutY="60" />
+							<Label fx:id="creatorLabel" layoutX="5" layoutY="60" />
 							<Label text="Group members:" layoutX="5" layoutY="100" />
 							<ListView fx:id="memberList" prefHeight="165" prefWidth="318"
 								layoutX="5" layoutY="120" />
-							<Button fx:id="addMemberButton" onAction="#addMembers"
+							<Button fx:id="addMembersButton" onAction="#addMembers"
 								alignment="CENTER" prefWidth="80" text="Add..." layoutX="5"
 								layoutY="290" disable="true" />
 							<Button fx:id="removeMemberButton" onAction="#removeMember"
