@@ -20,6 +20,7 @@ public class Server {
 		server = HttpServer.create(new InetSocketAddress(8000), 200);
 		server.createContext("/login", new HttpLogin(this));
 		server.createContext("/rooms", new HttpRooms(this));
+		server.createContext("/user", new HttpUser(this));
 		server.setExecutor(null);
 	}
 

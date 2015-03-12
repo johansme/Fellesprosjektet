@@ -98,8 +98,11 @@ public class NewAppointmentController implements ControllerInterface {
 
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
+<<<<<<< HEAD
 
 			if(header.getText()=="Edit appointment") {
+=======
+>>>>>>> 1b03a9522b545aee19dc1d695ae38c019b63bca4
 			if (header.getText()=="Edit appointment") {
 				appointment.delete();
 			}
@@ -158,7 +161,7 @@ public class NewAppointmentController implements ControllerInterface {
 			// do what you got to do :)
 			stage.close();
 		}
-		else sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
+		else { sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
 		}
 	}
 
@@ -696,7 +699,10 @@ public class NewAppointmentController implements ControllerInterface {
 
 	@FXML
 	public void addPerson(){
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b03a9522b545aee19dc1d695ae38c019b63bca4
 		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getData(), this);
 	}
 	
