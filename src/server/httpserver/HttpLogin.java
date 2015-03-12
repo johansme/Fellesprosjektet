@@ -1,6 +1,7 @@
 package server.httpserver;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.sun.net.httpserver.*;
 
@@ -14,32 +15,21 @@ public class HttpLogin extends HttpAPIHandler {
 	}
 
 	public void handle(HttpExchange t)  throws IOException {
-		JSONObject response = new JSONObject();
-		JSONObject obj = get(t);
-
-		if(obj != null) {
-			String username = (String)obj.get("username");
-			String password = (String)obj.get("password");
-		
-			if(obj != null && (username != null && password != null)) {
-				if(User.checkPassword(username, password)) {
-					User u = null;
-					try { u = new User(username); } catch(Exception e) {}
-					response.put("status", true);
-					response.put("session", (String)server.getSessionManager().getNewSession(u.getId()));
-				} else {
-					response.put("status", false);
-					response.put("error", "Invalid username or password");
-				}
+		try {
+			JSONObject request = get(t);
+			String username = (String)request.get("username");
+			String password = (String)request.get("password");
+			
+			if(User.checkPassword(username, password)) {
+				User u = new User(username);
+				sendOK(t, new JSONObject().put("session", (String)server.getSessionManager().getNewSession(u.getId())));
+				return;
 			} else {
-				response.put("status", false);
-				response.put("error", "Invalid request");
+				sendError(t, "Invalid authentication credentials");
+				return;
 			}
-		} else {
-			response.put("status", false);
-			response.put("error", "Not JSON");
-		}
-		
-		send(t, response);
+		} catch(JSONException e) { sendInvalidCommand(t);
+		} catch(SQLException e) { sendError(t, "Error fetching user data from DB");
+		} catch(Exception e) { t.close(); e.printStackTrace(); }
 	}
 }
