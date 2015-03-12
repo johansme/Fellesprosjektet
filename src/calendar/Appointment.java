@@ -399,7 +399,6 @@ public class Appointment {
 		//show only rooms that matches user specified capacity
 		
 		List<Integer> checkCapList = new ArrayList<Integer>();
-		List<String> newRoomList = new ArrayList<String>();
 		
 		for(int i = 0; i < roomList.size(); i++)
 		{

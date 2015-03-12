@@ -55,14 +55,17 @@ public class FilterViewController {
 		Label groupLabel = new Label();
 		
 		groupLabel.wrapTextProperty().set(true);
+		groupLabel.setFocusTraversable(false);
 		
 		groupLabel.setText(g.getName());
 		CheckBox checkBox = new CheckBox();
 		
 		checkBox.setSelected(true);
+		checkBox.setFocusTraversable(false);
 		
 		groupLabel.setPrefWidth(line.getPrefWidth()-checkBox.getWidth());
 		line.getChildren().addAll(groupLabel, checkBox);
+		line.setFocusTraversable(false);
 		
 		checkBox.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {

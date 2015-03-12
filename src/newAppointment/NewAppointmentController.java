@@ -598,7 +598,7 @@ public class NewAppointmentController implements ControllerInterface {
 		//add "0" to hour and/or min
 		if(todayHour >= 0 && todayHour <= 9 && todayMinute >= 0 && todayMinute <= 9) fromField.setText("0" + (todayHour + 1) + ":" + "0" + todayMinute);
 		else if(todayHour >= 0 && todayHour <= 9) fromField.setText("0" + (todayHour + 1) + ":" + todayMinute);
-		else fromField.setText("0" + (todayHour + 1) + ":" + todayMinute);
+		else fromField.setText((todayHour + 1) + ":" + todayMinute);
 		toField.setText(getRoundHalfHour(LocalTime.now().getHour() + 1, LocalTime.now().getMinute()));
 	}
 	
