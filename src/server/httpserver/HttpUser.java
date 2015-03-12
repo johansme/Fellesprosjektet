@@ -35,15 +35,21 @@ public class HttpUser extends HttpAPIHandler {
 		} catch(Exception e) { e.printStackTrace();	}
 	}
 	
-	private void sendAll(HttpExchange t) throws IOException {
-		JSONObject response = new JSONObject();
-		response.put("status", true);
-		ArrayList<User> arr = User.getAllUsers();
+	private void getAll(HttpExchange t) throws IOException {
+		ArrayList<User> arr;
+		try {
+			arr = User.getAllUsers();
+		} catch(Exception e) {
+			sendError(t, "Error getting users from DB");
+			return;
+		}
+		
 		JSONArray jarr = new JSONArray();
 		for(User u : arr) {
 			jarr.put(u.toJSON());
 		}
-		response.put("users", jarr);
-		send(t, response);
+		
+		sendOK(t, new JSONObject().put("users", jarr));
+	}
 	}
 }
