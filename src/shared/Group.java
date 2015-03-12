@@ -4,10 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Group {
-	private int id;
-	private int parent;
-	private int createdBy;
-	private String name;
+	private int id = 0;
+	private int parent = 0;
+	private int createdBy = 0;
+	private String name = null;
 	
 	public int getId() {
 		return id;
