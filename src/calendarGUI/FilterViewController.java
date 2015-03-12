@@ -3,11 +3,6 @@ package calendarGUI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-
-
-
-
 import calendar.Calendar;
 import calendar.Group;
 import javafx.event.ActionEvent;
