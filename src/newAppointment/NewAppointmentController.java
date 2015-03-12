@@ -178,7 +178,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			 
 			
 			
-			
 			if(!descriptionField.textProperty().getValue().isEmpty() &&
 				!toField.textProperty().getValue().equals("") &&
 				!fromField.textProperty().getValue().equals("") &&
@@ -291,6 +290,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	private void fromTime(){
 		
 		if(checkValidFromField()){
+			
 			String fromTime = fromField.textProperty().getValue();
 			int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
 			int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
@@ -299,11 +299,16 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			int toTimeHour = Integer.parseInt(toTime.split(":")[0]);
 			int toTimeMin = Integer.parseInt(toTime.split(":")[1]);
 			
-			toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+			if(!validToTime()){
+				
+				toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				toField.setText(toField.textProperty().getValue());
+				
+			}
 			
 			if(!validFromTime())
 			{
-				fromField.setText(toTwoDigits(LocalTime.now().getHour()) +":" + toTwoDigits(LocalTime.now().getMinute()));
+				fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
 				String ftm = fromTimeMin + "";
 				if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin) + "0");
 				else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
@@ -343,7 +348,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		else System.out.println("BiG shitty error!"); //TODO do we need this shitty error? =O
 	
 	}
-
+	
 	@FXML
 	private void toTime(){
 		
@@ -377,7 +382,9 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 				printErrorMessage();
 			}
-			
+			else if(fromTimeHour >= toTimeHour && fromTimeMin > toTimeMin){
+				
+			}
 			
 			if(!minAndMaxAllowedToTime())
 			{
@@ -503,11 +510,11 @@ public class NewAppointmentController implements ControllerInterface, Participan
 
 		// arithmetics for checking correct time
 
-		if(tilTidTime>fraTidTime){
+		if(tilTidTime > fraTidTime){
 			//	appoint.setFra(LocalTime.of(tilTidTime,tilTidMin));
 			return true;
 
-		}else if(tilTidTime == fraTidTime && tilTidMin>fraTidMin){
+		}else if(tilTidTime == fraTidTime && tilTidMin > fraTidMin){
 			//	appoint.setFra(LocalTime.of(tilTidTime,tilTidMin));
 			return true;
 		}
