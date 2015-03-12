@@ -73,6 +73,9 @@ public class WeekViewController extends Application implements ControllerInterfa
 		setWeek(calendar.getCurrentDate());
 		setYear(calendar.getCurrentDate());
 		setAppointments(calendar.getCurrentDate());
+		filterController.setData(calendar);
+		filterController.setParent(this);
+
 		}
 	
 	@FXML
@@ -298,7 +301,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		LocalDate day = d.minusDays(i);
 		calendar.setCurrentDate(day);
 		for (int j=1; j<8; j++) {
-			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
+			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getActiveAppointments();
 			if (!appointments.isEmpty()) {
 				appointments.get(0).calculateOverlap();
 			}

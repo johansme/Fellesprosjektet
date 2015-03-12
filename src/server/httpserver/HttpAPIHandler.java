@@ -48,4 +48,8 @@ public abstract class HttpAPIHandler implements HttpHandler{
 	static protected void sendOK(HttpExchange t) throws IOException {
 		send(t, new JSONObject().put("status", "OK"));
 	}
+	
+	static protected void sendOK(HttpExchange t, JSONObject result) throws IOException {
+		send(t, result.put("status", true));
+	}
 }

@@ -8,12 +8,14 @@ public class Day {
 	
 	private LocalDate day;
 	private List<Appointment> appointments;
+	private List<Appointment> activeAppointments;
 	private int weekNumber;
 	private List<DayChangeListener> dayChangeListeners;
 	
 	public Day(LocalDate date) {
 		this.day = date;
 		appointments = new ArrayList<Appointment>();
+		activeAppointments = new ArrayList<Appointment>();
 		dayChangeListeners = new ArrayList<DayChangeListener>();
 	}
 
@@ -30,6 +32,7 @@ public class Day {
 			List<Appointment> oldAppointments = new ArrayList<Appointment>();
 			oldAppointments.addAll(getAppointments());
 			appointments.remove(a);
+			setActiveAppointments();
 			fireDayChanged(oldAppointments);
 		}
 	}
@@ -39,6 +42,7 @@ public class Day {
 			List<Appointment> oldAppointments = new ArrayList<Appointment>();
 			oldAppointments.addAll(getAppointments());
 			appointments.add(appointment);
+			setActiveAppointments();
 			fireDayChanged(oldAppointments);
 		}
 	}
@@ -76,33 +80,34 @@ public class Day {
 	}
 
 	public void calculateOverlap() {
-		if (!appointments.isEmpty() || appointments!=null) {
-			for (Appointment a : appointments) {
+		setActiveAppointments();
+		if (!activeAppointments.isEmpty() || activeAppointments!=null) {
+			for (Appointment a : activeAppointments) {
 				a.clearOverlap();
 			}
-			if(appointments.size()>1) {
+			if(activeAppointments.size()>1) {
 				sortAppointments();
 				int[] overlap = new int[2];
 				overlap[0]=0;
 				overlap[1]=0;
 				double t1;
 				double t2;
-				if (appointments.size()>1) {
-					for (int i=0; i<appointments.size()-1; i++) {
-						t1 = (double)appointments.get(i).getStartTime().getHour()+((double)((double)appointments.get(i).getStartTime().getMinute())/(double)60);
-						for (int j=i+1; j<appointments.size(); j++) {
-							t2 = (double)appointments.get(j).getStartTime().getHour()+((double)((double)appointments.get(j).getStartTime().getMinute())/(double)60);
+				if (activeAppointments.size()>1) {
+					for (int i=0; i<activeAppointments.size()-1; i++) {
+						t1 = (double)activeAppointments.get(i).getStartTime().getHour()+((double)((double)activeAppointments.get(i).getStartTime().getMinute())/(double)60);
+						for (int j=i+1; j<activeAppointments.size(); j++) {
+							t2 = (double)activeAppointments.get(j).getStartTime().getHour()+((double)((double)activeAppointments.get(j).getStartTime().getMinute())/(double)60);
 							if (t2-t1<0.5) {
 								overlap[0]+=1;
 								overlap[1]+=1;
-								overlap[0]+=appointments.get(i).getOverlap()[0];
-								overlap[1]+=appointments.get(i).getOverlap()[1];
+								overlap[0]+=activeAppointments.get(i).getOverlap()[0];
+								overlap[1]+=activeAppointments.get(i).getOverlap()[1];
 							}
-							else if (appointments.get(j).getStartTime().isBefore(appointments.get(i).getEndTime())) {
+							else if (activeAppointments.get(j).getStartTime().isBefore(activeAppointments.get(i).getEndTime())) {
 								overlap[1]+=1;
-								overlap[1]+=appointments.get(i).getOverlap()[1];
+								overlap[1]+=activeAppointments.get(i).getOverlap()[1];
 							}
-							appointments.get(j).addOverlap(overlap);
+							activeAppointments.get(j).addOverlap(overlap);
 							overlap[0]=0;
 							overlap[1]=0;
 							
@@ -116,26 +121,39 @@ public class Day {
 	
 	private void sortAppointments() {
 		List<Appointment> newAppointments = new ArrayList<Appointment>();
-		newAppointments.add(appointments.get(0));
-		for (int i=1; i<appointments.size(); i++) {
-			double t2 = (double)appointments.get(i).getStartTime().getHour()+(double)(((double)appointments.get(i).getStartTime().getMinute())/(double)60);
+		newAppointments.add(activeAppointments.get(0));
+		for (int i=1; i<activeAppointments.size(); i++) {
+			double t2 = (double)activeAppointments.get(i).getStartTime().getHour()+(double)(((double)activeAppointments.get(i).getStartTime().getMinute())/(double)60);
 			for (int j=0; j<i; j++) {
 				double t1 = (double)newAppointments.get(j).getStartTime().getHour()+(double)(((double)newAppointments.get(j).getStartTime().getMinute())/(double)60);
 				if (t2<=t1) {
-					newAppointments.add(j, appointments.get(i));
+					newAppointments.add(j, activeAppointments.get(i));
 					break;
 				}
 				else {
 					if (j==i-1) {
-						newAppointments.add(appointments.get(i));
+						newAppointments.add(activeAppointments.get(i));
 					}
 				}
 			}
 		}
-		appointments.clear();
+		activeAppointments.clear();
 		for (int i=0; i<newAppointments.size(); i++) {
-			appointments.add(newAppointments.get(i));
+			activeAppointments.add(newAppointments.get(i));
 		}
+	}
+	
+	public void setActiveAppointments() {
+		activeAppointments.clear();
+		for (Appointment a : appointments) {
+			if (a.getActive(true)) {
+				activeAppointments.add(a);
+			}
+		}
+	}
+	
+	public List<Appointment> getActiveAppointments() {
+		return activeAppointments;
 	}
 
 }

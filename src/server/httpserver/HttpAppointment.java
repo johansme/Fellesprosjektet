@@ -34,6 +34,9 @@ public class HttpAppointment extends HttpAPIHandler {
 					case "modify":
 						modify(t, u, request);
 						return;
+					case "delete":
+						delete(t, u, request);
+						return;
 					default:
 						sendInvalidCommand(t);
 						return;
@@ -80,7 +83,7 @@ public class HttpAppointment extends HttpAPIHandler {
 				return;
 			}
 		} else {
-			sendError(t, "User not authorised to modify appointment");
+			sendUnauthorised(t);
 			return;
 		}
 		
@@ -102,12 +105,44 @@ public class HttpAppointment extends HttpAPIHandler {
 		}
 		
 		app.setCreator(u.getId());
-		if(Appointment.createAppointment(app)) {
-			sendOK(t);
+		int id = Appointment.createAppointment(app);
+		if(id != 0) {
+			sendOK(t, new JSONObject().put("aid", id));
 			return;
 		} else {
 			sendError(t, "Error creating appointment");
 			return;
+		}
+	}
+	
+	private void delete(HttpExchange t, User u, JSONObject request) throws IOException {
+		Appointment app;
+		int aid;
+		
+		try {
+			aid = request.getInt("aid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		try {
+			app = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error reading appointment from DB");
+			return;
+		}
+		
+		if(u.getId() == app.getCreator() || u.isAdmin()) {
+			if(Appointment.deleteAppointment(aid)) {
+				// TODO: Notify users
+				sendOK(t);
+				return;
+			} else {
+				sendError(t, "Error deleting appointment from database");
+			}
+		} else {
+			sendUnauthorised(t);
 		}
 	}
 }

@@ -8,6 +8,7 @@ public class Group implements Participant {
 	private User admin;
 	private int id;
 	private String name;
+	private boolean active;
 	
 	public Group(int id, List<User> u, User a, String n) {
 		this.id = id;
@@ -63,6 +64,14 @@ public class Group implements Participant {
 	@Override
 	public String toString() {
 		return getName();
+	}
+	
+	public void setActive(boolean b) {
+		active = b;
+	}
+	
+	public boolean getActive() {
+		return active;
 	}
 
 }
