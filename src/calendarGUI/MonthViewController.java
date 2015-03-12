@@ -429,7 +429,7 @@ public class MonthViewController implements ControllerInterface {
 	}
 	
 	@FXML
-	private void newGroupAction() {
+	private void groupAction() {
 		sceneHandler.popUpScene("/calendarGUI/GroupView.fxml", 600, 350, getData(), null);
 	}
 	
