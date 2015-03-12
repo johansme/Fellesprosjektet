@@ -55,3 +55,6 @@
 		In: uid(int)
 	get_all
 		Out: users(User)[]
+	get_by_id
+		In: uid(int)
+		Out: user(User)
