@@ -14,9 +14,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import login.SceneHandler;
 
-public class GroupViewController extends Application implements ControllerInterface {
+public class GroupViewController extends Application implements ControllerInterface, ParticipantController {
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -36,13 +38,8 @@ public class GroupViewController extends Application implements ControllerInterf
 	}
 	
 	@FXML private Tab newGroup;
-	@FXML private TextField nameFieldNew;
-	@FXML private Label creatorLabelNew;
-	@FXML private ListView<Participant> memberListNew;
-	@FXML private Button addMembersButtonNew;
-	@FXML private Button removeMemberButtonNew;
-	@FXML private Button saveButtonNew;
-	@FXML private Button cancelButtonNew;
+	@FXML private Pane newGroupPane;
+	@FXML private NewGroupViewController newGroupController;
 	
 	@FXML private Tab groups;
 	@FXML private MenuButton groupChoice;
@@ -57,6 +54,8 @@ public class GroupViewController extends Application implements ControllerInterf
 	
 	private Calendar calendar;
 	
+	private SceneHandler sceneHandler = new SceneHandler();
+	
 	@FXML
 	private void initialize() {
 		
@@ -64,7 +63,7 @@ public class GroupViewController extends Application implements ControllerInterf
 	
 	@FXML
 	private void addMembers() {
-		
+		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getData(), this);
 	}
 	
 	@FXML
@@ -103,6 +102,12 @@ public class GroupViewController extends Application implements ControllerInterf
 
 	@Override
 	public void setFeedback() {
+		
+	}
+
+	@Override
+	public void addParticipant(Participant participant) {
+		// TODO Auto-generated method stub
 		
 	}
 

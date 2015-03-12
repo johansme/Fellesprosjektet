@@ -60,13 +60,17 @@ public class WeekViewController extends Application implements ControllerInterfa
 		calendar=c;
 		if (calendar.getLoggedInUser() != null) {
 			if (calendar.getLoggedInUser().isAdmin()) {
-				newAppointment.setPrefWidth(315);
+				newAppointment.setPrefWidth(300);
 				admin.setVisible(true);
 				admin.setDisable(false);
-				filterController.setData(calendar);
-				filterController.setParent(this);
+			} else {
+				newAppointment.setPrefWidth(400);
+				admin.setVisible(false);
+				admin.setDisable(true);
 			}
 		}
+		filterController.setData(calendar);
+		filterController.setParent(this);
 		setDates(calendar.getCurrentDate());
 		setWeek(calendar.getCurrentDate());
 		setYear(calendar.getCurrentDate());

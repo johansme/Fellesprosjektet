@@ -17,29 +17,7 @@
 			prefWidth="600" >
 			<Tab fx:id="newGroup" text="+ New group">
 				<content>
-					<Pane>
-						<children>
-							<Label text="Group name:" layoutY="25" layoutX="5" />
-							<TextField fx:id="nameFieldNew" prefWidth="250"
-								layoutY="25" layoutX="100" promptText="Group name" />
-							<Label text="Creator:" layoutY="60" layoutX="5" />
-							<Label fx:id="creatorLabelNew" layoutX="5" layoutY="60" />
-							<Label text="Group members:" layoutX="5" layoutY="100" />
-							<ListView fx:id="memberListNew" prefHeight="165"
-								prefWidth="318" layoutX="5" layoutY="120" />
-							<Button fx:id="addMembersButtonNew" onAction="#addMembers"
-								alignment="CENTER" prefWidth="80" text="Add..." layoutX="5"
-								layoutY="290" />
-							<Button fx:id="removeMemberButtonNew" onAction="#removeMember"
-								text="Remove" prefWidth="80" layoutX="90" layoutY="290" />
-							<Button fx:id="saveButtonNew" alignment="CENTER"
-								onAction="#saveButtonPressed" prefWidth="80" text="Save"
-								layoutX="430" layoutY="290" />
-							<Button fx:id="cancelButtonNew" onAction="#cancelButtonPressed"
-								alignment="CENTER" prefWidth="80" text="Cancel" layoutX="515"
-								layoutY="290" />
-						</children>
-					</Pane>
+					<fx:include fx:id="newGroupPane" source="/calendarGUI/NewGroupView.fxml" />
 				</content>
 			</Tab>
 			<Tab fx:id="groups" text="Groups">

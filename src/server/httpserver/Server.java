@@ -21,6 +21,7 @@ public class Server {
 		server.createContext("/login", new HttpLogin(this));
 		server.createContext("/rooms", new HttpRooms(this));
 		server.createContext("/user", new HttpUser(this));
+		server.createContext("/appointment", new HttpAppointment(this));
 		server.setExecutor(null);
 	}
 
