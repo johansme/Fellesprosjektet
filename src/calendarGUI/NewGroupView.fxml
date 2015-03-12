@@ -14,7 +14,7 @@
 		<Label text="Creator:" layoutY="60" layoutX="5" />
 		<Label fx:id="creatorLabel" layoutX="5" layoutY="60" />
 		<Label text="Group members:" layoutX="5" layoutY="100" />
-		<ListView fx:id="memberList" prefHeight="165" prefWidth="318"
+		<ListView fx:id="memberListView" prefHeight="165" prefWidth="318"
 			layoutX="5" layoutY="120" />
 		<Button fx:id="addMembersButton" onAction="#addMembers"
 			alignment="CENTER" prefWidth="80" text="Add..." layoutX="5" layoutY="290" />
