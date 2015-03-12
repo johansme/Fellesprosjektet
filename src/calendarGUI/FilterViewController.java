@@ -9,7 +9,6 @@ import java.util.List;
 
 import calendar.Calendar;
 import calendar.Group;
-import calendar.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -58,7 +57,7 @@ public class FilterViewController {
 		
 		groupLabel.setText(g.getName());
 		CheckBox checkBox = new CheckBox();
-		
+		groups.put(checkBox, g);
 		checkBox.setSelected(true);
 		checkBox.setFocusTraversable(false);
 		

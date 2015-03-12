@@ -527,16 +527,18 @@ public class Appointment {
 	}
 	
 	public void setActive() {
-		for (Group g : groups) {
-			if (g.getActive()) {
-				active = true;
-				break;
+		if (groups!=null && !groups.isEmpty()) {
+			for (Group g : groups) {
+				if (g.getActive()) {
+					active = true;
+					break;
+				}
+				else {
+					active = false;
+				}
 			}
-			else {
-				active = false;
-			}
+			day.setActiveAppointments();
 		}
-		day.setActiveAppointments();
 	}
 	
 	
