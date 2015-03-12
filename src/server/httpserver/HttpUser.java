@@ -24,10 +24,19 @@ public class HttpUser extends HttpAPIHandler {
 				sendUnauthenticated(t);
 				return;
 			}
+			
 			String command = request.getString("command");
-			if(command != null && command.equals("get_all")) {
-				sendAll(t);
-				return;
+			if(command != null) {
+				switch(command) {
+					case "get_all":
+						getAll(t);
+						return;
+					case "get_by_id":
+						getById(t, request);
+						return;
+					default:
+						sendInvalidCommand(t);
+				}
 			} else {
 				sendInvalidCommand(t);
 			}
@@ -51,5 +60,25 @@ public class HttpUser extends HttpAPIHandler {
 		
 		sendOK(t, new JSONObject().put("users", jarr));
 	}
+	
+	private void getById(HttpExchange t, JSONObject request) throws IOException {
+		User u;
+		int uid;
+		
+		try {
+			uid = request.getInt("uid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		try {
+			u = new User(uid);
+		} catch(Exception e) {
+			sendError(t, "Error fetching user from DB");
+			return;
+		}
+		
+		sendOK(t, new JSONObject().put("user", u.toJSON()));
 	}
 }
