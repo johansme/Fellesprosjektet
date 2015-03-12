@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Appointment extends shared.Appointment {
-	
+
 	public Appointment(int id) {
 		DBConnection db = null;
 		final String str_fmt = "SELECT * FROM Appointment WHERE id=?";
@@ -50,6 +50,32 @@ public class Appointment extends shared.Appointment {
 			stm.setDate(4, new java.sql.Date(a.end.getTime()));
 			stm.setInt(5, a.creator);
 						
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
+	public static boolean changeAppointment(Appointment a) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "UPDATE Appointment SET location=?,description=?,starttime=?,endtime=?,lastmodified=NOW()";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setString(1, a.location);
+			stm.setString(2, a.description);
+			stm.setDate(3, new java.sql.Date(a.start.getTime()));
+			stm.setDate(4, new java.sql.Date(a.end.getTime()));
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;

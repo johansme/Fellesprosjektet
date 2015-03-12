@@ -18,6 +18,10 @@ public class Appointment {
 		return id;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public int getCreator() {
 		return creator;
 	}
@@ -62,6 +66,10 @@ public class Appointment {
 		return modified;
 	}
 	
+	public void setModified(Date modified) {
+		this.modified = modified;
+	}
+	
 	public JSONObject toJSON() {
 		JSONObject obj = new JSONObject();
 		try {
@@ -75,17 +83,16 @@ public class Appointment {
 		return obj;
 	}
 	
-	public static Appointment fromJSON(JSONObject obj) {
-		Appointment app = new Appointment();
+	public boolean fromJSON(JSONObject obj) {
 		try {
-			app.id = obj.getInt("id");
-			app.description = obj.getString("description");
-			app.location = obj.getString("location");
-			app.start = new Date(obj.getInt("start"));
-			app.end = new Date(obj.getInt("end"));
-			app.modified = new Date(obj.getInt("modified"));
+			id = obj.getInt("id");
+			description = obj.getString("description");
+			location = obj.getString("location");
+			start = new Date(obj.getInt("start"));
+			end = new Date(obj.getInt("end"));
+			modified = new Date(obj.getInt("modified"));
 			
-		} catch(JSONException e) { return null; }
-		return app;
+		} catch(JSONException e) { return false; }
+		return true;
 	}
 }
