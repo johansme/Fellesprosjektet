@@ -10,10 +10,14 @@
 /invitation
 	get_all_for_user
 		In: uid(int)
-		Out: (app(Appointment), invitation(UserInvitation))[]
+		Out: invitations(app(Appointment), invitation(UserInvitation))[]
 	get_all_for_group
 		In: gid(int)
 		Out: app(Appointment)[]
+	invite_user
+		In: aid(int),uid(int)
+	invite_group
+		In: aid(int),gid(int)
 
 /group
 	create
