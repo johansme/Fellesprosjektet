@@ -1,6 +1,7 @@
 /appointment
 	create
 		In: app(Appointment)
+		Out: aid(int)
 	modify
 		In: app(Appointment)
 	delete
