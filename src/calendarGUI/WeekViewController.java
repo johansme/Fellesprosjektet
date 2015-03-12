@@ -63,6 +63,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 				newAppointment.setPrefWidth(315);
 				admin.setVisible(true);
 				admin.setDisable(false);
+				filterController.setData(calendar);
+				filterController.setParent(this);
 			}
 		}
 		setDates(calendar.getCurrentDate());
@@ -294,7 +296,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 		LocalDate day = d.minusDays(i);
 		calendar.setCurrentDate(day);
 		for (int j=1; j<8; j++) {
-			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getAppointments();
+			List<Appointment> appointments = calendar.getCurrentMonth().getDay(day.getDayOfMonth()).getActiveAppointments();
 			if (!appointments.isEmpty()) {
 				appointments.get(0).calculateOverlap();
 			}

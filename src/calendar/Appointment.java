@@ -27,6 +27,8 @@ public class Appointment {
 	private HashMap<User, Boolean> users = new HashMap<User, Boolean>();
 	private Appointment prev;
 	private Appointment next;
+	private List<Group> groups = new ArrayList<Group>();
+	private boolean active;
 	
 	
 	public Appointment() {
@@ -502,7 +504,40 @@ public class Appointment {
 		day.removeAppointment(this);
 	}
 	
-
+	public void addGroups(Group g) {
+		groups.add(g);
+	}
+	
+	public void setGroups(List<Group> gr) {
+		groups.clear();
+		if (gr!=null && !gr.isEmpty()) {
+			for (Group g : gr) {
+				groups.add(g);
+			}
+		}
+	}
+	
+	public List<Group> getGroups() {
+		return groups;
+	}
+	
+	public boolean getActive() {
+		setActive();
+		return active;
+	}
+	
+	public void setActive() {
+		for (Group g : groups) {
+			if (g.getActive()) {
+				active = true;
+				break;
+			}
+			else {
+				active = false;
+			}
+		}
+		day.setActiveAppointments();
+	}
 	
 	
 }

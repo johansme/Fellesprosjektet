@@ -1,12 +1,15 @@
 package calendarGUI;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
+
+
+import calendar.Calendar;
 import calendar.Group;
 import calendar.User;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,36 +23,32 @@ public class FilterViewController {
 	@FXML
 	private ListView<HBox> groupList;
 	
+	private Calendar calendar;
+	private HashMap<CheckBox, Group> groups = new HashMap<CheckBox, Group>(); 
+	private ControllerInterface parentController;
 	
-	private List<Integer> groupIDs = new ArrayList<Integer>(); 
+	public void setData(Calendar c){
+		calendar = c;
+	}
 	
-	private void refreshGroups(List<Integer> groups){
-		//flush current AppointmentList
-		//get new List;
-		System.out.println("::::::_____:::::::");
-		for (Integer i : groupIDs) {
-			System.out.println(i);
-		}
-		System.out.println("::::::_____:::::::");
-		
+	public void setParent(ControllerInterface p) {
+		parentController=p;
 	}
 	
 	@FXML
 	private void initialize(){
 		
 	List<Group> groupies = new ArrayList<Group>();
+//	List<Group> groupies = calendar.getLoggedInUser().getGroups();
 	for( int i = 0; i <10;i++){
 		Group g = new Group(i,null, null, "group: " +i);
 		
-		groupies.add( g);
+		groupies.add(g);
 		
 	}
 	
 	
-	//List<User> partpts = appointment.getUsers();
 	for (Group g : groupies) {
-		//TODO
-		groupIDs.add(g.getId());
 		HBox line = new HBox();
 		line.setPrefWidth(100);
 		Label groupLabel = new Label();
@@ -70,17 +69,12 @@ public class FilterViewController {
 		checkBox.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				if (checkBox.isSelected()) {
-					//Request group Appointments
-					groupIDs.add(g.getId());
-					refreshGroups(groupIDs);
-					
+					groups.get(checkBox).setActive(true);
+					parentController.setData(calendar);
 				}
 				else {
-					// remove focused groupID
-					
-					groupIDs.remove(groupIDs.indexOf( g.getId()));
-					refreshGroups(groupIDs);
-					
+					groups.get(checkBox).setActive(false);
+					parentController.setData(calendar);
 				}
 			}
 		});
