@@ -24,7 +24,7 @@ public class NewGroupViewController implements ParticipantController {
 
 	private List<Participant> memberList = new ArrayList<Participant>();
 	private SceneHandler sceneHandler = new SceneHandler();
-	private GroupViewController groupController;
+	private GroupViewController groupViewController;
 
 	@FXML
 	private void initialize() {
@@ -32,7 +32,7 @@ public class NewGroupViewController implements ParticipantController {
 	}
 
 	private void setView() {
-		//creatorLabel.setText(getGroupViewController().getData().getLoggedInUser().toString());
+		creatorLabel.setText(groupViewController.getData().getLoggedInUser().toString());
 	}
 
 	@FXML
@@ -47,13 +47,25 @@ public class NewGroupViewController implements ParticipantController {
 			memberListView.getItems().remove(index);
 			memberList.remove(index);
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", groupController);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", groupViewController);
 		}
 	}
 
 	@FXML
 	private void saveButtonPressed() {
+		if (isValidName()) {
+			
+		} else {
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Invalid group name", getGroupViewController());
+		}
+	}
 
+	private boolean isValidName() {
+		String s = nameField.getText();
+		if (s.length() > 50) {
+			return false;
+		}
+		return s.matches("[ a-zA-Z0-9_]+") && ! s.startsWith(" ");
 	}
 
 	@FXML
@@ -72,12 +84,12 @@ public class NewGroupViewController implements ParticipantController {
 	}
 
 	public GroupViewController getGroupViewController() {
-		return groupController;
+		return groupViewController;
 	}
 
 	public void setGroupViewController(GroupViewController controller) {
 		if (controller != null) {
-			this.groupController = controller;
+			this.groupViewController = controller;
 			setView();
 		}
 	}

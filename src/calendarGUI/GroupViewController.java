@@ -44,7 +44,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	
 	@FXML
 	private void initialize() {
-		setController();
+		
 	}
 	
 	@FXML
@@ -79,6 +79,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	public void setData(Calendar calendar) {
 		if (calendar != null) {
 			this.calendar = calendar;
+			setController();
 		}
 	}
 
@@ -91,6 +92,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	public void setData(Calendar c, Appointment a) {
 		if (c != null) {
 			calendar = c;
+			setController();
 		}
 	}
 
