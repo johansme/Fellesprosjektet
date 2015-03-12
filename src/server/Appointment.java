@@ -93,6 +93,29 @@ public class Appointment extends shared.Appointment {
 		return success;
 	}
 	
+	public static boolean deleteAppointment(int id) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM Appointment WHERE id=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, id);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
 	public User getCreatorUser() {
 		try { return new User(creator);	}
 		catch(SQLException e) { return null; }
