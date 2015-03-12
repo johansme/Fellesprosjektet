@@ -41,7 +41,7 @@ public abstract class HttpAPIHandler implements HttpHandler{
 		send(t, new JSONObject().put("status", false).put("error", "Invalid command"));
 	}
 	
-	static protected void sendError(HttpExchange t, String error) throws IOException) {
+	static protected void sendError(HttpExchange t, String error) throws IOException {
 		send(t, new JSONObject().put("status", false).put("error", error));
 	}
 	
