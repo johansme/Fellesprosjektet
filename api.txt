@@ -15,7 +15,7 @@ P	delete
 F	get_all_for_user
 		In: uid(int)
 		Out: invitations(app(Appointment), invitation(UserInvitation))[]
-P	get_all_for_group
+F	get_all_for_group
 		In: gid(int)
 		Out: app(Appointment)[]
 P	invite_user
