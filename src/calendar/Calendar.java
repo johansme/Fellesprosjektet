@@ -1,10 +1,13 @@
 package calendar;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.ArrayList;
 import java.util.List;
+
+import api.SyncFromServer;
 
 public class Calendar {
 
@@ -24,6 +27,7 @@ public class Calendar {
 		months.add(currentMonth);
 		addPastMonths(5);
 		addFutureMonths(8);
+		refresh();
 	}
 	
 	public String getSession() {
@@ -148,5 +152,12 @@ public class Calendar {
 		}
 	}
 	
-	
+	public void refresh() {
+		try {
+			SyncFromServer.sync(this);
+		} catch (IOException e) {
+			return;
+		}
+	}
+		
 }

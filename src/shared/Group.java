@@ -9,6 +9,10 @@ public class Group {
 	private int createdBy = 0;
 	private String name = null;
 	
+	public Group() {
+		
+	}
+	
 	public int getId() {
 		return id;
 	}

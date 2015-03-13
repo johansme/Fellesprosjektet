@@ -14,7 +14,7 @@
 	fx:controller="calendarGUI.GroupViewController" stylesheets="/resources/defaultTheme.css">
 	<children>
 		<TabPane tabClosingPolicy="UNAVAILABLE" prefHeight="350"
-			prefWidth="600" fx:id="tabs">
+			prefWidth="600" fx:id="tabs" >
 			<tabs>
 				<Tab fx:id="groups" text="Groups">
 					<content>

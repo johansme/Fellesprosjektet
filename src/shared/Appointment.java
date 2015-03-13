@@ -90,9 +90,9 @@ public class Appointment {
 			creator = obj.getInt("creator");
 			description = obj.getString("description");
 			location = obj.getString("location");
-			start = new Date(obj.getInt("start"));
-			end = new Date(obj.getInt("end"));
-			modified = new Date(obj.getInt("modified"));
+			start = new Date(obj.getLong("start"));
+			end = new Date(obj.getLong("end"));
+			modified = new Date(obj.getLong("modified"));
 			
 		} catch(JSONException e) { return false; }
 		return true;

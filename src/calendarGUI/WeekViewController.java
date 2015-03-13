@@ -51,10 +51,6 @@ public class WeekViewController extends Application implements ControllerInterfa
 	private HashMap<Label, Integer> labels = new HashMap<Label, Integer>();
 
 	
-	@FXML
-	private void initialize() {
-		setView(calendar);
-	}
 	
 	public void setView(Calendar c) {
 		calendar=c;
