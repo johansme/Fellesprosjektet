@@ -1,3 +1,7 @@
+/login
+	In: username(String),password(String)
+	Out: session(String)
+
 /appointment
 	create
 		In: app(Appointment)
