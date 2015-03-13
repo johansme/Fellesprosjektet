@@ -42,6 +42,8 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	private Group group;
 	private Calendar calendar;
 	private List<Participant> memberList = new ArrayList<Participant>();
+	private List<Participant> addedMembers = new ArrayList<Participant>();
+	private List<Participant> removedMembers = new ArrayList<Participant>();
 
 	private SceneHandler sceneHandler = new SceneHandler();
 
@@ -53,6 +55,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	@FXML
 	private void addMembers() {
 		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, calendar, this);
+		saveButton.setDisable(false);
 	}
 
 	@FXML
@@ -60,15 +63,47 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		int index = memberListView.getSelectionModel().getSelectedIndex();
 		if(index >= 0 && index < memberListView.getItems().size()){
 			memberListView.getItems().remove(index);
-			memberList.remove(index);
+			Participant removed = memberList.remove(index);
+			if (addedMembers.contains(removed)) {
+				addedMembers.remove(removed);
+			} else {
+				removedMembers.add(removed);
+			}
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", this);
 		}
+		saveButton.setDisable(false);
+	}
+	
+	@FXML
+	private void nameChanged() {
+		saveButton.setDisable(false);
 	}
 
 	@FXML
 	private void saveButtonPressed() {
-
+		if (isValidName()) {
+			group.setName(nameField.getText());
+			for (Participant member : addedMembers) {
+				group.addMember(member);
+				//TODO send to server
+			}
+			for (Participant member : removedMembers) {
+				group.removeMember(member);
+				//TODO send to server
+			}
+			saveButton.setDisable(true);
+		} else {
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Invalid group name", this);
+		}
+	}
+	
+	private boolean isValidName() {
+		String s = nameField.getText();
+		if (s.length() > 50) {
+			return false;
+		}
+		return s.matches("[ a-zA-Z0-9_]+") && ! s.startsWith(" ");
 	}
 
 	@FXML
@@ -80,6 +115,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 
 	private void setView() {
 		nameLabel.setText(group.getName());
+		nameField.setText(group.getName());
 		creatorLabel.setText(group.getAdmin().toString());
 		setMemberList();
 		if (calendar.getLoggedInUser().isAdmin() || group.getAdmin().equals(calendar.getLoggedInUser())) {
@@ -98,9 +134,9 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	}
 
 	private void setMemberList() {
-		if (group == null) { return; }
 		memberList.clear();
 		memberListView.getItems().clear();
+		if (group == null || group.getMembers() == null) { return; }
 		for (Participant member : group.getMembers()) {
 			memberList.add(member);
 			memberListView.getItems().add(member.toString());
@@ -152,6 +188,11 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		if (participant != null && ! memberList.contains(participant)) {
 			memberList.add(participant);
 			memberListView.getItems().add(participant.toString());
+			if (! removedMembers.contains(participant)) {
+				addedMembers.add(participant);
+			} else {
+				removedMembers.remove(participant);
+			}
 		}
 	}
 

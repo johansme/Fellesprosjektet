@@ -23,10 +23,9 @@
 								<MenuButton fx:id="groupChoice" prefWidth="150"
 									layoutX="445" layoutY="5" />
 								<Label text="Group name:" layoutY="25" layoutX="5" />
-								<Label fx:id="nameLabel" text="test" layoutX="100"
-									layoutY="25" />
+								<Label fx:id="nameLabel" layoutX="100" layoutY="25" />
 								<TextField fx:id="nameField" prefWidth="250" layoutY="25"
-									layoutX="100" visible="false" disable="true" />
+									layoutX="100" visible="false" disable="true" onTextChange="#nameChanged" />
 								<Label text="Creator:" layoutY="60" layoutX="5" />
 								<Label fx:id="creatorLabel" layoutX="100" layoutY="60" />
 								<Label text="Group members:" layoutX="5" layoutY="100" />
