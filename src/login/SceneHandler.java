@@ -27,6 +27,7 @@ public class SceneHandler {
 			  stage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
 			  stage.setScene(scene);
 			  stage.centerOnScreen();
+			  stage.titleProperty().setValue("BETJA Systems™");
 			  stage.show();
 			 
 			} catch(Exception er) {
@@ -48,6 +49,7 @@ public class SceneHandler {
 			stage.hide();
 			stage.setScene(scene);
 			stage.centerOnScreen();
+			stage.titleProperty().setValue("BETJA Systems™");
 			stage.show();
 			  
 			} catch(Exception er) {
@@ -68,6 +70,7 @@ public class SceneHandler {
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
+			primaryStage.titleProperty().setValue("BETJA Systems™");
 			primaryStage.show();
 			
 		} catch(Exception e) {
@@ -88,6 +91,7 @@ public class SceneHandler {
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
+			primaryStage.titleProperty().setValue("BETJA Systems™");
 			primaryStage.show();
 			
 		} catch(Exception e) {
@@ -109,6 +113,7 @@ public class SceneHandler {
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
+			primaryStage.titleProperty().setValue("BETJA Systems™");
 			primaryStage.show();
 			
 		} catch(Exception e) {
@@ -129,6 +134,7 @@ public class SceneHandler {
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
+			primaryStage.titleProperty().setValue("BETJA Systems™");
 			primaryStage.show();
 			
 		} catch(Exception e) {
