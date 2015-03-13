@@ -113,7 +113,7 @@ public class Appointment {
 	public void setDescription(String d) {
 		if (descriptionIsValid(d)) {
 			description = d;
-			
+			sync();
 			if (prev!=null) {
 				if (prev.getDescription()!=d) {
 					prev.setDescription(d);
@@ -134,6 +134,7 @@ public class Appointment {
 	public void setDate(LocalDate d) {
 		if (dateIsValid(d)) {
 			date = d;
+			sync();
 		}
 	}
 
@@ -145,6 +146,7 @@ public class Appointment {
 	public void setStartTime(LocalTime t) {
 		if (startTimeIsValid(t)) {
 			startTime = t;
+			sync();
 		}
 	}
 
@@ -164,6 +166,7 @@ public class Appointment {
 	public void setEndTime(LocalTime t) {
 		if (endTimeIsValid(t)) {
 			endTime = t;
+			sync();
 		}
 	}
 
@@ -183,6 +186,7 @@ public class Appointment {
 	public void setLocation(String l) {
 		if (locationIsValid(l)) {
 			location = l;
+			sync();
 			if (prev!=null) {
 				if (prev.getLocation()!=l) {
 					prev.setLocation(l);
@@ -221,16 +225,22 @@ public class Appointment {
 		else {
 			users=null;
 			if (prev!=null) {
-				prev.setUsers(null);
+				if (prev.getUsers()!=null) {
+					prev.setUsers(null);
+				}
 			}
 			if (next!=null) {
-				next.setUsers(null);
+				if (next.getUsers()!=null) {
+					next.setUsers(null);
+				}
 			}
 		}
+		sync();
 	}
 	
 	public void addUser(User user) {
 		users.put(user, false);
+		sync();
 		if (prev!=null) {
 			if (!prev.getUsers().contains(user)) {
 				prev.addUser(user);
@@ -309,19 +319,6 @@ public class Appointment {
 		overlap[1]+=i[1];
 	}
 
-	public void setID(int id) {
-		this.id=id;
-		if (prev!=null) {
-			if (prev.getID()!=id) {
-				prev.setID(id);
-			}
-		}
-		if (next!=null) {
-			if (next.getID()!=id) {
-				next.setID(id);
-			}
-		}
-	}
 
 	public int getID() {
 		return id;
@@ -333,6 +330,7 @@ public class Appointment {
 
 	public void setOpened(boolean b) {
 		opened = b;
+		sync();
 		if (prev!=null) {
 			if (prev.getOpened()!=b) {
 				prev.setOpened(b);
@@ -351,6 +349,7 @@ public class Appointment {
 
 	public void setAdmin(boolean b) {
 		admin = b;
+		sync();
 		if (prev!=null) {
 			if (prev.getAdmin()!=b) {
 				prev.setAdmin(b);
@@ -367,6 +366,16 @@ public class Appointment {
 	public void setAttending(String s) {
 		if (s=="Y" || s=="N" || s=="None" || s=="notAnswered") {
 			attending=s;
+			if (s=="Y") {
+				users.replace(calendar.getLoggedInUser(), true);
+			}
+			else if (s=="N") {
+				users.replace(calendar.getLoggedInUser(), false);
+			}
+			else if (s=="notAnswered") {
+				users.replace(calendar.getLoggedInUser(), null);
+			}
+			sync();
 		}
 		if (prev!=null) {
 			if (prev.getAttending()!=s) {
@@ -392,6 +401,7 @@ public class Appointment {
 	public void setCapacity(int capacity) {
 		
 		this.roomCapacity = capacity;
+		sync();
 		if (prev!=null) {
 			if (prev.getCapacity()!=capacity) {
 				prev.setCapacity(capacity);
@@ -431,6 +441,7 @@ public class Appointment {
 		
 	
 		this.roomList = roomList; 
+		sync();
 		
 		if (prev!=null) {
 			if (prev.getRoomList()!=roomList) {
@@ -457,6 +468,7 @@ public class Appointment {
 	public void setUserAttending(User p, boolean b) {
 		if (users.get(p)!=b) {
 			users.replace(p, !b, b);
+			sync();
 			if (prev!=null) {
 				if (prev.getUserAttending(p)!=b) {
 					prev.setUserAttending(p, b);
@@ -481,10 +493,12 @@ public class Appointment {
 	
 	public void setPrev(Appointment a) {
 		prev = a;
+		sync();
 	}
 	
 	public void setNext(Appointment a) {
 		next = a;
+		sync();
 	}
 	
 	
@@ -506,7 +520,7 @@ public class Appointment {
 		}
 	}
 	
-	public void delete() {
+	public void delete() throws IOException {
 		if (prev!=null) {
 			prev.setNext(null);
 			prev.delete();
@@ -516,6 +530,10 @@ public class Appointment {
 			next.delete();
 		}
 		day.removeAppointment(this);
+		JSONObject o = new JSONObject();
+		o.put("command", "delete");
+		o.put("aid", id);
+		API.call("/appointment", o, calendar.getSession());
 	}
 	
 	public void addGroup(Group g) {
@@ -552,6 +570,7 @@ public class Appointment {
 			}
 
 		}
+		sync();
 	}
 	
 	public List<Group> getGroups() {
@@ -570,6 +589,7 @@ public class Appointment {
 	
 	public void setActive(boolean b) {
 		active = b;
+		sync();
 	}
 	
 	public void findActive() {
@@ -593,7 +613,7 @@ public class Appointment {
 					next.setActive(active);
 				}
 			}
-
+			sync();
 			day.setActiveAppointments();
 		}
 	}
@@ -604,6 +624,7 @@ public class Appointment {
 	
 	public void setPersonal(boolean b) {
 		personal = b;
+		sync();
 		if (prev!=null) {
 			if (prev.getPersonal()!=b) {
 				prev.setPersonal(b);
@@ -615,6 +636,17 @@ public class Appointment {
 			}
 		}
 
+	}
+	
+	private void sync() {
+		JSONObject o = new JSONObject();
+		o.put("command", "modify");
+		o.put("app", this);
+		try {
+			API.call("/appointment", o, calendar.getSession());
+		} catch (IOException e) {
+			return;
+		}
 	}
 	
 	
