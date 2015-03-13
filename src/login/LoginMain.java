@@ -17,7 +17,7 @@ public class LoginMain extends Application {
 			Parent root = (Parent)FXMLLoader.load(getClass().getResource("/login/loginScreen.fxml"));
 			Scene scene = new Scene(root,307,258);
 			primaryStage.setScene(scene);
-			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../../bin/appointment_icon.png")));
+			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
 			primaryStage.show();
 		} catch(Exception e) 
 		{
