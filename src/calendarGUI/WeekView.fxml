@@ -174,7 +174,7 @@
 			</children>
 		</VBox>
 		<Button fx:id="admin" onAction="#adminPressed" text="Admin"
-			alignment="CENTER" prefHeight="40" prefWidth="100" disable="true"
-			visible="false" layoutX="850" layoutY="560" />
+			alignment="CENTER" prefHeight="36" prefWidth="100" disable="true"
+			visible="false" layoutX="850" layoutY="564" />
 	</children>
 </AnchorPane>
