@@ -441,7 +441,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	private void adminPressed() {
-		
+		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 355, 400, getData(), null);
 	}
 	
 }

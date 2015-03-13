@@ -81,7 +81,7 @@ public class FilterViewController {
 		}
 		else {
 			groupList.getItems().clear();
-			Label label = new Label("Join a group");
+			Label label = new Label("No groups");
 			label.setFocusTraversable(false);
 			HBox line = new HBox();
 			line.setFocusTraversable(false);
