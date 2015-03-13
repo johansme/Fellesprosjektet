@@ -1,8 +1,12 @@
 package calendarGUI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
+import api.API;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -61,6 +65,15 @@ public class NewGroupViewController implements ParticipantController {
 			group = new Group(0, memberList, getGroupViewController().getData().getLoggedInUser(), nameField.getText());
 			group.setCreatedBy(group.getAdmin().getId());
 			groupViewController.setGroup(group);
+			JSONObject obj = new JSONObject();
+			obj.put("command", "create");
+			obj.put("group", group);
+			JSONObject res;
+			try {
+				res = API.call("/group", obj, getGroupViewController().getData().getSession());
+				group.setId(res.getInt("gid"));	
+			} catch (IOException e) {
+			}
 			for (Participant member : memberList) {
 				if (member instanceof Group) {
 					((Group) member).setParent(group.getId());
@@ -72,6 +85,9 @@ public class NewGroupViewController implements ParticipantController {
 			}
 			//TODO send group to server
 			
+			nameField.clear();
+			memberList.clear();
+			memberListView.getItems().clear();
 			groupViewController.getTabs().getSelectionModel().select(0);
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Invalid group name", getGroupViewController());
@@ -83,7 +99,7 @@ public class NewGroupViewController implements ParticipantController {
 		if (s.length() > 50) {
 			return false;
 		}
-		return s.matches("[ a-zA-Z0-9_]+") && ! s.startsWith(" ");
+		return s.matches("[ a-zA-Z0-9]+") && ! s.startsWith(" ");
 	}
 
 	@FXML

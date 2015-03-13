@@ -1,17 +1,25 @@
 package calendarGUI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
+import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Group;
 import calendar.Participant;
+import calendar.User;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -70,7 +78,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				removedMembers.add(removed);
 			}
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No member is selected.", this);
 		}
 		saveButton.setDisable(false);
 	}
@@ -86,11 +94,28 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			group.setName(nameField.getText());
 			for (Participant member : addedMembers) {
 				group.addMember(member);
+				if (member instanceof User) {
+					((User) member).addGroup(group);
+				} else if (member instanceof Group) {
+					((Group) member).setParent(group.getId());
+				}
 				//TODO send to server
 			}
 			for (Participant member : removedMembers) {
 				group.removeMember(member);
+				if (member instanceof User) {
+					((User) member).removeGroup(group);
+				} else if (member instanceof Group) {
+					((Group) member).setParent(0);
+				}
 				//TODO send to server
+			}
+			JSONObject obj = new JSONObject();
+			obj.put("command", "modify");
+			obj.put("group", group);
+			try {
+				API.call("/group", obj, calendar.getSession());
+			} catch (IOException e) {
 			}
 			saveButton.setDisable(true);
 		} else {
@@ -103,7 +128,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		if (s.length() > 50) {
 			return false;
 		}
-		return s.matches("[ a-zA-Z0-9_]+") && ! s.startsWith(" ");
+		return s.matches("[ a-zA-Z0-9]+") && ! s.startsWith(" ");
 	}
 
 	@FXML
@@ -117,6 +142,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		nameLabel.setText(group.getName());
 		nameField.setText(group.getName());
 		creatorLabel.setText(group.getAdmin().toString());
+		setGroupMenu();
 		setMemberList();
 		if (calendar.getLoggedInUser().isAdmin() || group.getAdmin().equals(calendar.getLoggedInUser())) {
 			nameLabel.setVisible(false);
@@ -181,6 +207,18 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	@Override
 	public void setFeedback() {
 
+	}
+	
+	private void setGroupMenu() {
+		for (Group group : groupList) {
+			MenuItem mi = new MenuItem(group.getName());
+			mi.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent t) {
+					groupChoice.setText(mi.getText());
+				}
+			});
+			groupChoice.getItems().add(mi);
+		}
 	}
 
 	@Override
