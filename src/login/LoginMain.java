@@ -18,7 +18,7 @@ public class LoginMain extends Application {
 			Scene scene = new Scene(root,307,258);
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
-			primaryStage.titleProperty().setValue("BETJA Systemsâ„¢");
+			primaryStage.titleProperty().setValue("BETJA Systems™");
 			primaryStage.show();
 		} catch(Exception e) 
 		{
