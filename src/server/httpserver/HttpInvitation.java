@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import server.Appointment;
+import server.Group;
 import server.Invitation;
 import server.User;
 
@@ -93,8 +94,7 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		}
 		
-		// TODO: Check that user is in group
-		if(/*u.getId() != uid*/ false && !u.isAdmin()) {
+		if(!Group.isUserInGroup(gid, u.getId()) && !u.isAdmin()) {
 			sendUnauthorised(t);
 			return;
 		}

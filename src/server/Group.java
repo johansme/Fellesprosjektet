@@ -1,6 +1,7 @@
 package server;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Group extends shared.Group {
@@ -33,5 +34,30 @@ public class Group extends shared.Group {
 			db.close();
 		}
 		return success;
+	}
+	
+	public static boolean isUserInGroup(int gid, int uid) {
+		DBConnection db = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		boolean exists = true;
+		try {
+			db = new DBConnection();
+			final String stm_str = "SELECT 1 FROM GroupMember WHERE groupid=? AND userid=?";
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, gid);
+			stm.setInt(2, uid);
+			stm.execute();
+			rs = stm.getResultSet();
+			exists = rs.first();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return exists;
 	}
 }
