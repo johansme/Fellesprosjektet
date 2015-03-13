@@ -16,6 +16,10 @@ public class Group extends shared.Group implements Participant {
 		super.setName(n);
 	}
 
+	public Group() {
+		super();
+	}
+
 	public List<Participant> getMembers() {
 		return members;
 	}
