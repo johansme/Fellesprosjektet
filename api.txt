@@ -1,30 +1,30 @@
-/login
+/login DONE
 	In: username(String),password(String)
 	Out: uid(int),session(String)
 
 /appointment
-	create
+F	create
 		In: app(Appointment)
 		Out: aid(int)
-	modify
+P	modify
 		In: app(Appointment)
-	delete
+P	delete
 		In: aid(int)
 
 /invitation
-	get_all_for_user
+F	get_all_for_user
 		In: uid(int)
 		Out: invitations(app(Appointment), invitation(UserInvitation))[]
-	get_all_for_group
+P	get_all_for_group
 		In: gid(int)
 		Out: app(Appointment)[]
-	invite_user
+P	invite_user
 		In: aid(int),uid(int)
-	invite_group
+P	invite_group
 		In: aid(int),gid(int)
 
 /group
-	create
+F	create
 		In: group(Group)
 	modify
 		In: group(Group)
@@ -61,8 +61,8 @@
 		In: user(User)
 	delete
 		In: uid(int)
-	get_all
+F	get_all
 		Out: users(User)[]
-	get_by_id
+F	get_by_id
 		In: uid(int)
 		Out: user(User)
