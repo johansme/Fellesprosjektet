@@ -1,8 +1,15 @@
 package login;
 
 
+import java.io.IOException;
+
+import org.json.JSONObject;
+
+import api.API;
+import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
+import calendarGUI.ControllerInterface;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,23 +20,20 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 
-public class LoginController {
+public class LoginController implements ControllerInterface {
 
 	private LoginManager lman = new LoginManager();
 	private SceneHandler sceneHandler = new SceneHandler();
-
+	private Calendar calendar;
 	private User loggingIn = new User();
+	private String session;
 
 	@FXML private TextField username;
 	@FXML private TextField password;
 	@FXML private Label errorMessage;
 	@FXML private Button loginButton;
 	@FXML private Pane screen;
-	
-	private User getUser() {
-		return loggingIn;
-	}
-	
+		
 	@FXML
 	private void login(Event e){
 		// get username and password
@@ -40,22 +44,27 @@ public class LoginController {
 			}
 		}
 
-		String uname;
-		String pass;
-		uname = username.textProperty().getValue();
-		pass = password.textProperty().getValue();
+		String uname = username.textProperty().getValue();
+		String pass = password.textProperty().getValue();
 
 		//check if username and password corresponds
 
 		if(lman.checkLogin(uname, pass)){
+			session = lman.getSession();
+			int uid = lman.getID();
+			JSONObject obj = new JSONObject();
+			obj.put("command", "get_by_id");
+			obj.put("uid", uid);
+			JSONObject res;
+			try {
+				res = API.call("/user", obj, session);
+				loggingIn.fromJSON(res.getJSONObject("user"));
+				calendar = new Calendar(loggingIn, session);
+				sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",950,600, calendar);
 
-			// its a match, proceeding to calendar
-			// changing stage fxml file to calendar
-
-
-			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",950,600, new Calendar(getUser()));
-
-
+			} catch (IOException e1) {
+				errorMessage.textProperty().setValue("Invalid authentication credentials");				
+			}
 
 		}else{
 
@@ -64,6 +73,27 @@ public class LoginController {
 
 		}
 
+	}
+
+	@Override
+	public void setData(Calendar calendar) {
+		this.calendar = calendar;
+	}
+
+	@Override
+	public Calendar getData() {
+		return calendar;
+	}
+
+	@Override
+	public void setData(Calendar c, Appointment a) {
+		calendar = c;
+	}
+
+	@Override
+	public void setFeedback() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DBConnection {
-	private static final String URL = "jdbc:mysql://mysql.stud.ntnu.no/";
-	private static final String USER = "einh_test";
-	private static final String PASS = "test";
-	private static final String DB = "einh_cal";
+	private static final String URL = "jdbc:mysql://localhost/";
+	private static final String USER = "fp";
+	private static final String PASS = "fp";
+	private static final String DB = "cal";
 	
 	Connection c;
 	

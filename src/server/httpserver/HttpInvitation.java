@@ -125,6 +125,7 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		}
 		
+		// TODO: Send notification
 		if(Invitation.inviteUser(aid, uid)) {
 			sendOK(t);
 			return;

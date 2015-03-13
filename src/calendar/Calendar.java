@@ -13,15 +13,21 @@ public class Calendar {
 	private Month currentMonth;
 	private List<Month> months;
 	private User loggedInUser;
+	private String session;
 
-	public Calendar(User loggedIn) {
+	public Calendar(User loggedIn, String session) {
 		this.loggedInUser = loggedIn;
+		this.session = session;
 		currentDate = LocalDate.now();
 		currentMonth = new Month(currentDate);
 		months = new ArrayList<Month>();
 		months.add(currentMonth);
 		addPastMonths(5);
 		addFutureMonths(8);
+	}
+	
+	public String getSession() {
+		return session;
 	}
 
 	public LocalDate getCurrentDate() {

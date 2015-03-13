@@ -1,5 +1,6 @@
 package calendar;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -7,6 +8,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import org.json.JSONObject;
+
+import api.API;
 
 public class Appointment {
 
@@ -32,14 +37,21 @@ public class Appointment {
 	private boolean personal;
 	
 	
-	public Appointment() {
+	public Appointment(Calendar c) {
 		//hahahahhahahahah:D
 		//TODO set boolean personal=user invited directly
+		calendar = c;
 		prev = null;
 		next = null;
-		Random rand = new Random();
-
-		id = rand.nextInt(57436) + 1;
+		JSONObject obj = new JSONObject();
+		obj.put("command", "create");
+		obj.put("app", this);
+		JSONObject res;
+		try {
+			res = API.call("/appointment", obj, calendar.getSession());
+			id = res.getInt("aid");
+		} catch (IOException e) {
+		}
 		
 	}
 
@@ -101,6 +113,7 @@ public class Appointment {
 	public void setDescription(String d) {
 		if (descriptionIsValid(d)) {
 			description = d;
+			
 			if (prev!=null) {
 				if (prev.getDescription()!=d) {
 					prev.setDescription(d);

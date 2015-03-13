@@ -10,16 +10,16 @@ import org.json.JSONObject;
 import shared.Util;
 
 public class API {
-	private final static String BASE_URL = "http://localhost:8000";
+	private final static String BASE_URL = "http://188.226.170.24:8000";
 	
-	public static String login(String username, String password) throws IOException {
+	public static JSONObject login(String username, String password) throws IOException {
 		JSONObject obj = new JSONObject();
 		obj.put("username", username);
 		obj.put("password", password);
 		
 		JSONObject res = call("/login", obj, null);
 		try {
-			return res.getString("session");
+			return new JSONObject().put("uid", res.getInt("uid")).put("session", res.getString("session"));
 		} catch(JSONException e) {
 			return null;
 		}

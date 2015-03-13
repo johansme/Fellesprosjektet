@@ -22,7 +22,7 @@ public class HttpLogin extends HttpAPIHandler {
 			
 			if(User.checkPassword(username, password)) {
 				User u = new User(username);
-				sendOK(t, new JSONObject().put("session", (String)server.getSessionManager().getNewSession(u.getId())));
+				sendOK(t, new JSONObject().put("session", (String)server.getSessionManager().getNewSession(u.getId())).put("uid", u.getId()));
 				return;
 			} else {
 				sendError(t, "Invalid authentication credentials");
