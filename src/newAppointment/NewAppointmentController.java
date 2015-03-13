@@ -378,8 +378,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				timeDiffInMin = fromTimeMinutes - toTimeMinutes;
 			
 			if(!validToTime()){
-				String ftm = fromTimeMin + "";
-				if(ftm.equals("0") && timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 				//else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 				
 			}
@@ -539,7 +538,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 
 		if(fromDate.getValue().toString().equals(LocalDate.now().toString()))
 		{
-
 
 
 			// arithmetics for checking if fromTime is >= 06:00 and <= 22:30 @Alex
