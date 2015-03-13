@@ -11,6 +11,12 @@ public class User extends shared.User implements Participant {
 		groups.add(g);
 	}
 	
+	public void removeGroup(Group group) {
+		if (groups.contains(group)) {
+			groups.remove(group);
+		}
+	}
+	
 	public void setGroups(List<Group> g) {
 		groups.clear();
 		for (Group gr : g) {

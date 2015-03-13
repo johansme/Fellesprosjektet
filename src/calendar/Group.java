@@ -8,6 +8,10 @@ public class Group extends shared.Group implements Participant {
 	private User admin;
 	private boolean active;
 	
+	public Group() {
+		
+	}
+	
 	public Group(int id, List<Participant> memberList, User a, String n) {
 		super();
 		super.setId(id);
