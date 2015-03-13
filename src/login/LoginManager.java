@@ -26,6 +26,8 @@ public class LoginManager {
 			return false;
 		} catch (JSONException j) {
 			return false;
+		} catch (NullPointerException n) {
+			return false;
 		}
 	}
 
