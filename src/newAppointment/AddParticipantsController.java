@@ -1,11 +1,19 @@
 package newAppointment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.Group;
 import calendar.Participant;
+import calendar.ParticipantComparator;
+import calendar.User;
 import calendarGUI.ControllerInterface;
 import calendarGUI.ParticipantController;
 import javafx.fxml.FXML;
@@ -34,8 +42,39 @@ public class AddParticipantsController implements ControllerInterface {
 	
 	@FXML
 	private void initialize() {
+	}
+	
+	private void init() {
 		List<Participant> participants = new ArrayList<Participant>();
-		//TODO get participants from server, add to searchList
+		JSONObject obj = new JSONObject();
+		obj.put("command", "get_all");
+		JSONObject res1;
+		try {
+			res1 = API.call("/user", obj, calendar.getSession());
+			JSONArray users = res1.getJSONArray("users");
+			for (int i = 0; i < users.length(); i++) {
+				JSONObject userObj = ((JSONObject) users.get(i));
+				User user = new User();
+				user.fromJSON(userObj);
+				participants.add(user);
+			}
+		} catch (IOException e) {
+		}
+		obj = new JSONObject();
+		obj.put("command", "get_all");
+		JSONObject res2;
+		try {
+			res2 = API.call("/group", obj, calendar.getSession());
+			JSONArray groups = res2.getJSONArray("groups");
+			for (int i = 0; i < groups.length(); i++) {
+				JSONObject groupObj = ((JSONObject) groups.get(i));
+				Group group = new Group();
+				group.fromJSON(groupObj);
+				participants.add(group);
+			}
+		} catch (IOException e) {
+		}
+		participants.sort(new ParticipantComparator());
 		for (Participant participant : participants) {
 			HBox line = new HBox();
 			Label userLabel = new Label();
@@ -118,6 +157,7 @@ public class AddParticipantsController implements ControllerInterface {
 	public void setData(Calendar calendar) {
 		if (calendar != null) {
 			this.calendar = calendar;
+			init();
 		}
 	}
 
@@ -129,6 +169,7 @@ public class AddParticipantsController implements ControllerInterface {
 	@Override
 	public void setData(Calendar c, Appointment a) {
 		this.calendar = c;
+		init();
 	}
 
 	@Override
