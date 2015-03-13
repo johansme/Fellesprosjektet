@@ -2,30 +2,29 @@ package calendar;
 
 import java.util.List;
 
-public class Group implements Participant {
+public class Group extends shared.Group implements Participant {
 	
-	private List<User> users;
+	private List<Participant> members;
 	private User admin;
-	private int id;
-	private String name;
 	private boolean active;
 	
-	public Group(int id, List<User> u, User a, String n) {
-		this.id = id;
-		setUsers(u);
+	public Group(int id, List<Participant> memberList, User a, String n) {
+		super();
+		super.setId(id);
+		setMembers(memberList);
 		admin = a;
-		name = n;
+		super.setName(n);
 	}
 
-	public List<User> getUsers() {
-		return users;
+	public List<Participant> getMembers() {
+		return members;
 	}
 
-	public void setUsers(List<User> users) {
-		if(users != null){
-		for (User user: users) {
-			if (user != null && ! this.users.contains(user)) {
-				this.users.add(user);
+	public void setMembers(List<Participant> memberList) {
+		if(memberList != null){
+		for (Participant participant: memberList) {
+			if (participant != null && ! this.members.contains(participant)) {
+				this.members.add(participant);
 			}
 		}
 		}
@@ -35,29 +34,15 @@ public class Group implements Participant {
 		return admin;
 	}
 
-
-	public int getId() {
-		return id;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void addUser(User user) {
-		if (user != null && ! users.contains(user)) {
-			users.add(user);
+	public void addMember(Participant participant) {
+		if (participant != null && ! members.contains(participant)) {
+			members.add(participant);
 		}
 	}
 	
-	public void removeUser(User user) {
-		if (users.contains(user)) {
-			users.remove(user);
+	public void removeMember(Participant participant) {
+		if (members.contains(participant)) {
+			members.remove(participant);
 		}
 	}
 	
