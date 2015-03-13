@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class SceneHandler {
@@ -23,7 +24,7 @@ public class SceneHandler {
 			  Stage stage=(Stage) node.getScene().getWindow();
 			  Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
 			  Scene scene = new Scene(root);
-			  
+			  stage.getIcons().add(new Image(this.getClass().getResourceAsStream("../../bin/appointment_icon.png")));
 			  stage.setScene(scene);
 			  stage.centerOnScreen();
 			  stage.show();
@@ -43,6 +44,7 @@ public class SceneHandler {
 			Scene scene = new Scene(root,width,height);
 			ControllerInterface monthController = (ControllerInterface) loader.getController();
 			monthController.setData(calendar);
+			stage.getIcons().add(new Image(this.getClass().getResourceAsStream("../../bin/appointment_icon.png")));
 			stage.hide();
 			stage.setScene(scene);
 			stage.centerOnScreen();
@@ -63,6 +65,7 @@ public class SceneHandler {
 			Scene scene = new Scene(root,width,height);
 			ControllerInterface monthController = (ControllerInterface) loader.getController();
 			monthController.setData(calendar, appointment);
+			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../../bin/appointment_icon.png")));
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.show();
@@ -82,6 +85,7 @@ public class SceneHandler {
 			Scene scene = new Scene(root,width,height);
 			ControllerInterface controll = loader.getController();
 			controll.setData(cal, a);
+			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../../bin/appointment_icon.png")));
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.show();
@@ -102,6 +106,7 @@ public class SceneHandler {
 			MessageController messageController = (MessageController) loader.getController();
 			messageController.setMessage(message);
 			messageController.setReferenceController(contrInt);
+			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../../bin/appointment_icon.png")));
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.show();
@@ -121,6 +126,7 @@ public class SceneHandler {
 			AddParticipantsController addPartController = (AddParticipantsController) loader.getController();
 			addPartController.setParticipantController(controller);
 			addPartController.setData(calendar);
+			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("../../bin/appointment_icon.png")));
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.show();
