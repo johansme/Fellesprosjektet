@@ -153,11 +153,12 @@ public class Calendar {
 	}
 	
 	public void refresh() {
-		try {
-			SyncFromServer.sync(this);
-		} catch (IOException e) {
-			return;
-		}
+		//TODO remove commenting
+//		try {
+//			SyncFromServer.sync(this);
+//		} catch (IOException e) {
+//			return;
+//		}
 	}
 		
 }
