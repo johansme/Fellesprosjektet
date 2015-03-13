@@ -10,7 +10,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import login.SceneHandler;
+import calendar.Group;
 import calendar.Participant;
+import calendar.User;
 
 public class NewGroupViewController implements ParticipantController {
 
@@ -25,6 +27,8 @@ public class NewGroupViewController implements ParticipantController {
 	private List<Participant> memberList = new ArrayList<Participant>();
 	private SceneHandler sceneHandler = new SceneHandler();
 	private GroupViewController groupViewController;
+	
+	private Group group;
 
 	@FXML
 	private void initialize() {
@@ -54,7 +58,21 @@ public class NewGroupViewController implements ParticipantController {
 	@FXML
 	private void saveButtonPressed() {
 		if (isValidName()) {
+			group = new Group(0, memberList, getGroupViewController().getData().getLoggedInUser(), nameField.getText());
+			group.setCreatedBy(group.getAdmin().getId());
+			groupViewController.setGroup(group);
+			for (Participant member : memberList) {
+				if (member instanceof Group) {
+					((Group) member).setParent(group.getId());
+					//TODO update server
+				} else if (member instanceof User) {
+					((User) member).addGroup(group);
+					//TODO update server
+				}
+			}
+			//TODO send group to server
 			
+			groupViewController.getTabs().getSelectionModel().select(0);
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Invalid group name", getGroupViewController());
 		}
