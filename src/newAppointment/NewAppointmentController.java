@@ -171,13 +171,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	// method for checking if necessary fields are filled out @Birk
 		public boolean checkFieldsFill()
 		{
-			System.out.println(!descriptionField.textProperty().getValue().isEmpty());
-			System.out.println(!toField.textProperty().getValue().equals(""));
-			System.out.println(!fromField.textProperty().getValue().equals(""));
-			System.out.println(capasityField.textProperty().getValue() != "");
-			System.out.println(!room.textProperty().getValue().equals("Choose room"));
-			 
-			
 			
 			if(!descriptionField.textProperty().getValue().isEmpty() &&
 				!toField.textProperty().getValue().equals("") &&
@@ -346,7 +339,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 					
 			}
 		}
-		else System.out.println("BiG shitty error!"); //TODO do we need this shitty error? =O
 	
 	}
 	

@@ -1,8 +1,10 @@
 package login;
 
 
+import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
+import calendarGUI.ControllerInterface;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,12 +15,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 
-public class LoginController {
+public class LoginController implements ControllerInterface {
 
 	private LoginManager lman = new LoginManager();
 	private SceneHandler sceneHandler = new SceneHandler();
-
+	private Calendar calendar;
 	private User loggingIn = new User();
+	private String session;
 
 	@FXML private TextField username;
 	@FXML private TextField password;
@@ -40,20 +43,16 @@ public class LoginController {
 			}
 		}
 
-		String uname;
-		String pass;
-		uname = username.textProperty().getValue();
-		pass = password.textProperty().getValue();
+		String uname = username.textProperty().getValue();
+		String pass = password.textProperty().getValue();
 
 		//check if username and password corresponds
 
 		if(lman.checkLogin(uname, pass)){
-
-			// its a match, proceeding to calendar
-			// changing stage fxml file to calendar
-
-
-			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",950,600, new Calendar(getUser()));
+			session = lman.getSession();
+			loggingIn
+			calendar = new Calendar(loggingIn);
+			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",950,600, calendar, session);
 
 
 
@@ -64,6 +63,27 @@ public class LoginController {
 
 		}
 
+	}
+
+	@Override
+	public void setData(Calendar calendar) {
+		this.calendar = calendar;
+	}
+
+	@Override
+	public Calendar getData() {
+		return calendar;
+	}
+
+	@Override
+	public void setData(Calendar c, Appointment a) {
+		calendar = c;
+	}
+
+	@Override
+	public void setFeedback() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
