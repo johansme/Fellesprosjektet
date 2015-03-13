@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Participant;
@@ -35,7 +34,6 @@ import login.SceneHandler;
 public class NewAppointmentController implements ControllerInterface, ParticipantController {
 
 	private Appointment appointment;
-
 	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
 
@@ -300,27 +298,32 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			int toTimeHour = Integer.parseInt(toTime.split(":")[0]);
 			int toTimeMin = Integer.parseInt(toTime.split(":")[1]);
 			
+			int fromTimeMinutes = (fromTimeHour * 60) + fromTimeMin;
+			int toTimeMinutes = (toTimeHour * 60) + toTimeMin; 
+			int timeDiffInMin;
+			if (toTimeMinutes > fromTimeMinutes)
+				timeDiffInMin = toTimeMinutes - fromTimeMinutes;
+			else 
+				timeDiffInMin = fromTimeMinutes - toTimeMinutes;
+			
+			System.out.println(timeDiffInMin);
 			if(!validToTime()){
-				
-				toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-				toField.setText(toField.textProperty().getValue());
+				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				else toField.setText(toField.textProperty().getValue());
 				
 			}
 			
 			if(!validFromTime())
 			{
 				fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
-				String ftm = fromTimeMin + "";
-				if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin) + "0");
-				else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				else toField.setText(toField.textProperty().getValue());
 			}
 			
 			
 			if(minAndMaxAllowedStartTime())
 			{
-				String ftm = fromTimeMin + "";
-				if(ftm.equals("0")) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-				else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 			}
 			else 
 			{
@@ -389,8 +392,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			if(!minAndMaxAllowedToTime())
 			{
 				
-				String ftm = fromTimeMin + "";
-				
 				if(fromTimeHour >= 22 && fromTimeMin > 30 || toTimeHour >= 22 && toTimeMin >= 0 ){
 					fromField.setText("22:30");
 					toField.setText("23:00");
@@ -401,7 +402,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 					toField.setText("23:00");
 					printErrorMessage();
 				}
-				else if(ftm.equals("0") && timeDiffInMin < 30) 
+				else if(timeDiffInMin < 30) 
 				{
 					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 				}
@@ -720,7 +721,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		room.getItems().add(other);
 
 	}
-
 	@FXML
 	public void addUsers()
 	{
