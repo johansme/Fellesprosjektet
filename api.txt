@@ -10,6 +10,9 @@ P	modify
 		In: app(Appointment)
 P	delete
 		In: aid(int)
+	get_from_creator
+		In: uid(int)
+		Out: app(Appointment)[]
 
 /invitation
 F	get_all_for_user
@@ -34,6 +37,9 @@ F	create
 		Out: groups(Group)[]
 	get
 		In: gid(int)[]
+		Out: groups(Group)[]
+	get_from_creator
+		In: uid(int)
 		Out: groups(Group)[]
 	add_user
 		In: gid(int),uid(int)
