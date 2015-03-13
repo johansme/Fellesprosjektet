@@ -169,7 +169,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		{
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
 		}
-
 		
 	}
 	
@@ -226,9 +225,9 @@ public class NewAppointmentController implements ControllerInterface, Participan
 
 	}
 	
-	private void printErrorMessage(){
-		String msg = "The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.";
-		sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, msg, this);
+	private void printErrorMessage(String errorMsg){
+		
+		sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, errorMsg, this);
 	}
 	
 	private boolean checkValidFromField(){
@@ -306,24 +305,29 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			else 
 				timeDiffInMin = fromTimeMinutes - toTimeMinutes;
 			
-			System.out.println(timeDiffInMin);
 			if(!validToTime()){
-				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-				else toField.setText(toField.textProperty().getValue());
+				if(timeDiffInMin < 30){
+					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+					printErrorMessage("The appointment must last for at least 30 minutes.");
+				}
 				
 			}
 			
 			if(!validFromTime())
 			{
 				fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
-				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-				else toField.setText(toField.textProperty().getValue());
+				if(timeDiffInMin < 30) {
+					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+					printErrorMessage("The appointment must last for at least 30 minutes.");
+				}
 			}
 			
 			
 			if(minAndMaxAllowedStartTime())
 			{
-				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				if(timeDiffInMin < 30) {
+					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				}
 			}
 			else 
 			{
@@ -332,18 +336,18 @@ public class NewAppointmentController implements ControllerInterface, Participan
 					{
 						fromField.setText("22:30");
 						toField.setText("23:00");
-						printErrorMessage();
+						printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
 					}
 					else if(fromTimeHour > 22 && fromTimeMin >= 0 || toTimeHour > 22 && toTimeMin >= 0){
 						fromField.setText("22:30");
 						toField.setText("23:00");
-						printErrorMessage();
+						printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
 					}
 					else if(fromTimeHour < 6 && fromTimeHour >= 0)
 					{
 						fromField.setText("06:00");
 						toField.setText("06:30");
-						printErrorMessage();
+						printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
 					}
 					
 					
@@ -365,13 +369,13 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			int toTimeHour = Integer.parseInt(toTime.split(":")[0]);
 			int toTimeMin = Integer.parseInt(toTime.split(":")[1]);
 
-			int timeHourToMinDiff = (toTimeHour - fromTimeHour) * 60;
-			int timeMinDiff = toTimeMin - fromTimeMin;
+			int fromTimeMinutes = (fromTimeHour * 60) + fromTimeMin;
+			int toTimeMinutes = (toTimeHour * 60) + toTimeMin; 
 			int timeDiffInMin;
-			if (timeHourToMinDiff > timeMinDiff)
-				timeDiffInMin = timeHourToMinDiff - timeMinDiff;
+			if (toTimeMinutes > fromTimeMinutes)
+				timeDiffInMin = toTimeMinutes - fromTimeMinutes;
 			else 
-				timeDiffInMin = timeMinDiff - timeHourToMinDiff;
+				timeDiffInMin = fromTimeMinutes - toTimeMinutes;
 			
 			if(!validToTime()){
 				String ftm = fromTimeMin + "";
@@ -380,31 +384,26 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				
 			}
 			
-			if(fromTimeHour > toTimeHour)
-			{
+			if(fromTimeHour > toTimeHour){
 				toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-				printErrorMessage();
 			}
-			else if(fromTimeHour >= toTimeHour && fromTimeMin > toTimeMin){
-				
-			}
-			
 			if(!minAndMaxAllowedToTime())
 			{
 				
 				if(fromTimeHour >= 22 && fromTimeMin > 30 || toTimeHour >= 22 && toTimeMin >= 0 ){
 					fromField.setText("22:30");
 					toField.setText("23:00");
-					printErrorMessage();
+					printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
 				}
 				else if(fromTimeHour > 22 && fromTimeMin >= 0 || toTimeHour > 22 && toTimeMin >= 0 ){
 					fromField.setText("22:30");
 					toField.setText("23:00");
-					printErrorMessage();
+					printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
 				}
 				else if(timeDiffInMin < 30) 
 				{
 					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+					printErrorMessage("The appointment must last for at least 30 minutes.");
 				}
 				//else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 				
