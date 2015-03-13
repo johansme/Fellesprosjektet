@@ -1,5 +1,6 @@
 package newAppointment;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -102,9 +103,14 @@ public class NewAppointmentController implements ControllerInterface, Participan
 
 			
 			if (header.getText()=="Edit appointment") {
-				appointment.delete();
+				try {
+					appointment.delete();
+				} catch (IOException e1) {
+					sceneHandler = new SceneHandler();
+					sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "WTF", this);
+				}
 			}
-			Appointment a = new Appointment();
+			Appointment a = new Appointment(calendar);
 			LocalDate startDate = fromDate.getValue();
 			LocalDate endDate = toDate.getValue();
 			List<Appointment> days = new ArrayList<Appointment>();
@@ -137,7 +143,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				a.setDate(startDate.plusDays(i));
 				a.setData(calendar);
 				days.add(a);
-				a = new Appointment();
+				a = new Appointment(calendar);
 			}
 			a = days.get(0);
 			a.setDescription(descriptionField.getText());
@@ -658,7 +664,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				disableDates(toDate, LocalDate.now());
 			}
 			else {
-				this.appointment = new Appointment();
+				this.appointment = new Appointment(calendar);
 				if (calendar.getCurrentDate().isBefore(LocalDate.now())) {
 					fromDate.setValue(LocalDate.now());
 					toDate.setValue(LocalDate.now());
