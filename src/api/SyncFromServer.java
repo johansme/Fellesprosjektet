@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import calendar.Calendar;
@@ -19,10 +20,17 @@ public class SyncFromServer {
 	
 	public static List<Group> getGroups(Calendar c) throws IOException {
 		JSONObject o = new JSONObject();
-		o.put("command", "");
+		o.put("command", "get_from_user");
+		o.put("uid", c.getLoggedInUser().getId());
 		
 		JSONObject res = API.call("/group", o, c.getSession());
+		JSONArray gidArray = res.getJSONArray("gid");
 		List<Group> g = new ArrayList<Group>();
+//		for (int i=0; i<gidList.length(); i++) {
+//			int id = (int)gidList.get(i);
+//			JSONObject obj = new JSONObject();
+//			obj.put("command", arg1)
+//		}
 		
 		c.getLoggedInUser().setGroups(g);
 		
