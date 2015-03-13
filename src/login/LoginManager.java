@@ -16,7 +16,8 @@ public class LoginManager {
 		try {
 			JSONObject res = new JSONObject();
 			res = API.login(username, password);
-			session=
+			session = res.getString("session");
+			userID = res.getInt("uid");
 			if (session!=null) {
 				return true;
 			}
