@@ -1,6 +1,6 @@
 /login
 	In: username(String),password(String)
-	Out: session(String)
+	Out: uid(int),session(String)
 
 /appointment
 	create
