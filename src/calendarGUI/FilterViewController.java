@@ -36,16 +36,12 @@ public class FilterViewController {
 	
 	@FXML
 	private void initialize(){
-			
+		//enable when ready:D	
 //		List<Group> groupies = calendar.getLoggedInUser().getGroups();
 
-//		TODO remove testcode
 		groupList.getItems().clear();
 		List<Group> groupies = new ArrayList<Group>();
-//		for( int i = 0; i <10;i++){
-//			Group g = new Group(i,null, null, "group: " +i);		
-//			groupies.add(g);		
-//		}
+
 		
 		
 		if (groupies!=null && !groupies.isEmpty()) {
