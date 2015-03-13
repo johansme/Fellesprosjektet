@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class SceneHandler {
@@ -32,7 +33,6 @@ public class SceneHandler {
 			} catch(Exception er) {
 				er.printStackTrace();
 			}
-		
 	}
 	
 	public void changeMonthRelatedScene(Event e, String fxmlPath, int width, int height, Calendar calendar){
@@ -66,11 +66,13 @@ public class SceneHandler {
 			ControllerInterface monthController = (ControllerInterface) loader.getController();
 			monthController.setData(calendar, appointment);
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
+			primaryStage.initModality(Modality.APPLICATION_MODAL);
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.show();
 			
-		} catch(Exception e) {
+		} catch(Exception e) 
+		{
 			e.printStackTrace();
 		}
 		
@@ -86,6 +88,7 @@ public class SceneHandler {
 			ControllerInterface controll = loader.getController();
 			controll.setData(cal, a);
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
+			primaryStage.initModality(Modality.APPLICATION_MODAL);
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.show();
@@ -107,6 +110,7 @@ public class SceneHandler {
 			messageController.setMessage(message);
 			messageController.setReferenceController(contrInt);
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
+			primaryStage.initModality(Modality.APPLICATION_MODAL);
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.show();
@@ -127,6 +131,7 @@ public class SceneHandler {
 			addPartController.setParticipantController(controller);
 			addPartController.setData(calendar);
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
+			primaryStage.initModality(Modality.APPLICATION_MODAL);
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.show();
