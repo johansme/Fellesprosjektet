@@ -141,7 +141,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			}
 			a = days.get(0);
 			a.setDescription(descriptionField.getText());
-			if(room.textProperty().getValue() == "Other"){
+			if(room.textProperty().getValue().equals("Other")){
 				a.setLocation(otherField.textProperty().getValue());
 			}else{
 				a.setLocation(room.textProperty().getValue()); 
@@ -201,7 +201,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			Tuple rm = bestRoom(Integer.valueOf(capasityField.textProperty().getValue()));
 
 
-			if(rm.room == "Other"){
+			if(rm.room.equals("Other")) {
 				room.setText("Other");
 				otherField.setDisable(false);
 			}else{
@@ -490,6 +490,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		else return fromTimeHour + ":" + fromTimeMin;  
 		
 	}
+	
 	private String toTwoDigits(int timeElement) {
 		if (timeElement < 10) {
 			return 0 + "" + timeElement;
