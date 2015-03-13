@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import shared.Util;
 
 public class API {
-	private final static String BASE_URL = "http://localhost:8000";
+	private final static String BASE_URL = "http://188.226.170.24:8000";
 	
 	public static String login(String username, String password) throws IOException {
 		JSONObject obj = new JSONObject();
