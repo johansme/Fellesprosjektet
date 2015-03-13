@@ -159,6 +159,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			for (Appointment ap : days) 
 			{
 				ap.addAppointmentToDay();
+				ap.createInServer();
 			}
 			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved", this);
 			// get a handle to the stage

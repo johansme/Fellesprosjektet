@@ -1,8 +1,11 @@
 package calendar;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,14 +16,11 @@ import org.json.JSONObject;
 
 import api.API;
 
-public class Appointment {
+public class Appointment extends shared.Appointment {
 
-	private int id;
-	private String description;
 	private LocalDate date;
 	private LocalTime startTime;
 	private LocalTime endTime;
-	private String location;
 	private int[] overlap = new int[2];
 	private boolean opened=false;
 	private boolean admin;
@@ -38,21 +38,11 @@ public class Appointment {
 	
 	
 	public Appointment(Calendar c) {
-		//hahahahhahahahah:D
-		//TODO set boolean personal=user invited directly
+		super();
+		//hahahahhahahahah:D		
 		calendar = c;
 		prev = null;
-		next = null;
-		JSONObject obj = new JSONObject();
-		obj.put("command", "create");
-		obj.put("app", this);
-		JSONObject res;
-		try {
-			res = API.call("/appointment", obj, calendar.getSession());
-			id = res.getInt("aid");
-		} catch (IOException e) {
-		}
-		
+		next = null;		
 	}
 
 	public void addAppointmentToDay() {
@@ -647,6 +637,28 @@ public class Appointment {
 		} catch (IOException e) {
 			return;
 		}
+	}
+	
+	public void createInServer() {
+		super.creator=calendar.getLoggedInUser().getId();
+		LocalDateTime t = getStartDate().atTime(getStartStartTime());
+		super.start=Date.from(t.atZone(ZoneId.systemDefault()).toInstant());
+		t = getEndDate().atTime(getEndEndTime());
+		super.end=Date.from(t.atZone(ZoneId.systemDefault()).toInstant());
+		t = LocalDateTime.now();
+		super.modified=Date.from(t.atZone(ZoneId.systemDefault()).toInstant());
+		JSONObject obj = new JSONObject();
+		obj.put("command", "create");
+		obj.put("app", this.toJSON());
+		JSONObject res;
+		try {
+			res = API.call("/appointment", obj, calendar.getSession());
+			if (res.getBoolean("status")) {
+				id = res.getInt("aid");
+			}
+		} catch (IOException e) {
+		}
+
 	}
 	
 	
