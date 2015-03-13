@@ -53,30 +53,30 @@ public class ReceiveRoom extends DBConnection{
 	
 	public void makeRoomQuery()
 	{
-		
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		try {
-			conn = recvConnection();
-			// prepare query
-			String query = "select id, name, capacity from MeetingRoom";
-			// create a statement
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(query);
-			roomValues(rs);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		} finally {
-			try {
-				rs.close();
-				stmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+//		
+//		Connection conn = null;
+//		Statement stmt = null;
+//		ResultSet rs = null;
+//		try {
+//			conn = recvConnection();
+//			// prepare query
+//			String query = "select id, name, capacity from MeetingRoom";
+//			// create a statement
+//			stmt = conn.createStatement();
+//			rs = stmt.executeQuery(query);
+//			roomValues(rs);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.exit(1);
+//		} finally {
+//			try {
+//				rs.close();
+//				stmt.close();
+//				conn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 	
 	public void setRoomList(List<Tuple> roomList)

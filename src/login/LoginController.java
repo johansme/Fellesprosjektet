@@ -1,6 +1,11 @@
 package login;
 
 
+import java.io.IOException;
+
+import org.json.JSONObject;
+
+import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
@@ -28,11 +33,7 @@ public class LoginController implements ControllerInterface {
 	@FXML private Label errorMessage;
 	@FXML private Button loginButton;
 	@FXML private Pane screen;
-	
-	private User getUser() {
-		return loggingIn;
-	}
-	
+		
 	@FXML
 	private void login(Event e){
 		// get username and password
@@ -50,11 +51,20 @@ public class LoginController implements ControllerInterface {
 
 		if(lman.checkLogin(uname, pass)){
 			session = lman.getSession();
-			loggingIn
-			calendar = new Calendar(loggingIn);
-			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",950,600, calendar, session);
+			int uid = lman.getID();
+			JSONObject obj = new JSONObject();
+			obj.put("command", "get_by_id");
+			obj.put("uid", uid);
+			JSONObject res;
+			try {
+				res = API.call("/user", obj, session);
+				loggingIn.fromJSON(res.getJSONObject("user"));
+				calendar = new Calendar(loggingIn, session);
+				sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",950,600, calendar);
 
-
+			} catch (IOException e1) {
+				errorMessage.textProperty().setValue("Invalid authentication credentials");				
+			}
 
 		}else{
 

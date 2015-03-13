@@ -386,7 +386,7 @@ public class MonthViewController implements ControllerInterface {
 		if (calendar != null) {
 			this.calendar = calendar;
 		} else {
-			this.calendar = new Calendar(null);
+			this.calendar = new Calendar(null, null);
 		}
 		month = this.calendar.getCurrentMonth();
 		monthChanged();

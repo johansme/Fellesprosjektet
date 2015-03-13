@@ -2,13 +2,13 @@ package login;
 
 import java.io.IOException;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import api.API;
 
 public class LoginManager {
 	
-	private SceneHandler sceneHandler = new SceneHandler();
 	private String session;
 	private int userID;
 	
@@ -24,11 +24,17 @@ public class LoginManager {
 			return false;
 		} catch (IOException e) {
 			return false;
+		} catch (JSONException j) {
+			return false;
 		}
 	}
 
 	public String getSession() {
 		return session;
+	}
+
+	public int getID() {
+		return userID;
 	}
 
 }
