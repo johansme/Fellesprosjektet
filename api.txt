@@ -21,7 +21,7 @@ F	get_all_for_user
 F	get_all_for_group
 		In: gid(int)
 		Out: app(Appointment)[]
-P	invite_user
+F	invite_user
 		In: aid(int),uid(int)
 P	invite_group
 		In: aid(int),gid(int)

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import server.Appointment;
 import server.Group;
 import server.Invitation;
+import server.Notification;
 import server.User;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -125,8 +126,8 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		}
 		
-		// TODO: Send notification
 		if(Invitation.inviteUser(aid, uid)) {
+			Notification.sendInvitationNotification(aid, uid);
 			sendOK(t);
 			return;
 		} else {
