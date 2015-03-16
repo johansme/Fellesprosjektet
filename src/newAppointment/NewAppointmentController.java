@@ -742,8 +742,14 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	}
 	
 	public void addParticipant(Participant participant) {
-		
-		if (participant != null && !participantList.contains(participant)) {
+		boolean eql = false;
+		for (Participant p : participantList) {
+			if (p.toString().equals(participant.toString())) {
+				eql = true;
+				break;
+			}
+		}
+		if (! eql) {
 			participantList.add(participant);
 			listView.getItems().add(participant.toString());
 		}

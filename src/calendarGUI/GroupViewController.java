@@ -234,7 +234,13 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 
 	@Override
 	public void addParticipant(Participant participant) {
-		if (participant != null && ! memberList.contains(participant)) {
+		boolean eql = false;
+		for (Participant p : memberList) {
+			if (p.toString().equals(participant.toString())) {
+				eql = true;
+			}
+		}
+		if (participant != null && ! eql) {
 			memberList.add(participant);
 			memberListView.getItems().add(participant.toString());
 			if (! removedMembers.contains(participant)) {

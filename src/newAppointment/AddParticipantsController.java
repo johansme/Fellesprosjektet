@@ -88,6 +88,7 @@ public class AddParticipantsController implements ControllerInterface {
 			if (added.contains(participant)) {
 				addList.getItems().add(line);
 				addListItems.add(participant);
+				//TODO FIX!!!! Doesn't work
 			} else {
 				searchList.getItems().add(line);
 				searchListItems.add(participant);
