@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 public class Invitation extends shared.Invitation {
 	public static ArrayList<Invitation> getInvitationsForUser(int uid) {
 		ArrayList<Invitation> list = new ArrayList<Invitation>();
@@ -40,8 +39,8 @@ public class Invitation extends shared.Invitation {
 	}
 	
 	public static boolean inviteUser(int aid, int uid) {
+		boolean result = true;
 		DBConnection db = null;
-		boolean success = true;
 		final String stm_str = "INSERT INTO Invitation VALUES(?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement stm = null;
@@ -56,15 +55,16 @@ public class Invitation extends shared.Invitation {
 			stm.setNull(6, java.sql.Types.DATE);			
 			stm.executeUpdate();
 		} catch(SQLException e) {
-			success = false;
 			System.out.println(e.getMessage());
+			result = false;
 		} catch(Exception e) {
 			e.printStackTrace();
+			result = false;
 		} finally {
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}
 			db.close();
 		}
-		return success;
+		return result;
 	}
 	
 	public static boolean inviteGroup(int aid, int gid) {
