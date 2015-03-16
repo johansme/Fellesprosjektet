@@ -2,6 +2,7 @@ package server.httpserver;
 
 import java.io.IOException;
 import java.io.NotActiveException;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -141,8 +142,12 @@ public class HttpAppointment extends HttpAPIHandler {
 		}
 		
 		if(u.getId() == app.getCreator() || u.isAdmin()) {
+			Appointment a = new Appointment(aid);
+			ArrayList<Integer> users = Invitation.getInvitationsForAppointment(aid);
 			if(Appointment.deleteAppointment(aid)) {
-				// TODO: Notify users
+				for(int uid : users) {
+					Notification.sendAppointmentDeleteNotification(a, uid);
+				}
 				sendOK(t);
 				return;
 			} else {
