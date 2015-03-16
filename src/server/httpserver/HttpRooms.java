@@ -24,6 +24,8 @@ public class HttpRooms extends HttpAPIHandler {
 			String command = request.getString("command");
 			if(command != null) {
 				switch(command) {
+					case "create":
+					case "remove":
 					case "get_available":
 					case "get_all":
 					case "get":

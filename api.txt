@@ -50,6 +50,10 @@ F	get_all
 		In: gid(int),uid(int)
 
 /room
+	create
+		In: room(Room)
+	remove
+		In rid(int)
 	get_available
 		In: start(Date), end(Date)
 		Out: rooms(Room)[]
