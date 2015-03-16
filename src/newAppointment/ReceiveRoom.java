@@ -7,7 +7,7 @@ import java.util.List;
 public class ReceiveRoom {
 	
 	 
-	private List<Tuple> roomList = new ArrayList<Tuple>();
+	private List<Room> roomList = new ArrayList<Room>();
 
 	//return room values MeetingRoom(id, name, capacity)
 	public void roomValues() {
@@ -36,11 +36,11 @@ public class ReceiveRoom {
 
 	}
 	
-	public void setRoomList(List<Tuple> roomList)
+	public void setRoomList(List<Room> roomList)
 	{
 		this.roomList = roomList;
 	}
-	public List<Tuple> getRoomList(){
+	public List<Room> getRoomList(){
 		
 		return this.roomList; 
 	}
