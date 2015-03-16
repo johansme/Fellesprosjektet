@@ -179,6 +179,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			if(!descriptionField.textProperty().getValue().isEmpty() &&
 				!toField.textProperty().getValue().equals("") &&
 				!fromField.textProperty().getValue().equals("") &&
+				!otherField.textProperty().getValue().equals("") &&
 				capasityField.textProperty().getValue() != "" &&
 				!room.textProperty().getValue().equals("Choose room"))
 			{
@@ -614,7 +615,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	@FXML
 	public void initialize(){
 
-		getRoomFromDB();
+		
 		descriptionField.setPromptText("Appointment Description...");
 		checkTodaysHourAndMin();
 		addUsers();
