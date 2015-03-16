@@ -10,7 +10,6 @@ import calendar.Calendar;
 import calendar.Participant;
 import calendarGUI.ControllerInterface;
 import calendarGUI.ParticipantController;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -53,7 +52,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	@FXML private ListView<String> listView; 
 	@FXML private Button removeUserButton; 
 	@FXML private Button addButton; 
-	private ObservableList<String> listViewData = FXCollections.observableArrayList();
 	private List<Participant> participantList = new ArrayList<Participant>();
 	ObservableList<MenuItem> roomValueList;
 
@@ -617,7 +615,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		getRoomFromDB();
 		descriptionField.setPromptText("Appointment Description...");
 		checkTodaysHourAndMin();
-		addUsers();
 		capasityField.textProperty().setValue("1");
 		fromDate.setValue(LocalDate.now());
 		disableDates(fromDate, LocalDate.now());
@@ -718,37 +715,18 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		room.getItems().add(other);
 
 	}
-	@FXML
-	public void addUsers()
-	{
-
-		listViewData.add(new String("Steve Jobs"));
-		listViewData.add(new String("Mark Zuckerberg"));
-		listViewData.add(new String("Bill Gates"));
-		listViewData.add(new String("Edward Snowden"));
-		listViewData.add(new String("Steve Wozniak"));
-		listViewData.add(new String("Linus Torvalds"));
-		listViewData.add(new String("Sean Parker"));
-		listViewData.add(new String("Charles Babbage"));
-		listViewData.add(new String("Alan Turing"));
-
-
-		listView.setItems(listViewData);
-
-	}
 
 	@FXML
 	public void removeUser()
 	{
 		String user = listView.getSelectionModel().getSelectedItem();
 		if(user != null){
-			listViewData.remove(user);
 			String msg = user + " removed";
 
 			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, msg, this);
 
 		}
-		else sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, "No participant selected.", this);
+		else sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", this);
 
 
 	}
@@ -762,9 +740,13 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	public void addParticipant(Participant participant) {
 		if (participant != null && ! participantList.contains(participant)) {
 			participantList.add(participant);
-			listViewData.add(participant.toString());
 			listView.getItems().add(participant.toString());
 		}
+	}
+
+	@Override
+	public List<Participant> getParticipants() {
+		return participantList;
 	}
 
 }
