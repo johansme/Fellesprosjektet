@@ -20,7 +20,8 @@ public class HttpUser extends HttpAPIHandler {
 		try{
 			JSONObject request = get(t);
 	
-			if(server.getUserFromExchange(t) == null) {
+			User u = server.getUserFromExchange(t);
+			if(u == null) {
 				sendUnauthenticated(t);
 				return;
 			}
@@ -28,6 +29,14 @@ public class HttpUser extends HttpAPIHandler {
 			String command = request.getString("command");
 			if(command != null) {
 				switch(command) {
+					case "create":
+						create(t, u, request);
+						return;
+					case "modify":
+						sendNotImplemented(t);
+						return;
+					case "delete":
+						remove(t, u, request);
 					case "get_all":
 						getAll(t);
 						return;
@@ -42,6 +51,59 @@ public class HttpUser extends HttpAPIHandler {
 			}
 		} catch(JSONException e) { sendInvalidCommand(t);
 		} catch(Exception e) { e.printStackTrace();	}
+	}
+	
+	private void create(HttpExchange t, User u, JSONObject request) throws IOException {
+		try {
+			if(!u.isAdmin()) {
+				sendUnauthorised(t);
+				return;
+			}
+			
+			User new_user = new User();
+			boolean gotuser = new_user.fromJSON(request.getJSONObject("user"));
+			String pwd = request.getString("password");
+			System.out.println(request.getJSONObject("user").toString());
+			System.out.println(gotuser);
+			System.out.println(pwd);
+			if(!gotuser || pwd == null) {
+				sendInvalidCommand(t);
+				return;
+			}
+			
+			if(User.createUser(new_user, pwd)) {
+				sendOK(t);
+				return;
+			} else {
+				sendError(t, "Error creating user");
+				return;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			sendInvalidCommand(t);
+		}
+	}
+	
+	private void remove(HttpExchange t, User u, JSONObject request) throws IOException {
+		try {
+			if(!u.isAdmin()) {
+				sendUnauthorised(t);
+				return;
+			}
+			
+			int uid = request.getInt("uid");
+			if(User.removeUser(uid)) {
+				sendOK(t);
+				return;
+			} else {
+				sendError(t, "Error removing user from DB");
+				return;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			sendInvalidCommand(t);
+		}
 	}
 	
 	private void getAll(HttpExchange t) throws IOException {

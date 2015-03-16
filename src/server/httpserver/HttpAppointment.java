@@ -1,11 +1,15 @@
 package server.httpserver;
 
 import java.io.IOException;
+import java.io.NotActiveException;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import server.Appointment;
+import server.Invitation;
+import server.Notification;
 import server.User;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -36,6 +40,9 @@ public class HttpAppointment extends HttpAPIHandler {
 						return;
 					case "delete":
 						delete(t, u, request);
+						return;
+					case "get_from_creator":
+						sendNotImplemented(t);
 						return;
 					default:
 						sendInvalidCommand(t);
@@ -75,7 +82,8 @@ public class HttpAppointment extends HttpAPIHandler {
 		
 		if(old_app.getCreator() == u.getId() || u.isAdmin()) {
 			if(Appointment.changeAppointment(new_app)) {
-				// TODO: Mark invitations dirty and notify users
+				Invitation.dirtify(new_app.getId());
+				Notification.sendModifiedAppointmentNotification(new_app.getId());
 				sendOK(t);
 				return;
 			} else {
@@ -134,8 +142,12 @@ public class HttpAppointment extends HttpAPIHandler {
 		}
 		
 		if(u.getId() == app.getCreator() || u.isAdmin()) {
+			Appointment a = new Appointment(aid);
+			ArrayList<Integer> users = Invitation.getInvitationsForAppointment(aid);
 			if(Appointment.deleteAppointment(aid)) {
-				// TODO: Notify users
+				for(int uid : users) {
+					Notification.sendAppointmentDeleteNotification(a, uid);
+				}
 				sendOK(t);
 				return;
 			} else {

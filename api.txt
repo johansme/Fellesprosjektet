@@ -6,9 +6,9 @@
 F	create
 		In: app(Appointment)
 		Out: aid(int)
-P	modify
+F	modify
 		In: app(Appointment)
-P	delete
+F	delete
 		In: aid(int)
 	get_from_creator
 		In: uid(int)
@@ -21,7 +21,7 @@ F	get_all_for_user
 F	get_all_for_group
 		In: gid(int)
 		Out: app(Appointment)[]
-P	invite_user
+F	invite_user
 		In: aid(int),uid(int)
 P	invite_group
 		In: aid(int),gid(int)
@@ -33,7 +33,7 @@ F	create
 		In: group(Group)
 	delete:
 		In: gid(int)
-	get_all
+F	get_all
 		Out: groups(Group)[]
 	get
 		In: gid(int)[]
@@ -50,6 +50,10 @@ F	create
 		In: gid(int),uid(int)
 
 /room
+	create
+		In: room(Room)
+	remove
+		In rid(int)
 	get_available
 		In: start(Date), end(Date)
 		Out: rooms(Room)[]
@@ -64,11 +68,11 @@ F	create
 		In: aid(int)
 
 /user
-	create
-		In: user(User)
+F	create
+		In: user(User),password(String)
 	modify
 		In: user(User)
-	delete
+F	delete
 		In: uid(int)
 F	get_all
 		Out: users(User)[]

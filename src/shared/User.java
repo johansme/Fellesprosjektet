@@ -27,8 +27,8 @@ public class User {
 		return surname;
 	}
 
-	public void setSurname(String name) {
-		this.name = surname;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getEmail() {
@@ -43,6 +43,14 @@ public class User {
 		return username;
 	}
 	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
 	public boolean isAdmin() {
 		return admin;
 	}

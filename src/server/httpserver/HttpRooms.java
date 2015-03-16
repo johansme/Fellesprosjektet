@@ -1,13 +1,9 @@
 package server.httpserver;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import server.User;
-import server.Room;
 
 import com.sun.net.httpserver.*;
 
@@ -17,25 +13,34 @@ public class HttpRooms extends HttpAPIHandler {
 	}
 	
 	public void handle(HttpExchange t) throws IOException {
-		JSONObject response = new JSONObject();
-		User u = server.getUserFromExchange(t);
-		if(u == null) {
-			response.put("status", false);
-			response.put("error", "Not authenticated");
-		} else {
-			if(u.isAdmin()) {
-				ArrayList<Room> rooms = Room.getAllRooms();
-				response.put("status", true);
-				JSONArray roomarr = new JSONArray();
-				for(Room r : rooms) {
-					roomarr.put(r.toJSON());
-				}
-				response.put("rooms", roomarr);
-			} else {
-				response.put("status", false);
-				response.put("error", "Not authorised");
+		try {
+			JSONObject request = get(t);
+			
+			if(server.getUserFromExchange(t) == null) {
+				sendUnauthenticated(t);
+				return;
 			}
-		}
-		send(t, response);
+			
+			String command = request.getString("command");
+			if(command != null) {
+				switch(command) {
+					case "create":
+					case "remove":
+					case "get_available":
+					case "get_all":
+					case "get":
+					case "reserve": 
+					case "cancel":
+						sendNotImplemented(t);
+						return;
+						
+					default:
+						sendInvalidCommand(t);
+				}
+			} else {
+				sendInvalidCommand(t);
+			}
+		} catch(JSONException e) { sendInvalidCommand(t);
+		} catch(Exception e) { e.printStackTrace();	}
 	}
 }

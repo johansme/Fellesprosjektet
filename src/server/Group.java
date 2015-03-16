@@ -3,8 +3,39 @@ package server;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Group extends shared.Group {
+	public static ArrayList<Group> getAllGroups() {
+		ArrayList<Group> list = new ArrayList<Group>();
+		
+		DBConnection db = null;
+		final String str_fmt = "SELECT id,name,parent,createdby FROM Group_";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {
+				Group g = new Group();
+				g.id = rs.getInt("id");
+				g.name = rs.getString("name");
+				g.parent = rs.getInt("parent");
+				g.createdBy = rs.getInt("createdby");
+				list.add(g);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return list;
+	}
 	
 	public static boolean createGroup(Group g) {
 		DBConnection db = null;
