@@ -12,7 +12,7 @@ F	delete
 		In: aid(int)
 	get_from_creator
 		In: uid(int)
-		Out: aid(int)[]
+		Out: aids(int)[]
 
 /invitation
 F	get_all_for_user
