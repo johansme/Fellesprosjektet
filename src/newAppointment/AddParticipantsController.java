@@ -110,7 +110,7 @@ public class AddParticipantsController implements ControllerInterface {
 	// when the right arrow button is pressed
 	@FXML
 	private void addUserButtonPressed() {
-		int i = searchList.getFocusModel().getFocusedIndex();
+		int i = searchList.getSelectionModel().getSelectedIndex();
 		if (i >= 0) {
 			Participant addedParticipant = searchListItems.remove(i);
 			HBox userLabel = searchList.getItems().remove(i);
@@ -122,7 +122,7 @@ public class AddParticipantsController implements ControllerInterface {
 	// When the left arrow button is pressed
 	@FXML
 	private void removeUserButtonPressed() {
-		int i = addList.getFocusModel().getFocusedIndex();
+		int i = addList.getSelectionModel().getSelectedIndex();
 		if (i >= 0) {
 			Participant removedParticipant = addListItems.remove(i);
 			HBox userLabel = addList.getItems().remove(i);
