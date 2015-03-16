@@ -37,6 +37,9 @@ public class HttpAppointment extends HttpAPIHandler {
 					case "delete":
 						delete(t, u, request);
 						return;
+					case "get_from_creator":
+						sendNotImplemented(t);
+						return;
 					default:
 						sendInvalidCommand(t);
 						return;

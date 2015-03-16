@@ -28,6 +28,11 @@ public class HttpUser extends HttpAPIHandler {
 			String command = request.getString("command");
 			if(command != null) {
 				switch(command) {
+					case "create":
+					case "modify":
+					case "delete":
+						sendNotImplemented(t);
+						return;
 					case "get_all":
 						getAll(t);
 						return;

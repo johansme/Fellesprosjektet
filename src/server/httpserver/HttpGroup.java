@@ -36,7 +36,7 @@ public class HttpGroup extends HttpAPIHandler {
 						return;
 					case "modify":
 					case "delete":
-						sendError(t, "Not implemented");
+						sendNotImplemented(t);
 						return;
 					case "get_all":
 						getAll(t);
@@ -46,7 +46,7 @@ public class HttpGroup extends HttpAPIHandler {
 					case "get_from_creator":
 					case "add_user":
 					case "remove_user":
-						sendError(t, "Not implemented");
+						sendNotImplemented(t);
 						return;
 					default:
 						sendInvalidCommand(t);
