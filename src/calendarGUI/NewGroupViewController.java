@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import login.SceneHandler;
 import calendar.Group;
@@ -62,6 +64,10 @@ public class NewGroupViewController implements ParticipantController {
 	@FXML
 	private void saveButtonPressed() {
 		if (isValidName()) {
+			if (memberList.size() < 1) {
+				sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Please add group members", getGroupViewController());
+				return;
+			}
 			group = new Group(0, memberList, getGroupViewController().getData().getLoggedInUser(), nameField.getText());
 			group.setCreatedBy(group.getAdmin().getId());
 			groupViewController.setGroup(group);
@@ -126,6 +132,22 @@ public class NewGroupViewController implements ParticipantController {
 			this.groupViewController = controller;
 			setView();
 		}
+	}
+	
+	@FXML
+	private void keyPressed(KeyEvent e) {
+		if (e.getCode()==KeyCode.ENTER) {
+			saveButtonPressed();
+		} else if (e.getCode()==KeyCode.ESCAPE) {
+			cancelButtonPressed();
+		} else {
+			return;
+		}
+	}
+
+	@Override
+	public List<Participant> getParticipants() {
+		return memberList;
 	}
 
 }
