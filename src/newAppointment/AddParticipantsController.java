@@ -58,7 +58,9 @@ public class AddParticipantsController implements ControllerInterface {
 				user.fromJSON(userObj);
 				participants.add(user);
 			}
-		} catch (IOException e) {
+		} catch (IOException e) 
+		{
+			
 		}
 		obj = new JSONObject();
 		obj.put("command", "get_all");
@@ -85,10 +87,19 @@ public class AddParticipantsController implements ControllerInterface {
 			userLabel.setText(participant.toString());
 			line.getChildren().add(userLabel);
 			
-			if (added.contains(participant)) {
+			boolean eql = false;
+			
+			for (Participant p : added){
+				if(p.toString().equals(participant.toString())) {
+					eql = true;
+					break;
+				}
+				
+			}
+			if(eql) 
+			{
 				addList.getItems().add(line);
 				addListItems.add(participant);
-				//TODO FIX!!!! Doesn't work
 			} else {
 				searchList.getItems().add(line);
 				searchListItems.add(participant);
