@@ -20,6 +20,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import login.SceneHandler;
 
 public class AdminUserController implements ControllerInterface {
 
@@ -37,10 +38,16 @@ public class AdminUserController implements ControllerInterface {
 	private List<User> userList = new ArrayList<User>();
 
 	private Calendar calendar;
+	private SceneHandler sceneHandler = new SceneHandler();
 
 	@FXML
 	private void addUser(){
-		//:F
+		if (isValidUser()) {
+			
+			//TODO
+		} else {
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Insufficient user info", this);
+		}
 	}
 
 	@FXML
@@ -48,6 +55,11 @@ public class AdminUserController implements ControllerInterface {
 		// get a handle to the stage
 		Stage stage = (Stage)closeButton.getScene().getWindow();
 		stage.close();
+	}
+	
+	private boolean isValidUser() {
+		//TODO
+		return false;
 	}
 
 	private void setUserList() {

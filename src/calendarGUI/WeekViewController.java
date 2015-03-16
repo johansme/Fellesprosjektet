@@ -44,7 +44,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	}
 	
 	private Calendar calendar;
-	private SceneHandler sceneHandler;
+	private SceneHandler sceneHandler = new SceneHandler();
 	private List<Day> days = new ArrayList<Day>();
 	private HashMap<Integer, Appointment> appointments = new HashMap<Integer, Appointment>();
 	private HashMap<Polygon, Integer> polygons = new HashMap<Polygon, Integer>();
@@ -199,7 +199,6 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void monthClicked(Event e) {
-		sceneHandler = new SceneHandler();
 		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml", 950, 600, calendar);
 	}
 	
@@ -208,7 +207,6 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void newAction() {
-		sceneHandler = new SceneHandler();
 		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(), null);
 	}
 	
@@ -382,7 +380,6 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	private void appointmentBoxClicked(MouseEvent e) {
 		int id = polygons.get(e.getSource());
-		sceneHandler = new SceneHandler();
 		appointments.get(id).setOpened(true);
 		setView(calendar);
 		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
@@ -390,7 +387,6 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	private void appointmentLabelClicked(MouseEvent e) {
 		int id = labels.get(e.getSource());
-		sceneHandler = new SceneHandler();
 		appointments.get(id).setOpened(true);
 		setView(calendar);
 		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
@@ -441,7 +437,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	private void adminPressed() {
-		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 355, 400, getData(), null);
+		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 355, 425, getData(), null);
 	}
 	
 }
