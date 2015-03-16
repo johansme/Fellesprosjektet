@@ -43,7 +43,9 @@ public class AdminUserController implements ControllerInterface {
 	@FXML
 	private void addUser(){
 		if (isValidUser()) {
-			
+			User user = new User();
+			user.setUsername(usernameField.getText());
+			user.setAdmin(newAdmin.isSelected());
 			//TODO
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Insufficient user info", this);
