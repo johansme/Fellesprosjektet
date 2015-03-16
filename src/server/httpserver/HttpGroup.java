@@ -1,7 +1,9 @@
 package server.httpserver;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,20 @@ public class HttpGroup extends HttpAPIHandler {
 				switch(command) {
 					case "create":
 						create(t, u, request);
+						return;
+					case "modify":
+					case "delete":
+						sendError(t, "Not implemented");
+						return;
+					case "get_all":
+						getAll(t);
+						return;
+					case "get":
+					case "get_from_user":
+					case "get_from_creator":
+					case "add_user":
+					case "remove_user":
+						sendError(t, "Not implemented");
 						return;
 					default:
 						sendInvalidCommand(t);
@@ -70,5 +86,14 @@ public class HttpGroup extends HttpAPIHandler {
 			sendError(t, "Error creating group");
 			return;
 		}
+	}
+	
+	public void getAll(HttpExchange t) throws IOException {
+		ArrayList<Group> list = Group.getAllGroups();
+		JSONArray arr = new JSONArray();
+		for(Group g : list) {
+			arr.put(g.toJSON());
+		}
+		sendOK(t, new JSONObject().put("groups", arr));
 	}
 }

@@ -33,7 +33,7 @@ F	create
 		In: group(Group)
 	delete:
 		In: gid(int)
-	get_all
+F	get_all
 		Out: groups(Group)[]
 	get
 		In: gid(int)[]
