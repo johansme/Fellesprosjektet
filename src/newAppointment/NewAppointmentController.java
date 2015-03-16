@@ -618,7 +618,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		
 		descriptionField.setPromptText("Appointment Description...");
 		checkTodaysHourAndMin();
-		addUsers();
 		capasityField.textProperty().setValue("1");
 		fromDate.setValue(LocalDate.now());
 		disableDates(fromDate, LocalDate.now());
@@ -719,31 +718,14 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		room.getItems().add(other);
 
 	}
-	@FXML
-	public void addUsers()
-	{
-
-		listViewData.add(new String("Steve Jobs"));
-		listViewData.add(new String("Mark Zuckerberg"));
-		listViewData.add(new String("Bill Gates"));
-		listViewData.add(new String("Edward Snowden"));
-		listViewData.add(new String("Steve Wozniak"));
-		listViewData.add(new String("Linus Torvalds"));
-		listViewData.add(new String("Sean Parker"));
-		listViewData.add(new String("Charles Babbage"));
-		listViewData.add(new String("Alan Turing"));
-
-
-		listView.setItems(listViewData);
-
-	}
 
 	@FXML
 	public void removeUser()
 	{
 		String user = listView.getSelectionModel().getSelectedItem();
 		if(user != null){
-			listViewData.remove(user);
+			System.out.println(user);
+			listView.getItems().remove(user);
 			String msg = user + " removed";
 
 			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, msg, this);
@@ -761,9 +743,9 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	}
 	
 	public void addParticipant(Participant participant) {
-		if (participant != null && ! participantList.contains(participant)) {
+		
+		if (participant != null && !participantList.contains(participant)) {
 			participantList.add(participant);
-			listViewData.add(participant.toString());
 			listView.getItems().add(participant.toString());
 		}
 	}
