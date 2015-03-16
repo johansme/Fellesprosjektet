@@ -33,9 +33,10 @@ public class HttpUser extends HttpAPIHandler {
 						create(t, u, request);
 						return;
 					case "modify":
-					case "delete":
 						sendNotImplemented(t);
 						return;
+					case "delete":
+						remove(t, u, request);
 					case "get_all":
 						getAll(t);
 						return;
@@ -77,6 +78,28 @@ public class HttpUser extends HttpAPIHandler {
 				sendError(t, "Error creating user");
 				return;
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			sendInvalidCommand(t);
+		}
+	}
+	
+	private void remove(HttpExchange t, User u, JSONObject request) throws IOException {
+		try {
+			if(!u.isAdmin()) {
+				sendUnauthorised(t);
+				return;
+			}
+			
+			int uid = request.getInt("uid");
+			if(User.removeUser(uid)) {
+				sendOK(t);
+				return;
+			} else {
+				sendError(t, "Error removing user from DB");
+				return;
+			}
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			sendInvalidCommand(t);

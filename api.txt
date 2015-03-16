@@ -72,7 +72,7 @@ F	create
 		In: user(User),password(String)
 	modify
 		In: user(User)
-	delete
+F	delete
 		In: uid(int)
 F	get_all
 		Out: users(User)[]
