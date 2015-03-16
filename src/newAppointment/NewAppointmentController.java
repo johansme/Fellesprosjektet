@@ -731,7 +731,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		}
 		else sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", this);
 
-
 	}
 
 	@FXML
