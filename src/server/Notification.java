@@ -6,9 +6,33 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Notification {
+	public static void sendInvitationNotification(int aid, int uid) {
+		final String fmt =
+				"Dear %s %s!!! :)\n" +
+				"You have a new invitation in our calendar!!\n\n" +
+				"Description: %s\nTime: %s to %s\nLocation: %s\n\n" +
+				"Please accept or decline the invitation in the calendar!!!!\n" +
+				":) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) ";
+		try {
+			Appointment a = new Appointment(aid);
+			User u = new User(uid);
+			String msg = String.format(fmt, 
+					u.getName(),
+					u.getSurname(),
+					a.getDescription(),
+					a.getStart().toString(),
+					a.getEnd().toString(),
+					a.getLocation());
+			send(u, "New invitation!!!!", msg);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void send(User u, String subject, String message) {
-		final String username = "koieadm1n@gmail.com";
-		final String password = "koie1234";
+		final String username = "fellesproject@gmail.com";
+		final String password = "fpfpfpfp";
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", true);
@@ -25,10 +49,10 @@ public class Notification {
 		
 		try {
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("test@test.test"));
+			msg.setFrom(new InternetAddress("fellesproject@gmail.com"));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(u.getEmail()));
 			msg.setSubject("Calendar alert: " + subject);
-			msg.setText("Dear " + u.getName() + "\r\n" + message);
+			msg.setText(message);
 			
 			Transport.send(msg);
 		} catch(Exception e) {
