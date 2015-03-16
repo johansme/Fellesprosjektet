@@ -29,6 +29,7 @@ public class SceneHandler {
 			  stage.setScene(scene);
 			  stage.centerOnScreen();
 			  stage.titleProperty().setValue("BETJA Systems");
+			  stage.setResizable(false);
 			  stage.show();
 			 
 			} catch(Exception er) {
@@ -50,6 +51,7 @@ public class SceneHandler {
 			stage.setScene(scene);
 			stage.centerOnScreen();
 			stage.titleProperty().setValue("BETJA Systems");
+			stage.setResizable(false);
 			stage.show();
 			  
 			} catch(Exception er) {
@@ -72,6 +74,7 @@ public class SceneHandler {
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.titleProperty().setValue("BETJA Systems");
+			primaryStage.setResizable(false);
 			primaryStage.show();
 			
 		} catch(Exception e) 
@@ -95,6 +98,7 @@ public class SceneHandler {
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.titleProperty().setValue("BETJA Systems");
+			primaryStage.setResizable(false);
 			primaryStage.show();
 			
 		} catch(Exception e) {
@@ -118,6 +122,7 @@ public class SceneHandler {
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.titleProperty().setValue("BETJA Systems");
+			primaryStage.setResizable(false);
 			primaryStage.show();
 			
 		} catch(Exception e) {
@@ -140,6 +145,7 @@ public class SceneHandler {
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
 			primaryStage.titleProperty().setValue("BETJA Systems");
+			primaryStage.setResizable(false);
 			primaryStage.show();
 			
 		} catch(Exception e) {

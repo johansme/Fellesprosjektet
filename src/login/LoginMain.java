@@ -15,10 +15,11 @@ public class LoginMain extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = (Parent)FXMLLoader.load(getClass().getResource("/login/loginScreen.fxml"));
-			Scene scene = new Scene(root,307,258);
+			Scene scene = new Scene(root,297,248);
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
 			primaryStage.titleProperty().setValue("BETJA Systems");
+			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch(Exception e) 
 		{
