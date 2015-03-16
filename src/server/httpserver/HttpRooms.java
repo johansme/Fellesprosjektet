@@ -1,13 +1,9 @@
 package server.httpserver;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import server.User;
-import server.Room;
 
 import com.sun.net.httpserver.*;
 
