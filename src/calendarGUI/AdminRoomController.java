@@ -7,9 +7,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import shared.Room;
 import api.API;
-import newAppointment.Tuple;
+import newAppointment.Room;
 import calendar.Appointment;
 import calendar.Calendar;
 import javafx.fxml.FXML;
@@ -26,8 +25,8 @@ public class AdminRoomController implements ControllerInterface {
 	@FXML private Button addRoomButton;
 	@FXML private Button closeButton;
 
-	@FXML private ListView<Tuple> roomListView;
-	private List<Tuple> roomList = new ArrayList<Tuple>();
+	@FXML private ListView<Room> roomListView;
+	private List<Room> roomList = new ArrayList<Room>();
 
 	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
@@ -35,14 +34,17 @@ public class AdminRoomController implements ControllerInterface {
 	@FXML
 	private void addRoom(){
 		if (isValidRoom()) {
-//			JSONObject obj = new JSONObject();
-//			obj.put("command", "create");
-//			obj.put("room", room);
-//			try {
-//				JSONObject res = API.call("/room", obj, calendar.getSession());
-//			} catch (IOException e) {
-//			}
-			//TODO
+			Room room = new Room();
+			room.setName(roomNameField.getText());
+			room.setCapacity(Integer.valueOf(capacityField.getText()));
+			JSONObject obj = new JSONObject();
+			obj.put("command", "create");
+			obj.put("room", room);
+			try {
+				JSONObject res = API.call("/room", obj, calendar.getSession());
+				room.setId(res.getInt("rid"));
+			} catch (IOException e) {
+			}
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Invalid room data", this);
 		}
@@ -54,7 +56,7 @@ public class AdminRoomController implements ControllerInterface {
 		Stage stage = (Stage)closeButton.getScene().getWindow();
 		stage.close();
 	}
-	
+
 	private boolean isValidRoom() {
 		if (capacityField.getText().length() < 1 || roomNameField.getText().length() < 2) {
 			return false;
@@ -71,18 +73,18 @@ public class AdminRoomController implements ControllerInterface {
 	private void setRoomList() {
 		JSONObject obj = new JSONObject();
 		obj.put("command", "get_all");
-		//		try {
-		//			JSONObject res = API.call("/room", obj, calendar.getSession());
-		//			JSONArray resArray = res.getJSONArray("rooms");
-		//			for (int i = 0; i < resArray.length(); i++) {
-		//				 room = new ;
-		//				JSONObject userObj = (JSONObject) resArray.get(i);
-		//				room.fromJSON(userObj);
-		//				roomList.add(room);
-		//				//TODO add to listView, incl. delete
-		//			}
-		//		} catch (IOException e) {
-		//		}
+		try {
+			JSONObject res = API.call("/room", obj, calendar.getSession());
+			JSONArray resArray = res.getJSONArray("rooms");
+			for (int i = 0; i < resArray.length(); i++) {
+				Room room = new Room();
+				JSONObject userObj = (JSONObject) resArray.get(i);
+				room.fromJSON(userObj);
+				roomList.add(room);
+				//TODO add to listView, incl. delete
+			}
+		} catch (IOException e) {
+		}
 	}
 
 	@Override
