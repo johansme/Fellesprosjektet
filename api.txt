@@ -68,8 +68,8 @@ F	get_all
 		In: aid(int)
 
 /user
-	create
-		In: user(User)
+F	create
+		In: user(User),password(String)
 	modify
 		In: user(User)
 	delete
