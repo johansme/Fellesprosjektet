@@ -8,7 +8,7 @@ F	create
 		Out: aid(int)
 F	modify
 		In: app(Appointment)
-P	delete
+F	delete
 		In: aid(int)
 	get_from_creator
 		In: uid(int)
