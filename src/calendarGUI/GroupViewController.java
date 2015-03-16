@@ -91,15 +91,24 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	@FXML
 	private void saveButtonPressed() {
 		if (isValidName()) {
+			JSONObject obj;
 			group.setName(nameField.getText());
 			for (Participant member : addedMembers) {
+				obj = new JSONObject();
 				group.addMember(member);
 				if (member instanceof User) {
 					((User) member).addGroup(group);
+					obj.put("command", "add_user");
+					obj.put("gid", group.getId());
+					obj.put("uid", ((User) member).getId());
 				} else if (member instanceof Group) {
 					((Group) member).setParent(group.getId());
+					//TODO update to server
 				}
-				//TODO send to server
+				try {
+					API.call("/group", obj, calendar.getSession());
+				} catch (IOException e) {
+				}
 			}
 			for (Participant member : removedMembers) {
 				group.removeMember(member);
@@ -110,7 +119,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				}
 				//TODO send to server
 			}
-			JSONObject obj = new JSONObject();
+			obj = new JSONObject();
 			obj.put("command", "modify");
 			obj.put("group", group);
 			try {
