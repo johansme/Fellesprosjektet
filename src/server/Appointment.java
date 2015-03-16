@@ -70,7 +70,7 @@ public class Appointment extends shared.Appointment {
 	public static boolean changeAppointment(Appointment a) {
 		DBConnection db = null;
 		boolean success = true;
-		final String stm_str = "UPDATE Appointment SET location=?,description=?,starttime=?,endtime=?,lastmodified=NOW()";
+		final String stm_str = "UPDATE Appointment SET location=?,description=?,starttime=?,endtime=?,lastmodified=NOW() WHERE id=?";
 		
 		PreparedStatement stm = null;
 		try {
@@ -80,6 +80,7 @@ public class Appointment extends shared.Appointment {
 			stm.setString(2, a.description);
 			stm.setDate(3, new java.sql.Date(a.start.getTime()));
 			stm.setDate(4, new java.sql.Date(a.end.getTime()));
+			stm.setInt(5, a.id);
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;

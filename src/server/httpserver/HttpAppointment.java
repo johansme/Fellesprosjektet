@@ -1,11 +1,14 @@
 package server.httpserver;
 
 import java.io.IOException;
+import java.io.NotActiveException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import server.Appointment;
+import server.Invitation;
+import server.Notification;
 import server.User;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -78,7 +81,8 @@ public class HttpAppointment extends HttpAPIHandler {
 		
 		if(old_app.getCreator() == u.getId() || u.isAdmin()) {
 			if(Appointment.changeAppointment(new_app)) {
-				// TODO: Mark invitations dirty and notify users
+				Invitation.dirtify(new_app.getId());
+				Notification.sendModifiedAppointmentNotification(new_app.getId());
 				sendOK(t);
 				return;
 			} else {

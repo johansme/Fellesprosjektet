@@ -3,6 +3,8 @@ package server;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Notification {
@@ -28,6 +30,37 @@ public class Notification {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void sendModifiedAppointmentNotification(int aid) {
+		final String fmt = 
+				"Dead %s %s\n" +
+				"We are sad to inform you of a change of plans in regards to a\n" +
+				"meeting of which you are scheduled to potentially attend.\n" +
+				"New information about the appointment is included below:\n\n" +
+				"Description: %s\nTime: %s to %s\nLocation: %s";
+		try {
+			Appointment a = new Appointment(aid);
+			ArrayList<Integer> list = Invitation.getInvitationsForAppointment(aid);
+			for(int uid : list) {
+				try {
+					User u = new User(uid);
+					String msg = String.format(fmt, 
+							u.getName(),
+							u.getSurname(),
+							a.getDescription(),
+							a.getStart().toString(),
+							a.getEnd().toString(),
+							a.getLocation());
+					send(u, "Changed appointment", msg);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public static void send(User u, String subject, String message) {

@@ -119,4 +119,56 @@ public class Invitation extends shared.Invitation {
 		}
 		return list;
 	}
+	
+	public static ArrayList<Integer> getInvitationsForAppointment(int aid) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+
+		DBConnection db = null;
+		final String str_fmt = "SELECT userid FROM Invitation WHERE appointmentid=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, aid);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {
+				int i;
+				i = rs.getInt("userid");
+				list.add(i);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return list;
+	}
+	
+	public static boolean dirtify(int aid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "UPDATE Invitation SET dirty=TRUE WHERE appointmentid=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, aid);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
 }
