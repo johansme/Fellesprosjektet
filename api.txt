@@ -10,7 +10,7 @@ F	modify
 		In: app(Appointment)
 F	delete
 		In: aid(int)
-	get_from_creator
+F	get_from_creator
 		In: uid(int)
 		Out: aids(int)[]
 
