@@ -1,9 +1,9 @@
 package server.httpserver;
 
 import java.io.IOException;
-import java.io.NotActiveException;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,7 +42,7 @@ public class HttpAppointment extends HttpAPIHandler {
 						delete(t, u, request);
 						return;
 					case "get_from_creator":
-						sendNotImplemented(t);
+						getFromCreator(t, u, request);
 						return;
 					default:
 						sendInvalidCommand(t);
@@ -156,5 +156,27 @@ public class HttpAppointment extends HttpAPIHandler {
 		} else {
 			sendUnauthorised(t);
 		}
+	}
+	
+	void getFromCreator(HttpExchange t, User u, JSONObject request) throws IOException {
+		int uid;
+		try {
+			uid = request.getInt("uid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(!(u.getId() == uid) && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		ArrayList<Integer> appointments = Appointment.getAppointmentsFromCreator(uid);
+		JSONArray jarr = new JSONArray();
+		for(int i : appointments) {
+			jarr.put(i);
+		}
+		sendOK(t, new JSONObject().put("aids", jarr));
 	}
 }
