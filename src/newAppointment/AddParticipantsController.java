@@ -75,6 +75,7 @@ public class AddParticipantsController implements ControllerInterface {
 		} catch (IOException e) {
 		}
 		participants.sort(new ParticipantComparator());
+		List<Participant> added = participantController.getParticipants();
 		for (Participant participant : participants) {
 			HBox line = new HBox();
 			Label userLabel = new Label();
@@ -84,8 +85,13 @@ public class AddParticipantsController implements ControllerInterface {
 			userLabel.setText(participant.toString());
 			line.getChildren().add(userLabel);
 			
-			searchList.getItems().add(line);
-			searchListItems.add(participant);
+			if (added.contains(participant)) {
+				addList.getItems().add(line);
+				addListItems.add(participant);
+			} else {
+				searchList.getItems().add(line);
+				searchListItems.add(participant);
+			}
 		}
 	}
 	
@@ -93,20 +99,24 @@ public class AddParticipantsController implements ControllerInterface {
 	@FXML
 	private void addUserButtonPressed() {
 		int i = searchList.getFocusModel().getFocusedIndex();
-		Participant addedParticipant = searchListItems.remove(i);
-		HBox userLabel = searchList.getItems().remove(i);
-		addListItems.add(addedParticipant);
-		addList.getItems().add(userLabel);
+		if (i >= 0) {
+			Participant addedParticipant = searchListItems.remove(i);
+			HBox userLabel = searchList.getItems().remove(i);
+			addListItems.add(addedParticipant);
+			addList.getItems().add(userLabel);
+		}
 	}
 	
 	// When the left arrow button is pressed
 	@FXML
 	private void removeUserButtonPressed() {
 		int i = addList.getFocusModel().getFocusedIndex();
-		Participant removedParticipant = addListItems.remove(i);
-		HBox userLabel = addList.getItems().remove(i);
-		searchListItems.add(removedParticipant);
-		searchList.getItems().add(userLabel);
+		if (i >= 0) {
+			Participant removedParticipant = addListItems.remove(i);
+			HBox userLabel = addList.getItems().remove(i);
+			searchListItems.add(removedParticipant);
+			searchList.getItems().add(userLabel);
+		}
 	}
 	
 	@FXML
@@ -137,9 +147,9 @@ public class AddParticipantsController implements ControllerInterface {
 			String[] sa = s.split(" ");
 			search = search.replaceAll(",", "");
 			String[] searchArray = search.split(" ");
-			if (sa[0].startsWith(searchArray[0])) {
+			if (sa[0].toLowerCase().startsWith(searchArray[0].toLowerCase())) {
 				if (sa[0].equalsIgnoreCase(searchArray[0]) && searchArray.length > 1) {
-					if (sa[1].startsWith(searchArray[1])) {
+					if (sa[1].toLowerCase().startsWith(searchArray[1].toLowerCase())) {
 						index = i;
 						if (sa[1].equalsIgnoreCase(searchArray[1])) {
 							break;
@@ -187,14 +197,13 @@ public class AddParticipantsController implements ControllerInterface {
 	private void keyPressed(KeyEvent e) {
 		if (e.getCode()==KeyCode.LEFT) {
 			removeUserButtonPressed();
-		}
-		else if (e.getCode()==KeyCode.RIGHT) {
+		} else if (e.getCode()==KeyCode.RIGHT) {
 			addUserButtonPressed();
-		}
-		else if (e.getCode()==KeyCode.ENTER) {
+		} else if (e.getCode()==KeyCode.ENTER) {
 			addButtonPressed();
-		}
-		else {
+		} else if (e.getCode()==KeyCode.ESCAPE) {
+			cancelButtonPressed();
+		} else {
 			return;
 		}
 	}
