@@ -14,8 +14,8 @@
 		<Label text="Room Name:" layoutY="40" layoutX="5" />
 		<TextField fx:id="roomNameField" prefWidth="250" layoutY="40"
 			layoutX="100" promptText="Room name" />
-		<Label text="Capasity:" layoutY="80" layoutX="5" />
-		<TextField fx:id="capasityField" prefWidth="250" layoutY="80"
+		<Label text="Capacity:" layoutY="80" layoutX="5" />
+		<TextField fx:id="capacityField" prefWidth="250" layoutY="80"
 			layoutX="100" promptText="capasity" />
 
 		<Button fx:id="addRoomButton" onAction="#addRoom" alignment="CENTER"
@@ -28,6 +28,7 @@
 		<ListView fx:id="roomListView" prefHeight="170" prefWidth="345"
 			layoutX="5" layoutY="190" />
 
-
+		<Button fx:id="closeButton" text="Close" layoutX="270" layoutY="365"
+			prefWidth="80" onAction="#closeButtonPressed" />
 	</children>
 </Pane>

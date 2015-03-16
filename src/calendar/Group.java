@@ -1,5 +1,6 @@
 package calendar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Group extends shared.Group implements Participant {
@@ -10,6 +11,7 @@ public class Group extends shared.Group implements Participant {
 	
 	public Group(int id, List<Participant> memberList, User a, String n) {
 		super();
+		members = new ArrayList<Participant>();
 		super.setId(id);
 		setMembers(memberList);
 		admin = a;

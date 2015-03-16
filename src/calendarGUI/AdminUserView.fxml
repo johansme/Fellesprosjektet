@@ -11,11 +11,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.CheckBox?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="/resources/defaultTheme.css"
 	fx:controller="calendarGUI.AdminUserController">
 	<children>
-		<TabPane tabClosingPolicy="UNAVAILABLE" prefHeight="400"
+		<TabPane tabClosingPolicy="UNAVAILABLE" prefHeight="425"
 			prefWidth="355" fx:id="tabs">
 			<tabs>
 				<Tab fx:id="users" text="Users">
@@ -27,12 +28,15 @@
 									styleClass="subheader" />
 
 								<Label text="Username:" layoutY="40" layoutX="5" />
-								<TextField fx:id="userNameField" prefWidth="250"
+								<TextField fx:id="usernameField" prefWidth="250"
 									layoutY="40" layoutX="100" promptText="Username" />
 
 								<Label text="Password:" layoutY="80" layoutX="5" />
-								<PasswordField fx:id="passwordField"
-									prefWidth="250" layoutY="80" layoutX="100" promptText="Password" />
+								<PasswordField fx:id="passwordField" prefWidth="250"
+									layoutY="80" layoutX="100" promptText="Password" />
+
+								<CheckBox fx:id="newAdmin" layoutX="110" layoutY="110" />
+								<Label text="Administrator" layoutX="130" layoutY="110" />
 
 								<Button fx:id="addUserButton" onAction="#addUser"
 									alignment="CENTER" prefWidth="80" text="Add" layoutX="270"
@@ -41,10 +45,11 @@
 								<Separator layoutX="5" layoutY="160" prefWidth="345" />
 
 								<Label text="Users:" layoutY="165" layoutX="5" styleClass="subheader" />
-								<ListView fx:id="memberListView" prefHeight="170"
+								<ListView fx:id="userListView" prefHeight="170"
 									prefWidth="345" layoutX="5" layoutY="190" />
 
-
+								<Button fx:id="closeButton" text="Close" layoutX="270"
+									layoutY="365" prefWidth="80" onAction="#closeButtonPressed" />
 							</children>
 						</Pane>
 					</content>

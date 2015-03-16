@@ -10,7 +10,6 @@ import calendar.Calendar;
 import calendar.Participant;
 import calendarGUI.ControllerInterface;
 import calendarGUI.ParticipantController;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -53,7 +52,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	@FXML private ListView<String> listView; 
 	@FXML private Button removeUserButton; 
 	@FXML private Button addButton; 
-	private ObservableList<String> listViewData = FXCollections.observableArrayList();
 	private List<Participant> participantList = new ArrayList<Participant>();
 	ObservableList<MenuItem> roomValueList;
 
@@ -724,14 +722,14 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	{
 		String user = listView.getSelectionModel().getSelectedItem();
 		if(user != null){
-			System.out.println(user);
+			String[] userName = user.split(";");
 			listView.getItems().remove(user);
-			String msg = user + " removed";
+			String msg = userName[0] + " removed";
 
 			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, msg, this);
 
 		}
-		else sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, "No participant selected.", this);
+		else sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", this);
 
 
 	}
@@ -748,6 +746,11 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			participantList.add(participant);
 			listView.getItems().add(participant.toString());
 		}
+	}
+
+	@Override
+	public List<Participant> getParticipants() {
+		return participantList;
 	}
 
 }

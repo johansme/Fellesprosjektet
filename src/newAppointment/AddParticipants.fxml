@@ -8,7 +8,8 @@
 <?import javafx.scene.control.ListView?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="300"
-	prefWidth="500" fx:controller="newAppointment.AddParticipantsController" stylesheets="resources/defaultTheme.css">
+	prefWidth="500" fx:controller="newAppointment.AddParticipantsController" 
+	stylesheets="resources/defaultTheme.css" onKeyPressed="#keyPressed" >
 	<children>
 		<HBox prefWidth="500" prefHeight="30"
 			style="-fx-background-color:dodgerblue;">

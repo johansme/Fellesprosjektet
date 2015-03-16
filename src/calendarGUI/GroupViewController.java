@@ -23,6 +23,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import login.SceneHandler;
@@ -269,6 +271,22 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 
 	public TabPane getTabs() {
 		return tabs;
+	}
+	
+	@FXML
+	private void keyPressed(KeyEvent e) {
+		if (e.getCode()==KeyCode.ENTER) {
+			saveButtonPressed();
+		} else if (e.getCode()==KeyCode.ESCAPE) {
+			cancelButtonPressed();
+		} else {
+			return;
+		}
+	}
+
+	@Override
+	public List<Participant> getParticipants() {
+		return memberList;
 	}
 
 }
