@@ -194,26 +194,26 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			capasityField.setPromptText("Invalid");
 			capasityField.setText("1");
 		}else{
-			Tuple rm = bestRoom(Integer.valueOf(capasityField.textProperty().getValue()));
+			Room rm = bestRoom(Integer.valueOf(capasityField.textProperty().getValue()));
 
 
-			if(rm.room.equals("Other")) {
+			if(rm.getName().equals("Other")) {
 				room.setText("Other");
 				otherField.setDisable(false);
 			}else{
-				room.setText(rm.room +" (" + rm.capasity +")");
+				room.setText(rm.getName() +" (" + rm.getCapacity() +")");
 				otherField.setDisable(true);
 				otherField.textProperty().setValue("");
 			}
 		}
 	}
 
-	public Tuple bestRoom(int cap){
-		List<Tuple> rooms = rr.getRoomList();
+	public Room bestRoom(int cap){
+		List<Room> rooms = rr.getRoomList();
 		int min = 100000;
-		Tuple room = new Tuple("Other",0);
-		for (Tuple tup: rooms){
-			int as = tup.capasity - cap;
+		Room room = new Room("Other",0);
+		for (Room tup: rooms){
+			int as = tup.getCapacity() - cap;
 			if( as < min && as >=0){
 				min = as;
 				room = tup;
@@ -695,7 +695,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		rr.makeRoomQuery();
 		for(int i = 0; i < rr.getRoomList().size(); i++)
 		{
-			MenuItem it = new MenuItem(rr.getRoomList().get(i).room +" (" + rr.getRoomList().get(i).capasity+")");
+			MenuItem it = new MenuItem(rr.getRoomList().get(i).getName() +" (" + rr.getRoomList().get(i).getCapacity()+")");
 			it.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent t) {
 					room.setText(it.getText());
@@ -721,9 +721,11 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	public void removeUser()
 	{
 		String user = listView.getSelectionModel().getSelectedItem();
+		int i = listView.getSelectionModel().getSelectedIndex();
 		if(user != null){
 			String[] userName = user.split(";");
 			listView.getItems().remove(user);
+			participantList.remove(i);
 			String msg = userName[0] + " removed";
 
 			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, msg, this);

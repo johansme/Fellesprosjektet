@@ -3,6 +3,7 @@ package server;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.mysql.jdbc.Statement;
 
@@ -115,6 +116,33 @@ public class Appointment extends shared.Appointment {
 			db.close();
 		}
 		return success;
+	}
+	
+	public static ArrayList<Integer> getAppointmentsFromCreator(int uid) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		DBConnection db = null;
+		final String str_fmt = "SELECT id FROM Appointment WHERE createdby=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, uid);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {		
+				list.add(rs.getInt("id"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return list;
 	}
 	
 	public User getCreatorUser() {
