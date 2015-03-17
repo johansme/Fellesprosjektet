@@ -33,7 +33,8 @@ import login.SceneHandler;
 public class AdminUserController implements ControllerInterface {
 
 	@FXML private Tab rooms;
-
+	@FXML private AdminRoomController roomsPaneController;
+	
 	@FXML private TabPane tabs;
 	@FXML private Tab users;
 	@FXML private TextField usernameField;
@@ -177,6 +178,7 @@ public class AdminUserController implements ControllerInterface {
 		if (c != null) {
 			this.calendar = c;
 			setUserList();
+			roomsPaneController.setData(c);
 		}
 	}
 

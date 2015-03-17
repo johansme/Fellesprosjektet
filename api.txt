@@ -49,7 +49,7 @@ F	get_all
 	remove_user
 		In: gid(int),uid(int)
 
-/room
+/rooms
 	create
 		In: room(Room)
 	remove

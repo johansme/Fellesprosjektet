@@ -1,9 +1,13 @@
 package server.httpserver;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import server.Room;
 
 import com.sun.net.httpserver.*;
 
@@ -27,7 +31,11 @@ public class HttpRooms extends HttpAPIHandler {
 					case "create":
 					case "remove":
 					case "get_available":
+						sendNotImplemented(t);
+						return;
 					case "get_all":
+						getAll(t);
+						return;
 					case "get":
 					case "reserve": 
 					case "cancel":
@@ -42,5 +50,21 @@ public class HttpRooms extends HttpAPIHandler {
 			}
 		} catch(JSONException e) { sendInvalidCommand(t);
 		} catch(Exception e) { e.printStackTrace();	}
+	}
+	
+	private void getAll(HttpExchange t) throws IOException {
+		ArrayList<Room> rooms = Room.getAllRooms();
+		if(rooms == null) {
+			sendError(t, "Error getting rooms from DB");
+			return;
+		}
+		
+		JSONArray jarr = new JSONArray();
+		for(Room r : rooms) {
+			jarr.put(r.toJSON());
+		}
+		
+		sendOK(t, new JSONObject().put("rooms", jarr));
+		return;
 	}
 }

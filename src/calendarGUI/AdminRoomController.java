@@ -84,7 +84,7 @@ public class AdminRoomController implements ControllerInterface {
 			for (Room room : roomList) {
 				
 				HBox line = new HBox();
-				line.setPrefWidth((int)(roomListView.getPrefWidth()*0.95));
+				line.setPrefWidth((int)(roomListView.getPrefWidth()*0.90));
 				
 				
 				//label for the line:
@@ -127,17 +127,20 @@ public class AdminRoomController implements ControllerInterface {
 		obj.put("command", "get_all");
 		try {
 			
-			JSONObject res = API.call("/room", obj, calendar.getSession());
+			JSONObject res = API.call("/rooms", obj, calendar.getSession());
 			JSONArray resArray = res.getJSONArray("rooms");
 			for (int i = 0; i < resArray.length(); i++) {
 				Room room = new Room();
 				JSONObject userObj = (JSONObject) resArray.get(i);
 				room.fromJSON(userObj);
+				System.out.println(userObj.toString());
 				roomList.add(room);
 				//TODO add to listView, incl. delete
-				createRoomListView();
+				
 			}
+			createRoomListView();
 		} catch (IOException e) {
+			System.out.println(e.toString());
 		}
 	}
 
