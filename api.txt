@@ -63,7 +63,7 @@ F	get_all
 		In: rid(int)[]
 		Out: rooms(Room)[]
 	reserve
-		In: aid(int), rid(int) 
+		In: aid(int), rid(int), start(Date), end(Date)
 	cancel
 		In: aid(int)
 
