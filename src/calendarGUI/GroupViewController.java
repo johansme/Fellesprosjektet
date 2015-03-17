@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import api.API;
@@ -160,7 +161,6 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		nameLabel.setText(group.getName());
 		nameField.setText(group.getName());
 		creatorLabel.setText(group.getAdmin().toString());
-		setGroupMenu();
 		setMemberList();
 		if (calendar.getLoggedInUser().isAdmin() || group.getAdmin().toString().equals(calendar.getLoggedInUser().toString())) {
 			nameLabel.setVisible(false);
@@ -197,6 +197,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			setController();
 			if (groupList.size() > 0) {
 				setGroup(groupList.get(0));
+				setGroupMenu();
 				setView();
 			} else {
 				tabs.getSelectionModel().select(1);
@@ -213,10 +214,15 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	public void setData(Calendar c, Appointment a) {
 		if (c != null) {
 			calendar = c;
-			setGroups(calendar.getLoggedInUser().getGroups());
+			if (calendar.getLoggedInUser().isAdmin()) {
+				setGroups(getAllGroups());
+			} else {
+				setGroups(calendar.getLoggedInUser().getGroups());
+			}
 			setController();
 			if (groupList.size() > 0) {
 				setGroup(groupList.get(0));
+				setGroupMenu();
 				setView();
 			} else {
 				tabs.getSelectionModel().select(1);
@@ -240,6 +246,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Something went wrong. Please try again.", this);
 			return;
 		}
+		calendar.getLoggedInUser().removeGroup(group);
 		groupChoice.getItems().remove(menuItem);
 		if (groupChoice.getItems().size() > 0) {
 			groupChoice.getItems().get(0).fire();
@@ -292,6 +299,18 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			}
 		}
 	}
+	
+	public void addGroup(Group group) {
+		groupList.add(group);
+		MenuItem mi = new MenuItem(group.getName());
+		mi.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				setGroup(group);
+				menuItem = mi;
+			}
+		});
+		groupChoice.getItems().add(mi);
+	}
 
 	@FXML
 	private void setController() {
@@ -313,7 +332,6 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	public void setGroups(List<Group> groups) {
 		if (groups != null) {
 			this.groupList = groups;
-			setView();
 		}
 	}
 
@@ -335,6 +353,25 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	@Override
 	public List<Participant> getParticipants() {
 		return memberList;
+	}
+	
+	private List<Group> getAllGroups() {
+		List<Group> groups = new ArrayList<Group>();
+		JSONObject obj = new JSONObject();
+		obj.put("command", "get_all");
+		try {
+			JSONObject res = API.call("/group", obj, calendar.getSession());
+			JSONArray groupArray = res.getJSONArray("groups");
+			for (int i = 0; i < groupArray.length(); i++) {
+				Group gr = new Group();
+				gr.setData(calendar);
+				JSONObject grObj = groupArray.getJSONObject(i);
+				gr.fromJSON(grObj);
+				groups.add(gr);
+			}
+		} catch (IOException e) {
+		}
+		return groups;
 	}
 
 }

@@ -69,7 +69,9 @@ public class NewGroupViewController implements ParticipantController {
 				return;
 			}
 			group = new Group(0, memberList, getGroupViewController().getData().getLoggedInUser(), nameField.getText());
+			group.setData(getGroupViewController().getData());
 			group.setCreatedBy(group.getAdmin().getId());
+			groupViewController.addGroup(group);
 			groupViewController.setGroup(group);
 			JSONObject obj = new JSONObject();
 			obj.put("command", "create");

@@ -71,6 +71,7 @@ public class AddParticipantsController implements ControllerInterface {
 			for (int i = 0; i < groups.length(); i++) {
 				JSONObject groupObj = ((JSONObject) groups.get(i));
 				Group group = new Group();
+				group.setData(calendar);
 				group.fromJSON(groupObj);
 				participants.add(group);
 			}
