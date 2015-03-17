@@ -2,8 +2,11 @@ package newAppointment;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -183,12 +186,17 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		if(!descriptionField.textProperty().getValue().isEmpty() &&
 				!toField.textProperty().getValue().equals("") &&
 				!fromField.textProperty().getValue().equals("") &&
-				!otherField.textProperty().getValue().equals("") &&
 				capasityField.textProperty().getValue() != "" &&
 				!room.textProperty().getValue().equals("Choose room"))
 		{
+			if(otherField.isDisable()){
 
 			return true;
+			
+			}else if(!otherField.isDisable()  &&
+					!otherField.textProperty().getValue().equals("")){
+				return true;
+			}
 		}
 		return false;
 	}
@@ -293,7 +301,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	private void fromTime(){
 
 		if(checkValidFromField()){
-
+			
 			String fromTime = fromField.textProperty().getValue();
 			int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
 			int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
@@ -309,7 +317,9 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				timeDiffInMin = toTimeMinutes - fromTimeMinutes;
 			else 
 				timeDiffInMin = fromTimeMinutes - toTimeMinutes;
-
+			
+			setRoomList();
+			
 			if(!validToTime()){
 				if(timeDiffInMin < 30){
 					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
@@ -571,6 +581,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		disableDates(toDate, fromDate.getValue());
 		if (toDate.getValue().isBefore(fromDate.getValue())) {
 			toDate.setValue(fromDate.getValue());
+			setRoomList();
 		}
 		//appoint.setDato(fromDate.getValue());
 	}
@@ -698,7 +709,17 @@ public class NewAppointmentController implements ControllerInterface, Participan
 
 	private void setRoomList() {
 		JSONObject obj = new JSONObject();
-		obj.put("command", "get_all");
+		obj.put("command", "get_available");
+		
+		roomList = new ArrayList<Room>();
+		room.getItems().clear();
+		
+		LocalDateTime st = fromDate.getValue().atTime(LocalTime.parse(fromField.getText()));
+
+		LocalDateTime en = toDate.getValue().atTime(LocalTime.parse(toField.getText()));
+		
+		obj.put("start", Date.from(st.atZone(ZoneId.systemDefault()).toInstant()).getTime());
+		obj.put("end", Date.from(en.atZone(ZoneId.systemDefault()).toInstant()).getTime());
 
 		MenuItem it1 = new MenuItem("Other");
 
@@ -714,7 +735,9 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		try {
 
 			JSONObject res = API.call("/rooms", obj, calendar.getSession());
+			System.out.println(res.toString());
 			JSONArray resArray = res.getJSONArray("rooms");
+			
 			for (int i = 0; i < resArray.length(); i++) {
 				Room rm = new Room();
 				JSONObject userObj = (JSONObject) resArray.get(i);

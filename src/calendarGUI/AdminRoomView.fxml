@@ -16,7 +16,7 @@
 			layoutX="100" promptText="Room name" />
 		<Label text="Capacity:" layoutY="80" layoutX="5" />
 		<TextField fx:id="capacityField" prefWidth="250" layoutY="80"
-			layoutX="100" promptText="capasity" />
+			layoutX="100" promptText="Capasity" />
 
 		<Button fx:id="addRoomButton" onAction="#addRoom" alignment="CENTER"
 			prefWidth="80" text="Add" layoutX="270" layoutY="120" />
