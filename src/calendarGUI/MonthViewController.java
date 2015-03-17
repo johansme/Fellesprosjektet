@@ -435,7 +435,7 @@ public class MonthViewController implements ControllerInterface {
 	
 	@FXML
 	private void adminPressed() {
-		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 355, 425, getData(), null);
+		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 355, 600, getData(), null);
 	}
 
 }
