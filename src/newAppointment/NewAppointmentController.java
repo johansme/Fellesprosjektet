@@ -711,7 +711,8 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		JSONObject obj = new JSONObject();
 		obj.put("command", "get_available");
 		
-		
+		roomList = new ArrayList<Room>();
+		room.getItems().clear();
 		
 		LocalDateTime st = fromDate.getValue().atTime(LocalTime.parse(fromField.getText()));
 
