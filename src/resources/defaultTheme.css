@@ -12,6 +12,11 @@
 	-fx-font-family: "Arial", Helvetica, sans-serif;
 }
 
+.menuItems {
+	-fx-font-size: 10pt;
+	-fx-text-fill: #000000;
+	-fx-font-family: "Courier";
+}
 
 .subheader {
 	-fx-font-family: "Trebuchet MS";

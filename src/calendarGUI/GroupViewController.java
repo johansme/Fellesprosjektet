@@ -108,7 +108,8 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 					obj.put("uid", ((User) member).getId());
 				} else if (member instanceof Group) {
 					((Group) member).setParent(group.getId());
-					//TODO update to server
+					obj.put("command", "modify");
+					obj.put("group", (Group) member);
 				}
 				try {
 					API.call("/group", obj, calendar.getSession());
@@ -116,13 +117,22 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				}
 			}
 			for (Participant member : removedMembers) {
+				obj = new JSONObject();
 				group.removeMember(member);
 				if (member instanceof User) {
 					((User) member).removeGroup(group);
+					obj.put("command", "remove_user");
+					obj.put("gid", group.getId());
+					obj.put("uid", ((User) member).getId());
 				} else if (member instanceof Group) {
 					((Group) member).setParent(0);
+					obj.put("command", "modify");
+					obj.put("group", (Group) member);
 				}
-				//TODO send to server
+				try {
+					API.call("/group", obj, calendar.getSession());
+				} catch (IOException e) {
+				}
 			}
 			obj = new JSONObject();
 			obj.put("command", "modify");
