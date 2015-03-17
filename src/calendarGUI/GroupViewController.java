@@ -109,7 +109,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				} else if (member instanceof Group) {
 					((Group) member).setParent(group.getId());
 					obj.put("command", "modify");
-					obj.put("group", (Group) member);
+					obj.put("group", ((Group) member).toJSON());
 				}
 				try {
 					API.call("/group", obj, calendar.getSession());
@@ -127,7 +127,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				} else if (member instanceof Group) {
 					((Group) member).setParent(0);
 					obj.put("command", "modify");
-					obj.put("group", (Group) member);
+					obj.put("group", ((Group) member).toJSON());
 				}
 				try {
 					API.call("/group", obj, calendar.getSession());
@@ -136,7 +136,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			}
 			obj = new JSONObject();
 			obj.put("command", "modify");
-			obj.put("group", group);
+			obj.put("group", group.toJSON());
 			try {
 				API.call("/group", obj, calendar.getSession());
 			} catch (IOException e) {

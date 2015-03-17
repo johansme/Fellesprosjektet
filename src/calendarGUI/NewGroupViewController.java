@@ -75,7 +75,7 @@ public class NewGroupViewController implements ParticipantController {
 			groupViewController.setGroup(group);
 			JSONObject obj = new JSONObject();
 			obj.put("command", "create");
-			obj.put("group", group);
+			obj.put("group", group.toJSON());
 			JSONObject res;
 			try {
 				res = API.call("/group", obj, getGroupViewController().getData().getSession());
@@ -87,7 +87,7 @@ public class NewGroupViewController implements ParticipantController {
 				if (member instanceof Group) {
 					((Group) member).setParent(group.getId());
 					obj.put("command", "modify");
-					obj.put("group", (Group) member);
+					obj.put("group", ((Group) member).toJSON());
 				} else if (member instanceof User) {
 					((User) member).addGroup(group);
 					obj.put("command", "add_user");
