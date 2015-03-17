@@ -54,10 +54,10 @@ F	get_all
 		In: room(Room)
 	remove
 		In rid(int)
-	get_available
+?	get_available
 		In: start(Date), end(Date)
 		Out: rooms(Room)[]
-	get_all
+F	get_all
 		Out: rooms(Room)[]
 	get
 		In: rid(int)[]

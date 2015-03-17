@@ -24,9 +24,9 @@ CREATE TABLE Appointment(
 	id INT NOT NULL AUTO_INCREMENT,
 	location VARCHAR(255),
 	description VARCHAR(255) NOT NULL,
-	starttime DATE NOT NULL,
-	endtime DATE NOT NULL,
-	lastmodified DATE NOT NULL,
+	starttime DATETIME NOT NULL,
+	endtime DATETIME NOT NULL,
+	lastmodified DATETIME NOT NULL,
 	createdby INT NOT NULL,
 	PRIMARY KEY(id),
 	FOREIGN KEY(createdby) REFERENCES User(id)
@@ -56,7 +56,7 @@ CREATE TABLE Invitation(
 	accepted BOOLEAN,
 	hidden BOOLEAN,
 	dirty BOOLEAN DEFAULT TRUE,
-	alarm DATE,
+	alarm DATETIME,
 	PRIMARY KEY(userid, appointmentid),
 	FOREIGN KEY(userid) REFERENCES User(id)
 		ON DELETE CASCADE,
@@ -77,8 +77,8 @@ CREATE TABLE GroupInvitation(
 CREATE TABLE ReservedFor(
 	appointmentid INT NOT NULL,
 	roomid INT NOT NULL,
-	starttime DATE NOT NULL,
-	endtime DATE NOT NULL,
+	starttime DATETIME NOT NULL,
+	endtime DATETIME NOT NULL,
 	PRIMARY KEY(appointmentid),
 	FOREIGN KEY(appointmentid) REFERENCES Appointment(id)
 		ON DELETE CASCADE,
