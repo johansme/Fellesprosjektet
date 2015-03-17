@@ -7,10 +7,12 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id='screen' onKeyPressed='#keyPressed' maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-	minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0"
+<Pane fx:id='screen' onKeyPressed='#keyPressed' maxHeight="-Infinity"
+	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+	prefHeight="480.0" prefWidth="600.0"
 	style="-fx-border-width: 2; -fx-border-color: Black;" xmlns="http://javafx.com/javafx/8"
-	fx:controller="newAppointment.NewAppointmentController" xmlns:fx="http://javafx.com/fxml/1">
+	fx:controller="newAppointment.NewAppointmentController" xmlns:fx="http://javafx.com/fxml/1"
+	stylesheets="/resources/defaultTheme.css">
 	<children>
 		<Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE"
 			height="54.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
@@ -123,13 +125,13 @@
 							prefHeight="49.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<Button fx:id="addButton" onAction="#addPerson" alignment="CENTER" contentDisplay="CENTER"
-							maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
-							prefHeight="25.0" prefWidth="59.0" text="Add"
+						<Button fx:id="addButton" onAction="#addPerson" alignment="CENTER"
+							contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+							mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Add"
 							GridPane.halignment="LEFT" />
-						<Button fx:id="removeUserButton" onAction="#removeUser" mnemonicParsing="false" text="Remove"
-							GridPane.columnIndex="1" GridPane.halignment="LEFT"
-							GridPane.valignment="CENTER" />
+						<Button fx:id="removeUserButton" onAction="#removeUser"
+							mnemonicParsing="false" text="Remove" GridPane.columnIndex="1"
+							GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
 					</children>
 				</GridPane>
 				<GridPane GridPane.columnSpan="2" GridPane.hgrow="ALWAYS"
@@ -153,9 +155,10 @@
 								<Font size="16.0" />
 							</font>
 						</Label>
-						<ListView fx:id ="listView" maxWidth="-Infinity" prefHeight="150.0"
-							prefWidth="318.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS"
-							GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+						<ListView fx:id="listView" maxWidth="-Infinity"
+							prefHeight="150.0" prefWidth="318.0" GridPane.columnSpan="2"
+							GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
+							GridPane.valignment="CENTER" />
 					</children>
 				</GridPane>
 				<GridPane prefHeight="59.0" prefWidth="223.0"
@@ -201,11 +204,11 @@
 								<Font size="16.0" />
 							</font>
 						</Label>
-						<MenuButton fx:id="room" mnemonicParsing="false" prefHeight="25.0"
-							prefWidth="110.0" text="Choose room" GridPane.columnIndex="1"
-							GridPane.halignment="LEFT">
+						<MenuButton fx:id="room" mnemonicParsing="false"
+							prefHeight="25.0" prefWidth="200.0" text="Choose room"
+							GridPane.columnIndex="1" GridPane.halignment="LEFT" styleClass="menuItems">
 							<items>
-							
+
 							</items>
 						</MenuButton>
 					</children>

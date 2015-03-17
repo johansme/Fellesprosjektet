@@ -5,6 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Participant;
@@ -55,6 +60,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	private List<Participant> participantList = new ArrayList<Participant>();
 	ObservableList<MenuItem> roomValueList;
 
+	private List<Room> roomList = new ArrayList<Room>();
 
 	ReceiveRoom rr = new ReceiveRoom();
 
@@ -97,7 +103,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		//saveButton pressed check if fields are filled and save data
 		if(checkFieldsFill()){
 
-			
+
 			if (header.getText()=="Edit appointment") {
 				try {
 					appointment.delete();
@@ -167,25 +173,25 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		{
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
 		}
-		
+
 	}
-	
+
 	// method for checking if necessary fields are filled out @Birk
-		public boolean checkFieldsFill()
-		{
-			
-			if(!descriptionField.textProperty().getValue().isEmpty() &&
+	public boolean checkFieldsFill()
+	{
+
+		if(!descriptionField.textProperty().getValue().isEmpty() &&
 				!toField.textProperty().getValue().equals("") &&
 				!fromField.textProperty().getValue().equals("") &&
 				!otherField.textProperty().getValue().equals("") &&
 				capasityField.textProperty().getValue() != "" &&
 				!room.textProperty().getValue().equals("Choose room"))
-			{
-				
-				return true;
-			}
-			return false;
+		{
+
+			return true;
 		}
+		return false;
+	}
 
 	@FXML
 	private void checkCapasity(){
@@ -201,7 +207,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				room.setText("Other");
 				otherField.setDisable(false);
 			}else{
-				room.setText(rm.getName() +" (" + rm.getCapacity() +")");
+				room.setText(menuItemStringFormatter(rm.getName(),rm.getCapacity(),17));
 				otherField.setDisable(true);
 				otherField.textProperty().setValue("");
 			}
@@ -209,10 +215,10 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	}
 
 	public Room bestRoom(int cap){
-		List<Room> rooms = rr.getRoomList();
+
 		int min = 100000;
-		Room room = new Room("Other",0);
-		for (Room tup: rooms){
+		Room room = new Room("Other", 0);
+		for (Room tup: roomList){
 			int as = tup.getCapacity() - cap;
 			if( as < min && as >=0){
 				min = as;
@@ -223,20 +229,20 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		return room;
 
 	}
-	
+
 	private void printErrorMessage(String errorMsg){
-		
+
 		sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, errorMsg, this);
 	}
-	
+
 	private boolean checkValidFromField(){
 
-		
+
 		if(!fromField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !fromField.textProperty().getValue().matches("\\d\\d") && !fromField.textProperty().getValue().matches("\\d") ){
-			
+
 			fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
 			return true;
-			
+
 		}
 		else if(fromField.textProperty().getValue().matches("\\d\\d:\\d")){
 			fromField.setText(fromField.getText() + "0");
@@ -247,23 +253,23 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			fromField.setText(fromField.getText() + ":00");
 			return true;
 		}
-		 if(fromField.textProperty().getValue().matches("\\d")){
+		if(fromField.textProperty().getValue().matches("\\d")){
 			fromField.setText("0" + fromField.getText() + ":00");
 			return true;
 		}
 		return true; 
-		
+
 	}
-	
+
 	private boolean checkValidToField(){
 
-		
+
 		if(!toField.textProperty().getValue().matches("\\d\\d:\\d\\d") && !toField.textProperty().getValue().matches("\\d\\d") && !toField.textProperty().getValue().matches("\\d") )
 		{
-			
+
 			toField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
 			return true;
-			
+
 		}
 		else if(toField.textProperty().getValue().matches("\\d\\d:\\d")){
 			toField.setText(toField.getText() + "0");
@@ -274,96 +280,24 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			toField.setText(toField.getText() + ":00");
 			return true;
 		}
-		 if(toField.textProperty().getValue().matches("\\d")){
+		if(toField.textProperty().getValue().matches("\\d")){
 			toField.setText("0" + toField.getText() + ":00");
 			return true;
 		}
 		return true; 
-		
+
 	}
-	
+
 	// methods for handling input in time fields
 	@FXML
 	private void fromTime(){
-		
+
 		if(checkValidFromField()){
-			
+
 			String fromTime = fromField.textProperty().getValue();
 			int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
 			int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
-			
-			String toTime = toField.textProperty().getValue();
-			int toTimeHour = Integer.parseInt(toTime.split(":")[0]);
-			int toTimeMin = Integer.parseInt(toTime.split(":")[1]);
-			
-			int fromTimeMinutes = (fromTimeHour * 60) + fromTimeMin;
-			int toTimeMinutes = (toTimeHour * 60) + toTimeMin; 
-			int timeDiffInMin;
-			if (toTimeMinutes > fromTimeMinutes)
-				timeDiffInMin = toTimeMinutes - fromTimeMinutes;
-			else 
-				timeDiffInMin = fromTimeMinutes - toTimeMinutes;
-			
-			if(!validToTime()){
-				if(timeDiffInMin < 30){
-					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-					printErrorMessage("The appointment must last for at least 30 minutes.");
-				}
-				
-			}
-			
-			if(!validFromTime())
-			{
-				fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
-				if(timeDiffInMin < 30) {
-					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-					printErrorMessage("The appointment must last for at least 30 minutes.");
-				}
-			}
-			
-			
-			if(minAndMaxAllowedStartTime())
-			{
-				if(timeDiffInMin < 30) {
-					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-				}
-			}
-			else 
-			{
-					
-					if(fromTimeHour >= 22 && fromTimeMin > 30 || toTimeHour >= 22 && toTimeMin >= 0 )
-					{
-						fromField.setText("22:30");
-						toField.setText("23:00");
-						printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
-					}
-					else if(fromTimeHour > 22 && fromTimeMin >= 0 || toTimeHour > 22 && toTimeMin >= 0){
-						fromField.setText("22:30");
-						toField.setText("23:00");
-						printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
-					}
-					else if(fromTimeHour < 6 && fromTimeHour >= 0)
-					{
-						fromField.setText("06:00");
-						toField.setText("06:30");
-						printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
-					}
-					
-					
-			}
-		}
-	
-	}
-	
-	@FXML
-	private void toTime(){
-		
-		if(checkValidToField()){
-			
-			String fromTime = fromField.textProperty().getValue();
-			int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
-			int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
-			
+
 			String toTime = toField.textProperty().getValue();
 			int toTimeHour = Integer.parseInt(toTime.split(":")[0]);
 			int toTimeMin = Integer.parseInt(toTime.split(":")[1]);
@@ -375,19 +309,91 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				timeDiffInMin = toTimeMinutes - fromTimeMinutes;
 			else 
 				timeDiffInMin = fromTimeMinutes - toTimeMinutes;
-			
+
+			if(!validToTime()){
+				if(timeDiffInMin < 30){
+					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+					printErrorMessage("The appointment must last for at least 30 minutes.");
+				}
+
+			}
+
+			if(!validFromTime())
+			{
+				fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
+				if(timeDiffInMin < 30) {
+					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+					printErrorMessage("The appointment must last for at least 30 minutes.");
+				}
+			}
+
+
+			if(minAndMaxAllowedStartTime())
+			{
+				if(timeDiffInMin < 30) {
+					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
+				}
+			}
+			else 
+			{
+
+				if(fromTimeHour >= 22 && fromTimeMin > 30 || toTimeHour >= 22 && toTimeMin >= 0 )
+				{
+					fromField.setText("22:30");
+					toField.setText("23:00");
+					printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
+				}
+				else if(fromTimeHour > 22 && fromTimeMin >= 0 || toTimeHour > 22 && toTimeMin >= 0){
+					fromField.setText("22:30");
+					toField.setText("23:00");
+					printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
+				}
+				else if(fromTimeHour < 6 && fromTimeHour >= 0)
+				{
+					fromField.setText("06:00");
+					toField.setText("06:30");
+					printErrorMessage("The appointment must be between 06:00 and 23:00 and must last for at least 30 minutes.");
+				}
+
+
+			}
+		}
+
+	}
+
+	@FXML
+	private void toTime(){
+
+		if(checkValidToField()){
+
+			String fromTime = fromField.textProperty().getValue();
+			int fromTimeHour = Integer.parseInt(fromTime.split(":")[0]);
+			int fromTimeMin = Integer.parseInt(fromTime.split(":")[1]);
+
+			String toTime = toField.textProperty().getValue();
+			int toTimeHour = Integer.parseInt(toTime.split(":")[0]);
+			int toTimeMin = Integer.parseInt(toTime.split(":")[1]);
+
+			int fromTimeMinutes = (fromTimeHour * 60) + fromTimeMin;
+			int toTimeMinutes = (toTimeHour * 60) + toTimeMin; 
+			int timeDiffInMin;
+			if (toTimeMinutes > fromTimeMinutes)
+				timeDiffInMin = toTimeMinutes - fromTimeMinutes;
+			else 
+				timeDiffInMin = fromTimeMinutes - toTimeMinutes;
+
 			if(!validToTime()){
 				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 				//else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-				
+
 			}
-			
+
 			if(fromTimeHour > toTimeHour){
 				toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 			}
 			if(!minAndMaxAllowedToTime())
 			{
-				
+
 				if(fromTimeHour >= 22 && fromTimeMin > 30 || toTimeHour >= 22 && toTimeMin >= 0 ){
 					fromField.setText("22:30");
 					toField.setText("23:00");
@@ -404,7 +410,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 					printErrorMessage("The appointment must last for at least 30 minutes.");
 				}
 				//else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-				
+
 			}
 		}
 
@@ -425,7 +431,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		int minAllowedStartHour = 06; 
 		int maxAllowedStartHour = 22;
 		//from 22:35 - to 23:00 
-		
+
 		if(fromTimeHour >= minAllowedStartHour && fromTimeHour <= maxAllowedStartHour)
 		{
 			if(timeHourDiff == 0 && timeMinDiff < 30) return false;
@@ -434,7 +440,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		else return false;
 
 	}
-	
+
 	private boolean minAndMaxAllowedToTime(){
 
 		String fromTime = fromField.textProperty().getValue();
@@ -458,14 +464,14 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			else return true;
 		}
 		else return false; 
-		
-		
-		
+
+
+
 	}
 	//adding 30 minutes to fromTimeHours:fromTimeMin
 	//checking if hours or mins are >= 0 and <= 9, if yes add "0"
 	private String getRoundHalfHour(int fromTimeHour, int fromTimeMin){
-		
+
 		if(fromTimeMin == 0){
 			return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + fromTimeHour + ":" + (fromTimeMin + 30) : fromTimeHour + ":" + (fromTimeMin + 30); 
 		}
@@ -476,18 +482,18 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + (fromTimeHour + 1) + ":" + "00" : (fromTimeHour + 1) + ":" + "00";
 		}
 		else if(fromTimeMin > 30){
-			
+
 			int minDiff = fromTimeMin - 30;
 			if(minDiff >= 0 && minDiff <= 9)
 				return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + (fromTimeHour + 1) + ":" + "0" + minDiff : (fromTimeHour + 1) + ":" + "0" + minDiff;
 			else
 				return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + (fromTimeHour + 1) + ":" + minDiff : (fromTimeHour + 1) + ":" + minDiff;
 		}
-		
+
 		else return fromTimeHour + ":" + fromTimeMin;  
-		
+
 	}
-	
+
 	private String toTwoDigits(int timeElement) {
 		if (timeElement < 10) {
 			return 0 + "" + timeElement;
@@ -523,7 +529,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		}
 	}
 
-	
+
 	private boolean validFromTime(){
 
 		//casting to more approtiate data for handling time
@@ -593,14 +599,14 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		datepicker.setDayCellFactory(dayCellFactory);
 
 	}
-	
+
 	//On initialize, set from- and toField. add "0" if hour/minute is btwn 0 and 9 @Alex
-	
+
 	private void checkTodaysHourAndMin(){
-		
+
 		int todayHour = LocalTime.now().getHour();
 		int todayMinute = LocalTime.now().getMinute();
-		
+
 		//add "0" to hour and/or min
 		if(todayHour >= 0 && todayHour <= 9 && todayMinute >= 0 && todayMinute <= 9) fromField.setText("0" + (todayHour + 1) + ":" + "0" + todayMinute);
 		else if(todayHour >= 0 && todayHour <= 9) fromField.setText("0" + (todayHour + 1) + ":" + todayMinute);
@@ -608,12 +614,12 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		else fromField.setText((todayHour + 1) + ":" + todayMinute);
 		toField.setText(getRoundHalfHour(LocalTime.now().getHour() + 1, LocalTime.now().getMinute()));
 	}
-	
+
 	// set default data in fields to help user @Birk
 	@FXML
 	public void initialize(){
 
-		
+
 		descriptionField.setPromptText("Appointment Description...");
 		checkTodaysHourAndMin();
 		capasityField.textProperty().setValue("1");
@@ -672,6 +678,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				disableDates(fromDate, LocalDate.now());
 				disableDates(toDate, LocalDate.now());
 			}
+			setRoomList();
 		}
 	}
 
@@ -689,32 +696,63 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	private Label header;
 
 
-	public void getRoomFromDB(){
+	private void setRoomList() {
+		JSONObject obj = new JSONObject();
+		obj.put("command", "get_all");
 
+		MenuItem it1 = new MenuItem("Other");
 
-		rr.makeRoomQuery();
-		for(int i = 0; i < rr.getRoomList().size(); i++)
-		{
-			MenuItem it = new MenuItem(rr.getRoomList().get(i).getName() +" (" + rr.getRoomList().get(i).getCapacity()+")");
-			it.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent t) {
-					room.setText(it.getText());
-					otherField.setDisable(true);
-					otherField.textProperty().setValue("");
-				}
-			});
-
-			room.getItems().add(it);
-		}
-		MenuItem other = new MenuItem("Other");
-		other.setOnAction(new EventHandler<ActionEvent>() {
+		it1.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
-				room.setText(other.getText());
+				room.setText(it1.getText());
 				otherField.setDisable(false);
+				otherField.textProperty().setValue("");
 			}
 		});
-		room.getItems().add(other);
+		room.getItems().add(it1);
 
+		try {
+
+			JSONObject res = API.call("/rooms", obj, calendar.getSession());
+			JSONArray resArray = res.getJSONArray("rooms");
+			for (int i = 0; i < resArray.length(); i++) {
+				Room rm = new Room();
+				JSONObject userObj = (JSONObject) resArray.get(i);
+				rm.fromJSON(userObj);
+
+				roomList.add(rm);
+
+				MenuItem it = new MenuItem(menuItemStringFormatter(rm.getName(),rm.getCapacity(),17));
+
+
+				it.setOnAction(new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent t) {
+						room.setText(it.getText());
+						otherField.setDisable(true);
+						otherField.textProperty().setValue("");
+					}
+				});
+
+				room.getItems().add(it);
+
+			}
+
+		} catch (IOException e) {
+			System.out.println(e.toString());
+		}
+	}
+
+	private String menuItemStringFormatter(String nm, int cap, int length){
+		int strLength = nm.length();
+		String capString = "(" +Integer.toString(cap) +")";
+		int capLength = capString.length();
+
+		String outcome = nm;
+		for (int i  = 0; i < length -strLength - capLength;i++){
+			outcome+= " ";
+		}
+		outcome += capString;
+		return outcome;
 	}
 
 	@FXML
@@ -740,7 +778,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 
 		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getData(), this);
 	}
-	
+
 	public void addParticipant(Participant participant) {
 		boolean eql = false;
 		for (Participant p : participantList) {
