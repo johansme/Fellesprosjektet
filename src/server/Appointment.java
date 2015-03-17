@@ -24,9 +24,9 @@ public class Appointment extends shared.Appointment {
 				this.id = rs.getInt("id");
 				location = rs.getString("location");
 				description = rs.getString("description");
-				start = rs.getTime("starttime");
-				end = rs.getTime("endtime");
-				modified = rs.getTime("lastmodified");
+				start = rs.getTimestamp("starttime");
+				end = rs.getTimestamp("endtime");
+				modified = rs.getTimestamp("lastmodified");
 				creator = rs.getInt("createdby");
 			}
 		} catch(Exception e) {
@@ -49,8 +49,8 @@ public class Appointment extends shared.Appointment {
 			stm = db.getConnection().prepareStatement(stm_str, Statement.RETURN_GENERATED_KEYS);
 			stm.setString(1, a.location);
 			stm.setString(2, a.description);
-			stm.setTime(3, new java.sql.Time(a.start.getTime()));
-			stm.setTime(4, new java.sql.Time(a.end.getTime()));
+			stm.setTimestamp(3, new java.sql.Timestamp(a.start.getTime()));
+			stm.setTimestamp(4, new java.sql.Timestamp(a.end.getTime()));
 			stm.setInt(5, a.creator);
 			stm.executeUpdate();
 			ResultSet keys = stm.getGeneratedKeys();
@@ -79,8 +79,8 @@ public class Appointment extends shared.Appointment {
 			stm = db.getConnection().prepareStatement(stm_str);
 			stm.setString(1, a.location);
 			stm.setString(2, a.description);
-			stm.setTime(3, new java.sql.Time(a.start.getTime()));
-			stm.setTime(4, new java.sql.Time(a.end.getTime()));
+			stm.setTimestamp(3, new java.sql.Timestamp(a.start.getTime()));
+			stm.setTimestamp(4, new java.sql.Timestamp(a.end.getTime()));
 			stm.setInt(5, a.id);
 			stm.executeUpdate();
 		} catch(SQLException e) {
