@@ -37,6 +37,7 @@ public class HttpUser extends HttpAPIHandler {
 						return;
 					case "delete":
 						remove(t, u, request);
+						return;
 					case "get_all":
 						getAll(t);
 						return;
