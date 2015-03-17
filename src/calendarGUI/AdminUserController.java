@@ -2,6 +2,7 @@ package calendarGUI;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -10,15 +11,20 @@ import org.json.JSONObject;
 import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.Group;
 import calendar.User;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
@@ -35,7 +41,13 @@ public class AdminUserController implements ControllerInterface {
 	@FXML private Button closeButton;
 
 	@FXML private ListView<User> userListView;
+	
+	@FXML
+	private ListView<HBox> userElementsList;
+	
 	private List<User> userList = new ArrayList<User>();
+	
+	private HashMap<CheckBox, User> userElements = new HashMap<CheckBox, User>();
 
 	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
@@ -59,6 +71,63 @@ public class AdminUserController implements ControllerInterface {
 		stage.close();
 	}
 	
+	private void createUserList(){
+		if (userList!=null && !userList.isEmpty()) {
+			for (User usr : userList) {
+				
+				HBox line = new HBox();
+				line.setPrefWidth((int)(userElementsList.getPrefWidth()*0.9));
+				line.setPrefHeight((int)(userElementsList.getPrefHeight()*0.05));
+				
+				//label for the line:
+				Label userLabel = new Label();
+				userLabel.wrapTextProperty().set(true);
+				userLabel.setFocusTraversable(false);
+				userLabel.setText(usr.getName() +" " + usr.getSurname());
+				
+				
+				//checkBox to delete user:
+				CheckBox checkBox = new CheckBox();
+				userElements.put(checkBox, usr);
+				checkBox.setSelected(false);
+				checkBox.setFocusTraversable(false);
+				
+				checkBox.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						if (checkBox.isSelected()) {
+							// remove user from database :O
+							userElementsList.getItems().remove(line);
+						}
+						else {
+							// do nothing
+						}
+					}
+				});
+				
+				//button to change password:
+				Button changePassButton = new Button();
+				changePassButton.setPrefWidth((int)(userElementsList.getPrefWidth()*0.4));
+				changePassButton.setText("Change Password");
+				changePassButton.setMaxHeight(line.getPrefHeight());
+				
+				changePassButton.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						// launch change password window for targeted user:
+						
+					}
+				});
+				
+				userLabel.setPrefWidth(line.getPrefWidth()- changePassButton.getPrefWidth()-checkBox.getWidth());
+				line.getChildren().addAll(userLabel, changePassButton,checkBox);
+				line.setFocusTraversable(false);
+				
+				
+				
+				userElementsList.getItems().add(line);
+			}
+	}
+	}
+	
 	private boolean isValidUser() {
 		//TODO
 		return false;
@@ -77,8 +146,10 @@ public class AdminUserController implements ControllerInterface {
 				userList.add(user);
 				//TODO add to listView, incl. delete and change password
 			}
+			
 		} catch (IOException e) {
 		}
+		createUserList();
 	}
 
 	@Override
