@@ -1,6 +1,7 @@
 package server.httpserver;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -30,8 +31,10 @@ public class HttpRooms extends HttpAPIHandler {
 				switch(command) {
 					case "create":
 					case "remove":
-					case "get_available":
 						sendNotImplemented(t);
+						return;
+					case "get_available":
+						getAvailable(t, request);
 						return;
 					case "get_all":
 						getAll(t);
@@ -66,5 +69,30 @@ public class HttpRooms extends HttpAPIHandler {
 		
 		sendOK(t, new JSONObject().put("rooms", jarr));
 		return;
+	}
+	
+	private void getAvailable(HttpExchange t, JSONObject request) throws IOException {
+		Date start, end;
+		try {
+			start = new Date(request.getLong("start"));
+			end = new Date(request.getLong("end"));
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		ArrayList<Room> rooms = Room.getAvailable(start, end);
+		if(rooms == null) {
+			sendError(t, "Error getting rooms from DB");
+			return;
+		}
+		
+		JSONArray jarr = new JSONArray();
+		for(Room r : rooms) {
+			jarr.put(r.toJSON());
+		}
+		
+		sendOK(t, new JSONObject().put("rooms", jarr));
+		return;		
 	}
 }
