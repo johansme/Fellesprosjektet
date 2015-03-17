@@ -147,7 +147,6 @@ public class AdminUserController implements ControllerInterface {
 		
 		deleteUser.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				//TODO
 				delLine = line;
 				sceneHandler.popUpMessage("/messages/Confirm.fxml", 290, 140, "Are you sure you want to delete?", thisController);
 			}
@@ -243,6 +242,7 @@ public class AdminUserController implements ControllerInterface {
 	private HBox delLine;
 	
 	private void delUser() {
+		//TODO check possible bug with reopening admin window
 		int index =userElementsList.getItems().indexOf(delLine);
 		User delUser = userList.get(index);
 		JSONObject obj = new JSONObject();
@@ -253,7 +253,7 @@ public class AdminUserController implements ControllerInterface {
 			userList.remove(index);
 			userElementsList.getItems().remove(delLine);
 		} catch (IOException e1) {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", new AdminUserController());
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", thisController);
 		}
 	}
 

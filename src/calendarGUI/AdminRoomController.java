@@ -36,7 +36,7 @@ public class AdminRoomController implements ControllerInterface {
 	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
 
-
+	private AdminRoomController thisController = this;
 
 	@FXML
 	private void addRoom(){
@@ -108,10 +108,8 @@ public class AdminRoomController implements ControllerInterface {
 		
 		deleteRoom.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				//TODO
-				// remove room from database :O
-				roomListView.getItems().remove(line);
-				
+				delLine = line;
+				sceneHandler.popUpMessage("/messages/Confirm.fxml", 290, 140, "Are you sure you want to delete?", thisController);
 			}
 		});
 		
@@ -167,6 +165,24 @@ public class AdminRoomController implements ControllerInterface {
 
 	@Override
 	public void setFeedback() {
-
+		delRoom();
 	}
+	
+	private HBox delLine;
+	
+	private void delRoom() {
+		int index =roomListView.getItems().indexOf(delLine);
+		Room delRoom = roomList.get(index);
+		JSONObject obj = new JSONObject();
+		obj.put("command", "remove");
+		obj.put("rid", delRoom.getId());
+		try {
+			API.call("/room", obj, calendar.getSession());
+			roomList.remove(index);
+			roomListView.getItems().remove(delLine);
+		} catch (IOException e1) {
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", thisController);
+		}
+	}
+	
 }

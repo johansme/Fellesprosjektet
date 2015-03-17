@@ -735,7 +735,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		try {
 
 			JSONObject res = API.call("/rooms", obj, calendar.getSession());
-			System.out.println(res.toString());
 			JSONArray resArray = res.getJSONArray("rooms");
 			
 			for (int i = 0; i < resArray.length(); i++) {
