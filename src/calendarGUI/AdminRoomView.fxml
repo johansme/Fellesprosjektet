@@ -25,10 +25,10 @@
 		<Separator layoutX="5" layoutY="160" prefWidth="345" />
 
 		<Label text="Rooms:" layoutY="165" layoutX="5" styleClass="subheader" />
-		<ListView fx:id="roomListView" prefHeight="170" prefWidth="345"
+		<ListView fx:id="roomListView" prefHeight="330" prefWidth="345"
 			layoutX="5" layoutY="190" />
 
-		<Button fx:id="closeButton" text="Close" layoutX="270" layoutY="365"
+		<Button fx:id="closeButton" text="Close" layoutX="270" layoutY="530"
 			prefWidth="80" onAction="#closeButtonPressed" />
 	</children>
 </Pane>
