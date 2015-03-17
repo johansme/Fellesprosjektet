@@ -1,13 +1,19 @@
 package calendar;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONObject;
+
+import api.API;
 
 public class Group extends shared.Group implements Participant {
 	
 	private List<Participant> members;
 	private User admin;
 	private boolean active;
+	private Calendar calendar;
 	
 	public Group(int id, List<Participant> memberList, User a, String n) {
 		super();
@@ -35,6 +41,19 @@ public class Group extends shared.Group implements Participant {
 		}
 		}
 	}
+	
+	private void setAdmin(int uid) {
+		JSONObject obj = new JSONObject();
+		obj.put("command", "get_by_id");
+		obj.put("uid", uid);
+		try {
+			JSONObject res = API.call("/user", obj, calendar.getSession());
+			User adm = new User();
+			adm.fromJSON(res);
+			this.admin = adm;
+		} catch (IOException e) {
+		}
+	}
 
 	public User getAdmin() {
 		return admin;
@@ -52,6 +71,12 @@ public class Group extends shared.Group implements Participant {
 		}
 	}
 	
+	public void setData(Calendar calendar) {
+		if (calendar != null) {
+			this.calendar = calendar;
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return getName();
@@ -63,6 +88,13 @@ public class Group extends shared.Group implements Participant {
 	
 	public boolean getActive() {
 		return active;
+	}
+	
+	@Override
+	public boolean fromJSON(JSONObject obj) {
+		boolean res = super.fromJSON(obj);
+		setAdmin(getCreatedBy());
+		return res;
 	}
 
 }
