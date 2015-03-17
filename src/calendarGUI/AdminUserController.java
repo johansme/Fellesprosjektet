@@ -47,7 +47,6 @@ public class AdminUserController implements ControllerInterface {
 	
 	private List<User> userList = new ArrayList<User>();
 	
-	private HashMap<CheckBox, User> userElements = new HashMap<CheckBox, User>();
 
 	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
@@ -107,6 +106,7 @@ public class AdminUserController implements ControllerInterface {
 				
 				deleteUser.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
+						//TODO
 						// remove user from database :O
 						userElementsList.getItems().remove(line);
 						

@@ -11,10 +11,15 @@ import api.API;
 import newAppointment.Room;
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.User;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
@@ -25,12 +30,14 @@ public class AdminRoomController implements ControllerInterface {
 	@FXML private Button addRoomButton;
 	@FXML private Button closeButton;
 
-	@FXML private ListView<Room> roomListView;
+	@FXML private ListView<HBox> roomListView;
 	private List<Room> roomList = new ArrayList<Room>();
 
 	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
 
+	
+	
 	@FXML
 	private void addRoom(){
 		if (isValidRoom()) {
@@ -70,11 +77,53 @@ public class AdminRoomController implements ControllerInterface {
 		return true;
 	}
 	
+	private void createRoomListView(){
+		if (roomList!=null && !roomList.isEmpty()) {
+			for (Room room : roomList) {
+				
+				HBox line = new HBox();
+				line.setPrefWidth((int)(roomListView.getPrefWidth()*0.95));
+				
+				
+				//label for the line:
+				Label userLabel = new Label();
+				userLabel.wrapTextProperty().set(true);
+				userLabel.setFocusTraversable(false);
+				userLabel.setText(room.getName() +" Capasity: " + room.getCapacity());
+				
+				//button to delete room:
+				Button deleteRoom = new Button();
+				deleteRoom.setPrefWidth((int)(roomListView.getPrefWidth()*0.1));
+				deleteRoom.setText("X");
+				
+				
+				deleteRoom.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						//TODO
+						// remove room from database :O
+						roomListView.getItems().remove(line);
+						
+					}
+				});
+				
+				userLabel.setPrefWidth(line.getPrefWidth()-deleteRoom.getPrefWidth());
+				line.getChildren().addAll(userLabel, deleteRoom);
+				line.setFocusTraversable(false);
+				
+				
+				
+				roomListView.getItems().add(line);
+			}
+	}
+		
+		
+	}
 
 	private void setRoomList() {
 		JSONObject obj = new JSONObject();
 		obj.put("command", "get_all");
 		try {
+			
 			JSONObject res = API.call("/room", obj, calendar.getSession());
 			JSONArray resArray = res.getJSONArray("rooms");
 			for (int i = 0; i < resArray.length(); i++) {
@@ -83,6 +132,7 @@ public class AdminRoomController implements ControllerInterface {
 				room.fromJSON(userObj);
 				roomList.add(room);
 				//TODO add to listView, incl. delete
+				createRoomListView();
 			}
 		} catch (IOException e) {
 		}
