@@ -36,6 +36,7 @@ public class SyncFromServer {
 		List<Group> g = new ArrayList<Group>();
 		for (int i=0; i<groupArray.length(); i++) {
 			Group gr = new Group();
+			gr.setData(c);
 			gr.fromJSON((JSONObject) groupArray.get(i));
 			g.add(gr);
 		}
