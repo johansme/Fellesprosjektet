@@ -77,13 +77,14 @@ public class Room extends shared.Room {
 		return list;
 	}
 	
+	// TODO: Test this
 	// TODO: Is this properly locked?
 	public static boolean reserve(int aid, int rid, Date start, Date end) throws IOException {
 		DBConnection db = null;
 		ResultSet rs = null;
 		boolean success = true;
 //		final String stm_lock = "LOCK TABLE ReservedFor IN EXCLUSIVE MODE";
-		final String stm_poll = "SELECT 1 FROM ReservedFor WHERE (roomid=? AND NOT (? <= starttime OR ? >= endtime))";
+		final String stm_poll = "SELECT 1 FROM ReservedFor WHERE (roomid=? AND WHERE NOT(? > endtime || ? < starttime))";
 		final String stm_ins = "INSERT INTO ReservedFor VALUES(?, ?, ?, ?)";
 		
 		PreparedStatement stm = null;

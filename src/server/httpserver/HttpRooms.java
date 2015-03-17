@@ -1,14 +1,16 @@
 package server.httpserver;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import server.Appointment;
 import server.Room;
+import server.User;
 
 import com.sun.net.httpserver.*;
 
@@ -21,7 +23,8 @@ public class HttpRooms extends HttpAPIHandler {
 		try {
 			JSONObject request = get(t);
 			
-			if(server.getUserFromExchange(t) == null) {
+			User u = server.getUserFromExchange(t);
+			if(u == null) {
 				sendUnauthenticated(t);
 				return;
 			}
@@ -40,7 +43,11 @@ public class HttpRooms extends HttpAPIHandler {
 						getAll(t);
 						return;
 					case "get":
-					case "reserve": 
+						sendNotImplemented(t);
+						return;
+					case "reserve":
+						reserve(t, u, request);
+						return;
 					case "cancel":
 						sendNotImplemented(t);
 						return;
@@ -94,5 +101,41 @@ public class HttpRooms extends HttpAPIHandler {
 		
 		sendOK(t, new JSONObject().put("rooms", jarr));
 		return;		
+	}
+	
+	private void reserve(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid, rid;
+		Date start, end;
+		try {
+			aid = request.getInt("aid");
+			rid = request.getInt("rid");
+			start = new Date(request.getLong("start"));
+			end = new Date(request.getLong("end"));
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Invalid appointment ID");
+			return;
+		}
+		
+		if(u.getId() != a.getCreator() && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		if(Room.reserve(aid, rid, start, end)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error reserving room");
+			return;
+		}
+		
 	}
 }
