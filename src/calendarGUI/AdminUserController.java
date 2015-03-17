@@ -25,6 +25,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
@@ -62,6 +64,11 @@ public class AdminUserController implements ControllerInterface {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Insufficient user info", this);
 		}
 	}
+	
+	@FXML
+	private void roomsPressed() {
+		
+	}
 
 	@FXML
 	private void closeButtonPressed() {
@@ -83,6 +90,9 @@ public class AdminUserController implements ControllerInterface {
 				userLabel.wrapTextProperty().set(true);
 				userLabel.setFocusTraversable(false);
 				userLabel.setText(usr.getName() +" " + usr.getSurname());
+				
+				userLabel.setFont(new Font(18));
+				
 
 				
 				//button to change password:
@@ -102,6 +112,7 @@ public class AdminUserController implements ControllerInterface {
 				Button deleteUser = new Button();
 				deleteUser.setPrefWidth((int)(userElementsList.getPrefWidth()*0.1));
 				deleteUser.setText("X");
+				deleteUser.setTextFill(new Color(1, 0, 0, 1));
 				
 				
 				deleteUser.setOnAction(new EventHandler<ActionEvent>() {

@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
@@ -40,6 +41,7 @@ public class AdminRoomController implements ControllerInterface {
 	
 	@FXML
 	private void addRoom(){
+		
 		if (isValidRoom()) {
 			Room room = new Room();
 			room.setName(roomNameField.getText());
@@ -95,6 +97,7 @@ public class AdminRoomController implements ControllerInterface {
 				Button deleteRoom = new Button();
 				deleteRoom.setPrefWidth((int)(roomListView.getPrefWidth()*0.1));
 				deleteRoom.setText("X");
+				deleteRoom.setTextFill(new Color(1, 0, 0, 1));
 				
 				
 				deleteRoom.setOnAction(new EventHandler<ActionEvent>() {
