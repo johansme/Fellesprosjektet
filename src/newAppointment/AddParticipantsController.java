@@ -172,7 +172,7 @@ public class AddParticipantsController implements ControllerInterface {
 				}
 			}
 		}
-		searchList.getFocusModel().focus(index);
+		searchList.getSelectionModel().select(index);
 	}
 
 	@Override
