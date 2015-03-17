@@ -199,7 +199,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void monthClicked(Event e) {
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml", 950, 600, calendar);
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml", 940, 590, calendar);
 	}
 	
 	@FXML
@@ -207,7 +207,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	public void newAction() {
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(), null);
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 590, 470, getData(), null);
 	}
 	
 	@FXML
@@ -382,14 +382,14 @@ public class WeekViewController extends Application implements ControllerInterfa
 		int id = polygons.get(e.getSource());
 		appointments.get(id).setOpened(true);
 		setView(calendar);
-		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
+		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 590, 470, calendar, appointments.get(id));
 	}
 	
 	private void appointmentLabelClicked(MouseEvent e) {
 		int id = labels.get(e.getSource());
 		appointments.get(id).setOpened(true);
 		setView(calendar);
-		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 600, 480, calendar, appointments.get(id));
+		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 590, 470, calendar, appointments.get(id));
 	}
 	
 	public static void main(String[] args) {
@@ -437,7 +437,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 	
 	@FXML
 	private void adminPressed() {
-		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 355, 600, getData(), null);
+		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 345, 590, getData(), null);
 	}
 	
 }

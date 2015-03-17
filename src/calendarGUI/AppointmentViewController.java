@@ -145,7 +145,7 @@ public class AppointmentViewController extends Application implements Controller
 	public void editAction() {
 		sceneHandler = new SceneHandler();
 		closeAction();
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(), appointment);
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 590, 470, getData(), appointment);
 		
 	}
 	
@@ -155,7 +155,7 @@ public class AppointmentViewController extends Application implements Controller
 	@FXML
 	public void deleteAction() {
 		sceneHandler = new SceneHandler();
-		sceneHandler.popUpMessage("/messages/Confirm.fxml", 300, 150, "Are you sure you want to delete?", this);
+		sceneHandler.popUpMessage("/messages/Confirm.fxml", 290, 140, "Are you sure you want to delete?", this);
 	}
 	
 	public void setView(Appointment a) {
@@ -303,7 +303,7 @@ public class AppointmentViewController extends Application implements Controller
 			appointment.delete();
 		} catch (IOException e) {
 			sceneHandler = new SceneHandler();
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "WTF", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "WTF", this);
 		}
 	    // get a handle to the stage
 	    Stage stage = (Stage) close.getScene().getWindow();

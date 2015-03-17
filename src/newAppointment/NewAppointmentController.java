@@ -109,7 +109,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 					appointment.delete();
 				} catch (IOException e1) {
 					sceneHandler = new SceneHandler();
-					sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "WTF", this);
+					sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "WTF", this);
 				}
 			}
 			Appointment a = new Appointment(calendar);
@@ -163,7 +163,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				ap.addAppointmentToDay();
 			}
 			a.createInServer();
-			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, "Your appointment has been saved", this);
+			sceneHandler.popUpMessage("/messages/Info.fxml", 290, 140, "Your appointment has been saved", this);
 			// get a handle to the stage
 			Stage stage = (Stage) saveButton.getScene().getWindow();
 			// do what you got to do :)
@@ -171,7 +171,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		}
 		else 
 		{
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Check your fields for valid input.", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Check your fields for valid input.", this);
 		}
 
 	}
@@ -766,17 +766,17 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			participantList.remove(i);
 			String msg = userName[0] + " removed";
 
-			sceneHandler.popUpMessage("/messages/Info.fxml", 300, 150, msg, this);
+			sceneHandler.popUpMessage("/messages/Info.fxml", 290, 140, msg, this);
 
 		}
-		else sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", this);
+		else sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "No participant selected.", this);
 
 	}
 
 	@FXML
 	public void addPerson(){
 
-		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getData(), this);
+		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 490, 290, getData(), this);
 	}
 
 	public void addParticipant(Participant participant) {
