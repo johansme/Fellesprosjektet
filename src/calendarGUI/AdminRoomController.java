@@ -55,7 +55,7 @@ public class AdminRoomController implements ControllerInterface {
 			} catch (IOException e) {
 			}
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Invalid room data", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid room data", this);
 		}
 	}
 

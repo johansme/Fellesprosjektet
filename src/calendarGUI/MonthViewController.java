@@ -324,37 +324,37 @@ public class MonthViewController implements ControllerInterface {
 	@FXML
 	private void week1Clicked(Event e) {
 		calendar.setCurrentDate(weekList1.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 940, 590, getData());
 	}
 
 	@FXML
 	private void week2Clicked(Event e) {
 		calendar.setCurrentDate(weekList2.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml",  940, 590, getData());
 	}
 
 	@FXML
 	private void week3Clicked(Event e) {
 		calendar.setCurrentDate(weekList3.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 940, 590, getData());
 	}
 
 	@FXML
 	private void week4Clicked(Event e) {
 		calendar.setCurrentDate(weekList4.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml",  940, 590, getData());
 	}
 
 	@FXML
 	private void week5Clicked(Event e) {
 		calendar.setCurrentDate(weekList5.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml",  940, 590, getData());
 	}
 
 	@FXML
 	private void week6Clicked(Event e) {
 		calendar.setCurrentDate(weekList6.get(0).getDay().getDate());
-		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());			
+		sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml",  940, 590, getData());			
 	}
 
 	// when "Previous"-button is pressed
@@ -363,7 +363,7 @@ public class MonthViewController implements ControllerInterface {
 		try {
 			month = calendar.getPreviousMonth();
 		} catch (IllegalStateException isl) {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, isl.getMessage(), this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, isl.getMessage(), this);
 		}
 		monthChanged();
 	}
@@ -378,7 +378,7 @@ public class MonthViewController implements ControllerInterface {
 	// when "New appointment"-button is pressed
 	@FXML
 	private void newAppointmentAction() {
-		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 600, 480, getData(),null);
+		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 590, 470, getData(),null);
 	}
 
 	@Override
@@ -420,7 +420,7 @@ public class MonthViewController implements ControllerInterface {
 		}
 		else if (e.getCode()==KeyCode.ENTER) {
 			calendar.setCurrentDate(LocalDate.now());
-			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 950, 600, getData());
+			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 940, 590, getData());
 		}
 		else {
 			return;
@@ -430,12 +430,12 @@ public class MonthViewController implements ControllerInterface {
 	
 	@FXML
 	private void groupAction() {
-		sceneHandler.popUpScene("/calendarGUI/GroupView.fxml", 600, 350, getData(), null);
+		sceneHandler.popUpScene("/calendarGUI/GroupView.fxml", 590, 340, getData(), null);
 	}
 	
 	@FXML
 	private void adminPressed() {
-		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 355, 600, getData(), null);
+		sceneHandler.popUpScene("/calendarGUI/AdminUserView.fxml", 345, 580, getData(), null);
 	}
 
 }

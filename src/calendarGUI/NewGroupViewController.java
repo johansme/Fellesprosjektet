@@ -47,7 +47,7 @@ public class NewGroupViewController implements ParticipantController {
 
 	@FXML
 	private void addMembers() {
-		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, getGroupViewController().getData(), this);
+		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 485, 290, getGroupViewController().getData(), this);
 	}
 
 	@FXML
@@ -57,7 +57,7 @@ public class NewGroupViewController implements ParticipantController {
 			memberListView.getItems().remove(index);
 			memberList.remove(index);
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No participant selected.", groupViewController);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "No participant selected.", groupViewController);
 		}
 	}
 
@@ -65,7 +65,7 @@ public class NewGroupViewController implements ParticipantController {
 	private void saveButtonPressed() {
 		if (isValidName()) {
 			if (memberList.size() < 1) {
-				sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Please add group members", getGroupViewController());
+				sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Please add group members", getGroupViewController());
 				return;
 			}
 			group = new Group(0, memberList, getGroupViewController().getData().getLoggedInUser(), nameField.getText());
@@ -98,7 +98,7 @@ public class NewGroupViewController implements ParticipantController {
 			memberListView.getItems().clear();
 			groupViewController.getTabs().getSelectionModel().select(0);
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Invalid group name", getGroupViewController());
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid group name", getGroupViewController());
 		}
 	}
 

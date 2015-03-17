@@ -67,7 +67,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 
 	@FXML
 	private void addMembers() {
-		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 500, 300, calendar, this);
+		sceneHandler.popUpParticipants("/newAppointment/AddParticipants.fxml", 490, 290, calendar, this);
 		saveButton.setDisable(false);
 	}
 
@@ -83,7 +83,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				removedMembers.add(removed);
 			}
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "No member is selected.", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "No member is selected.", this);
 		}
 		saveButton.setDisable(false);
 	}
@@ -133,7 +133,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			}
 			saveButton.setDisable(true);
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Invalid group name", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid group name", this);
 		}
 	}
 	
@@ -147,7 +147,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 
 	@FXML
 	private void deleteGroup() {
-		sceneHandler.popUpMessage("/messages/Confirm.fxml", 300, 150, "Are you sure you want to delete?", this);
+		sceneHandler.popUpMessage("/messages/Confirm.fxml", 290, 140, "Are you sure you want to delete?", this);
 	}
 	
 	@FXML
@@ -243,7 +243,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		try {
 			API.call("/group", obj, calendar.getSession());
 		} catch (IOException e) {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Something went wrong. Please try again.", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 			return;
 		}
 		calendar.getLoggedInUser().removeGroup(group);

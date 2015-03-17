@@ -60,7 +60,7 @@ public class LoginController implements ControllerInterface {
 				res = API.call("/user", obj, session);
 				loggingIn.fromJSON(res.getJSONObject("user"));
 				calendar = new Calendar(loggingIn, session);
-				sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",950,600, calendar);
+				sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",940,590, calendar);
 
 			} catch (IOException e1) {
 				errorMessage.textProperty().setValue("Invalid authentication credentials");				

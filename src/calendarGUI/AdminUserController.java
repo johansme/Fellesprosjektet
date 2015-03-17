@@ -62,7 +62,7 @@ public class AdminUserController implements ControllerInterface {
 			user.setAdmin(newAdmin.isSelected());
 			//TODO
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Insufficient user info", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Insufficient user info", this);
 		}
 	}
 	
@@ -105,7 +105,7 @@ public class AdminUserController implements ControllerInterface {
 				changePassButton.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
 						// launch change password window for targeted user:
-						sceneHandler.popUpChangePassword("/calendarGUI/EditUserPasswordView.fxml", 250, 200, usr);
+						sceneHandler.popUpChangePassword("/calendarGUI/EditUserPasswordView.fxml", 240, 190, usr);
 					}
 				});
 				
