@@ -46,9 +46,11 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	@FXML private Button addMembersButton;
 	@FXML private Button removeMemberButton;
 	@FXML private Button saveButton;
+	@FXML private Button deleteButton;
 	@FXML private Button cancelButton;
 
 	private List<Group> groupList = new ArrayList<Group>();
+	private MenuItem menuItem;
 	private Group group;
 	private Calendar calendar;
 	private List<Participant> memberList = new ArrayList<Participant>();
@@ -139,9 +141,14 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		if (s.length() > 50) {
 			return false;
 		}
-		return s.matches("[ a-zA-Z0-9]+") && ! s.startsWith(" ");
+		return (s.matches("[ a-zA-Z0-9]+") && ! s.startsWith(" "));
 	}
 
+	@FXML
+	private void deleteGroup() {
+		sceneHandler.popUpMessage("/messages/Confirm.fxml", 300, 150, "Are you sure you want to delete?", this);
+	}
+	
 	@FXML
 	private void cancelButtonPressed() {
 		// get a handle to the stage
@@ -155,18 +162,20 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		creatorLabel.setText(group.getAdmin().toString());
 		setGroupMenu();
 		setMemberList();
-		if (calendar.getLoggedInUser().isAdmin() || group.getAdmin().equals(calendar.getLoggedInUser())) {
+		if (calendar.getLoggedInUser().isAdmin() || group.getAdmin().toString().equals(calendar.getLoggedInUser().toString())) {
 			nameLabel.setVisible(false);
 			nameField.setVisible(true);
 			nameField.setDisable(false);
 			addMembersButton.setDisable(false);
 			removeMemberButton.setDisable(false);
+			deleteButton.setDisable(false);
 		} else {
 			nameLabel.setVisible(true);
 			nameField.setVisible(false);
 			nameField.setDisable(true);
 			addMembersButton.setDisable(true);
 			removeMemberButton.setDisable(true);
+			deleteButton.setDisable(true);
 		}
 	}
 
@@ -217,7 +226,39 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 
 	@Override
 	public void setFeedback() {
-
+		delete();
+	}
+	
+	private void delete() {
+		int gid = group.getId();
+		JSONObject obj = new JSONObject();
+		obj.put("command", "delete");
+		obj.put("gid", gid);
+		try {
+			API.call("/group", obj, calendar.getSession());
+		} catch (IOException e) {
+			sceneHandler.popUpMessage("/messages/Error.fxml", 300, 150, "Something went wrong. Please try again.", this);
+			return;
+		}
+		groupChoice.getItems().remove(menuItem);
+		if (groupChoice.getItems().size() > 0) {
+			groupChoice.getItems().get(0).fire();
+		} else {
+			nameField.clear();
+			creatorLabel.setText("");
+			nameLabel.setText("");
+			memberList.clear();
+			memberListView.getItems().clear();
+			
+			nameLabel.setVisible(true);
+			nameField.setVisible(false);
+			nameField.setDisable(true);
+			addMembersButton.setDisable(true);
+			removeMemberButton.setDisable(true);
+			deleteButton.setDisable(true);
+			
+			tabs.getSelectionModel().select(1);
+		}
 	}
 	
 	private void setGroupMenu() {
@@ -225,7 +266,8 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			MenuItem mi = new MenuItem(group.getName());
 			mi.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent t) {
-					groupChoice.setText(mi.getText());
+					setGroup(group);
+					menuItem = mi;
 				}
 			});
 			groupChoice.getItems().add(mi);

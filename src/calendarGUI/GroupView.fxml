@@ -23,6 +23,9 @@
 							<children>
 								<MenuButton fx:id="groupChoice" prefWidth="150"
 									layoutX="445" layoutY="5" />
+								<Button fx:id="deleteButton" text="Delete group"
+									prefWidth="150" layoutX="445" layoutY="40" disable="true"
+									onAction="#deleteGroup" />
 								<Label text="Group name:" layoutY="25" layoutX="5" />
 								<Label fx:id="nameLabel" layoutX="100" layoutY="25" />
 								<TextField fx:id="nameField" prefWidth="250" layoutY="25"
