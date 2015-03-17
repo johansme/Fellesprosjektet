@@ -83,16 +83,22 @@ public class NewGroupViewController implements ParticipantController {
 			} catch (IOException e) {
 			}
 			for (Participant member : memberList) {
+				obj = new JSONObject();
 				if (member instanceof Group) {
 					((Group) member).setParent(group.getId());
-					//TODO update server
+					obj.put("command", "modify");
+					obj.put("group", (Group) member);
 				} else if (member instanceof User) {
 					((User) member).addGroup(group);
-					//TODO update server
+					obj.put("command", "add_user");
+					obj.put("gid", group.getId());
+					obj.put("uid", ((User) member).getId());
+				}
+				try {
+					API.call("/group", obj, getGroupViewController().getData().getSession());
+				} catch (IOException e) {
 				}
 			}
-			//TODO send group to server
-			
 			nameField.clear();
 			memberList.clear();
 			memberListView.getItems().clear();
