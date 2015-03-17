@@ -42,17 +42,19 @@ public class Group extends shared.Group implements Participant {
 		}
 	}
 	
-	private void setAdmin(int uid) {
+	private boolean setAdmin(int uid) {
 		JSONObject obj = new JSONObject();
 		obj.put("command", "get_by_id");
 		obj.put("uid", uid);
 		try {
 			JSONObject res = API.call("/user", obj, calendar.getSession());
 			User adm = new User();
-			adm.fromJSON(res);
+			adm.fromJSON(res.getJSONObject("user"));
 			this.admin = adm;
+			return true;
 		} catch (IOException e) {
 		}
+		return false;
 	}
 
 	public User getAdmin() {
@@ -93,7 +95,7 @@ public class Group extends shared.Group implements Participant {
 	@Override
 	public boolean fromJSON(JSONObject obj) {
 		boolean res = super.fromJSON(obj);
-		setAdmin(getCreatedBy());
+		res = res && setAdmin(getCreatedBy());
 		return res;
 	}
 
