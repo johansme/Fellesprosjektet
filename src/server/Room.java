@@ -122,4 +122,27 @@ public class Room extends shared.Room {
 		}
 		return success;
 	}
+	
+	public static boolean cancel(int aid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM ReservedFor WHERE appointmentid=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, aid);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
 }

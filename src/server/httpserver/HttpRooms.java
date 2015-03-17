@@ -49,7 +49,7 @@ public class HttpRooms extends HttpAPIHandler {
 						reserve(t, u, request);
 						return;
 					case "cancel":
-						sendNotImplemented(t);
+						cancel(t, u, request);
 						return;
 						
 					default:
@@ -135,7 +135,37 @@ public class HttpRooms extends HttpAPIHandler {
 		} else {
 			sendError(t, "Error reserving room");
 			return;
+		}	
+	}
+	
+	private void cancel(HttpExchange t, User u, JSONObject request) throws IOException {		
+		int aid;
+		try {
+			aid = request.getInt("aid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
 		}
 		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error getting appointment from DB");
+			return;
+		}
+		
+		if(a.getCreator() != u.getId() && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+			
+		if(Room.cancel(aid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error cancelling room for appointment");
+			return;
+		}
 	}
 }

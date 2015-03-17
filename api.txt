@@ -64,7 +64,7 @@ F	get_all
 		Out: rooms(Room)[]
 ?	reserve
 		In: aid(int), rid(int), start(Date), end(Date)
-	cancel
+F	cancel
 		In: aid(int)
 
 /user
