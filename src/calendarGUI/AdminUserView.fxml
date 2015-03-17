@@ -54,7 +54,7 @@
 						</Pane>
 					</content>
 				</Tab>
-				<Tab fx:id="rooms" text="Rooms">
+				<Tab fx:id="rooms" text="Rooms" >
 					<content>
 						<fx:include fx:id="roomsPane" source="AdminRoomView.fxml" />
 					</content>
