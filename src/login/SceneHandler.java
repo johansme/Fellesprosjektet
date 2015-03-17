@@ -3,7 +3,9 @@ package login;
 import newAppointment.AddParticipantsController;
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.User;
 import calendarGUI.ControllerInterface;
+import calendarGUI.EditUserPasswordController;
 import calendarGUI.ParticipantController;
 import messages.MessageController;
 import javafx.event.Event;
@@ -128,6 +130,32 @@ public class SceneHandler {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	// for use when admin requests to change a users password:
+	public void popUpChangePassword(String fxmlPath, int width,int height, User usr){
+		
+		Stage primaryStage = new Stage();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+			Parent root = loader.load();
+			Scene scene = new Scene(root,width,height);
+			EditUserPasswordController passController = (EditUserPasswordController) loader.getController();
+			passController.setUser(usr);
+			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
+			primaryStage.initModality(Modality.APPLICATION_MODAL);
+			primaryStage.setScene(scene);
+			primaryStage.centerOnScreen();
+			primaryStage.titleProperty().setValue("BETJA Systems");
+			primaryStage.setResizable(false);
+			primaryStage.show();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	// for use when adding participants in NewAppointmentController

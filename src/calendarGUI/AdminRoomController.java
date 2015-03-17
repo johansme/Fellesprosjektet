@@ -69,6 +69,7 @@ public class AdminRoomController implements ControllerInterface {
 		}
 		return true;
 	}
+	
 
 	private void setRoomList() {
 		JSONObject obj = new JSONObject();

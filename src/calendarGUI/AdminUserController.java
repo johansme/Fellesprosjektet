@@ -76,49 +76,45 @@ public class AdminUserController implements ControllerInterface {
 			for (User usr : userList) {
 				
 				HBox line = new HBox();
-				line.setPrefWidth((int)(userElementsList.getPrefWidth()*0.9));
-				line.setPrefHeight((int)(userElementsList.getPrefHeight()*0.05));
+				line.setPrefWidth((int)(userElementsList.getPrefWidth()*0.95));
+				
 				
 				//label for the line:
 				Label userLabel = new Label();
 				userLabel.wrapTextProperty().set(true);
 				userLabel.setFocusTraversable(false);
 				userLabel.setText(usr.getName() +" " + usr.getSurname());
-				
-				
-				//checkBox to delete user:
-				CheckBox checkBox = new CheckBox();
-				userElements.put(checkBox, usr);
-				checkBox.setSelected(false);
-				checkBox.setFocusTraversable(false);
-				
-				checkBox.setOnAction(new EventHandler<ActionEvent>() {
-					@Override public void handle(ActionEvent e) {
-						if (checkBox.isSelected()) {
-							// remove user from database :O
-							userElementsList.getItems().remove(line);
-						}
-						else {
-							// do nothing
-						}
-					}
-				});
+
 				
 				//button to change password:
 				Button changePassButton = new Button();
 				changePassButton.setPrefWidth((int)(userElementsList.getPrefWidth()*0.4));
 				changePassButton.setText("Change Password");
-				changePassButton.setMaxHeight(line.getPrefHeight());
+				
 				
 				changePassButton.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
 						// launch change password window for targeted user:
+						sceneHandler.popUpChangePassword("/calendarGUI/EditUserPasswordView.fxml", 250, 200, usr);
+					}
+				});
+				
+				//button to delete user:
+				Button deleteUser = new Button();
+				deleteUser.setPrefWidth((int)(userElementsList.getPrefWidth()*0.1));
+				deleteUser.setText("X");
+				
+				
+				deleteUser.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						// remove user from database :O
+						userElementsList.getItems().remove(line);
 						
 					}
 				});
 				
-				userLabel.setPrefWidth(line.getPrefWidth()- changePassButton.getPrefWidth()-checkBox.getWidth());
-				line.getChildren().addAll(userLabel, changePassButton,checkBox);
+				userLabel.setPrefWidth(line.getPrefWidth()- changePassButton.getPrefWidth()-deleteUser.getPrefWidth());
+				line.getChildren().addAll(userLabel, changePassButton,deleteUser);
 				line.setFocusTraversable(false);
 				
 				
