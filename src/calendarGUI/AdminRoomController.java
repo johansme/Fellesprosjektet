@@ -133,10 +133,7 @@ public class AdminRoomController implements ControllerInterface {
 				Room room = new Room();
 				JSONObject userObj = (JSONObject) resArray.get(i);
 				room.fromJSON(userObj);
-				System.out.println(userObj.toString());
 				roomList.add(room);
-				//TODO add to listView, incl. delete
-				
 			}
 			createRoomListView();
 		} catch (IOException e) {

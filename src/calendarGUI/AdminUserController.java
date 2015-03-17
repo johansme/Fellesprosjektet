@@ -24,6 +24,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -185,6 +187,15 @@ public class AdminUserController implements ControllerInterface {
 	@Override
 	public void setFeedback() {
 
+	}
+	
+	@FXML
+	private void keyPressed(KeyEvent e) {
+		if (e.getCode()==KeyCode.ESCAPE) {
+			closeButtonPressed();
+		} else {
+			return;
+		}
 	}
 
 }

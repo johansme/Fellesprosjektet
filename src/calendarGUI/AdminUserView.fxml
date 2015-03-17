@@ -14,7 +14,7 @@
 <?import javafx.scene.control.CheckBox?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="/resources/defaultTheme.css"
-	fx:controller="calendarGUI.AdminUserController">
+	fx:controller="calendarGUI.AdminUserController" onKeyPressed="#keyPressed">
 	<children>
 		<TabPane tabClosingPolicy="UNAVAILABLE" prefHeight="600"
 			prefWidth="355" fx:id="tabs">
