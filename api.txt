@@ -52,7 +52,7 @@ F	get_all
 /rooms
 F	create
 		In: room(Room)
-	remove
+?	remove
 		In rid(int)
 ?	get_available
 		In: start(Date), end(Date)

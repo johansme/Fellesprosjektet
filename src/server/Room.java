@@ -34,6 +34,29 @@ public class Room extends shared.Room {
 		return success;
 	}
 	
+	public static boolean remove(int id) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM MeetingRoom WHERE id=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, id);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
 	public static ArrayList<Room> getAllRooms() {
 		ArrayList<Room> list = new ArrayList<Room>();
 		

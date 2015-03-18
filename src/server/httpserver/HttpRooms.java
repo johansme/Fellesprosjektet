@@ -36,7 +36,7 @@ public class HttpRooms extends HttpAPIHandler {
 						create(t, u, request);
 						return;
 					case "remove":
-						sendNotImplemented(t);
+						remove(t, u, request);
 						return;
 					case "get_available":
 						getAvailable(t, request);
@@ -84,6 +84,29 @@ public class HttpRooms extends HttpAPIHandler {
 				sendError(t, "Error creating room");
 				return;
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			sendInvalidCommand(t);
+		}
+	}
+	
+	// Notify users with room reserved about cancellations?
+	private void remove(HttpExchange t, User u, JSONObject request) throws IOException {
+		try {
+			if(!u.isAdmin()) {
+				sendUnauthorised(t);
+				return;
+			}
+			
+			int rid = request.getInt("rid");
+			if(Room.remove(rid)) {
+				sendOK(t);
+				return;
+			} else {
+				sendError(t, "Error removing room from DB");
+				return;
+			}
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			sendInvalidCommand(t);
