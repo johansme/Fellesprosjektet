@@ -96,6 +96,10 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	@FXML
 	private void saveButtonPressed() {
 		if (isValidName()) {
+			if (groupList.size() + addedMembers.size() - removedMembers.size() <= 0) {
+				sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "The group has to have members.", this);
+				return;
+			}
 			JSONObject obj;
 			group.setName(nameField.getText());
 			for (Participant member : addedMembers) {
