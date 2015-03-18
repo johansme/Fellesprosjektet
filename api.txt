@@ -31,7 +31,7 @@ F	create
 		In: group(Group)
 	modify
 		In: group(Group)
-	delete
+F	delete
 		In: gid(int)
 F	get_all
 		Out: groups(Group)[]

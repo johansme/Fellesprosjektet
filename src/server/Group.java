@@ -6,6 +6,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Group extends shared.Group {
+	public Group() {
+		
+	}
+	
+	public Group(int gid) throws Exception {
+		DBConnection db = null;
+		final String str_fmt = "SELECT id,name,parent,createdby FROM Group_ WHERE id=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, gid);
+			stm.execute();
+			rs = stm.getResultSet();
+			if(rs.next()) {
+				id = rs.getInt("id");
+				name = rs.getString("name");
+				parent = rs.getInt("parent");
+				createdBy = rs.getInt("createdby");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+	}
+
 	public static ArrayList<Group> getAllGroups() {
 		ArrayList<Group> list = new ArrayList<Group>();
 		
@@ -162,6 +193,29 @@ public class Group extends shared.Group {
 			}
 			stm.setInt(3, g.getCreatedBy());
 			
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
+	public static boolean deleteGroup(int gid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM Group_ WHERE id=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, gid);
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;

@@ -35,8 +35,10 @@ public class HttpGroup extends HttpAPIHandler {
 						create(t, u, request);
 						return;
 					case "modify":
-					case "delete":
 						sendNotImplemented(t);
+						return;
+					case "delete":
+						delete(t, u, request);
 						return;
 					case "get_all":
 						getAll(t);
@@ -97,6 +99,31 @@ public class HttpGroup extends HttpAPIHandler {
 		} else {
 			sendError(t, "Error creating group");
 			return;
+		}
+	}
+	
+	private void delete(HttpExchange t, User u, JSONObject request) throws IOException {
+		try {
+			int gid = request.getInt("gid");
+			
+			Group g = new Group(gid);
+			
+			if(g.getCreatedBy() != u.getId() && !u.isAdmin()) {
+				sendUnauthorised(t);
+				return;
+			}
+						
+			if(Group.deleteGroup(gid)) {
+				sendOK(t);
+				return;
+			} else {
+				sendError(t, "Error removing group from DB");
+				return;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			sendInvalidCommand(t);
 		}
 	}
 	
