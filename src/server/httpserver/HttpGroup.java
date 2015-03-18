@@ -43,7 +43,7 @@ public class HttpGroup extends HttpAPIHandler {
 						return;
 					case "get":
 					case "get_users":
-						sendNotImplemented(t);
+						getUsers(t, u, request);
 						return;
 					case "get_children":
 						getChildren(t, request);
@@ -98,6 +98,28 @@ public class HttpGroup extends HttpAPIHandler {
 			sendError(t, "Error creating group");
 			return;
 		}
+	}
+	
+	private void getUsers(HttpExchange t, User u, JSONObject request) throws IOException {
+		int gid;
+		try {
+			gid = request.getInt("gid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(!(Group.isUserInGroup(gid, u.getId())) && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		ArrayList<Integer> users = Group.getUsers(gid);
+		JSONArray jarr = new JSONArray();
+		for(int i : users) {
+			jarr.put(i);
+		}
+		sendOK(t, new JSONObject().put("gids", jarr));
 	}
 	
 	private void getChildren(HttpExchange t, JSONObject request) throws IOException {

@@ -41,7 +41,34 @@ public class Group extends shared.Group {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		
 		DBConnection db = null;
-		final String str_fmt = "SELECT groupid FROM GroupMember WHERE parent=?";
+		final String str_fmt = "SELECT id FROM Group_ WHERE parent=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, gid);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {
+				list.add(rs.getInt(1));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return list;
+	}
+	
+	public static ArrayList<Integer> getUsers(int gid) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		DBConnection db = null;
+		final String str_fmt = "SELECT userid FROM GroupMember WHERE groupid=?";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
