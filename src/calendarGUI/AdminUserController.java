@@ -134,7 +134,7 @@ public class AdminUserController implements ControllerInterface {
 		changePassButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				// launch change password window for targeted user:
-				sceneHandler.popUpChangePassword("/calendarGUI/EditUserPasswordView.fxml", 240, 190, user);
+				sceneHandler.popUpChangePassword("/calendarGUI/EditUserPasswordView.fxml", 240, 190, user, calendar);
 			}
 		});
 		
@@ -187,7 +187,7 @@ public class AdminUserController implements ControllerInterface {
 				return false;
 			}
 		}
-		if (passwordField.getText().length() < 6) {
+		if (passwordField.getText().length() < 6 || ! passwordField.getText().matches("[\\wæøåÆØÅ]+")) {
 			return false;
 		}
 		return true;

@@ -134,7 +134,7 @@ public class SceneHandler {
 	
 	
 	// for use when admin requests to change a users password:
-	public void popUpChangePassword(String fxmlPath, int width,int height, User usr){
+	public void popUpChangePassword(String fxmlPath, int width,int height, User usr, Calendar calendar){
 		
 		Stage primaryStage = new Stage();
 		try {
@@ -143,6 +143,7 @@ public class SceneHandler {
 			Scene scene = new Scene(root,width,height);
 			EditUserPasswordController passController = (EditUserPasswordController) loader.getController();
 			passController.setUser(usr);
+			passController.setData(calendar);
 			primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("appointment_icon.png")));
 			primaryStage.initModality(Modality.APPLICATION_MODAL);
 			primaryStage.setScene(scene);
