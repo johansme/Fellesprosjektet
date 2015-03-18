@@ -27,6 +27,7 @@ public class Group extends shared.Group implements Participant {
 
 	public Group() {
 		super();
+		members = new ArrayList<Participant>();
 	}
 
 	public List<Participant> getMembers() {
@@ -99,7 +100,7 @@ public class Group extends shared.Group implements Participant {
 		obj.put("gid", super.getId());
 		try {
 			JSONObject res = API.call("/group", obj, calendar.getSession());
-			JSONArray arr = res.getJSONArray("uid");
+			JSONArray arr = res.getJSONArray("gids"); //TODO check if this is correct
 			for (int i = 0; i < arr.length(); i++) {
 				int uid = arr.getInt(i);
 				obj = new JSONObject();
@@ -112,25 +113,26 @@ public class Group extends shared.Group implements Participant {
 			}
 		} catch (IOException e) {
 		}
-		obj = new JSONObject();
-		obj.put("command", "get_children");
-		obj.put("gid", super.getId());
-		try {
-			JSONObject res = API.call("/group", obj, calendar.getSession());
-			JSONArray arr = res.getJSONArray("gid");
-			obj = new JSONObject();
-			obj.put("command", "get");
-			obj.put("gid", arr);
-			res = API.call("/group", obj, calendar.getSession());
-			arr = res.getJSONArray("groups");
-			for (int i = 0; i < arr.length(); i++) {
-				Group group = new Group();
-				JSONObject gr = arr.getJSONObject(i);
-				group.fromJSON(gr);
-				members.add(group);
-			}
-		} catch (IOException e) {
-		}
+		// TODO remove commenting
+//		obj = new JSONObject();
+//		obj.put("command", "get_children");
+//		obj.put("gid", super.getId());
+//		try {
+//			JSONObject res = API.call("/group", obj, calendar.getSession());
+//			JSONArray arr = res.getJSONArray("gids");
+//			obj = new JSONObject();
+//			obj.put("command", "get");
+//			obj.put("gid", arr);
+//			res = API.call("/group", obj, calendar.getSession());
+//			arr = res.getJSONArray("groups");
+//			for (int i = 0; i < arr.length(); i++) {
+//				Group group = new Group();
+//				JSONObject gr = arr.getJSONObject(i);
+//				group.fromJSON(gr);
+//				members.add(group);
+//			}
+//		} catch (IOException e) {
+//		}
 	}
 	
 	@Override
