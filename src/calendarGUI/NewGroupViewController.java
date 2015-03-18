@@ -43,6 +43,8 @@ public class NewGroupViewController implements ParticipantController {
 
 	private void setView() {
 		creatorLabel.setText(groupViewController.getData().getLoggedInUser().toString());
+		memberList.add(groupViewController.getData().getLoggedInUser());
+		memberListView.getItems().add(groupViewController.getData().getLoggedInUser().toString());
 	}
 
 	@FXML

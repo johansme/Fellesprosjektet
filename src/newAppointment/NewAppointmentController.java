@@ -16,7 +16,6 @@ import org.json.JSONObject;
 import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
-import calendar.Group;
 import calendar.Participant;
 import calendarGUI.ControllerInterface;
 import calendarGUI.ParticipantController;
@@ -26,7 +25,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -640,6 +638,9 @@ public class NewAppointmentController implements ControllerInterface, Participan
 
 				if (!a.getUsers().isEmpty()) {
 					capasityField.textProperty().setValue("" + a.getUsers().size());
+					for (Participant participant : a.getUsers()) {
+						addParticipant(participant);
+					}
 				}
 
 				fromDate.setValue(a.getStartDate());
@@ -649,6 +650,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			}
 			else {
 				this.appointment = new Appointment(calendar);
+				addParticipant(calendar.getLoggedInUser());
 				if (calendar.getCurrentDate().isBefore(LocalDate.now())) {
 					fromDate.setValue(LocalDate.now());
 					toDate.setValue(LocalDate.now());
