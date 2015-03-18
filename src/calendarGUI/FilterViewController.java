@@ -44,7 +44,6 @@ public class FilterViewController {
 		try {
 			SyncFromServer.getGroups(calendar);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		groupList.getItems().clear();

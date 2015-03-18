@@ -16,8 +16,6 @@ public class InfoController implements MessageController {
 	@FXML private Button okButton;
 	@FXML private AnchorPane screen;
 	
-	private ControllerInterface referenceController;
-	
 	public void setMessage(String msg) {
 		infoMessage.setText(msg);
 	}
@@ -46,7 +44,6 @@ public class InfoController implements MessageController {
 
 	@Override
 	public void setReferenceController(ControllerInterface controller) {
-		referenceController=controller;
 		
 	}
 

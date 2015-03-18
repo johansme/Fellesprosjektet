@@ -382,6 +382,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				JSONObject grObj = groupArray.getJSONObject(i);
 				gr.fromJSON(grObj);
 //				gr.setMembers();
+				//TODO remove comenting
 				groups.add(gr);
 			}
 		} catch (IOException e) {
