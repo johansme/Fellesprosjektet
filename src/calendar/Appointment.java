@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import newAppointment.Room;
+
 import org.json.JSONObject;
 
 import api.API;
@@ -34,6 +37,7 @@ public class Appointment extends shared.Appointment {
 	private boolean active;
 	private boolean personal;
 	
+	private Room thaRoom;
 	
 	public Appointment(Calendar c) {
 		super();
@@ -636,7 +640,9 @@ public class Appointment extends shared.Appointment {
 			return;
 		}
 	}
-	
+	public void setRoom(Room rm){
+		thaRoom = rm;
+	}
 	public void createInServer() {
 		super.creator=calendar.getLoggedInUser().getId();
 		LocalDateTime t = getStartDate().atTime(getStartStartTime());
@@ -653,6 +659,21 @@ public class Appointment extends shared.Appointment {
 			res = API.call("/appointment", obj, calendar.getSession());
 			if (res.getBoolean("status")) {
 				id = res.getInt("aid");
+				if(thaRoom != null){
+					JSONObject obj1 = new JSONObject();
+					obj1.put("command", "reserve");
+					obj1.put("aid", id);
+					obj1.put("rid", thaRoom.getId());
+					LocalDateTime st = date.atTime((startTime));
+
+					LocalDateTime en = date.atTime(endTime);
+					
+					obj1.put("start", Date.from(st.atZone(ZoneId.systemDefault()).toInstant()).getTime());
+					obj1.put("end", Date.from(en.atZone(ZoneId.systemDefault()).toInstant()).getTime());
+					
+					API.call("/rooms", obj1, calendar.getSession());
+					
+				}
 			}
 		} catch (IOException e) {
 		}
