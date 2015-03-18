@@ -9,6 +9,9 @@ import org.json.JSONObject;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import server.Appointment;
+import server.Invitation;
+import server.Notification;
 import server.User;
 
 public class HttpUser extends HttpAPIHandler {
@@ -33,7 +36,10 @@ public class HttpUser extends HttpAPIHandler {
 						create(t, u, request);
 						return;
 					case "modify":
-						sendNotImplemented(t);
+						modify(t, u, request);
+						return;
+					case "change_password":
+						changePassword(t, u, request);
 						return;
 					case "delete":
 						remove(t, u, request);
@@ -82,6 +88,72 @@ public class HttpUser extends HttpAPIHandler {
 		} catch(Exception e) {
 			e.printStackTrace();
 			sendInvalidCommand(t);
+		}
+	}
+	
+	private void modify(HttpExchange t, User u, JSONObject request) throws IOException {
+			JSONObject juser;
+			try {
+				juser = request.getJSONObject("user");
+			} catch(JSONException e) {
+				sendInvalidCommand(t);
+				return;
+			}
+			
+			User new_user = new User();
+			User old_user = null;
+			if(!new_user.fromJSON(juser)) {
+				sendError(t, "Error parsing user object)");
+				return;
+			}
+			
+			try {
+				old_user = new User(new_user.getId());
+			} catch(Exception e) {
+				sendError(t, "Could not fetch old user from DB");
+				return;
+			}
+			
+			if(!u.isAdmin()) {
+				new_user.setAdmin(old_user.isAdmin()); // Don't trust the users
+			}
+			
+			if(old_user.getId() == u.getId() || u.isAdmin()) {
+				if(User.modify(new_user)) {
+					sendOK(t);
+					return;
+				} else {
+					sendError(t, "Error updating database");
+					return;
+				}
+			} else {
+				sendUnauthorised(t);
+				return;
+			}
+	}
+	
+	private void changePassword(HttpExchange t, User u, JSONObject request) throws IOException {
+		int uid;
+		String password;
+		try {
+			uid = request.getInt("uid");
+			password = request.getString("password");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(u.getId() != uid && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		if(User.changePassword(uid, password)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error changing password in DB");
+			return;
 		}
 	}
 	
