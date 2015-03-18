@@ -482,22 +482,15 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	//checking if hours or mins are >= 0 and <= 9, if yes add "0"
 	private String getRoundHalfHour(int fromTimeHour, int fromTimeMin){
 
-		if(fromTimeMin == 0){
-			return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + fromTimeHour + ":" + (fromTimeMin + 30) : fromTimeHour + ":" + (fromTimeMin + 30); 
-		}
-		else if(fromTimeMin < 30){
-			return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + fromTimeHour + ":" + (fromTimeMin + 30) : fromTimeHour + ":" + (fromTimeMin + 30);
-		}
-		else if(fromTimeMin == 30){
-			return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + (fromTimeHour + 1) + ":" + "00" : (fromTimeHour + 1) + ":" + "00";
+		if(fromTimeMin == 0 || fromTimeMin < 30){
+			return toTwoDigits(fromTimeHour) + ":" + toTwoDigits(fromTimeMin + 30);
+		} else if(fromTimeMin == 30){
+			return toTwoDigits(fromTimeHour + 1) + ":" + toTwoDigits(0);
 		}
 		else if(fromTimeMin > 30){
 
 			int minDiff = fromTimeMin - 30;
-			if(minDiff >= 0 && minDiff <= 9)
-				return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + (fromTimeHour + 1) + ":" + "0" + minDiff : (fromTimeHour + 1) + ":" + "0" + minDiff;
-			else
-				return (fromTimeHour >= 1 && fromTimeHour <= 9) ?  "0" + (fromTimeHour + 1) + ":" + minDiff : (fromTimeHour + 1) + ":" + minDiff;
+			return toTwoDigits(fromTimeHour + 1) + ":" + toTwoDigits(minDiff);
 		}
 
 		else return fromTimeHour + ":" + fromTimeMin;  
@@ -619,10 +612,11 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		int todayMinute = LocalTime.now().getMinute();
 
 		//add "0" to hour and/or min
-		if(todayHour >= 0 && todayHour <= 9 && todayMinute >= 0 && todayMinute <= 9) fromField.setText("0" + (todayHour + 1) + ":" + "0" + todayMinute);
-		else if(todayHour >= 0 && todayHour <= 9) fromField.setText("0" + (todayHour + 1) + ":" + todayMinute);
-		else if(todayMinute >= 0 && todayMinute <= 9) fromField.setText((todayHour + 1) + ":" + "0" + todayMinute);
-		else fromField.setText((todayHour + 1) + ":" + todayMinute);
+		fromField.setText(toTwoDigits(todayHour + 1) + ":" + toTwoDigits(todayMinute));
+//		if(todayHour >= 0 && todayHour < 9 && todayMinute >= 0 && todayMinute <= 9) fromField.setText("0" + (todayHour + 1) + ":" + "0" + todayMinute);
+//		else if(todayHour >= 0 && todayHour < 9) fromField.setText("0" + (todayHour + 1) + ":" + todayMinute);
+//		else if(todayMinute >= 0 && todayMinute <= 9) fromField.setText((todayHour + 1) + ":" + "0" + todayMinute);
+//		else fromField.setText((todayHour + 1) + ":" + todayMinute);
 		toField.setText(getRoundHalfHour(LocalTime.now().getHour() + 1, LocalTime.now().getMinute()));
 	}
 
