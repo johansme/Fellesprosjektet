@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import server.Appointment;
-import server.Group;
 import server.Room;
 import server.User;
 

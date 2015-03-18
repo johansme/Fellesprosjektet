@@ -194,7 +194,6 @@ public class HttpGroup extends HttpAPIHandler {
 		
 		sendOK(t, new JSONObject().put("groups", result));
 		return;
-		
 	}
 	
 	private void getUsers(HttpExchange t, User u, JSONObject request) throws IOException {
