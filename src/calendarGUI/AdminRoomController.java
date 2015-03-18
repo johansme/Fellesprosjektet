@@ -52,6 +52,7 @@ public class AdminRoomController implements ControllerInterface {
 				roomNameField.clear();
 				capacityField.clear();
 				setRoomList();
+				sceneHandler.popUpMessage("/messages/Info.fxml", 290, 140, "Room added successfully.", this);
 			} catch (IOException e) {
 				sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 			}
@@ -181,6 +182,7 @@ public class AdminRoomController implements ControllerInterface {
 			API.call("/rooms", obj, calendar.getSession());
 			roomList.remove(index);
 			roomListView.getItems().remove(delLine);
+			sceneHandler.popUpMessage("/messages/Info.fxml", 290, 140, "Room removed successfully.", this);
 		} catch (IOException e1) {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", thisController);
 		}
