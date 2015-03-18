@@ -155,7 +155,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			if(room.textProperty().getValue().equals("Other")){
 				a.setLocation(otherField.textProperty().getValue());
 			}else{
-				a.setLocation(null); 
+				a.setLocation(""); 
 			}
 
 			a.setAdmin(true);
