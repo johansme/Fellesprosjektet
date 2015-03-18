@@ -16,7 +16,7 @@ CREATE TABLE Group_(
 	createdby INT,
 	PRIMARY KEY(id),
 	FOREIGN KEY(parent) REFERENCES Group_(id)
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY(parent) REFERENCES User(id)
 );
 
