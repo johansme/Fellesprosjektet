@@ -74,6 +74,30 @@ public class User extends shared.User {
 		return removeUser(u.id);
 	}
 	
+	public static boolean changePassword(int uid, String password) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "UPDATE User SET password=? WHERE id=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setString(1, BCrypt.hashpw(password, BCrypt.gensalt()));
+			stm.setInt(2, uid);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
 	public static boolean checkPassword(String username, String password) {
 		User u;
 		try { u = new User(username); }

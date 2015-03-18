@@ -35,6 +35,9 @@ public class HttpUser extends HttpAPIHandler {
 					case "modify":
 						sendNotImplemented(t);
 						return;
+					case "change_password":
+						changePassword(t, u, request);
+						return;
 					case "delete":
 						remove(t, u, request);
 						return;
@@ -82,6 +85,31 @@ public class HttpUser extends HttpAPIHandler {
 		} catch(Exception e) {
 			e.printStackTrace();
 			sendInvalidCommand(t);
+		}
+	}
+	
+	private void changePassword(HttpExchange t, User u, JSONObject request) throws IOException {
+		int uid;
+		String password;
+		try {
+			uid = request.getInt("uid");
+			password = request.getString("password");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(u.getId() != uid && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		if(User.changePassword(uid, password)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error changing password in DB");
+			return;
 		}
 	}
 	
