@@ -36,6 +36,60 @@ public class Group extends shared.Group {
 		}
 		return list;
 	}
+
+	public static ArrayList<Integer> getAllFromUser(int uid) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		DBConnection db = null;
+		final String str_fmt = "SELECT groupid FROM GroupMember WHERE userid=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, uid);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {
+				list.add(rs.getInt(1));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return list;
+	}
+	
+	public static ArrayList<Integer> getAllFromCreator(int uid) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		DBConnection db = null;
+		final String str_fmt = "SELECT id FROM Group_ WHERE createdby=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, uid);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {
+				list.add(rs.getInt(1));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return list;
+	}
 	
 	public static boolean createGroup(Group g) {
 		DBConnection db = null;

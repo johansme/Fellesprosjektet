@@ -42,9 +42,13 @@ public class HttpGroup extends HttpAPIHandler {
 						getAll(t);
 						return;
 					case "get":
-					case "get_from_user":
-					case "get_from_creator":
 						sendNotImplemented(t);
+						return;
+					case "get_from_user":
+						getFromUser(t, u, request);
+						return;
+					case "get_from_creator":
+						getFromCreator(t, u, request);
 						return;
 					case "add_user":
 						addUser(t, u, request);
@@ -99,6 +103,50 @@ public class HttpGroup extends HttpAPIHandler {
 			arr.put(g.toJSON());
 		}
 		sendOK(t, new JSONObject().put("groups", arr));
+	}
+	
+	private void getFromUser(HttpExchange t, User u, JSONObject request) throws IOException {
+		int uid;
+		try {
+			uid = request.getInt("uid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(!(u.getId() == uid) && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		ArrayList<Integer> groups = Group.getAllFromUser(uid);
+		JSONArray jarr = new JSONArray();
+		for(int i : groups) {
+			jarr.put(i);
+		}
+		sendOK(t, new JSONObject().put("gids", jarr));
+	}
+	
+	private void getFromCreator(HttpExchange t, User u, JSONObject request) throws IOException {
+		int uid;
+		try {
+			uid = request.getInt("uid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(!(u.getId() == uid) && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		ArrayList<Integer> groups = Group.getAllFromCreator(uid);
+		JSONArray jarr = new JSONArray();
+		for(int i : groups) {
+			jarr.put(i);
+		}
+		sendOK(t, new JSONObject().put("gids", jarr));
 	}
 	
 	private void addUser(HttpExchange t, User u, JSONObject request) throws IOException {
