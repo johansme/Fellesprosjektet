@@ -35,7 +35,7 @@ F	delete
 		In: gid(int)
 F	get_all
 		Out: groups(Group)[]
-	get
+F	get
 		In: gid(int)[]
 		Out: groups(Group)[]
 F	get_users

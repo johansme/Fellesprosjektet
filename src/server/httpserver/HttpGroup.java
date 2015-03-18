@@ -44,6 +44,8 @@ public class HttpGroup extends HttpAPIHandler {
 						getAll(t);
 						return;
 					case "get":
+						getGroups(t, request);
+						return;
 					case "get_users":
 						getUsers(t, u, request);
 						return;
@@ -166,6 +168,33 @@ public class HttpGroup extends HttpAPIHandler {
 			e.printStackTrace();
 			sendInvalidCommand(t);
 		}
+	}
+	
+	private void getGroups(HttpExchange t, JSONObject request) throws IOException {
+		JSONArray gids;
+		try {
+			gids = request.getJSONArray("gid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		JSONArray result = new JSONArray();
+		for(int i = 0; i < gids.length(); i++) {
+			try {
+				Group g = new Group(gids.getInt(i));
+				if(g.getId() != 0) {
+					result.put(g.toJSON());
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+				continue;
+			}
+		}
+		
+		sendOK(t, new JSONObject().put("groups", result));
+		return;
+		
 	}
 	
 	private void getUsers(HttpExchange t, User u, JSONObject request) throws IOException {
