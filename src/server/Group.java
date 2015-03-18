@@ -36,6 +36,32 @@ public class Group extends shared.Group {
 			db.close();
 		}
 	}
+	
+	public static boolean modify(Group g) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "UPDATE Group_ SET name=?,createdby=?,parent=? WHERE id=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setString(1, g.name);
+			stm.setInt(2, g.createdBy);
+			stm.setInt(3, g.parent);
+			stm.setInt(4, g.id);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
 
 	public static ArrayList<Group> getAllGroups() {
 		ArrayList<Group> list = new ArrayList<Group>();

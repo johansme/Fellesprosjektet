@@ -35,7 +35,7 @@ public class HttpGroup extends HttpAPIHandler {
 						create(t, u, request);
 						return;
 					case "modify":
-						sendNotImplemented(t);
+						modify(t, u, request);
 						return;
 					case "delete":
 						delete(t, u, request);
@@ -98,6 +98,47 @@ public class HttpGroup extends HttpAPIHandler {
 			return;
 		} else {
 			sendError(t, "Error creating group");
+			return;
+		}
+	}
+	
+	private void modify(HttpExchange t, User u, JSONObject request) throws IOException {
+		JSONObject jgroup;
+		try {
+			jgroup = request.getJSONObject("group");
+		} catch(JSONException e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Group new_group = new Group();
+		Group old_group = null;
+		if(!new_group.fromJSON(jgroup)) {
+			sendError(t, "Error parsing user object)");
+			return;
+		}
+		
+		try {
+			old_group = new Group(new_group.getId());
+		} catch(Exception e) {
+			sendError(t, "Could not fetch old user from DB");
+			return;
+		}
+		
+		if(!u.isAdmin()) {
+			new_group.setCreatedBy(old_group.getCreatedBy()); // Don't trust the users
+		}
+		
+		if(old_group.getCreatedBy() == u.getId() || u.isAdmin()) {
+			if(Group.modify(new_group)) {
+				sendOK(t);
+				return;
+			} else {
+				sendError(t, "Error updating database");
+				return;
+			}
+		} else {
+			sendUnauthorised(t);
 			return;
 		}
 	}

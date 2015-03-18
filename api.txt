@@ -29,7 +29,7 @@ P	invite_group
 /group
 F	create
 		In: group(Group)
-	modify
+F	modify
 		In: group(Group)
 F	delete
 		In: gid(int)
