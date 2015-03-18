@@ -48,17 +48,10 @@ public class AdminRoomController implements ControllerInterface {
 			obj.put("command", "create");
 			obj.put("room", room.toJSON());
 			try {
-<<<<<<< HEAD
-				JSONObject res = API.call("/rooms", obj, calendar.getSession());
-				room.setId(res.getInt("rid"));
-				roomList.add(room);
-				createRoomElement(room);
-=======
 				API.call("/rooms", obj, calendar.getSession());
 				roomNameField.clear();
 				capacityField.clear();
 				setRoomList();
->>>>>>> branch 'master' of https://github.com/johansme/Fellesprosjektet.git
 			} catch (IOException e) {
 				sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 			}
