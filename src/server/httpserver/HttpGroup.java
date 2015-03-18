@@ -62,7 +62,7 @@ public class HttpGroup extends HttpAPIHandler {
 		} catch(Exception e) { e.printStackTrace();	}
 	}
 	
-	public void create(HttpExchange t, User u, JSONObject request) throws IOException {
+	private void create(HttpExchange t, User u, JSONObject request) throws IOException {
 		if(!u.isAdmin()) {
 			sendUnauthorised(t);
 			return;
@@ -92,7 +92,7 @@ public class HttpGroup extends HttpAPIHandler {
 		}
 	}
 	
-	public void getAll(HttpExchange t) throws IOException {
+	private void getAll(HttpExchange t) throws IOException {
 		ArrayList<Group> list = Group.getAllGroups();
 		JSONArray arr = new JSONArray();
 		for(Group g : list) {
@@ -101,7 +101,7 @@ public class HttpGroup extends HttpAPIHandler {
 		sendOK(t, new JSONObject().put("groups", arr));
 	}
 	
-	public void addUser(HttpExchange t, User u, JSONObject request) throws IOException {
+	private void addUser(HttpExchange t, User u, JSONObject request) throws IOException {
 		if(!u.isAdmin()) {
 			sendUnauthorised(t);
 			return;
