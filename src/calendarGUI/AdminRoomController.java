@@ -48,10 +48,17 @@ public class AdminRoomController implements ControllerInterface {
 			obj.put("command", "create");
 			obj.put("room", room.toJSON());
 			try {
+<<<<<<< HEAD
 				JSONObject res = API.call("/rooms", obj, calendar.getSession());
 				room.setId(res.getInt("rid"));
 				roomList.add(room);
 				createRoomElement(room);
+=======
+				API.call("/rooms", obj, calendar.getSession());
+				roomNameField.clear();
+				capacityField.clear();
+				setRoomList();
+>>>>>>> branch 'master' of https://github.com/johansme/Fellesprosjektet.git
 			} catch (IOException e) {
 				sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 			}
@@ -124,10 +131,11 @@ public class AdminRoomController implements ControllerInterface {
 	}
 
 	private void setRoomList() {
+		roomList.clear();
+		roomListView.getItems().clear();
 		JSONObject obj = new JSONObject();
 		obj.put("command", "get_all");
 		try {
-
 			JSONObject res = API.call("/rooms", obj, calendar.getSession());
 			JSONArray resArray = res.getJSONArray("rooms");
 			for (int i = 0; i < resArray.length(); i++) {
@@ -177,7 +185,7 @@ public class AdminRoomController implements ControllerInterface {
 		obj.put("command", "remove");
 		obj.put("rid", delRoom.getId());
 		try {
-			API.call("/room", obj, calendar.getSession());
+			API.call("/rooms", obj, calendar.getSession());
 			roomList.remove(index);
 			roomListView.getItems().remove(delLine);
 		} catch (IOException e1) {

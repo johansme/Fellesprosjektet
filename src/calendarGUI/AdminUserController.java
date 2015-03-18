@@ -242,7 +242,6 @@ public class AdminUserController implements ControllerInterface {
 	private HBox delLine;
 	
 	private void delUser() {
-		//TODO check possible bug with reopening admin window
 		int index =userElementsList.getItems().indexOf(delLine);
 		User delUser = userList.get(index);
 		JSONObject obj = new JSONObject();

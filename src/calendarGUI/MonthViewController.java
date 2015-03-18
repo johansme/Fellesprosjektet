@@ -232,8 +232,7 @@ public class MonthViewController implements ControllerInterface {
 		weekList6.add(week6Day2Controller);
 		weekList6.add(week6Day3Controller);
 		
-		filterController.setParent(this);
-		filterController.setData(calendar);
+		
 	}
 
 	private void monthChanged() {
@@ -316,6 +315,8 @@ public class MonthViewController implements ControllerInterface {
 				admin.setVisible(true);
 				admin.setDisable(false);
 			}
+			filterController.setParent(this);
+			filterController.setData(calendar);
 		}
 	}
 
