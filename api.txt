@@ -70,7 +70,7 @@ F	cancel
 /user
 F	create
 		In: user(User),password(String)
-	modify
+F	modify
 		In: user(User)
 F	change_password
 		In: uid(int),password(String)
