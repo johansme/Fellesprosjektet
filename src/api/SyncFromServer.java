@@ -86,6 +86,7 @@ public class SyncFromServer {
 			if (!a.contains(ap)) {
 				a.add(ap);
 //				TODO ap.setAttending();
+//				TODO split appointment class into appointment and invitation
 			}
 			if (!in.contains(inv)) {
 				in.add(inv);
