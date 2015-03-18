@@ -42,7 +42,11 @@ public class HttpGroup extends HttpAPIHandler {
 						getAll(t);
 						return;
 					case "get":
+					case "get_users":
 						sendNotImplemented(t);
+						return;
+					case "get_children":
+						getChildren(t, request);
 						return;
 					case "get_from_user":
 						getFromUser(t, u, request);
@@ -94,6 +98,23 @@ public class HttpGroup extends HttpAPIHandler {
 			sendError(t, "Error creating group");
 			return;
 		}
+	}
+	
+	private void getChildren(HttpExchange t, JSONObject request) throws IOException {
+		int gid;
+		try {
+			gid = request.getInt("gid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		ArrayList<Integer> groups = Group.getChildren(gid);
+		JSONArray jarr = new JSONArray();
+		for(int i : groups) {
+			jarr.put(i);
+		}
+		sendOK(t, new JSONObject().put("gids", jarr));
 	}
 	
 	private void getAll(HttpExchange t) throws IOException {
