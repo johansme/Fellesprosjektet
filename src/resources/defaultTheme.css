@@ -15,7 +15,7 @@
 .menuItems {
 	-fx-font-size: 10pt;
 	-fx-text-fill: #000000;
-	-fx-font-family: "Courier";
+	-fx-font-family: "DejaVu Sans Mono","Courier","Andale Mono";
 }
 
 .subheader {

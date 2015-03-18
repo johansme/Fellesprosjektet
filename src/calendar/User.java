@@ -6,6 +6,7 @@ import java.util.List;
 public class User extends shared.User implements Participant {
 
 	private List<Group> groups = new ArrayList<Group>();
+	private List<Appointment> appointments = new ArrayList<Appointment>();
 
 	public void addGroup(Group g) {
 		groups.add(g);
@@ -41,6 +42,28 @@ public class User extends shared.User implements Participant {
 	@Override
 	public String toString() {
 		return getSurname() + ", " + getName() + "; " + getEmail();
+	}
+	
+	public void setAppointments(List<Appointment> apps) {
+		if (apps!=null) {
+			for (Appointment a : apps) {
+				if (!appointments.contains(a)) {
+					appointments.add(a);
+				}
+			}
+		}
+	}
+	
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+	
+	public void addAppointment(Appointment a) {
+		if (a!=null) {
+			if (!appointments.contains(a)) {
+				appointments.add(a);
+			}
+		}
 	}
 
 }

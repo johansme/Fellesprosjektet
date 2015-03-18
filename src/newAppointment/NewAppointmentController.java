@@ -123,39 +123,10 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			Appointment a = new Appointment(calendar);
 			LocalDate startDate = fromDate.getValue();
 			LocalDate endDate = toDate.getValue();
-			List<Appointment> days = new ArrayList<Appointment>();
-			int diff = endDate.getDayOfYear()-startDate.getDayOfYear();
-			if (endDate.getYear()>startDate.getYear()) {
-				for (int i=0; i<endDate.getYear()-startDate.getYear(); i++) {
-					diff+=365;
-					if (startDate.plusYears(i).isLeapYear()) {
-						diff++;
-					}
-				}
-			}
-			for (int i=0; i < diff+1; i++) {
-				if (i==0) {
-					a.setStartTime(LocalTime.parse(fromField.getText()));
-					a.setPrev(null);
-				}
-				else {
-					a.setPrev(days.get(i-1));
-					days.get(i-1).setNext(a);
-					a.setStartTime(LocalTime.parse("06:00"));
-				}
-				if (i==diff) {
-					a.setEndTime(LocalTime.parse(toField.getText()));
-					a.setNext(null);
-				}
-				else {
-					a.setEndTime(LocalTime.parse("23:00"));
-				}
-				a.setDate(startDate.plusDays(i));
-				a.setData(calendar);
-				days.add(a);
-				a = new Appointment(calendar);
-			}
-			a = days.get(0);
+			a.setDate(startDate, endDate);
+			a.setData(calendar);
+			a.setStartTime(LocalTime.parse(fromField.getText()));
+			a.setEndTime(LocalTime.parse(toField.getText()));
 			a.setDescription(descriptionField.getText());
 			if(room.textProperty().getValue().equals("Other")){
 				a.setLocation(otherField.textProperty().getValue());
@@ -165,14 +136,11 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				System.out.println(stringToRoomsMap.get(room.textProperty().getValue()).getName());
 				
 			}
-
 			a.setAdmin(true);
 			a.setOpened(true);
 			a.setPersonal(true);
-			for (Appointment ap : days) 
-			{
-				ap.addAppointmentToDay();
-			}
+			a.addToDay();
+			calendar.getLoggedInUser().addAppointment(a);
 			a.createInServer();
 			sceneHandler.popUpMessage("/messages/Info.fxml", 290, 140, "Your appointment has been saved", this);
 			// get a handle to the stage

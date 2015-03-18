@@ -67,7 +67,6 @@ public class SyncFromServer {
 				if (!a.contains(ap)) {
 					a.add(ap);
 				}
-				//TODO Move logic from newappointment to appointment
 			}			
 		}
 		o = new JSONObject();
@@ -86,6 +85,8 @@ public class SyncFromServer {
 			inv.fromJSON(obj.getJSONObject("invitation"));
 			if (!a.contains(ap)) {
 				a.add(ap);
+//				TODO ap.setAttending();
+//				TODO split appointment class into appointment and invitation
 			}
 			if (!in.contains(inv)) {
 				in.add(inv);

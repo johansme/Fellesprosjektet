@@ -132,7 +132,7 @@ public class Room extends shared.Room {
 		ResultSet rs = null;
 		boolean success = true;
 //		final String stm_lock = "LOCK TABLE ReservedFor IN EXCLUSIVE MODE";
-		final String stm_poll = "SELECT 1 FROM ReservedFor WHERE (roomid=? AND WHERE NOT(? > endtime || ? < starttime))";
+		final String stm_poll = "SELECT 1 FROM ReservedFor WHERE (roomid=? AND NOT(? > endtime || ? < starttime))";
 		final String stm_ins = "INSERT INTO ReservedFor VALUES(?, ?, ?, ?)";
 		
 		PreparedStatement stm = null;
