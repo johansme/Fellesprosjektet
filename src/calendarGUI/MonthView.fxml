@@ -233,14 +233,14 @@
 					prefHeight="41" prefWidth="415" onAction="#newAppointmentAction" 
 					GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="6"
 					GridPane.valignment="TOP"/>
-				<Button fx:id="newGroup" text="Groups" alignment="CENTER"
-					prefHeight="41" prefWidth="415" onAction="#groupAction" 
-					GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="6"
-					GridPane.valignment="BOTTOM"/>
 				<Button fx:id="admin" text="Admin" alignment="CENTER"
 					prefHeight="41" prefWidth="100" onAction="#adminPressed"
 					disable="true" visible="false" GridPane.rowIndex="6"
 					GridPane.columnIndex="7" GridPane.valignment="TOP" />
+				<Button fx:id="newGroup" text="Groups" alignment="CENTER"
+					prefHeight="41" prefWidth="415" onAction="#groupAction" 
+					GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="6"
+					GridPane.valignment="BOTTOM"/>
 			</children>
 		</GridPane>
 	</children>

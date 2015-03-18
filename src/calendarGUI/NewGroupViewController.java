@@ -78,7 +78,6 @@ public class NewGroupViewController implements ParticipantController {
 			JSONObject obj = new JSONObject();
 			obj.put("command", "create");
 			obj.put("group", group.toJSON());
-			JSONObject res;
 			try {
 				API.call("/group", obj, getGroupViewController().getData().getSession());
 			} catch (IOException e) {
