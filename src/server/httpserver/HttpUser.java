@@ -67,9 +67,6 @@ public class HttpUser extends HttpAPIHandler {
 			User new_user = new User();
 			boolean gotuser = new_user.fromJSON(request.getJSONObject("user"));
 			String pwd = request.getString("password");
-			System.out.println(request.getJSONObject("user").toString());
-			System.out.println(gotuser);
-			System.out.println(pwd);
 			if(!gotuser || pwd == null) {
 				sendInvalidCommand(t);
 				return;

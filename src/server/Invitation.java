@@ -55,7 +55,7 @@ public class Invitation extends shared.Invitation {
 			stm.setNull(6, java.sql.Types.DATE);			
 			stm.executeUpdate();
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			result = false;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public class Invitation extends shared.Invitation {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -162,7 +162,7 @@ public class Invitation extends shared.Invitation {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

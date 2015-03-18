@@ -58,7 +58,7 @@ public class Appointment extends shared.Appointment {
 				id = (int)keys.getLong(1);
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -85,7 +85,7 @@ public class Appointment extends shared.Appointment {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -108,7 +108,7 @@ public class Appointment extends shared.Appointment {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

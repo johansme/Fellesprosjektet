@@ -54,8 +54,6 @@ public class HttpSessionManager extends Thread {
 			HttpSession s = (HttpSession) pair.getValue();
 			if(now - s.getLastAccessed() > SESSION_TIMEOUT) {
 				it.remove();
-				System.out.println("Harvesting session key " + pair.getKey()
-						+ " (" + ((now - s.getLastAccessed()) / (double)1000) + "s)");
 			}
 		}
 	}

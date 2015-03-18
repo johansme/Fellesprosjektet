@@ -106,7 +106,7 @@ public class Room extends shared.Room {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -129,7 +129,7 @@ public class Room extends shared.Room {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -186,7 +186,6 @@ public class Room extends shared.Room {
 			stm = db.getConnection().prepareStatement(str_fmt);
 			stm.setTimestamp(1, new Timestamp(start.getTime()));
 			stm.setTimestamp(2, new Timestamp(end.getTime()));
-			System.out.println(stm.toString());
 			stm.execute();
 			rs = stm.getResultSet();
 			while(rs.next()) {
@@ -227,7 +226,6 @@ public class Room extends shared.Room {
 			stm.setTimestamp(3, new Timestamp(start.getTime()));
 			rs = stm.executeQuery();
 			if(rs.next()) {
-				System.out.println("There is a resultset");
 				success = false;
 			} else {
 				stm.close();
@@ -240,7 +238,7 @@ public class Room extends shared.Room {
 			}
 			db.getConnection().commit();
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			try { db.getConnection().rollback(); } catch(Exception e2) { e2.printStackTrace(); }
 			success = false;
 		} catch(Exception e) {

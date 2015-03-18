@@ -34,7 +34,7 @@ public class User extends shared.User {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -57,7 +57,7 @@ public class User extends shared.User {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -92,7 +92,7 @@ public class User extends shared.User {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -116,7 +116,7 @@ public class User extends shared.User {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

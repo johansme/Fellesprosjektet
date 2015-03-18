@@ -53,7 +53,7 @@ public class Group extends shared.Group {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -222,7 +222,7 @@ public class Group extends shared.Group {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -245,7 +245,7 @@ public class Group extends shared.Group {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -269,7 +269,7 @@ public class Group extends shared.Group {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -293,7 +293,7 @@ public class Group extends shared.Group {
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			success = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

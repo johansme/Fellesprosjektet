@@ -78,8 +78,7 @@ public class HttpInvitation extends HttpAPIHandler {
 			try {
 				a = new Appointment(i.getAid());
 			} catch(Exception e) {
-				System.out.println("Failed to fetch appointment (" + i.getAid()
-						+ ") from invitation (" + i.getAid() + "," + uid + ")");
+				e.printStackTrace();
 				continue;
 			}
 			
@@ -119,8 +118,7 @@ public class HttpInvitation extends HttpAPIHandler {
 			try {
 				a = new Appointment(i);
 			} catch(Exception e) {
-				System.out.println("Failed to fetch appointment (" + i
-						+ ") from invitation (" + i + "," + gid + ")");
+				e.printStackTrace();
 				continue;
 			}
 			
