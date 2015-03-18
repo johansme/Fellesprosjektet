@@ -9,6 +9,31 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Room extends shared.Room {
+	
+	public static boolean create(Room r) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "INSERT INTO MeetingRoom VALUES(0, ?, ?)";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setString(1, r.getName());
+			stm.setInt(2, r.getCapacity());			
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
 	public static ArrayList<Room> getAllRooms() {
 		ArrayList<Room> list = new ArrayList<Room>();
 		

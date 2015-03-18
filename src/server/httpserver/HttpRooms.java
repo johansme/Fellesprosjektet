@@ -33,6 +33,8 @@ public class HttpRooms extends HttpAPIHandler {
 			if(command != null) {
 				switch(command) {
 					case "create":
+						create(t, u, request);
+						return;
 					case "remove":
 						sendNotImplemented(t);
 						return;
@@ -60,6 +62,32 @@ public class HttpRooms extends HttpAPIHandler {
 			}
 		} catch(JSONException e) { sendInvalidCommand(t);
 		} catch(Exception e) { e.printStackTrace();	}
+	}
+	
+	private void create(HttpExchange t, User u, JSONObject request) throws IOException {
+		try {
+				if(!u.isAdmin()) {
+				sendUnauthorised(t);
+				return;
+			}
+			
+			Room r = new Room();
+			if(!r.fromJSON(request.getJSONObject("room"))) {
+				sendInvalidCommand(t);
+				return;
+			}
+			
+			if(Room.create(r)) {
+				sendOK(t);
+				return;
+			} else {
+				sendError(t, "Error creating room");
+				return;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			sendInvalidCommand(t);
+		}
 	}
 	
 	private void getAll(HttpExchange t) throws IOException {
