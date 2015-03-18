@@ -44,7 +44,7 @@ F	get_all
 	get_from_creator
 		In: uid(int)
 		Out: gid(int)[]
-	add_user
+F	add_user
 		In: gid(int),uid(int)
 	remove_user
 		In: gid(int),uid(int)

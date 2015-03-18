@@ -44,7 +44,11 @@ public class HttpGroup extends HttpAPIHandler {
 					case "get":
 					case "get_from_user":
 					case "get_from_creator":
+						sendNotImplemented(t);
+						return;
 					case "add_user":
+						addUser(t, u, request);
+						return;
 					case "remove_user":
 						sendNotImplemented(t);
 						return;
@@ -95,5 +99,34 @@ public class HttpGroup extends HttpAPIHandler {
 			arr.put(g.toJSON());
 		}
 		sendOK(t, new JSONObject().put("groups", arr));
+	}
+	
+	public void addUser(HttpExchange t, User u, JSONObject request) throws IOException {
+		if(!u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		int uid, gid;
+		try {
+			uid = request.getInt("uid");
+			gid = request.getInt("gid");
+		} catch(JSONException e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(Group.isUserInGroup(gid, uid)) {
+			sendError(t, "User already in group");
+			return;
+		}
+		
+		if(Group.addUser(gid, uid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error adding user to group");
+			return;
+		}
 	}
 }

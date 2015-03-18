@@ -67,6 +67,29 @@ public class Group extends shared.Group {
 		return success;
 	}
 	
+	public static boolean addUser(int gid, int uid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "INSERT INTO GroupMember VALUES(?, ?)";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, gid);
+			stm.setInt(2, uid);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
 	public static boolean isUserInGroup(int gid, int uid) {
 		DBConnection db = null;
 		PreparedStatement stm = null;
