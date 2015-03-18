@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.Group;
 import calendar.Participant;
 import calendarGUI.ControllerInterface;
 import calendarGUI.ParticipantController;
@@ -24,6 +26,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -64,6 +67,8 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	ObservableList<MenuItem> roomValueList;
 
 	private List<Room> roomList = new ArrayList<Room>();
+	
+	private HashMap<String, Room> stringToRoomsMap = new HashMap<String, Room>(); 
 
 	ReceiveRoom rr = new ReceiveRoom();
 
@@ -127,6 +132,8 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				a.setLocation(otherField.textProperty().getValue());
 			}else{
 				a.setLocation(""); 
+				a.setRoom(stringToRoomsMap.get(room.textProperty().getValue()));
+				
 			}
 			a.setAdmin(true);
 			a.setOpened(true);
@@ -707,7 +714,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				roomList.add(rm);
 
 				MenuItem it = new MenuItem(menuItemStringFormatter(rm.getName(),rm.getCapacity(),17));
-
+				stringToRoomsMap.put(menuItemStringFormatter(rm.getName(),rm.getCapacity(),17), rm);
 
 				it.setOnAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent t) {
