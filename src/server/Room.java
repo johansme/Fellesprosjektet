@@ -10,6 +10,61 @@ import java.util.Date;
 
 public class Room extends shared.Room {
 	
+	public Room() {
+		
+	}
+	
+	public Room(int rid) {
+		DBConnection db = null;
+		final String str_fmt = "SELECT * FROM MeetingRoom WHERE id=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, rid);
+			stm.execute();
+			rs = stm.getResultSet();
+			if(rs.next()) {
+				id = rs.getInt("id");
+				name = rs.getString("name");
+				capacity = rs.getInt("capacity");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+	}
+	
+	public static int getForAppointment(int aid) {
+		int i = 0;
+		DBConnection db = null;
+		final String str_fmt = "SELECT roomid FROM ReservedFor WHERE appointmentid=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, aid);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {		
+				i = rs.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			i = 0;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return i;
+	}
+	
 	public static boolean create(Room r) {
 		DBConnection db = null;
 		boolean success = true;
