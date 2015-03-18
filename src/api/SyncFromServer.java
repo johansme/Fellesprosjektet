@@ -17,21 +17,27 @@ public class SyncFromServer {
 	
 	public static void sync(Calendar c) throws IOException {
 		getGroups(c);
-		getAppointments(c);
+		//getAppointments(c);
 	}
 	
 	public static void getGroups(Calendar c) throws IOException {
 		JSONObject o = new JSONObject();
-		o.put("command", "get_from_user");
-		o.put("uid", c.getLoggedInUser().getId());
+		if (c.getLoggedInUser().isAdmin()) {
+			o.put("command", "get_all");
+		} else {
+			o.put("command", "get_from_user");
+			o.put("uid", c.getLoggedInUser().getId());
+		}
 		
 		JSONObject res = API.call("/group", o, c.getSession());
-		JSONArray gidArray = res.getJSONArray("gid");
-		o = new JSONObject();
-		o.put("command", "get");
-		o.put("gid", gidArray);
-		
-		res = API.call("/group", o, c.getSession());
+		if (! c.getLoggedInUser().isAdmin()) {
+			JSONArray gidArray = res.getJSONArray("gid");
+			o = new JSONObject();
+			o.put("command", "get");
+			o.put("gid", gidArray);
+			
+			res = API.call("/group", o, c.getSession());
+		}
 		JSONArray groupArray = res.getJSONArray("groups");
 		List<Group> g = new ArrayList<Group>();
 		for (int i=0; i<groupArray.length(); i++) {
