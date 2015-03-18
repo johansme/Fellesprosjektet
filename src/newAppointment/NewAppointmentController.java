@@ -162,6 +162,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			}else{
 				a.setLocation(""); 
 				a.setRoom(stringToRoomsMap.get(room.textProperty().getValue()));
+				System.out.println(stringToRoomsMap.get(room.textProperty().getValue()).getName());
 				
 			}
 

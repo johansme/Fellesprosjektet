@@ -671,11 +671,13 @@ public class Appointment extends shared.Appointment {
 					obj1.put("start", Date.from(st.atZone(ZoneId.systemDefault()).toInstant()).getTime());
 					obj1.put("end", Date.from(en.atZone(ZoneId.systemDefault()).toInstant()).getTime());
 					
-					API.call("/rooms", obj1, calendar.getSession());
+					JSONObject ans =API.call("/rooms", obj1, calendar.getSession());
+					System.out.println(ans.toString());
 					
 				}
 			}
 		} catch (IOException e) {
+			System.out.println(e.toString());
 		}
 
 	}
