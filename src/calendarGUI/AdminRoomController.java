@@ -48,8 +48,8 @@ public class AdminRoomController implements ControllerInterface {
 			obj.put("command", "create");
 			obj.put("room", room.toJSON());
 			try {
-				JSONObject res = API.call("/room", obj, calendar.getSession());
-				room.setId(res.getInt("rid"));
+				API.call("/room", obj, calendar.getSession());
+				//room.setId(res.getInt("rid"));
 				roomList.add(room);
 				createRoomElement(room);
 			} catch (IOException e) {

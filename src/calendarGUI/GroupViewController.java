@@ -256,29 +256,29 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		obj.put("gid", gid);
 		try {
 			API.call("/group", obj, calendar.getSession());
+			calendar.getLoggedInUser().removeGroup(group);
+			groupChoice.getItems().remove(menuItem);
+			if (groupChoice.getItems().size() > 0) {
+				groupChoice.getItems().get(0).fire();
+			} else {
+				nameField.clear();
+				creatorLabel.setText("");
+				nameLabel.setText("");
+				memberList.clear();
+				memberListView.getItems().clear();
+				
+				nameLabel.setVisible(true);
+				nameField.setVisible(false);
+				nameField.setDisable(true);
+				addMembersButton.setDisable(true);
+				removeMemberButton.setDisable(true);
+				deleteButton.setDisable(true);
+				
+				tabs.getSelectionModel().select(1);
+			}
 		} catch (IOException e) {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 			return;
-		}
-		calendar.getLoggedInUser().removeGroup(group);
-		groupChoice.getItems().remove(menuItem);
-		if (groupChoice.getItems().size() > 0) {
-			groupChoice.getItems().get(0).fire();
-		} else {
-			nameField.clear();
-			creatorLabel.setText("");
-			nameLabel.setText("");
-			memberList.clear();
-			memberListView.getItems().clear();
-			
-			nameLabel.setVisible(true);
-			nameField.setVisible(false);
-			nameField.setDisable(true);
-			addMembersButton.setDisable(true);
-			removeMemberButton.setDisable(true);
-			deleteButton.setDisable(true);
-			
-			tabs.getSelectionModel().select(1);
 		}
 	}
 	
