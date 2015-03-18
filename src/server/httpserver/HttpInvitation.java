@@ -169,7 +169,14 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		}
 		
-		// TODO: Invite all members of group
+		// TODO: Recurse into children?
+		ArrayList<Integer> members = Group.getUsers(gid);
+		for(int uid : members) {
+			if(Invitation.inviteUser(aid, uid)) {
+				Notification.sendInvitationNotification(aid, uid);
+			}
+		}
+		
 		if(Invitation.inviteGroup(aid, gid)) {
 			sendOK(t);
 			return;
