@@ -9,9 +9,6 @@ import org.json.JSONObject;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import server.Appointment;
-import server.Invitation;
-import server.Notification;
 import server.User;
 
 public class HttpUser extends HttpAPIHandler {
