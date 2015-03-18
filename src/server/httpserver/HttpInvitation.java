@@ -11,6 +11,7 @@ import server.Appointment;
 import server.Group;
 import server.Invitation;
 import server.Notification;
+import server.Room;
 import server.User;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -81,6 +82,17 @@ public class HttpInvitation extends HttpAPIHandler {
 						+ ") from invitation (" + i.getAid() + "," + uid + ")");
 				continue;
 			}
+			
+			int room = Room.getForAppointment(a.getId());
+			try {
+				if(room != 0) {
+					Room r = new Room(room);
+					a.setLocation(r.getName());
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
 			jarr.put(new JSONObject().put("invitation", i.toJSON()).put("appointment", a.toJSON()));
 		}
 		sendOK(t, new JSONObject().put("invitations", jarr));
@@ -111,6 +123,17 @@ public class HttpInvitation extends HttpAPIHandler {
 						+ ") from invitation (" + i + "," + gid + ")");
 				continue;
 			}
+			
+			int room = Room.getForAppointment(a.getId());
+			try {
+				if(room != 0) {
+					Room r = new Room(room);
+					a.setLocation(r.getName());
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
 			jarr.put(new JSONObject().put("aid", i).put("appointment", a.toJSON()));
 		}
 		sendOK(t, new JSONObject().put("invitations", jarr));
