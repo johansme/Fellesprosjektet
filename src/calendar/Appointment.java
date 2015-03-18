@@ -119,9 +119,18 @@ public class Appointment extends shared.Appointment {
 		return description;
 	}
 
-	public void setDate(LocalDate d) {
-		if (dateIsValid(d)) {
-			date = d;
+	public void setDate(LocalDate start, LocalDate end) {
+		if (dateIsValid(start)) {
+			date = start;
+			if (end.isAfter(start)) {
+				Appointment a = new Appointment(calendar);
+				this.setNext(a);
+				a.setPrev(this);
+				a.setDate(start.plusDays(1), end);
+			}
+			else {
+				this.setNext(null);
+			}
 			sync();
 		}
 	}
@@ -132,9 +141,20 @@ public class Appointment extends shared.Appointment {
 
 
 	public void setStartTime(LocalTime t) {
-		if (startTimeIsValid(t)) {
-			startTime = t;
-			sync();
+		if (prev==null) {
+			if (startTimeIsValid(t)) {
+				startTime = t;
+				sync();
+			}
+
+		}
+		else {
+			startTime = LocalTime.parse("06:00");
+		}
+		if (next != null) {
+			if (next.getStartTime()!=(LocalTime.parse("06:00"))) {
+				next.setStartTime(t);
+			}
 		}
 	}
 
@@ -152,9 +172,20 @@ public class Appointment extends shared.Appointment {
 	}
 
 	public void setEndTime(LocalTime t) {
-		if (endTimeIsValid(t)) {
-			endTime = t;
-			sync();
+		if (next==null) {
+			if (endTimeIsValid(t)) {
+				endTime = t;
+				sync();
+			}
+			
+		}
+		else {
+			endTime = LocalTime.parse("23:00");
+		}
+		if (prev!=null) {
+			if (prev.getEndTime()!=LocalTime.parse("23:00")) {
+				prev.setStartTime(LocalTime.parse("23:00"));
+			}
 		}
 	}
 
@@ -657,6 +688,13 @@ public class Appointment extends shared.Appointment {
 		} catch (IOException e) {
 		}
 
+	}
+	
+	public void addToDay() {
+		addAppointmentToDay();
+		if (next!=null) {
+			next.addToDay();
+		}
 	}
 	
 	
