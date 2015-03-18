@@ -88,7 +88,7 @@ public class FilterViewController {
 						}
 						else {
 							
-							System.out.println("kafaen feila dritten");
+							
 							//groups.get(checkBox).setActive(false);
 							//parentController.setData(calendar);
 						}
