@@ -8,6 +8,29 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class Notification {
+	
+	public static void sendRoomDeletionNotification(int aid) {
+		final String fmt = 
+				"The room registered for your appointment has been removed.\n" +
+				"You should make sure to register a new room for the appointment.";
+
+		try {
+			Appointment a = new Appointment(aid);
+			User u = new User(a.getCreator());
+			String msg = String.format(fmt, 
+					u.getName(),
+					u.getSurname(),
+					a.getDescription(),
+					a.getStart().toString(),
+					a.getEnd().toString(),
+					a.getLocation());
+			send(u, "Deleted room", msg);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void sendAppointmentDeleteNotification(Appointment a, int uid) {
 		final String cat =
 				"        ._ \n" +

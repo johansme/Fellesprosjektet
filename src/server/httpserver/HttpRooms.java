@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import server.Appointment;
+import server.Notification;
 import server.Room;
 import server.User;
 
@@ -99,7 +100,11 @@ public class HttpRooms extends HttpAPIHandler {
 			}
 			
 			int rid = request.getInt("rid");
+			ArrayList<Integer> aids = Room.getAppointmentsForRoom(rid);
 			if(Room.remove(rid)) {
+				for(int aid : aids) {
+					Notification.sendRoomDeletionNotification(aid);
+				}
 				sendOK(t);
 				return;
 			} else {
