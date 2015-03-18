@@ -44,7 +44,7 @@ F	get_all
 	get_children
 		In: gid(int)
 		Out: gid(int)[]
-	get_from_user
+F	get_from_user
 		In: uid(int)
 		Out: gid(int)[]
 	get_from_creator
