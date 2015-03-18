@@ -38,6 +38,12 @@ F	get_all
 	get
 		In: gid(int)[]
 		Out: groups(Group)[]
+	get_users
+		In: gid(int)
+		Out: uid(int)[]
+	get_children
+		In: gid(int)
+		Out: gid(int)[]
 	get_from_user
 		In: uid(int)
 		Out: gid(int)[]
