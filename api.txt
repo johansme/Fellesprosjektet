@@ -46,7 +46,7 @@ F	get_all
 		Out: gid(int)[]
 F	add_user
 		In: gid(int),uid(int)
-	remove_user
+F	remove_user
 		In: gid(int),uid(int)
 
 /rooms

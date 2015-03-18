@@ -50,7 +50,7 @@ public class HttpGroup extends HttpAPIHandler {
 						addUser(t, u, request);
 						return;
 					case "remove_user":
-						sendNotImplemented(t);
+						removeUser(t, u, request);
 						return;
 					default:
 						sendInvalidCommand(t);
@@ -126,6 +126,35 @@ public class HttpGroup extends HttpAPIHandler {
 			return;
 		} else {
 			sendError(t, "Error adding user to group");
+			return;
+		}
+	}
+	
+	private static void removeUser(HttpExchange t, User u, JSONObject request) throws IOException {
+		if(!u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		int uid, gid;
+		try {
+			uid = request.getInt("uid");
+			gid = request.getInt("gid");
+		} catch(JSONException e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(!Group.isUserInGroup(gid, uid)) {
+			sendError(t, "User not in group");
+			return;
+		}
+		
+		if(Group.removeUser(gid, uid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error removing user from group");
 			return;
 		}
 	}
