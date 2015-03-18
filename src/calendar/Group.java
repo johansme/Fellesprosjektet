@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import api.API;
@@ -90,6 +91,46 @@ public class Group extends shared.Group implements Participant {
 	
 	public boolean getActive() {
 		return active;
+	}
+	
+	public void setMembers() {
+		JSONObject obj = new JSONObject();
+		obj.put("command", "get_users");
+		obj.put("gid", super.getId());
+		try {
+			JSONObject res = API.call("/group", obj, calendar.getSession());
+			JSONArray arr = res.getJSONArray("uid");
+			for (int i = 0; i < arr.length(); i++) {
+				int uid = arr.getInt(i);
+				obj = new JSONObject();
+				obj.put("command", "get_by_id");
+				obj.put("uid", uid);
+				res = API.call("/user", obj, calendar.getSession());
+				User user = new User();
+				user.fromJSON(res.getJSONObject("user"));
+				members.add(user);
+			}
+		} catch (IOException e) {
+		}
+		obj = new JSONObject();
+		obj.put("command", "get_children");
+		obj.put("gid", super.getId());
+		try {
+			JSONObject res = API.call("/group", obj, calendar.getSession());
+			JSONArray arr = res.getJSONArray("gid");
+			obj = new JSONObject();
+			obj.put("command", "get");
+			obj.put("gid", arr);
+			res = API.call("/group", obj, calendar.getSession());
+			arr = res.getJSONArray("groups");
+			for (int i = 0; i < arr.length(); i++) {
+				Group group = new Group();
+				JSONObject gr = arr.getJSONObject(i);
+				group.fromJSON(gr);
+				members.add(group);
+			}
+		} catch (IOException e) {
+		}
 	}
 	
 	@Override
