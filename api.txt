@@ -31,7 +31,7 @@ F	create
 		In: group(Group)
 	modify
 		In: group(Group)
-	delete:
+	delete
 		In: gid(int)
 F	get_all
 		Out: groups(Group)[]
@@ -47,7 +47,7 @@ F	get_all
 F	get_from_user
 		In: uid(int)
 		Out: gid(int)[]
-	get_from_creator
+F	get_from_creator
 		In: uid(int)
 		Out: gid(int)[]
 F	add_user
