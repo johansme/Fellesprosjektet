@@ -95,7 +95,21 @@ public class Appointment extends shared.Appointment {
 	public void setData(Calendar calendar) {
 		if (calendar != null) {
 			this.calendar = calendar;
+			if (prev!=null) {
+				if (prev.getData()!=calendar) {
+					prev.setData(calendar);
+				}
+			}
+			if (next!=null) {
+				if (next.getData()!=calendar) {
+					next.setData(calendar);
+				}
+			}
 		}
+	}
+	
+	public Calendar getData() {
+		return calendar;
 	}
 
 	public Calendar getCalendar() {
@@ -717,6 +731,18 @@ public class Appointment extends shared.Appointment {
 		addAppointmentToDay();
 		if (next!=null) {
 			next.addToDay();
+		}
+	}
+
+	public void setAttending(boolean accepted) {
+		if (accepted) {
+			setAttending("Y");
+		}
+		else if (!accepted) {
+			setAttending("N");
+		}
+		else {
+			setAttending("None");
 		}
 	}
 	

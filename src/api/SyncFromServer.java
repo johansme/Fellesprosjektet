@@ -67,6 +67,7 @@ public class SyncFromServer {
 				if (!a.contains(ap)) {
 					a.add(ap);
 				}
+				ap.setPersonal(false);
 			}			
 		}
 		o = new JSONObject();
@@ -85,14 +86,23 @@ public class SyncFromServer {
 			inv.fromJSON(obj.getJSONObject("invitation"));
 			if (!a.contains(ap)) {
 				a.add(ap);
-//				TODO ap.setAttending();
-//				TODO split appointment class into appointment and invitation
 			}
 			if (!in.contains(inv)) {
 				in.add(inv);
 			}
+			ap.setPersonal(true);
+//			TODO ap.setAttending(inv.isAccepted());
+//			TODO setUsers
+			if (ap.getCreator()==c.getLoggedInUser().getId()) {
+				ap.setAdmin(true);
+			}
+			else {
+				ap.setAdmin(false);
+			}
+//			TODO split appointment class into appointment and invitation
+
 		}
-//		TODO c.getLoggedInUser().setAppointments();	
+		c.getLoggedInUser().setAppointments(a);	
 //		TODO add refresh statements for some actions
 	}
 

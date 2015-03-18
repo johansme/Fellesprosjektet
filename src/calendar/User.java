@@ -46,6 +46,7 @@ public class User extends shared.User implements Participant {
 	
 	public void setAppointments(List<Appointment> apps) {
 		if (apps!=null) {
+			appointments.clear();
 			for (Appointment a : apps) {
 				if (!appointments.contains(a)) {
 					appointments.add(a);
