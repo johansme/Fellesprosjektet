@@ -65,7 +65,7 @@ F	create
 		Out: rooms(Room)[]
 F	get_all
 		Out: rooms(Room)[]
-	get
+F	get
 		In: rid(int)[]
 		Out: rooms(Room)[]
 ?	reserve
