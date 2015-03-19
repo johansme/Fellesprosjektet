@@ -60,7 +60,8 @@ public class AdminUserController implements ControllerInterface {
 
 	@FXML
 	private void addUser(){
-		if (isValidUser()) {
+		String s = isValidUser();
+		if (s == null) {
 			User user = new User();
 			user.setSurname(surnameField.getText());
 			user.setName(nameField.getText());
@@ -85,7 +86,7 @@ public class AdminUserController implements ControllerInterface {
 				sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 			}
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Insufficient user info", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, s, this);
 		}
 	}
 
@@ -162,35 +163,35 @@ public class AdminUserController implements ControllerInterface {
 		
 	}
 
-	private boolean isValidUser() {
+	private String isValidUser() {
 		if (! surnameField.getText().matches("([A-Zֶ״ֵ][a-zזרו]+)(\\-[A-Zֶ״ֵ][a-zזרו])?([a-zזרו]*)")) {
-			return false;
+			return "Invalid surname. A surname must consist of letters, and may contain '-'. Remember correct use of uppercase letters.";
 		}
-		if (! nameField.getText().matches("([A-Zֶ״ֵ][a-zזרו]+)(\\-[A-Zֶ״ֵ][a-zזרו])?([a-zזרו]*)")) {
-			return false;
+		if (! nameField.getText().matches("([A-Zֶ״ֵ][a-zזרו]+)(([ \\-][A-Zֶ״ֵ][a-zזרו])?([a-zזרו]*))*")) {
+			return "Invalid name. A name may contain letters, space and '-'. Remember correct use of uppercase letters.";
 		}
 		if (! emailField.getText().matches("[\\w_\\.זרוֶ״ֵ]+@[\\w_\\.זרוֶ״ֵ]+\\.[a-z]{2,3}")) {
-			return false;
+			return "Invalid email. An email must be on the form 'example@england.co.uk', and may contain letters, numbers, '.' and '_'";
 		}
 		String usrnm = usernameField.getText();
 		if (usrnm.length() < 5 || ! usrnm.matches("[a-zזרו]+")) {
-			return false;
+			return "Invalid username. A username must consist of at least five lowercase letters";
 		}
 		String srnm = surnameField.getText();
 		String nm = nameField.getText();
 		String eml = emailField.getText();
 		for (User user : userList) {
 			if (usrnm.equals(user.getUsername())) {
-				return false;
+				return "This username is already in use";
 			}
 			if (srnm.equals(user.getSurname()) && nm.equals(user.getName()) && eml.equals(user.getEmail())) {
-				return false;
+				return "This user already exists";
 			}
 		}
 		if (passwordField.getText().length() < 6 || ! passwordField.getText().matches("[\\wזרוֶ״ֵ]+")) {
-			return false;
+			return "Invalid password. A password must consist of at least 6 letters and numbers";
 		}
-		return true;
+		return null;
 	}
 
 	private void setUserList() {
