@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import login.SceneHandler;
+import calendar.Calendar;
 import calendar.Group;
 import calendar.Participant;
 import calendar.User;
@@ -108,6 +109,11 @@ public class NewGroupViewController implements ParticipantController {
 			groupViewController.getData().refresh(true);
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid group name", getGroupViewController());
+		}
+		Calendar cal = getGroupViewController().getData();
+		if(cal.filtController != null){
+			cal.filtController.refreshGroups();
+			System.out.println("refreshing");
 		}
 	}
 

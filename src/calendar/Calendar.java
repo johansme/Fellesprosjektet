@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.ArrayList;
 import java.util.List;
 
+import calendarGUI.FilterViewController;
 import api.SyncFromServer;
 
 public class Calendar {
@@ -20,7 +21,9 @@ public class Calendar {
 	private User loggedInUser;
 	private String session;
 	private LocalTime lastSync;
-
+	
+	public FilterViewController filtController;
+	
 	public Calendar(User loggedIn, String session) {
 		this.loggedInUser = loggedIn;
 		this.session = session;

@@ -145,11 +145,18 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				saveButton.setDisable(true);
 			} catch (IOException e) {
 			}
+			
+			
 			saveButton.setDisable(true);
 			calendar.refresh(true);
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid group name", this);
 		}
+		
+		if(calendar.filtController != null){
+			calendar.filtController.refreshGroups();
+		}
+		
 	}
 
 	private boolean isValidName() {
@@ -277,6 +284,9 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		} catch (IOException e) {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 			return;
+		}
+		if(calendar.filtController != null){
+			calendar.filtController.refreshGroups();
 		}
 	}
 

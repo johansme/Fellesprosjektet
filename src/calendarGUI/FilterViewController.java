@@ -29,6 +29,7 @@ public class FilterViewController {
 
 	public void setData(Calendar c){
 		calendar = c;
+		c.filtController = this;
 		createGroupPanel();
 		
 	}

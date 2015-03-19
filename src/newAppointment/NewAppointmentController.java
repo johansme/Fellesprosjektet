@@ -76,6 +76,12 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		/* System.out.println("YOLO"); */
 		//SMEGMABRO
 		//BiiiiiiRkyy
+		
+		if(descriptionField.getText().length() >20){
+			descriptionField.setText("");
+			descriptionField.setPromptText("Description to long");
+		
+		}
 	}
 
 	@FXML
