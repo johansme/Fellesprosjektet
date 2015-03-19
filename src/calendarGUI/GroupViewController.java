@@ -133,7 +133,9 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 					obj.put("group", ((Group) member).toJSON());
 				}
 				try {
-					API.call("/group", obj, calendar.getSession());
+					System.out.println(obj.toString());
+					JSONObject res = API.call("/group", obj, calendar.getSession());
+					System.out.println(res.toString());
 				} catch (IOException e) {
 				}
 			}
@@ -142,6 +144,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			obj.put("group", group.toJSON());
 			try {
 				API.call("/group", obj, calendar.getSession());
+				saveButton.setDisable(true);
 			} catch (IOException e) {
 			}
 			saveButton.setDisable(true);

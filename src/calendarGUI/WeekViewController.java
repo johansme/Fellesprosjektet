@@ -69,8 +69,6 @@ public class WeekViewController extends Application implements ControllerInterfa
 		setWeek(calendar.getCurrentDate());
 		setYear(calendar.getCurrentDate());
 		setAppointments(calendar.getCurrentDate());
-		filterController.setData(calendar);
-		filterController.setParent(this);
 
 		}
 	
@@ -402,6 +400,8 @@ public class WeekViewController extends Application implements ControllerInterfa
 		} else {
 			this.calendar = new Calendar(null, null);
 		}
+		filterController.setData(calendar);
+		filterController.setParent(this);
 		setView(this.calendar);
 	}
 	
