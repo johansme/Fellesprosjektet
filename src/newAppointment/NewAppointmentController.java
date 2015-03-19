@@ -136,7 +136,9 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			a.setAdmin(true);
 			a.setOpened(true);
 			a.setPersonal(true);
-			a.addParticipants(participantList);
+			if (!participantList.isEmpty() && participantList!=null) {
+				a.addParticipants(participantList);				
+			}
 			a.addToDay();
 			calendar.getLoggedInUser().addAppointment(a);
 			a.createInServer();

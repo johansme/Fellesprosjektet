@@ -149,7 +149,6 @@ public class Appointment extends shared.Appointment {
 			else {
 				this.setNext(null);
 			}
-			sync();
 		}
 	}
 
@@ -162,7 +161,6 @@ public class Appointment extends shared.Appointment {
 		if (prev==null) {
 			if (startTimeIsValid(t)) {
 				startTime = t;
-				sync();
 			}
 
 		}
@@ -193,17 +191,12 @@ public class Appointment extends shared.Appointment {
 		if (next==null) {
 			if (endTimeIsValid(t)) {
 				endTime = t;
-				sync();
 			}
 			
 		}
 		else {
 			endTime = LocalTime.parse("23:00");
-		}
-		if (prev!=null) {
-			if (prev.getEndTime()!=LocalTime.parse("23:00")) {
-				prev.setStartTime(LocalTime.parse("23:00"));
-			}
+			next.setEndTime(t);
 		}
 	}
 
@@ -223,7 +216,6 @@ public class Appointment extends shared.Appointment {
 	public void setLocation(String l) {
 		if (locationIsValid(l)) {
 			location = l;
-			sync();
 			if (prev!=null) {
 				if (prev.getLocation()!=l) {
 					prev.setLocation(l);
@@ -272,7 +264,6 @@ public class Appointment extends shared.Appointment {
 				}
 			}
 		}
-		sync();
 	}
 	
 	public void addUser(User user) {
@@ -286,7 +277,7 @@ public class Appointment extends shared.Appointment {
 			}
 			if (next!=null) {
 				if (!next.getUsers().contains(user)) {
-					prev.addUser(user);
+					next.addUser(user);
 				}
 			}
 		}
@@ -369,7 +360,6 @@ public class Appointment extends shared.Appointment {
 
 	public void setOpened(boolean b) {
 		opened = b;
-		sync();
 		if (prev!=null) {
 			if (prev.getOpened()!=b) {
 				prev.setOpened(b);
@@ -388,7 +378,6 @@ public class Appointment extends shared.Appointment {
 
 	public void setAdmin(boolean b) {
 		admin = b;
-		sync();
 		if (prev!=null) {
 			if (prev.getAdmin()!=b) {
 				prev.setAdmin(b);
@@ -440,7 +429,6 @@ public class Appointment extends shared.Appointment {
 	public void setCapacity(int capacity) {
 		
 		this.roomCapacity = capacity;
-		sync();
 		if (prev!=null) {
 			if (prev.getCapacity()!=capacity) {
 				prev.setCapacity(capacity);
@@ -480,7 +468,6 @@ public class Appointment extends shared.Appointment {
 		
 	
 		this.roomList = roomList; 
-		sync();
 		
 		if (prev!=null) {
 			if (prev.getRoomList()!=roomList) {
@@ -532,12 +519,10 @@ public class Appointment extends shared.Appointment {
 	
 	public void setPrev(Appointment a) {
 		prev = a;
-		sync();
 	}
 	
 	public void setNext(Appointment a) {
 		next = a;
-		sync();
 	}
 	
 	
@@ -638,7 +623,6 @@ public class Appointment extends shared.Appointment {
 	
 	public void setActive(boolean b) {
 		active = b;
-		sync();
 	}
 	
 	public void findActive() {
@@ -662,7 +646,6 @@ public class Appointment extends shared.Appointment {
 					next.setActive(active);
 				}
 			}
-			sync();
 			day.setActiveAppointments();
 		}
 	}
@@ -673,7 +656,6 @@ public class Appointment extends shared.Appointment {
 	
 	public void setPersonal(boolean b) {
 		personal = b;
-		sync();
 		if (prev!=null) {
 			if (prev.getPersonal()!=b) {
 				prev.setPersonal(b);
