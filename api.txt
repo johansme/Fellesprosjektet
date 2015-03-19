@@ -70,6 +70,9 @@ F	create
 ?	get_available
 		In: start(Date), end(Date)
 		Out: rooms(Room)[]
+F	get_from_app
+		In: aid(int)
+		Out: rid(int)
 F	get_all
 		Out: rooms(Room)[]
 F	get
