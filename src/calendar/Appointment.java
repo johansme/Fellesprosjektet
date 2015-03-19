@@ -215,6 +215,7 @@ public class Appointment extends shared.Appointment {
 
 	public void setLocation(String l) {
 		if (locationIsValid(l)) {
+			thaRoom = null;
 			location = l;
 			if (prev!=null) {
 				if (prev.getLocation()!=l) {
@@ -680,8 +681,14 @@ public class Appointment extends shared.Appointment {
 		}
 	}
 	public void setRoom(Room rm){
+		location = null;
 		thaRoom = rm;
 	}
+	
+	public Room getRoom() {
+		return thaRoom;
+	}
+	
 	public void createInServer() {
 		super.creator=calendar.getLoggedInUser().getId();
 		LocalDateTime t = getStartDate().atTime(getStartStartTime());
