@@ -81,7 +81,6 @@ public class NewGroupViewController implements ParticipantController {
 			try {
 				JSONObject res = API.call("/group", obj, getGroupViewController().getData().getSession());
 				group.setId(res.getInt("gid"));
-				// TODO need group ID
 			} catch (IOException e) {
 			}
 			for (Participant member : memberList) {

@@ -133,9 +133,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 					obj.put("group", ((Group) member).toJSON());
 				}
 				try {
-					System.out.println(obj.toString());
-					JSONObject res = API.call("/group", obj, calendar.getSession());
-					System.out.println(res.toString());
+					API.call("/group", obj, calendar.getSession());
 				} catch (IOException e) {
 				}
 			}

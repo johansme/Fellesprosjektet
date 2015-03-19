@@ -469,7 +469,6 @@ public class Appointment extends shared.Appointment {
 			{
 				checkCapList.add(specifiedRoomCap);
 			}
-			System.out.println(specifiedRoomCap);
 		}	
 		
 	
@@ -732,13 +731,10 @@ public class Appointment extends shared.Appointment {
 					obj1.put("start", Date.from(st.atZone(ZoneId.systemDefault()).toInstant()).getTime());
 					obj1.put("end", Date.from(en.atZone(ZoneId.systemDefault()).toInstant()).getTime());
 					
-					JSONObject ans =API.call("/rooms", obj1, calendar.getSession());
-					System.out.println(ans.toString());
-					
+					API.call("/rooms", obj1, calendar.getSession());
 				}
 			}
 		} catch (IOException e) {
-			System.out.println(e.toString());
 		}
 
 	}
@@ -780,5 +776,37 @@ public class Appointment extends shared.Appointment {
 		
 	}
 	
+	public void deleteReservation() {
+		if (thaRoom != null) {
+			JSONObject obj = new JSONObject();
+			obj.put("command", "cancel");
+			obj.put("aid", super.getId());
+			try {
+				JSONObject res = API.call("/rooms", obj, calendar.getSession());
+				System.out.println(res.toString());
+			} catch (IOException e) {
+			}
+		}
+	}
+	
+	public void reserveRoom() {
+		if(thaRoom != null){
+			JSONObject obj1 = new JSONObject();
+			obj1.put("command", "reserve");
+			obj1.put("aid", id);
+			obj1.put("rid", thaRoom.getId());
+			LocalDateTime st = date.atTime((startTime));
+
+			LocalDateTime en = date.atTime(endTime);
+			
+			obj1.put("start", Date.from(st.atZone(ZoneId.systemDefault()).toInstant()).getTime());
+			obj1.put("end", Date.from(en.atZone(ZoneId.systemDefault()).toInstant()).getTime());
+			
+			try {
+				API.call("/rooms", obj1, calendar.getSession());
+			} catch (IOException e) {
+			}
+		}
+	}
 	
 }

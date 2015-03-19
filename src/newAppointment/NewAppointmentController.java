@@ -110,14 +110,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		if(checkFieldsFill()){
 
 
-			if (header.getText()=="Edit appointment") {
-				try {
-					appointment.delete();
-				} catch (IOException e1) {
-					sceneHandler = new SceneHandler();
-					sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "WTF", this);
-				}
-			}
 			Appointment a = new Appointment(calendar);
 			LocalDate startDate = fromDate.getValue();
 			LocalDate endDate = toDate.getValue();
@@ -138,9 +130,29 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			if (!participantList.isEmpty() && participantList!=null) {
 				a.addParticipants(participantList);				
 			}
-			a.addToDay();
-			calendar.getLoggedInUser().addAppointment(a);
-			a.createInServer();
+			if (header.getText().equals("Edit appointment")) {
+				if (appointment.getRoom() != null && appointment.getRoom().getId() != stringToRoomsMap.get(room.textProperty().getValue()).getId()) {
+					appointment.deleteReservation();
+					int id = appointment.getId();
+					a.setId(id);
+					a.reserveRoom();
+				}
+				JSONObject obj = new JSONObject();
+				obj.put("command", "modify");
+				obj.put("app", a);
+				try {
+					API.call("/appointment", obj, calendar.getSession());
+					appointment.getDay().removeAppointment(appointment);
+					a.addToDay();
+				} catch (IOException e1) {
+					sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
+				}
+			} else {
+				a.addToDay();
+				calendar.getLoggedInUser().addAppointment(a);
+				//TODO fix reservation
+				a.createInServer();
+			}
 			sceneHandler.popUpMessage("/messages/Info.fxml", 290, 140, "Your appointment has been saved", this);
 			// get a handle to the stage
 			Stage stage = (Stage) saveButton.getScene().getWindow();
@@ -663,6 +675,18 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				disableDates(toDate, LocalDate.now());
 			}
 			setRoomList();
+			if (a != null) {
+				if (a.getRoom() != null) {
+					for (Room rm : roomList) {
+						if (rm.getId() == a.getRoom().getId()) {
+							room.getItems().get(roomList.indexOf(rm) + 1).fire();
+						}
+					}
+				} else {
+					room.getItems().get(0).fire();
+					otherField.setText(a.getLocation());
+				}
+			}
 		}
 	}
 
@@ -712,8 +736,8 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			
 			for (int i = 0; i < resArray.length(); i++) {
 				Room rm = new Room();
-				JSONObject userObj = (JSONObject) resArray.get(i);
-				rm.fromJSON(userObj);
+				JSONObject roomObj = (JSONObject) resArray.get(i);
+				rm.fromJSON(roomObj);
 
 				roomList.add(rm);
 
@@ -733,7 +757,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			}
 
 		} catch (IOException e) {
-			System.out.println(e.toString());
 		}
 	}
 

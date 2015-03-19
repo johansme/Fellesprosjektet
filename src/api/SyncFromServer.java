@@ -85,6 +85,7 @@ public class SyncFromServer {
 				ap.addGroup(gr);
 //				TODO ap.setAttending(inv.isAccepted());
 //				TODO ap.setUsers();
+//				TODO set room
 				if (ap.getCreator()==c.getLoggedInUser().getId()) {
 					ap.setAdmin(true);
 				}
@@ -115,6 +116,7 @@ public class SyncFromServer {
 			ap.setPersonal(true);
 //			TODO ap.setAttending(inv.isAccepted());
 //			TODO setUsers
+//			TODO set room
 			if (ap.getCreator()==c.getLoggedInUser().getId()) {
 				ap.setAdmin(true);
 			}
