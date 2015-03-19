@@ -166,7 +166,8 @@ public class AppointmentViewController extends Application implements Controller
 		endDate.setText(dateToString(appointment.getEndDate()));
 		from.setText(appointment.getStartStartTime().toString());
 		until.setText(appointment.getEndEndTime().toString());
-		room.setText(appointment.getLocation());
+		
+	
 		if (appointment.getRoom()==null) {
 			room.setText(appointment.getLocation());			
 		}
