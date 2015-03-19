@@ -44,7 +44,7 @@ public class HttpInvitation extends HttpAPIHandler {
 						getAllUsersForAppointment(t, u, request);
 						return;
 					case "get_all_groups_for_app":
-						sendNotImplemented(t);
+						getAllGroupsForAppointment(t, u, request);
 						return;
 					case "invite_user":
 						inviteUser(t, request);
@@ -171,6 +171,36 @@ public class HttpInvitation extends HttpAPIHandler {
 			jarr.put(i);
 		}
 		sendOK(t, new JSONObject().put("uids", jarr));
+	}
+	
+	private void getAllGroupsForAppointment(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid;
+		try {
+			aid = request.getInt("aid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Invalid appointment");
+			return;
+		}
+		
+		if(!Invitation.isUserInvited(a.getId(), u.getId()) && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		ArrayList<Integer> groups = Invitation.getGroupInvitationsForAppointment(aid);
+		JSONArray jarr = new JSONArray();
+		for(int i : groups) {
+			jarr.put(i);
+		}
+		sendOK(t, new JSONObject().put("gids", jarr));
 	}
 	
 	private void inviteUser(HttpExchange t, JSONObject request) throws IOException {
