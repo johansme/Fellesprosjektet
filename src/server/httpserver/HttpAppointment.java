@@ -83,6 +83,7 @@ public class HttpAppointment extends HttpAPIHandler {
 		if(old_app.getCreator() == u.getId() || u.isAdmin()) {
 			if(Appointment.changeAppointment(new_app)) {
 				Invitation.dirtify(new_app.getId());
+				Invitation.alertify(new_app.getId(), new_app.getStart());
 				Notification.sendModifiedAppointmentNotification(new_app.getId());
 				sendOK(t);
 				return;

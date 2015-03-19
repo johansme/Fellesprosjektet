@@ -11,12 +11,15 @@ import server.User;
 
 public class Server {
 	private HttpSessionManager sessionMgr;
+	private AlertManager alertMgr;
 	private HttpServer server;
 	boolean running = true;
 
 	private Server() throws IOException {
 		sessionMgr = new HttpSessionManager();
 		sessionMgr.start();
+		alertMgr = new AlertManager();
+		alertMgr.start();
 		server = HttpServer.create(new InetSocketAddress(8000), 200);
 		server.createContext("/login", new HttpLogin(this));
 		server.createContext("/rooms", new HttpRooms(this));
