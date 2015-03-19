@@ -214,10 +214,12 @@ public class Appointment extends shared.Appointment {
 	}
 
 	public void setLocation(String l) {
-		if (locationIsValid(l)) {
-			location = l;
+		
+		if (locationIsValid(l)) 
+		{
+			this.location = l;
 			if (prev!=null) {
-				if (prev.getLocation()!=l) {
+				if (prev.getLocation() != l) {
 					prev.setLocation(l);
 				}
 			}
