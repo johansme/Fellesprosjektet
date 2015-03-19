@@ -2,6 +2,8 @@ package calendar;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ public class Calendar {
 	private List<Month> months;
 	private User loggedInUser;
 	private String session;
+	private LocalTime lastSync;
 
 	public Calendar(User loggedIn, String session) {
 		this.loggedInUser = loggedIn;
@@ -27,7 +30,8 @@ public class Calendar {
 		months.add(currentMonth);
 		addPastMonths(5);
 		addFutureMonths(8);
-		refresh();
+		refresh(true);
+		lastSync = LocalTime.now();
 	}
 	
 	public String getSession() {
@@ -152,11 +156,27 @@ public class Calendar {
 		}
 	}
 	
-	public void refresh() {
-		try {
-			SyncFromServer.sync(this);
-		} catch (IOException e) {
-			return;
+	public void refresh(boolean b) {
+		LocalTime now  = LocalTime.now();
+		if (!b) {
+			if (((double)now.getHour()+(double)((double)now.getMinute()/(double)60))-
+			((double)lastSync.getHour()+(double)((double)lastSync.getMinute()/(double)60))>0.25) {
+				try {
+					SyncFromServer.sync(this);
+					lastSync = now;
+				} catch (IOException e) {
+					return;
+				}
+			}
+		}
+		else {
+			try {
+				SyncFromServer.sync(this);
+				lastSync = now;
+			} catch (IOException e) {
+				return;
+			}
+			
 		}
 	}
 		

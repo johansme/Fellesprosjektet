@@ -276,16 +276,18 @@ public class Appointment extends shared.Appointment {
 	}
 	
 	public void addUser(User user) {
-		users.put(user, false);
-		sync();
-		if (prev!=null) {
-			if (!prev.getUsers().contains(user)) {
-				prev.addUser(user);
+		if (!users.containsKey(user)) {
+			users.put(user, false);
+			sync();
+			if (prev!=null) {
+				if (!prev.getUsers().contains(user)) {
+					prev.addUser(user);
+				}
 			}
-		}
-		if (next!=null) {
-			if (!next.getUsers().contains(user)) {
-				prev.addUser(user);
+			if (next!=null) {
+				if (!next.getUsers().contains(user)) {
+					prev.addUser(user);
+				}
 			}
 		}
 	}
@@ -574,25 +576,35 @@ public class Appointment extends shared.Appointment {
 	}
 	
 	public void addGroup(Group g) {
-		groups.add(g);
-		if (prev!=null) {
-			if (!prev.getGroups().contains(g)) {
-				prev.addGroup(g);
+		if (!groups.contains(g)) {
+			groups.add(g);
+			List<Participant> prtpts = g.getMembers();
+			for (Participant p : prtpts) {
+				if (p instanceof User) {
+					this.addUser((User) p);
+				}
+				else if ( p instanceof Group) {
+					this.addGroup((Group) p);
+				}
+			}
+			if (prev!=null) {
+				if (!prev.getGroups().contains(g)) {
+					prev.addGroup(g);
+				}
+			}
+			if (next!=null) {
+				if (!next.getGroups().contains(g)) {
+					next.addGroup(g);
+				}
 			}
 		}
-		if (next!=null) {
-			if (!next.getGroups().contains(g)) {
-				next.addGroup(g);
-			}
-		}
-
 	}
 	
 	public void setGroups(List<Group> gr) {
 		groups.clear();
 		if (gr!=null && !gr.isEmpty()) {
 			for (Group g : gr) {
-				groups.add(g);
+				this.addGroup(g);
 				if (prev!=null) {
 					if (!prev.getGroups().contains(g)) {
 						prev.addGroup(g);
@@ -744,6 +756,24 @@ public class Appointment extends shared.Appointment {
 		else {
 			setAttending("None");
 		}
+	}
+
+	public void addParticipants(List<Participant> participantList) {
+		if (participantList != null && !participantList.isEmpty()) {
+			for (Participant p : participantList) {
+				if (p instanceof User) {
+					if (!users.containsKey((User) p)) {
+						this.addUser((User) p);
+					}
+				}
+				else if (p instanceof Group) {
+					if (!groups.contains((Group) p)) {
+						this.addGroup((Group) p);
+					}
+				}
+			}
+		}
+		
 	}
 	
 	
