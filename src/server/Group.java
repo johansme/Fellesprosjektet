@@ -50,7 +50,11 @@ public class Group extends shared.Group {
 			stm = db.getConnection().prepareStatement(stm_str);
 			stm.setString(1, g.name);
 			stm.setInt(2, g.createdBy);
-			stm.setInt(3, g.parent);
+			if(g.parent == 0) {
+				stm.setNull(3, java.sql.Types.INTEGER);
+			} else {
+				stm.setInt(3, g.parent);
+			}
 			stm.setInt(4, g.id);
 			stm.executeUpdate();
 		} catch(SQLException e) {
