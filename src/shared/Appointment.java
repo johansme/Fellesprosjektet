@@ -30,7 +30,8 @@ public class Appointment {
 		this.creator = creator; 
 	}
 
-	public String getDescription() {
+	public String getDescription() 
+	{
 		return description;
 	}
 

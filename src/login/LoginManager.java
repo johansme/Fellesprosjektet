@@ -38,5 +38,5 @@ public class LoginManager {
 	public int getID() {
 		return userID;
 	}
-
+	
 }

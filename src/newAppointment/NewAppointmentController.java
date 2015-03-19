@@ -68,11 +68,8 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	
 	private HashMap<String, Room> stringToRoomsMap = new HashMap<String, Room>(); 
 
-	ReceiveRoom rr = new ReceiveRoom();
-
-
 	@FXML
-	private void description(){
+	protected void description(){
 		/* System.out.println("YOLO"); */
 		//SMEGMABRO
 		//BiiiiiiRkyy

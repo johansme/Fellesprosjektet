@@ -45,6 +45,7 @@ public class Appointment extends shared.Appointment {
 		
 		PreparedStatement stm = null;
 		try {
+			
 			db = new DBConnection();
 			stm = db.getConnection().prepareStatement(stm_str, Statement.RETURN_GENERATED_KEYS);
 			stm.setString(1, a.location);

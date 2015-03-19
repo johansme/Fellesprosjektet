@@ -1,6 +1,6 @@
 package login;
 
-import newAppointment.ReceiveRoom;
+import testing.TestNewAppointment;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -14,6 +14,7 @@ public class LoginMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			
 			Parent root = (Parent)FXMLLoader.load(getClass().getResource("/login/loginScreen.fxml"));
 			Scene scene = new Scene(root,297,248);
 			primaryStage.setScene(scene);
@@ -21,6 +22,7 @@ public class LoginMain extends Application {
 			primaryStage.titleProperty().setValue("BETJA Systems");
 			primaryStage.setResizable(false);
 			primaryStage.show();
+			
 		} catch(Exception e) 
 		{
 			e.printStackTrace();
@@ -28,7 +30,7 @@ public class LoginMain extends Application {
 	}
 	
 	public static void main(String[] args) {
-		new ReceiveRoom();
 		launch(args);
+		
 	}
 }

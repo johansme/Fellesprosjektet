@@ -43,7 +43,7 @@ public class LoginController implements ControllerInterface {
 				return;
 			}
 		}
-
+		
 		String uname = username.textProperty().getValue();
 		String pass = password.textProperty().getValue();
 
@@ -94,6 +94,12 @@ public class LoginController implements ControllerInterface {
 	public void setFeedback() {
 		// TODO Auto-generated method stub
 		
+	}
+	public TextField getUsername(){
+		return username;
+	}
+	public TextField getPassword(){
+		return password;
 	}
 
 }
