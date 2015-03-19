@@ -20,7 +20,7 @@ F	get_all_for_user
 		Out: invitations(app(Appointment), invitation(UserInvitation))[]
 F	get_all_for_group
 		In: gid(int)
-		Out: app(Appointment)[]
+		Out: invitations(app(Appointment), aid(int))[]
 	get_all_users_for_app
 		In: aid(int)
 		Out: uids(int)[]
