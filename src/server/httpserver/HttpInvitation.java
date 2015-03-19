@@ -213,7 +213,15 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		}
 		
-		if(Invitation.inviteUser(aid, uid)) {
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error");
+			return;
+		}
+		
+		if(Invitation.inviteUser(aid, uid, a.getStart())) {
 			Notification.sendInvitationNotification(aid, uid);
 			sendOK(t);
 			return;
@@ -233,10 +241,18 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		}
 		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error getting appointment");
+			return;
+		}
+		
 		// TODO: Recurse into children?
 		ArrayList<Integer> members = Group.getUsers(gid);
 		for(int uid : members) {
-			if(Invitation.inviteUser(aid, uid)) {
+			if(Invitation.inviteUser(aid, uid, a.getStart())); {
 				Notification.sendInvitationNotification(aid, uid);
 			}
 		}

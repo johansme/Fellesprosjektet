@@ -9,6 +9,27 @@ import java.util.Properties;
 
 public class Notification {
 	
+	public static boolean sendAlertNotification(int aid, int uid) {
+		final String fmt =
+				"Wake up, you lazy bum. You have an appointment to attend\n" +
+				"at %s. In case you forgot, because you're a lazy idiot,\n" +
+				"the appointment's description is: \"%s\".\n\n" +
+				"We hope the remainder of your day will be delightful.";
+		
+		boolean result = false;
+		
+		try {
+			Appointment a = new Appointment(aid);
+			User u = new User(uid);
+			String msg = String.format(fmt, a.getStart().toString(), a.getDescription());
+			send(u, "Appointment alert", msg);
+			result = true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public static void sendRoomDeletionNotification(int aid) {
 		final String fmt = 
 				"The room registered for your appointment has been removed.\n" +

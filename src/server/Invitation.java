@@ -3,7 +3,9 @@ package server;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Invitation extends shared.Invitation {
 	public static ArrayList<Invitation> getInvitationsForUser(int uid) {
@@ -38,7 +40,7 @@ public class Invitation extends shared.Invitation {
 		return list;
 	}
 	
-	public static boolean inviteUser(int aid, int uid) {
+	public static boolean inviteUser(int aid, int uid, Date alert) {
 		boolean result = true;
 		DBConnection db = null;
 		final String stm_str = "INSERT INTO Invitation VALUES(?, ?, ?, ?, ?, ?)";
@@ -52,7 +54,7 @@ public class Invitation extends shared.Invitation {
 			stm.setBoolean(3, false);
 			stm.setBoolean(4, false);
 			stm.setBoolean(5, true);
-			stm.setNull(6, java.sql.Types.DATE);			
+			stm.setTimestamp(6, new Timestamp(alert.getTime() + 60 * 60 * 1000));			
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -201,6 +203,30 @@ public class Invitation extends shared.Invitation {
 		return success;
 	}
 	
+	public static boolean alertify(int aid, Date alert) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "UPDATE Invitation SET alarm=? WHERE appointmentid=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setTimestamp(1, new Timestamp(alert.getTime() * 60 * 60 * 1000));
+			stm.setInt(2, aid);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
 	public static boolean isUserInvited(int aid, int uid) {
 		DBConnection db = null;
 		PreparedStatement stm = null;
@@ -224,5 +250,61 @@ public class Invitation extends shared.Invitation {
 			db.close();
 		}
 		return exists;
+	}
+	
+	public static void markSent(int aid, int uid) {
+		DBConnection db = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			final String stm_str = "UPDATE Invitation SET alarm=NULL WHERE userid=? AND appointmentid=?";
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, uid);
+			stm.setInt(2, aid);
+			stm.execute();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+	}
+	
+	public static class Alert {
+		public int uid;
+		public int aid;
+		
+		public Alert(int uid, int aid) {
+			this.uid = uid;
+			this.aid = aid;
+		}
+	}
+	
+	public static ArrayList<Alert> getDueAlerts() {
+		ArrayList<Alert> result = new ArrayList<>();
+		
+		DBConnection db = null;
+		final String str_fmt = "SELECT userid,appointmentid FROM Invitation WHERE alarm<=NOW()";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {
+				Alert a = new Alert(rs.getInt("userid"), rs.getInt("appointmentid"));
+				result.add(a);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return result;
 	}
 }
