@@ -1,11 +1,9 @@
 package calendarGUI;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import api.SyncFromServer;
 import calendar.Calendar;
 import calendar.Group;
 import javafx.event.ActionEvent;
@@ -41,11 +39,6 @@ public class FilterViewController {
 
 	private void createGroupPanel(){
 		
-		try {
-			SyncFromServer.getGroups(calendar);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 		groupList.getItems().clear();
 		
 		List<Group> groupies = new ArrayList<Group>();

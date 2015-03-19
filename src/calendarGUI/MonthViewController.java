@@ -315,8 +315,6 @@ public class MonthViewController implements ControllerInterface {
 				admin.setVisible(true);
 				admin.setDisable(false);
 			}
-			filterController.setParent(this);
-			filterController.setData(calendar);
 		}
 	}
 
@@ -390,6 +388,8 @@ public class MonthViewController implements ControllerInterface {
 			this.calendar = new Calendar(null, null);
 		}
 		month = this.calendar.getCurrentMonth();
+		filterController.setParent(this);
+		filterController.setData(calendar);
 		monthChanged();
 	}
 

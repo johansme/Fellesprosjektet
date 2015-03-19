@@ -79,7 +79,9 @@ public class NewGroupViewController implements ParticipantController {
 			obj.put("command", "create");
 			obj.put("group", group.toJSON());
 			try {
-				API.call("/group", obj, getGroupViewController().getData().getSession());
+				JSONObject res = API.call("/group", obj, getGroupViewController().getData().getSession());
+				group.setId(res.getInt("gid"));
+				// TODO need group ID
 			} catch (IOException e) {
 			}
 			for (Participant member : memberList) {
@@ -95,8 +97,7 @@ public class NewGroupViewController implements ParticipantController {
 					obj.put("uid", ((User) member).getId());
 				}
 				try {
-					JSONObject res = API.call("/group", obj, getGroupViewController().getData().getSession());
-					System.out.println(res.toString()); //TODO FIX!
+					API.call("/group", obj, getGroupViewController().getData().getSession());
 				} catch (IOException e) {
 				}
 			}
