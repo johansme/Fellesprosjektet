@@ -69,20 +69,14 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	private HashMap<String, Room> stringToRoomsMap = new HashMap<String, Room>(); 
 
 	@FXML
-<<<<<<< HEAD
-	protected void description(){
-		/* System.out.println("YOLO"); */
-		//SMEGMABRO
-		//BiiiiiiRkyy
-=======
 	private void description(){
 	
-		if(descriptionField.getText().length() >20){
+		if(descriptionField.getText().length() >20)
+		{
 			descriptionField.setText("");
 			descriptionField.setPromptText("Description to long");
 		
 		}
->>>>>>> 525366a282d9c35a50baf1515ed628fe9626b133
 	}
 
 	@FXML
