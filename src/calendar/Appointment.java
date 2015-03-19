@@ -688,6 +688,16 @@ public class Appointment extends shared.Appointment {
 	public void setRoom(Room rm){
 		location = null;
 		thaRoom = rm;
+		if (prev!=null) {
+			if (prev.getRoom()!=rm) {
+				prev.setRoom(rm);
+			}
+		}
+		if (next!=null) {
+			if (next.getRoom()!=rm) {
+				next.setRoom(rm);
+			}
+		}
 	}
 	
 	public Room getRoom() {
