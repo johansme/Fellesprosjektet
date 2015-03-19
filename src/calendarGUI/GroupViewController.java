@@ -147,7 +147,8 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				saveButton.setDisable(true);
 			} catch (IOException e) {
 			}
-			calendar.refresh();
+			saveButton.setDisable(true);
+			calendar.refresh(true);
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid group name", this);
 		}

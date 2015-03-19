@@ -106,7 +106,7 @@ public class NewGroupViewController implements ParticipantController {
 			memberListView.getItems().clear();
 			setView();
 			groupViewController.getTabs().getSelectionModel().select(0);
-			groupViewController.getData().refresh();
+			groupViewController.getData().refresh(true);
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid group name", getGroupViewController());
 		}

@@ -149,7 +149,6 @@ public class Appointment extends shared.Appointment {
 			else {
 				this.setNext(null);
 			}
-			sync();
 		}
 	}
 
@@ -162,7 +161,6 @@ public class Appointment extends shared.Appointment {
 		if (prev==null) {
 			if (startTimeIsValid(t)) {
 				startTime = t;
-				sync();
 			}
 
 		}
@@ -193,17 +191,12 @@ public class Appointment extends shared.Appointment {
 		if (next==null) {
 			if (endTimeIsValid(t)) {
 				endTime = t;
-				sync();
 			}
 			
 		}
 		else {
 			endTime = LocalTime.parse("23:00");
-		}
-		if (prev!=null) {
-			if (prev.getEndTime()!=LocalTime.parse("23:00")) {
-				prev.setStartTime(LocalTime.parse("23:00"));
-			}
+			next.setEndTime(t);
 		}
 	}
 
@@ -221,11 +214,15 @@ public class Appointment extends shared.Appointment {
 	}
 
 	public void setLocation(String l) {
+		
+		if (locationIsValid(l)) 
+		{
+			this.location = l;
 		if (locationIsValid(l)) {
+			thaRoom = null;
 			location = l;
-			sync();
 			if (prev!=null) {
-				if (prev.getLocation()!=l) {
+				if (prev.getLocation() != l) {
 					prev.setLocation(l);
 				}
 			}
@@ -234,6 +231,7 @@ public class Appointment extends shared.Appointment {
 					next.setLocation(l);
 				}
 			}
+		}
 		}
 	}
 
@@ -272,20 +270,21 @@ public class Appointment extends shared.Appointment {
 				}
 			}
 		}
-		sync();
 	}
 	
 	public void addUser(User user) {
-		users.put(user, false);
-		sync();
-		if (prev!=null) {
-			if (!prev.getUsers().contains(user)) {
-				prev.addUser(user);
+		if (!users.containsKey(user)) {
+			users.put(user, false);
+			sync();
+			if (prev!=null) {
+				if (!prev.getUsers().contains(user)) {
+					prev.addUser(user);
+				}
 			}
-		}
-		if (next!=null) {
-			if (!next.getUsers().contains(user)) {
-				prev.addUser(user);
+			if (next!=null) {
+				if (!next.getUsers().contains(user)) {
+					next.addUser(user);
+				}
 			}
 		}
 	}
@@ -367,7 +366,6 @@ public class Appointment extends shared.Appointment {
 
 	public void setOpened(boolean b) {
 		opened = b;
-		sync();
 		if (prev!=null) {
 			if (prev.getOpened()!=b) {
 				prev.setOpened(b);
@@ -386,7 +384,6 @@ public class Appointment extends shared.Appointment {
 
 	public void setAdmin(boolean b) {
 		admin = b;
-		sync();
 		if (prev!=null) {
 			if (prev.getAdmin()!=b) {
 				prev.setAdmin(b);
@@ -438,7 +435,6 @@ public class Appointment extends shared.Appointment {
 	public void setCapacity(int capacity) {
 		
 		this.roomCapacity = capacity;
-		sync();
 		if (prev!=null) {
 			if (prev.getCapacity()!=capacity) {
 				prev.setCapacity(capacity);
@@ -478,7 +474,6 @@ public class Appointment extends shared.Appointment {
 		
 	
 		this.roomList = roomList; 
-		sync();
 		
 		if (prev!=null) {
 			if (prev.getRoomList()!=roomList) {
@@ -530,12 +525,10 @@ public class Appointment extends shared.Appointment {
 	
 	public void setPrev(Appointment a) {
 		prev = a;
-		sync();
 	}
 	
 	public void setNext(Appointment a) {
 		next = a;
-		sync();
 	}
 	
 	
@@ -574,25 +567,35 @@ public class Appointment extends shared.Appointment {
 	}
 	
 	public void addGroup(Group g) {
-		groups.add(g);
-		if (prev!=null) {
-			if (!prev.getGroups().contains(g)) {
-				prev.addGroup(g);
+		if (!groups.contains(g)) {
+			groups.add(g);
+			List<Participant> prtpts = g.getMembers();
+			for (Participant p : prtpts) {
+				if (p instanceof User) {
+					this.addUser((User) p);
+				}
+				else if ( p instanceof Group) {
+					this.addGroup((Group) p);
+				}
+			}
+			if (prev!=null) {
+				if (!prev.getGroups().contains(g)) {
+					prev.addGroup(g);
+				}
+			}
+			if (next!=null) {
+				if (!next.getGroups().contains(g)) {
+					next.addGroup(g);
+				}
 			}
 		}
-		if (next!=null) {
-			if (!next.getGroups().contains(g)) {
-				next.addGroup(g);
-			}
-		}
-
 	}
 	
 	public void setGroups(List<Group> gr) {
 		groups.clear();
 		if (gr!=null && !gr.isEmpty()) {
 			for (Group g : gr) {
-				groups.add(g);
+				this.addGroup(g);
 				if (prev!=null) {
 					if (!prev.getGroups().contains(g)) {
 						prev.addGroup(g);
@@ -626,7 +629,6 @@ public class Appointment extends shared.Appointment {
 	
 	public void setActive(boolean b) {
 		active = b;
-		sync();
 	}
 	
 	public void findActive() {
@@ -650,7 +652,6 @@ public class Appointment extends shared.Appointment {
 					next.setActive(active);
 				}
 			}
-			sync();
 			day.setActiveAppointments();
 		}
 	}
@@ -661,7 +662,6 @@ public class Appointment extends shared.Appointment {
 	
 	public void setPersonal(boolean b) {
 		personal = b;
-		sync();
 		if (prev!=null) {
 			if (prev.getPersonal()!=b) {
 				prev.setPersonal(b);
@@ -686,8 +686,24 @@ public class Appointment extends shared.Appointment {
 		}
 	}
 	public void setRoom(Room rm){
+		location = null;
 		thaRoom = rm;
+		if (prev!=null) {
+			if (prev.getRoom()!=rm) {
+				prev.setRoom(rm);
+			}
+		}
+		if (next!=null) {
+			if (next.getRoom()!=rm) {
+				next.setRoom(rm);
+			}
+		}
 	}
+	
+	public Room getRoom() {
+		return thaRoom;
+	}
+	
 	public void createInServer() {
 		super.creator=calendar.getLoggedInUser().getId();
 		LocalDateTime t = getStartDate().atTime(getStartStartTime());
@@ -744,6 +760,24 @@ public class Appointment extends shared.Appointment {
 		else {
 			setAttending("None");
 		}
+	}
+
+	public void addParticipants(List<Participant> participantList) {
+		if (participantList != null && !participantList.isEmpty()) {
+			for (Participant p : participantList) {
+				if (p instanceof User) {
+					if (!users.containsKey((User) p)) {
+						this.addUser((User) p);
+					}
+				}
+				else if (p instanceof Group) {
+					if (!groups.contains((Group) p)) {
+						this.addGroup((Group) p);
+					}
+				}
+			}
+		}
+		
 	}
 	
 	

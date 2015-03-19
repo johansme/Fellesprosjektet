@@ -129,14 +129,15 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			if(room.textProperty().getValue().equals("Other")){
 				a.setLocation(otherField.textProperty().getValue());
 			}else{
-				a.setLocation(""); 
 				a.setRoom(stringToRoomsMap.get(room.textProperty().getValue()));
-				System.out.println(stringToRoomsMap.get(room.textProperty().getValue()).getName());
 				
 			}
 			a.setAdmin(true);
 			a.setOpened(true);
 			a.setPersonal(true);
+			if (!participantList.isEmpty() && participantList!=null) {
+				a.addParticipants(participantList);				
+			}
 			a.addToDay();
 			calendar.getLoggedInUser().addAppointment(a);
 			a.createInServer();
