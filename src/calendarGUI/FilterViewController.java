@@ -32,6 +32,10 @@ public class FilterViewController {
 		createGroupPanel();
 		
 	}
+	
+	public void refreshGroups(){
+		createGroupPanel();
+	}
 
 	public void setParent(ControllerInterface p) {
 		parentController=p;
