@@ -40,6 +40,12 @@ public class HttpInvitation extends HttpAPIHandler {
 					case "get_all_for_group":
 						getAllForGroup(t, u, request);
 						return;
+					case "get_all_users_for_app":
+						getAllUsersForAppointment(t, u, request);
+						return;
+					case "get_all_groups_for_app":
+						getAllGroupsForAppointment(t, u, request);
+						return;
 					case "invite_user":
 						inviteUser(t, request);
 						return;
@@ -135,6 +141,66 @@ public class HttpInvitation extends HttpAPIHandler {
 			jarr.put(new JSONObject().put("aid", i).put("appointment", a.toJSON()));
 		}
 		sendOK(t, new JSONObject().put("invitations", jarr));
+	}
+	
+	private void getAllUsersForAppointment(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid;
+		try {
+			aid = request.getInt("aid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Invalid appointment");
+			return;
+		}
+		
+		if(!Invitation.isUserInvited(a.getId(), u.getId()) && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		ArrayList<Integer> users = Invitation.getInvitationsForAppointment(aid);
+		JSONArray jarr = new JSONArray();
+		for(int i : users) {
+			jarr.put(i);
+		}
+		sendOK(t, new JSONObject().put("uids", jarr));
+	}
+	
+	private void getAllGroupsForAppointment(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid;
+		try {
+			aid = request.getInt("aid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Invalid appointment");
+			return;
+		}
+		
+		if(!Invitation.isUserInvited(a.getId(), u.getId()) && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		ArrayList<Integer> groups = Invitation.getGroupInvitationsForAppointment(aid);
+		JSONArray jarr = new JSONArray();
+		for(int i : groups) {
+			jarr.put(i);
+		}
+		sendOK(t, new JSONObject().put("gids", jarr));
 	}
 	
 	private void inviteUser(HttpExchange t, JSONObject request) throws IOException {

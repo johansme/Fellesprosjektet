@@ -20,7 +20,13 @@ F	get_all_for_user
 		Out: invitations(app(Appointment), invitation(UserInvitation))[]
 F	get_all_for_group
 		In: gid(int)
-		Out: app(Appointment)[]
+		Out: invitations(app(Appointment), aid(int))[]
+F	get_all_users_for_app
+		In: aid(int)
+		Out: uids(int)[]
+F	get_all_groups_for_app
+		In: aid(int)[]
+		Out: gids(int)[]
 F	invite_user
 		In: aid(int),uid(int)
 P	invite_group
@@ -29,6 +35,7 @@ P	invite_group
 /group
 F	create
 		In: group(Group)
+		Out: gid(int)
 F	modify
 		In: group(Group)
 F	delete
@@ -63,6 +70,9 @@ F	create
 ?	get_available
 		In: start(Date), end(Date)
 		Out: rooms(Room)[]
+F	get_from_app
+		In: aid(int)
+		Out: rid(int)
 F	get_all
 		Out: rooms(Room)[]
 F	get

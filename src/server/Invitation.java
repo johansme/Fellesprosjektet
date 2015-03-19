@@ -149,6 +149,35 @@ public class Invitation extends shared.Invitation {
 		return list;
 	}
 	
+	public static ArrayList<Integer> getGroupInvitationsForAppointment(int aid) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+
+		DBConnection db = null;
+		final String str_fmt = "SELECT groupid FROM GroupInvitation WHERE appointmentid=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, aid);
+			stm.execute();
+			rs = stm.getResultSet();
+			while(rs.next()) {
+				int i;
+				i = rs.getInt("groupid");
+				list.add(i);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return list;
+	}
+	
 	public static boolean dirtify(int aid) {
 		DBConnection db = null;
 		boolean success = true;
@@ -170,5 +199,30 @@ public class Invitation extends shared.Invitation {
 			db.close();
 		}
 		return success;
+	}
+	
+	public static boolean isUserInvited(int aid, int uid) {
+		DBConnection db = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		boolean exists = true;
+		try {
+			db = new DBConnection();
+			final String stm_str = "SELECT 1 FROM Invitation WHERE userid=? AND appointmentid=?";
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, uid);
+			stm.setInt(2, aid);
+			stm.execute();
+			rs = stm.getResultSet();
+			exists = rs.first();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return exists;
 	}
 }

@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import server.Appointment;
+import server.Invitation;
 import server.Notification;
 import server.Room;
 import server.User;
@@ -44,6 +45,9 @@ public class HttpRooms extends HttpAPIHandler {
 						return;
 					case "get_all":
 						getAll(t);
+						return;
+					case "get_from_app":
+						getForAppointment(t, u, request);
 						return;
 					case "get":
 						getRooms(t, request);
@@ -183,7 +187,38 @@ public class HttpRooms extends HttpAPIHandler {
 		
 		sendOK(t, new JSONObject().put("rooms", result));
 		return;
+	}
+	
+	private void getForAppointment(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid;
+		try {
+			aid = request.getInt("aid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
 		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error getting appointment");
+			return;
+		}
+		
+		if(!Invitation.isUserInvited(aid, u.getId()) && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		int rid = Room.getForAppointment(aid);
+		if(rid != 0) {
+			sendOK(t, new JSONObject().put("rid", rid));
+			return;
+		} else {
+			sendError(t, "Error getting room for appointment");
+			return;
+		}
 	}
 
 	private void reserve(HttpExchange t, User u, JSONObject request) throws IOException {
