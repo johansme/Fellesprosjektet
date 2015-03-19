@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import api.API;
@@ -87,7 +86,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		}
 		saveButton.setDisable(false);
 	}
-	
+
 	@FXML
 	private void nameChanged() {
 		saveButton.setDisable(false);
@@ -146,11 +145,12 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			} catch (IOException e) {
 			}
 			saveButton.setDisable(true);
+			calendar.refresh();
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid group name", this);
 		}
 	}
-	
+
 	private boolean isValidName() {
 		String s = nameField.getText();
 		if (s.length() > 50) {
@@ -163,7 +163,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	private void deleteGroup() {
 		sceneHandler.popUpMessage("/messages/Confirm.fxml", 290, 140, "Are you sure you want to delete?", this);
 	}
-	
+
 	@FXML
 	private void cancelButtonPressed() {
 		// get a handle to the stage
@@ -176,6 +176,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 		nameField.setText(group.getName());
 		creatorLabel.setText(group.getAdmin().toString());
 		setMemberList();
+		saveButton.setDisable(true);
 		if (calendar.getLoggedInUser().isAdmin() || group.getAdmin().toString().equals(calendar.getLoggedInUser().toString())) {
 			nameLabel.setVisible(false);
 			nameField.setVisible(true);
@@ -228,11 +229,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	public void setData(Calendar c, Appointment a) {
 		if (c != null) {
 			calendar = c;
-			if (calendar.getLoggedInUser().isAdmin()) {
-				setGroups(getAllGroups());
-			} else {
-				setGroups(calendar.getLoggedInUser().getGroups());
-			}
+			setGroups(calendar.getLoggedInUser().getGroups());
 			setController();
 			if (groupList.size() > 0) {
 				setGroup(groupList.get(0));
@@ -248,7 +245,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	public void setFeedback() {
 		delete();
 	}
-	
+
 	private void delete() {
 		int gid = group.getId();
 		JSONObject obj = new JSONObject();
@@ -266,14 +263,14 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 				nameLabel.setText("");
 				memberList.clear();
 				memberListView.getItems().clear();
-				
+
 				nameLabel.setVisible(true);
 				nameField.setVisible(false);
 				nameField.setDisable(true);
 				addMembersButton.setDisable(true);
 				removeMemberButton.setDisable(true);
 				deleteButton.setDisable(true);
-				
+
 				tabs.getSelectionModel().select(1);
 			}
 		} catch (IOException e) {
@@ -281,7 +278,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			return;
 		}
 	}
-	
+
 	private void setGroupMenu() {
 		for (Group group : groupList) {
 			MenuItem mi = new MenuItem(group.getName());
@@ -313,7 +310,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 			}
 		}
 	}
-	
+
 	public void addGroup(Group group) {
 		groupList.add(group);
 		MenuItem mi = new MenuItem(group.getName());
@@ -352,7 +349,7 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	public TabPane getTabs() {
 		return tabs;
 	}
-	
+
 	@FXML
 	private void keyPressed(KeyEvent e) {
 		if (e.getCode()==KeyCode.ENTER) {
@@ -367,26 +364,6 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	@Override
 	public List<Participant> getParticipants() {
 		return memberList;
-	}
-	
-	private List<Group> getAllGroups() {
-		List<Group> groups = new ArrayList<Group>();
-		JSONObject obj = new JSONObject();
-		obj.put("command", "get_all");
-		try {
-			JSONObject res = API.call("/group", obj, calendar.getSession());
-			JSONArray groupArray = res.getJSONArray("groups");
-			for (int i = 0; i < groupArray.length(); i++) {
-				Group gr = new Group();
-				gr.setData(calendar);
-				JSONObject grObj = groupArray.getJSONObject(i);
-				gr.fromJSON(grObj);
-				gr.setMembers();
-				groups.add(gr);
-			}
-		} catch (IOException e) {
-		}
-		return groups;
 	}
 
 }

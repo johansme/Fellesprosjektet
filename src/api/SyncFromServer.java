@@ -44,6 +44,7 @@ public class SyncFromServer {
 			Group gr = new Group();
 			gr.setData(c);
 			gr.fromJSON((JSONObject) groupArray.get(i));
+			gr.setMembers();
 			g.add(gr);
 		}
 		c.getLoggedInUser().setGroups(g);		

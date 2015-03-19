@@ -95,7 +95,8 @@ public class NewGroupViewController implements ParticipantController {
 					obj.put("uid", ((User) member).getId());
 				}
 				try {
-					API.call("/group", obj, getGroupViewController().getData().getSession());
+					JSONObject res = API.call("/group", obj, getGroupViewController().getData().getSession());
+					System.out.println(res.toString()); //TODO FIX!
 				} catch (IOException e) {
 				}
 			}
@@ -104,6 +105,7 @@ public class NewGroupViewController implements ParticipantController {
 			memberListView.getItems().clear();
 			setView();
 			groupViewController.getTabs().getSelectionModel().select(0);
+			groupViewController.getData().refresh();
 		} else {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Invalid group name", getGroupViewController());
 		}
