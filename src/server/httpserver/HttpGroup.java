@@ -95,8 +95,9 @@ public class HttpGroup extends HttpAPIHandler {
 		}
 		
 		grp.setCreatedBy(u.getId());
-		if(Group.createGroup(grp)) {
-			sendOK(t);
+		int gid = Group.createGroup(grp);
+		if(gid != 0) {
+			sendOK(t, new JSONObject().put("gid", gid));
 			return;
 		} else {
 			sendError(t, "Error creating group");

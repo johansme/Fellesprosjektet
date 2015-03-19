@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.Statement;
+
 public class Group extends shared.Group {
 	public Group() {
 		
@@ -202,15 +204,15 @@ public class Group extends shared.Group {
 		return list;
 	}
 	
-	public static boolean createGroup(Group g) {
+	public static int createGroup(Group g) {
 		DBConnection db = null;
-		boolean success = true;
+		int id = 0;
 		final String stm_str = "INSERT INTO Group_ VALUES(0, ?, ?, ?)";
 		
 		PreparedStatement stm = null;
 		try {
 			db = new DBConnection();
-			stm = db.getConnection().prepareStatement(stm_str);
+			stm = db.getConnection().prepareStatement(stm_str, Statement.RETURN_GENERATED_KEYS);
 			stm.setString(1, g.getName());
 			if(g.getParent() != 0) {
 				stm.setInt(2, g.getParent());
@@ -218,10 +220,13 @@ public class Group extends shared.Group {
 				stm.setNull(2, java.sql.Types.INTEGER);
 			}
 			stm.setInt(3, g.getCreatedBy());
-			
 			stm.executeUpdate();
+			ResultSet keys = stm.getGeneratedKeys();
+			if(keys.next()) {
+				id = (int)keys.getLong(1);
+			}
 		} catch(SQLException e) {
-			success = false;
+			id = 0;
 			e.printStackTrace();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -229,7 +234,7 @@ public class Group extends shared.Group {
 			try{ if(stm != null) stm.close(); } catch(Exception e) {}
 			db.close();
 		}
-		return success;
+		return id;
 	}
 	
 	public static boolean deleteGroup(int gid) {
