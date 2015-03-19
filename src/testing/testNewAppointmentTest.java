@@ -14,18 +14,13 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import server.User;
 import shared.Appointment;
-import calendar.Calendar;
 
 
 public class testNewAppointmentTest extends NewAppointmentController {
 	
 	
-	protected String str;
 	protected Appointment appointment;
-	protected Calendar calendar;
-	protected User currentUser; 	
 	protected LoginMain login = new LoginMain();
 	protected Date date = new Date();
 	
