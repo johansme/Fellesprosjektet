@@ -47,7 +47,7 @@ public class AppointmentViewController implements ControllerInterface{
 	}
 	
 	
-	private SceneHandler sceneHandler;
+	private SceneHandler sceneHandler = new SceneHandler();
 	private Calendar calendar;
 	private Appointment appointment;
 
@@ -118,7 +118,7 @@ public class AppointmentViewController implements ControllerInterface{
 			appointment.setAttending("notAnswered");
 		}
 		else {
-			User u = new User();
+			User u = calendar.getLoggedInUser();
 
 			if (toggleAnswer.getSelectedToggle()==yes) {
 				appointment.setAttending("Y");
@@ -133,6 +133,7 @@ public class AppointmentViewController implements ControllerInterface{
 					appointment.setUserAttending(u, false);
 				}
 			}
+			sendConfirmationToServer();
 		}
 		setView(appointment);
 	}
@@ -148,7 +149,6 @@ public class AppointmentViewController implements ControllerInterface{
 	
 	@FXML
 	public void editAction() {
-		sceneHandler = new SceneHandler();
 		closeAction();
 		sceneHandler.popUpScene("/newAppointment/NewAppointment.fxml", 590, 470, getData(), appointment);
 		
@@ -159,7 +159,6 @@ public class AppointmentViewController implements ControllerInterface{
 	
 	@FXML
 	public void deleteAction() {
-		sceneHandler = new SceneHandler();
 		sceneHandler.popUpMessage("/messages/Confirm.fxml", 290, 140, "Are you sure you want to delete?", this);
 	}
 	
@@ -329,7 +328,6 @@ public class AppointmentViewController implements ControllerInterface{
 		try {
 			appointment.delete();
 		} catch (IOException e) {
-			sceneHandler = new SceneHandler();
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "WTF", this);
 		}
 	    // get a handle to the stage
@@ -338,4 +336,18 @@ public class AppointmentViewController implements ControllerInterface{
 	    stage.close();
 		
 	}
+	
+	private void sendConfirmationToServer() {
+		boolean attends = appointment.getAttending().equals("Y");
+		JSONObject obj = new JSONObject();
+		obj.put("command", "update_attending");
+		obj.put("uid", calendar.getLoggedInUser().getId());
+		obj.put("aid", appointment.getId());
+		obj.put("attending", attends);
+		try {
+			API.call("/invitation", obj, calendar.getSession());
+		} catch (IOException e) {
+		}
+	}
+	
 }
