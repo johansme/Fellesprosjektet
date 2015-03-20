@@ -32,18 +32,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
-public class WeekViewController extends Application implements ControllerInterface, DayChangeListener {
-
-	public void start(Stage primaryStage) {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("WeekView.fxml/"));
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+public class WeekViewController implements ControllerInterface, DayChangeListener {
 	
 	private Calendar calendar;
 	private SceneHandler sceneHandler = new SceneHandler();
@@ -190,7 +179,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 			monthClicked((Event) e);
 		}
 		else if (e.getCode()==KeyCode.F5) {
-			calendar.refresh(true);;
+			calendar.refresh(true);
 		}
 		else {
 			return;
@@ -395,9 +384,6 @@ public class WeekViewController extends Application implements ControllerInterfa
 		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 590, 470, calendar, appointments.get(id));
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
 				
 	public void setData(Calendar calendar) {
 		if (calendar != null) {

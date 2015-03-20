@@ -39,6 +39,8 @@ F	update_attending
 		In: uid(int),aid(int),attending(boolean)
 F	update_hidden
 		In: uid(int),aid(int),hidden(boolean)
+F	update_dirty
+		In: uid(int),aid(int)
 
 /group
 F	create

@@ -93,7 +93,7 @@ public class TestNewAppointment extends NewAppointmentController {
 			System.out.println(failure.toString());
 		}
 		if(result.wasSuccessful()) System.out.println("All tests was succsessful!");
-		else System.out.println("One or more tests was: " + result.wasSuccessful());
+		else System.err.println("One or more tests was: " + result.wasSuccessful());
 	}
 
 }

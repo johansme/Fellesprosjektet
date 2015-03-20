@@ -15,6 +15,7 @@ import newAppointment.Room;
 
 import org.json.JSONObject;
 
+import shared.Invitation;
 import api.API;
 
 public class Appointment extends shared.Appointment {
@@ -36,6 +37,7 @@ public class Appointment extends shared.Appointment {
 	private List<Group> groups = new ArrayList<Group>();
 	private boolean active=true;
 	private boolean personal=true;
+	private Invitation invitation = new Invitation();
 	
 	private Room thaRoom;
 	
@@ -367,6 +369,8 @@ public class Appointment extends shared.Appointment {
 
 	public void setOpened(boolean b) {
 		opened = b;
+		invitation.setDirty(b);
+		updateInvitation();
 		if (prev!=null) {
 			if (prev.getOpened()!=b) {
 				prev.setOpened(b);
@@ -377,6 +381,21 @@ public class Appointment extends shared.Appointment {
 				next.setOpened(b);
 			}
 		}
+	}
+	
+	private void updateInvitation() {
+		JSONObject obj = new JSONObject();
+		obj.put("command", "update_dirty");
+		obj.put("uid", calendar.getLoggedInUser().getId());
+		obj.put("aid", id);
+		try {
+			API.call("/invitation", obj, calendar.getSession());
+		} catch (IOException e) {
+		}
+	}
+	
+	public void setInvitation(Invitation i) {
+		invitation = i;
 	}
 
 	public boolean getAdmin() {

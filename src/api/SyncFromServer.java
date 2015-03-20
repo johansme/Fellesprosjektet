@@ -74,30 +74,6 @@ public class SyncFromServer {
 					ap.setValues();
 					ap.setPersonal(false);
 					ap.addGroup(gr);
-	//				TODO code for getting the response from other users, for for for
-	//				JSONObject uidReq = new JSONObject();
-	//				uidReq.put("command", "get_all_users_for_app");
-	//				uidReq.put("aid", ap.getId());
-	//				JSONObject getUids = new JSONObject();
-	//				getUids = API.call("/invitation", o, c.getSession());
-	//				JSONArray uidArray = getUids.getJSONArray("uids");
-	//				for (int j=0; j<uidArray.length(); j++) {
-	//					int uid = uidArray.getInt(j);
-	//					JSONObject appsForUidReq = new JSONObject();
-	//					appsForUidReq.put("command", "get_all_for_user");
-	//					appsForUidReq.put("uid", uid);
-	//					JSONObject getApps = new JSONObject();
-	//					getApps = API.call("/invitation", appsForUidReq, c.getSession());
-	//					JSONArray uidInvArray = getApps.getJSONArray("invitations");
-	//					for (int x=0; x<uidInvArray.length(); x++) {
-	//						JSONObject appObj = new JSONObject();
-	//						appObj = uidInvArray.getJSONObject(x);
-	//						Appointment app = new Appointment(c);
-	//						app.fromJSON(appObj.getJSONObject("app"));
-	//						Invitation inv = new Invitation();
-	//						inv.fromJSON(obj.getJSONObject("invitation"));
-	//					}
-	//				}
 					if (ap.getCreator()==c.getLoggedInUser().getId()) {
 						ap.setAdmin(true);
 						ap.setOpened(true);
@@ -159,6 +135,7 @@ public class SyncFromServer {
 				JSONObject getUsers = new JSONObject();
 				getUsers = API.call("/invitation", uidReq, c.getSession());
 				JSONArray usersArray = getUsers.getJSONArray("users");
+				ap.setInvitation(inv);
 				if (usersArray.length()==1) {
 					ap.setPersonal(true);
 					ap.setAttending(null);
@@ -166,6 +143,7 @@ public class SyncFromServer {
 				else {
 					ap.setPersonal(false);
 					ap.setAttending(inv.isAccepted());
+					ap.setOpened(inv.isDirty());
 					for (int j=0; j<usersArray.length(); j++) {
 						JSONObject object = new JSONObject();
 						object = usersArray.getJSONObject(j);
