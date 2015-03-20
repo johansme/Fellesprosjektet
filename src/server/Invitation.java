@@ -93,6 +93,54 @@ public class Invitation extends shared.Invitation {
 		return success;
 	}
 	
+	public static boolean removeUser(int aid, int uid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM Invitation WHERE userid=? AND appointmentid=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, uid);
+			stm.setInt(2, aid);		
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+
+	public static boolean removeGroup(int aid, int gid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM GroupInvitation WHERE groupid=? AND appointmentid=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, gid);
+			stm.setInt(2, aid);		
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
 	public static ArrayList<Integer> getInvitationsForGroup(int gid) {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 
