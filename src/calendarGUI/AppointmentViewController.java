@@ -329,7 +329,16 @@ public class AppointmentViewController implements ControllerInterface{
 	@Override
 	public void setFeedback() {
 		try {
-			appointment.delete();
+			if (appointment.getAdmin()) {
+				appointment.delete();
+			} else {
+				JSONObject obj = new JSONObject();
+				obj.put("command", "update_hidden");
+				obj.put("uid", calendar.getLoggedInUser().getId());
+				obj.put("aid", appointment.getID());
+				obj.put("hidden", true);
+				API.call("/invitation", obj, calendar.getSession());
+			}
 		} catch (IOException e) {
 			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "WTF", this);
 		}
@@ -345,7 +354,7 @@ public class AppointmentViewController implements ControllerInterface{
 		JSONObject obj = new JSONObject();
 		obj.put("command", "update_attending");
 		obj.put("uid", calendar.getLoggedInUser().getId());
-		obj.put("aid", appointment.getId());
+		obj.put("aid", appointment.getID());
 		obj.put("attending", attends);
 		try {
 			API.call("/invitation", obj, calendar.getSession());
