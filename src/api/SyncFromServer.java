@@ -143,7 +143,7 @@ public class SyncFromServer {
 				else {
 					ap.setPersonal(false);
 					ap.setAttending(inv.isAccepted());
-					ap.setOpened(inv.isDirty());
+					ap.setOpened(!inv.isDirty());
 					for (int j=0; j<usersArray.length(); j++) {
 						JSONObject object = new JSONObject();
 						object = usersArray.getJSONObject(j);
