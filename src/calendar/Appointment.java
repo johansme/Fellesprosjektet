@@ -34,8 +34,8 @@ public class Appointment extends shared.Appointment {
 	private Appointment prev;
 	private Appointment next;
 	private List<Group> groups = new ArrayList<Group>();
-	private boolean active;
-	private boolean personal;
+	private boolean active=true;
+	private boolean personal=true;
 	
 	private Room thaRoom;
 	
@@ -616,13 +616,15 @@ public class Appointment extends shared.Appointment {
 	}
 	
 	public boolean getActive(boolean b) {
-		if (personal) {
-			return personal;
-		}
-		if (b) {
-			findActive();
-		}
-		return active;
+//		TODO
+		return true;
+//		if (personal) {
+//			return personal;
+//		}
+//		if (b) {
+//			findActive();
+//		}
+//		return active;
 	}
 	
 	public void setActive(boolean b) {
@@ -814,13 +816,13 @@ public class Appointment extends shared.Appointment {
 	public void setValues() {
 		LocalDateTime start = super.getStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		LocalDateTime end = super.getEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		calendar.setCurrentDate(start.toLocalDate());
 		this.setDate(start.toLocalDate(), end.toLocalDate());
 		setStartTime(start.toLocalTime());
 		setEndTime(end.toLocalTime());
 		setDescription(super.getDescription());
 		setOpened(false);
 		addToDay();
+		day.setActiveAppointments();
 	}
 	
 	public void sendInvitation(Participant participant) {
