@@ -384,9 +384,6 @@ public class WeekViewController implements ControllerInterface, DayChangeListene
 		sceneHandler.changeAppointmentRelatedScene("/calendarGUI/AppointmentView.fxml", 590, 470, calendar, appointments.get(id));
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
 				
 	public void setData(Calendar calendar) {
 		if (calendar != null) {
