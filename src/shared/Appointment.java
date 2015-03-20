@@ -9,7 +9,7 @@ public class Appointment {
 	protected int id = 0;
 	protected int creator = 0;
 	protected String description = null;
-	protected String location = null;
+	protected String location = "";
 	protected Date start = null;
 	protected Date end = null;
 	protected Date modified = null;

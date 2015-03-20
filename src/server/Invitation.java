@@ -272,6 +272,48 @@ public class Invitation extends shared.Invitation {
 		}
 	}
 	
+	public static void setHidden(int aid, int uid, boolean hidden) {
+		DBConnection db = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			final String stm_str = "UPDATE Invitation SET hidden=? WHERE userid=? AND appointmentid=?";
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setBoolean(1, hidden);
+			stm.setInt(2, uid);
+			stm.setInt(3, aid);
+			stm.execute();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+	}
+	
+	public static void setAttending(int aid, int uid, boolean attending) {
+		DBConnection db = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			final String stm_str = "UPDATE Invitation SET accepted=? WHERE userid=? AND appointmentid=?";
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setBoolean(1, attending);
+			stm.setInt(2, uid);
+			stm.setInt(3, aid);
+			stm.execute();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+	}
+	
 	public static class Alert {
 		public int uid;
 		public int aid;
