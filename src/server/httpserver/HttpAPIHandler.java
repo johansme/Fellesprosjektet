@@ -23,7 +23,7 @@ public abstract class HttpAPIHandler implements HttpHandler{
 	
 	static protected void send(HttpExchange t, JSONObject response) throws IOException {
 		String response_str = response.toString();
-		t.sendResponseHeaders(200, response_str.length());
+		t.sendResponseHeaders(200, response_str.getBytes().length);
 		OutputStream out = t.getResponseBody();
 		out.write(response_str.getBytes());
 		t.close();
