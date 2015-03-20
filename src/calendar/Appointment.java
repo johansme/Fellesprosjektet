@@ -370,6 +370,7 @@ public class Appointment extends shared.Appointment {
 	public void setOpened(boolean b) {
 		opened = b;
 		invitation.setDirty(b);
+		updateInvitation();
 		if (prev!=null) {
 			if (prev.getOpened()!=b) {
 				prev.setOpened(b);
@@ -379,6 +380,17 @@ public class Appointment extends shared.Appointment {
 			if (next.getOpened()!=b) {
 				next.setOpened(b);
 			}
+		}
+	}
+	
+	private void updateInvitation() {
+		JSONObject obj = new JSONObject();
+		obj.put("command", "update_dirty");
+		obj.put("uid", calendar.getLoggedInUser().getId());
+		obj.put("aid", id);
+		try {
+			API.call("/invitation", obj, calendar.getSession());
+		} catch (IOException e) {
 		}
 	}
 	
