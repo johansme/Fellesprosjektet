@@ -72,7 +72,7 @@ public class FilterViewController {
 				checkBox.setSelected(false);
 				
 				checkBox.setFocusTraversable(false);
-
+				groups.put(checkBox, g);
 				groupLabel.setPrefWidth(line.getPrefWidth()-checkBox.getWidth());
 				line.getChildren().addAll(groupLabel, checkBox);
 				line.setFocusTraversable(false);
