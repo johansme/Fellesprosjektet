@@ -260,7 +260,7 @@ public class Invitation extends shared.Invitation {
 		try {
 			db = new DBConnection();
 			stm = db.getConnection().prepareStatement(stm_str);
-			stm.setTimestamp(1, new Timestamp(alert.getTime() * 60 * 60 * 1000));
+			stm.setTimestamp(1, new Timestamp(alert.getTime() + 60 * 60 * 1000));
 			stm.setInt(2, aid);
 			stm.executeUpdate();
 		} catch(SQLException e) {
