@@ -5,10 +5,15 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
+import newAppointment.Room;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.User;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,7 +33,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import login.SceneHandler;
 
-public class AppointmentViewController extends Application implements ControllerInterface{
+public class AppointmentViewController implements ControllerInterface{
 
 	public void start(Stage primaryStage) {
 		try {
@@ -166,7 +171,9 @@ public class AppointmentViewController extends Application implements Controller
 		endDate.setText(dateToString(appointment.getEndDate()));
 		from.setText(appointment.getStartStartTime().toString());
 		until.setText(appointment.getEndEndTime().toString());
-		
+		if (appointment.getLocation().equals("")) {
+			getRoomFromServer();
+		}
 	
 		if (appointment.getRoom()==null) {
 			room.setText(appointment.getLocation());			
@@ -234,6 +241,25 @@ public class AppointmentViewController extends Application implements Controller
 
 		}
 	}
+
+	private void getRoomFromServer() {
+		JSONObject obj = new JSONObject();
+		obj.put("command", "get_from_app");
+		obj.put("aid", appointment.getId());
+		try {
+			JSONObject res = API.call("/rooms", obj, calendar.getSession());
+			obj = new JSONObject();
+			obj.put("command", "get");
+			JSONArray arr = new JSONArray();
+			arr.put(res.get("rid"));
+			obj.put("rid", arr);
+			res = API.call("/rooms", obj, calendar.getSession());
+			Room rm = new Room();
+			rm.fromJSON(res.getJSONArray("rooms").getJSONObject(0));
+			appointment.setRoom(rm);
+		} catch (IOException e) {
+		}
+	}
 	
 	private HashMap<CheckBox, User> attendMap = new HashMap<CheckBox, User>();
 	
@@ -279,12 +305,6 @@ public class AppointmentViewController extends Application implements Controller
 		else {
 			return null;
 		}
-	}
-		
-	
-
-	public static void main(String[] args) {
-		launch(args);
 	}
 
 	@Override

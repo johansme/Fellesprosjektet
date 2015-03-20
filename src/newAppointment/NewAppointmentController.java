@@ -174,22 +174,21 @@ public class NewAppointmentController implements ControllerInterface, Participan
 					} catch (IOException e1) {
 					}
 				}
-				//TODO remove commenting when ready
-//				for (Participant p : removedParticipants) {
-//					obj = new JSONObject();
-//					obj.put("aid", a.getId());
-//					if (p instanceof User) {
-//						obj.put("command", "remove_user");
-//						obj.put("uid", ((User) p).getId());
-//					} if (p instanceof Group) {
-//						obj.put("command", "remove_group");
-//						obj.put("gid", ((Group) p).getId());
-//					}
-//					try {
-//						API.call("/invitation", obj, calendar.getSession());
-//					} catch (IOException e1) {
-//					}
-//				}
+				for (Participant p : removedParticipants) {
+					obj = new JSONObject();
+					obj.put("aid", a.getId());
+					if (p instanceof User) {
+						obj.put("command", "remove_user");
+						obj.put("uid", ((User) p).getId());
+					} if (p instanceof Group) {
+						obj.put("command", "remove_group");
+						obj.put("gid", ((Group) p).getId());
+					}
+					try {
+						API.call("/invitation", obj, calendar.getSession());
+					} catch (IOException e1) {
+					}
+				}
 			} else {
 				a.addToDay();
 				calendar.getLoggedInUser().addAppointment(a);
