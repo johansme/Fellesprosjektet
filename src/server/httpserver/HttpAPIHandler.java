@@ -22,6 +22,7 @@ public abstract class HttpAPIHandler implements HttpHandler{
 	}
 	
 	static protected void send(HttpExchange t, JSONObject response) throws IOException {
+		System.out.println("send(" + response.toString() + ")");
 		String response_str = response.toString();
 		t.sendResponseHeaders(200, response_str.getBytes().length);
 		OutputStream out = t.getResponseBody();
@@ -50,7 +51,7 @@ public abstract class HttpAPIHandler implements HttpHandler{
 	}
 	
 	static protected void sendOK(HttpExchange t) throws IOException {
-		send(t, new JSONObject().put("status", "OK"));
+		send(t, new JSONObject().put("status", true));
 	}
 	
 	static protected void sendOK(HttpExchange t, JSONObject result) throws IOException {

@@ -367,7 +367,7 @@ public class Appointment extends shared.Appointment {
 
 	public void setOpened(boolean b) {
 		opened = b;
-		invitation.setDirty(b);
+		invitation.setDirty(!b);
 		updateInvitation();
 		if (prev!=null) {
 			if (prev.getOpened()!=b) {
