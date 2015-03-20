@@ -12,7 +12,6 @@ import calendar.User;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Group;
-import calendar.Participant;
 
 public class SyncFromServer {
 	
@@ -75,6 +74,7 @@ public class SyncFromServer {
 					obj = invArray1.getJSONObject(i);
 					Appointment ap = new Appointment(c);
 					ap.fromJSON(obj.getJSONObject("app"));
+					ap.setValues();
 					ap.setPersonal(false);
 					ap.addGroup(gr);
 	//				TODO code for getting the response from other users, for for for
@@ -103,11 +103,12 @@ public class SyncFromServer {
 	//				}
 					if (ap.getCreator()==c.getLoggedInUser().getId()) {
 						ap.setAdmin(true);
+						ap.setOpened(true);
 					}
 					else {
 						ap.setAdmin(false);
+						ap.setOpened(false);
 					}
-					ap.setValues();
 					
 					boolean added = false;
 					if (a!=null && !a.isEmpty()) {
@@ -138,6 +139,7 @@ public class SyncFromServer {
 				obj = invArray2.getJSONObject(i);
 				Appointment ap = new Appointment(c);
 				ap.fromJSON(obj.getJSONObject("app"));
+				ap.setValues();
 				Invitation inv = new Invitation();
 				inv.fromJSON(obj.getJSONObject("invitation"));
 				boolean isAdded = false;
@@ -186,7 +188,6 @@ public class SyncFromServer {
 				else {
 					ap.setAdmin(false);
 				}
-				ap.setValues();
 			}
 		}
 	}
