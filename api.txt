@@ -32,9 +32,9 @@ F	invite_user
 P	invite_group
 		In: aid(int),gid(int)
 	update_attending
-		In: uid(int),attending(boolean)
+		In: uid(int),aid(int),attending(boolean)
 	update_hidden
-		In: uid(int),hidden(boolean)
+		In: uid(int),aid(int),hidden(boolean)
 
 /group
 F	create
