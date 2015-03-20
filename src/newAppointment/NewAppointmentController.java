@@ -145,7 +145,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				a.setEnd(Date.from(t.atZone(ZoneId.systemDefault()).toInstant()));
 				t = LocalDateTime.now();
 				a.setModified(Date.from(t.atZone(ZoneId.systemDefault()).toInstant()));
-				if (appointment.getRoom() != null && appointment.getRoom().getId() != stringToRoomsMap.get(room.textProperty().getValue()).getId()) {
+				if (appointment.getRoom() != null) {
 					appointment.deleteReservation();
 					a.reserveRoom();
 				}

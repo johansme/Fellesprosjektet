@@ -824,9 +824,7 @@ public class Appointment extends shared.Appointment {
 			obj.put("gid", ((Group) participant).getId());
 		}
 		try {
-			System.out.println(obj.toString());
-			JSONObject res = API.call("/invitation", obj, calendar.getSession());
-			System.out.println(res.toString());
+			API.call("/invitation", obj, calendar.getSession());
 		} catch (IOException e) {
 		}
 	}
