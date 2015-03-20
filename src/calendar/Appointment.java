@@ -303,9 +303,9 @@ public class Appointment extends shared.Appointment {
 	}
 
 	private boolean dateIsValid(LocalDate d) {
-		if (LocalDate.now().isAfter(d)) {
-			return false;
-		}
+//		if (LocalDate.now().isAfter(d)) {
+//			return false;
+//		}
 		return true;
 	}
 
@@ -609,7 +609,6 @@ public class Appointment extends shared.Appointment {
 			}
 
 		}
-		sync();
 	}
 	
 	public List<Group> getGroups() {
@@ -811,6 +810,18 @@ public class Appointment extends shared.Appointment {
 			} catch (IOException e) {
 			}
 		}
+	}
+
+	public void setValues() {
+		LocalDateTime start = super.getStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		LocalDateTime end = super.getEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		calendar.setCurrentDate(start.toLocalDate());
+		this.setDate(start.toLocalDate(), end.toLocalDate());
+		setStartTime(start.toLocalTime());
+		setEndTime(end.toLocalTime());
+		setDescription(super.getDescription());
+		setOpened(false);
+		addToDay();
 	}
 	
 	public void sendInvitation(Participant participant) {
