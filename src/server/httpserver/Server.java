@@ -41,7 +41,11 @@ public class Server {
 
 	private void run() {
 		server.start();
-		while(running);
+		while(running) {
+			// Should wait for server thread to end, don't know how
+			// Just sleep a bit to save CPU time
+			try { Thread.sleep(1000); } catch(Exception e) {}
+		}
 		sessionMgr.end();
 	}
 
