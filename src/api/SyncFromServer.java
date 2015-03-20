@@ -74,9 +74,6 @@ public class SyncFromServer {
 				obj = invArray1.getJSONObject(i);
 				Appointment ap = new Appointment(c);
 				ap.fromJSON(obj.getJSONObject("app"));
-				if (!a.contains(ap)) {
-					a.add(ap);
-				}
 				ap.setPersonal(false);
 				ap.addGroup(gr);
 //				TODO code for getting the response from other users, for for for
@@ -110,6 +107,21 @@ public class SyncFromServer {
 					ap.setAdmin(false);
 				}
 				ap.setValues();
+				
+				boolean added = false;
+				if (a!=null && !a.isEmpty()) {
+					for (Appointment app : a) {
+						if (app.getID()==ap.getID()) {
+							added = true;
+							break;
+						}
+					}
+				}
+				if (!added) {
+					a.add(ap);
+					c.getLoggedInUser().addAppointment(ap);
+				}
+
 			}
 		}
 		o = new JSONObject();
@@ -135,6 +147,7 @@ public class SyncFromServer {
 				}
 				if (!isAdded) {
 					a.add(ap);
+					c.getLoggedInUser().addAppointment(ap);
 				}
 				if (!in.contains(inv)) {
 					in.add(inv);
@@ -173,8 +186,6 @@ public class SyncFromServer {
 				}
 				ap.setValues();
 			}
-		c.getLoggedInUser().setAppointments(a);
 		}
 	}
-
 }

@@ -48,9 +48,7 @@ public class User extends shared.User implements Participant {
 		if (apps!=null) {
 			appointments.clear();
 			for (Appointment a : apps) {
-				if (!appointments.contains(a)) {
-					appointments.add(a);
-				}
+				appointments.add(a);
 			}
 		}
 	}
