@@ -103,8 +103,7 @@ public class HttpInvitation extends HttpAPIHandler {
 			int room = Room.getForAppointment(a.getId());
 			try {
 				if(room != 0) {
-					Room r = new Room(room);
-					a.setLocation(r.getName());
+					a.setLocation("");
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -143,8 +142,7 @@ public class HttpInvitation extends HttpAPIHandler {
 			int room = Room.getForAppointment(a.getId());
 			try {
 				if(room != 0) {
-					Room r = new Room(room);
-					a.setLocation(r.getName());
+					a.setLocation("");
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
