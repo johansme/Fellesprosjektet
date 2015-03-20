@@ -121,7 +121,6 @@ public class Appointment extends shared.Appointment {
 	public void setDescription(String d) {
 		if (descriptionIsValid(d)) {
 			description = d;
-			sync();
 			if (prev!=null) {
 				if (prev.getDescription()!=d) {
 					prev.setDescription(d);
@@ -278,7 +277,6 @@ public class Appointment extends shared.Appointment {
 	public void addUser(User user) {
 		if (!users.containsKey(user)) {
 			users.put(user, -1);
-			sync();
 			if (prev!=null) {
 				if (!prev.getUsers().contains(user)) {
 					prev.addUser(user);
@@ -429,7 +427,6 @@ public class Appointment extends shared.Appointment {
 			else if (s=="notAnswered") {
 				users.replace(calendar.getLoggedInUser(), -1);
 			}
-			sync();
 		}
 		if (prev!=null) {
 			if (prev.getAttending()!=s) {
@@ -519,7 +516,6 @@ public class Appointment extends shared.Appointment {
 	public void setUserAttending(User p, int b) {
 		if (users.get(p)!=b) {
 			users.replace(p, b);
-			sync();
 			if (prev!=null) {
 				if (prev.getUserAttending(p)!=b) {
 					prev.setUserAttending(p, b);
@@ -686,16 +682,16 @@ public class Appointment extends shared.Appointment {
 
 	}
 	
-	private void sync() {
-		JSONObject o = new JSONObject();
-		o.put("command", "modify");
-		o.put("app", this);
-		try {
-			API.call("/appointment", o, calendar.getSession());
-		} catch (IOException e) {
-			return;
-		}
-	}
+//	private void sync() {
+//		JSONObject o = new JSONObject();
+//		o.put("command", "modify");
+//		o.put("app", this.toJSON());
+//		try {
+//			API.call("/appointment", o, calendar.getSession());
+//		} catch (IOException e) {
+//			return;
+//		}
+//	}
 	public void setRoom(Room rm){
 		location = "";
 		thaRoom = rm;
