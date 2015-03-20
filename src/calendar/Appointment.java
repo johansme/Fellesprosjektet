@@ -718,11 +718,11 @@ public class Appointment extends shared.Appointment {
 			if (res.getBoolean("status")) {
 				id = res.getInt("aid");
 				reserveRoom();
-				for (Group group : groups) {
-					sendInvitation(group);
-				}
 				for (User user : users.keySet()) {
 					sendInvitation(user);
+				}
+				for (Group group : groups) {
+					sendInvitation(group);
 				}
 			}
 		} catch (IOException e) {
