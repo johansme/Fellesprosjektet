@@ -145,6 +145,7 @@ public class Appointment extends shared.Appointment {
 				this.setNext(a);
 				a.setPrev(this);
 				a.setDate(start.plusDays(1), end);
+				a.setID(super.id);
 			}
 			else {
 				this.setNext(null);
@@ -852,6 +853,20 @@ public class Appointment extends shared.Appointment {
 		}
 		day.removeAppointment(this);
 
+	}
+
+	public void setID(int id) {
+		super.id=id;
+		if (prev!=null) {
+			if (prev.getID()!=id) {
+				prev.setID(id);
+			}
+			if (next!=null) {
+				if (next.getID()!=id) {
+					next.setID(id);
+				}
+			}
+		}
 	}
 	
 }

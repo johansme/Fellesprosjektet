@@ -261,10 +261,11 @@ public class AppointmentViewController implements ControllerInterface{
 		obj.put("aid", appointment.getId());
 		try {
 			JSONObject res = API.call("/rooms", obj, calendar.getSession());
+			int rid = res.getInt("rid");
 			obj = new JSONObject();
 			obj.put("command", "get");
 			JSONArray arr = new JSONArray();
-			arr.put(res.get("rid"));
+			arr.put(rid);
 			obj.put("rid", arr);
 			res = API.call("/rooms", obj, calendar.getSession());
 			Room rm = new Room();
