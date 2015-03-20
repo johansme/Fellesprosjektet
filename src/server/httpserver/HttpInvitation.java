@@ -104,7 +104,7 @@ public class HttpInvitation extends HttpAPIHandler {
 				e.printStackTrace();
 			}
 			
-			jarr.put(new JSONObject().put("invitation", i.toJSON()).put("appointment", a.toJSON()));
+			jarr.put(new JSONObject().put("invitation", i.toJSON()).put("app", a.toJSON()));
 		}
 		sendOK(t, new JSONObject().put("invitations", jarr));
 	}
@@ -144,7 +144,7 @@ public class HttpInvitation extends HttpAPIHandler {
 				e.printStackTrace();
 			}
 			
-			jarr.put(new JSONObject().put("aid", i).put("appointment", a.toJSON()));
+			jarr.put(new JSONObject().put("aid", i).put("app", a.toJSON()));
 		}
 		sendOK(t, new JSONObject().put("invitations", jarr));
 	}
