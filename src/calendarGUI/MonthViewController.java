@@ -1,9 +1,11 @@
 package calendarGUI;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import api.SyncFromServer;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Day;
@@ -422,6 +424,9 @@ public class MonthViewController implements ControllerInterface {
 		else if (e.getCode()==KeyCode.ENTER) {
 			calendar.setCurrentDate(LocalDate.now());
 			sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/WeekView.fxml", 940, 590, getData());
+		}
+		else if (e.getCode()==KeyCode.F5) {
+			calendar.refresh(true);
 		}
 		else {
 			return;

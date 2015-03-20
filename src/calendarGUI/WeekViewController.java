@@ -1,10 +1,12 @@
 package calendarGUI;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import api.SyncFromServer;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Day;
@@ -186,6 +188,9 @@ public class WeekViewController extends Application implements ControllerInterfa
 		}
 		else if (e.getCode()==KeyCode.ESCAPE) {
 			monthClicked((Event) e);
+		}
+		else if (e.getCode()==KeyCode.F5) {
+			calendar.refresh(true);;
 		}
 		else {
 			return;
