@@ -41,6 +41,8 @@ public class FilterViewController {
 	public void setParent(ControllerInterface p) {
 		parentController=p;
 	}
+	
+
 
 	private void createGroupPanel(){
 		
@@ -66,8 +68,8 @@ public class FilterViewController {
 
 				groupLabel.setText(g.getName());
 				CheckBox checkBox = new CheckBox();
-				groups.put(checkBox, g);
-				checkBox.setSelected(true);
+				
+				checkBox.setSelected(false);
 				
 				checkBox.setFocusTraversable(false);
 
@@ -80,14 +82,14 @@ public class FilterViewController {
 						
 						if (checkBox.isSelected()) {
 							
-							//groups.get(checkBox).setActive(true);
-							//parentController.setData(calendar);
+							groups.get(checkBox).setActive(true);
+							parentController.setData(calendar);
 						}
 						else {
 							
 							
-							//groups.get(checkBox).setActive(false);
-							//parentController.setData(calendar);
+							groups.get(checkBox).setActive(false);
+							parentController.setData(calendar);
 						}
 					}
 				});
