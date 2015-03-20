@@ -76,7 +76,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	@FXML
 	private void description(){
 	
-		if(descriptionField.getText().length() > 20)
+		if(descriptionField.getText().length() > 30)
 		{
 			descriptionField.setText("");
 			descriptionField.setPromptText("Description to long");

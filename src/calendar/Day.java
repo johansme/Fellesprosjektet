@@ -69,10 +69,13 @@ public class Day {
 			for (DayChangeListener listener : dayChangeListeners) 
 			{
 				listener.dayChanged(this, oldAppointments, getAppointments());
+				
 			}
 			
-		}catch(ConcurrentModificationException e){
+		}catch(ConcurrentModificationException e)
+		{
 			System.err.println("This is not good :/");
+			
 			e.printStackTrace();
 		}
 	}

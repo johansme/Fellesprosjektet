@@ -190,7 +190,7 @@ public class WeekViewController extends Application implements ControllerInterfa
 			monthClicked((Event) e);
 		}
 		else if (e.getCode()==KeyCode.F5) {
-			calendar.refresh(true);;
+			calendar.refresh(true);
 		}
 		else {
 			return;

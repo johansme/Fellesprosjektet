@@ -56,7 +56,6 @@ public class GroupViewController implements ControllerInterface, ParticipantCont
 	private List<Participant> memberList = new ArrayList<Participant>();
 	private List<Participant> addedMembers = new ArrayList<Participant>();
 	private List<Participant> removedMembers = new ArrayList<Participant>();
-
 	private SceneHandler sceneHandler = new SceneHandler();
 
 	@FXML

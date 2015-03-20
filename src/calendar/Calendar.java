@@ -162,17 +162,23 @@ public class Calendar {
 		LocalTime now  = LocalTime.now();
 		if (!b) {
 			if (((double)now.getHour()+(double)((double)now.getMinute()/(double)60))-
-			((double)lastSync.getHour()+(double)((double)lastSync.getMinute()/(double)60))>0.25) {
-				try {
+			((double)lastSync.getHour()+(double)((double)lastSync.getMinute()/(double)60)) > 0.25) 
+			{
+				try 
+				{
 					SyncFromServer.sync(this);
 					lastSync = now;
-				} catch (IOException e) {
+				} catch (IOException e) 
+				{
+					System.err.println("Failed in refresh method");
+					e.printStackTrace();
 					return;
 				}
 			}
 		}
 		else {
-			try {
+			try 
+			{
 				SyncFromServer.sync(this);
 				lastSync = now;
 			} catch (IOException e) {
