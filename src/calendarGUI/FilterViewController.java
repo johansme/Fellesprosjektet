@@ -68,8 +68,15 @@ public class FilterViewController {
 
 				groupLabel.setText(g.getName());
 				CheckBox checkBox = new CheckBox();
+				List<Group> groupiese = calendar.getLoggedInUser().getGroups();
+				boolean isActive = false;
+				for (Group gr : groupiese) {
+					if(gr.getId() == g.getId() && gr.getActive()){
+						isActive = true;
+					}
+				}
+				checkBox.setSelected(isActive);
 				
-				checkBox.setSelected(false);
 				
 				checkBox.setFocusTraversable(false);
 				groups.put(checkBox, g);

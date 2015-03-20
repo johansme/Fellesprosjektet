@@ -2,6 +2,7 @@ package login;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import org.json.JSONObject;
 
@@ -60,6 +61,7 @@ public class LoginController implements ControllerInterface {
 				res = API.call("/user", obj, session);
 				loggingIn.fromJSON(res.getJSONObject("user"));
 				calendar = new Calendar(loggingIn, session);
+				calendar.setCurrentDate(LocalDate.now());
 				sceneHandler.changeMonthRelatedScene(e, "/calendarGUI/MonthView.fxml",940,590, calendar);
 
 			} catch (IOException e1) {
