@@ -123,14 +123,25 @@ public class AppointmentViewController implements ControllerInterface{
 			if (toggleAnswer.getSelectedToggle()==yes) {
 				appointment.setAttending("Y");
 				if (!appointment.getUsers().isEmpty()) {
-					appointment.addUser(u);
-					appointment.setUserAttending(u, true);
+					boolean added = false;
+					for (User user : appointment.getUsers()) {
+						if (u.getId() == user.getId()) {
+							appointment.setUserAttending(user, true);
+							added = true;
+						}
+					}
+					if (! added) {
+						appointment.addUser(u);
+						appointment.setUserAttending(u, true);
+					}
 				}
 			}
 			else if (toggleAnswer.getSelectedToggle()==no) {
 				appointment.setAttending("N");
-				if (appointment.getUsers().contains(u)) {
-					appointment.setUserAttending(u, false);
+				for (User user : appointment.getUsers()) {
+					if (u.getId() == user.getId()) {
+						appointment.setUserAttending(user, false);
+					}
 				}
 			}
 			sendConfirmationToServer();
@@ -350,7 +361,12 @@ public class AppointmentViewController implements ControllerInterface{
 	}
 	
 	private void sendConfirmationToServer() {
-		boolean attends = appointment.getAttending().equals("Y");
+		int attends = -1;
+		if (appointment.getAttending().equals("Y")) {
+			attends = 1;
+		} else if (appointment.getAttending().equals("N")) {
+			attends = 0;
+		}
 		JSONObject obj = new JSONObject();
 		obj.put("command", "update_attending");
 		obj.put("uid", calendar.getLoggedInUser().getId());
