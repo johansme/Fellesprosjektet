@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
@@ -13,62 +16,50 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.CheckBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="/resources/defaultTheme.css"
-	fx:controller="calendarGUI.AdminUserController" onKeyPressed="#keyPressed">
+<AnchorPane onKeyPressed="#keyPressed" stylesheets="/resources/defaultTheme.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="calendarGUI.AdminUserController">
 	<children>
-		<TabPane tabClosingPolicy="UNAVAILABLE" prefHeight="600"
-			prefWidth="355" fx:id="tabs">
+		<TabPane fx:id="tabs" prefHeight="600" prefWidth="355" tabClosingPolicy="UNAVAILABLE">
 			<tabs>
 				<Tab fx:id="users" text="Users">
 					<content>
 						<Pane>
 							<children>
 
-								<Label text="New User" layoutY="10" layoutX="5"
-									styleClass="subheader" />
+								<Label layoutX="5" layoutY="10" styleClass="subheader" text="New User" />
 									
-									<Label text="Surname:" layoutY="40" layoutX="5" />
-								<TextField fx:id="surnameField" prefWidth="250"
-									layoutY="40" layoutX="100" promptText="Surname" />
+									<Label layoutX="5" layoutY="40" text="Surname:" />
+								<TextField fx:id="surnameField" layoutX="100" layoutY="40" prefWidth="250" promptText="Surname" />
 									
-									<Label text="Name:" layoutY="80" layoutX="5" />
-								<TextField fx:id="nameField" prefWidth="250"
-									layoutY="80" layoutX="100" promptText="Name" />
+									<Label layoutX="5" layoutY="80" text="Name:" />
+								<TextField fx:id="nameField" layoutX="100" layoutY="80" prefWidth="250" promptText="Name" />
 									
-									<Label text="Email:" layoutY="120" layoutX="5" />
-								<TextField fx:id="emailField" prefWidth="250"
-									layoutY="120" layoutX="100" promptText="some@somthing.com" />
+									<Label layoutX="5" layoutY="120" text="Email:" />
+								<TextField fx:id="emailField" layoutX="100" layoutY="120" prefWidth="250" promptText="some@somthing.com" />
 
-								<Separator layoutX="100" layoutY="160" prefWidth="250" prefHeight="1" />
+								<Separator layoutX="100" layoutY="160" prefHeight="1" prefWidth="250" />
 
-								<Label text="Username:" layoutY="180" layoutX="5" />
-								<TextField fx:id="usernameField" prefWidth="250"
-									layoutY="180" layoutX="100" promptText="Username" />
+								<Label layoutX="5" layoutY="180" text="Username:" />
+								<TextField fx:id="usernameField" layoutX="100" layoutY="180" prefWidth="250" promptText="Username" />
 
-								<Label text="Password:" layoutY="220" layoutX="5" />
-								<PasswordField fx:id="passwordField" prefWidth="250"
-									layoutY="220" layoutX="100" promptText="Password" />
+								<Label layoutX="5" layoutY="220" text="Password:" />
+								<PasswordField fx:id="passwordField" layoutX="100" layoutY="220" prefWidth="250" promptText="Password" />
 
-								<CheckBox fx:id="newAdmin" layoutX="110" layoutY="250" />
-								<Label text="Administrator" layoutX="130" layoutY="250" />
+								<CheckBox fx:id="newAdmin" layoutX="100.0" layoutY="259.0" />
+								<Label layoutX="121.0" layoutY="259.0" text="Administrator" />
 
-								<Button fx:id="addUserButton" onAction="#addUser"
-									alignment="CENTER" prefWidth="80" text="Add" layoutX="270"
-									layoutY="260" />
+								<Button fx:id="addUserButton" alignment="CENTER" layoutX="270" layoutY="260" onAction="#addUser" prefWidth="80" text="Add" />
 
-								<Separator layoutX="5" layoutY="300" prefWidth="345" prefHeight="3" />
+								<Separator layoutX="5" layoutY="300" prefHeight="3" prefWidth="345" />
 
-								<Label text="Users:" layoutY="310" layoutX="5" styleClass="subheader" />
-								<ListView fx:id="userElementsList" prefHeight="190"
-									prefWidth="345" layoutX="5" layoutY="330" />
+								<Label layoutX="5" layoutY="310" styleClass="subheader" text="Users:" />
+								<ListView fx:id="userElementsList" layoutX="5" layoutY="330" prefHeight="190" prefWidth="345" />
 
-								<Button fx:id="closeButton" text="Close" layoutX="270"
-									layoutY="530" prefWidth="80" onAction="#closeButtonPressed" />
+								<Button fx:id="closeButton" layoutX="270" layoutY="530" onAction="#closeButtonPressed" prefWidth="80" text="Close" />
 							</children>
 						</Pane>
 					</content>
 				</Tab>
-				<Tab fx:id="rooms" text="Rooms" >
+				<Tab fx:id="rooms" text="Rooms">
 					<content>
 						<fx:include fx:id="roomsPane" source="AdminRoomView.fxml" />
 					</content>
