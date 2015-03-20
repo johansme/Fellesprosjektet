@@ -206,7 +206,7 @@ public class HttpRooms extends HttpAPIHandler {
 			return;
 		}
 		
-		if(!Invitation.isUserInvited(aid, u.getId()) && !u.isAdmin()) {
+		if(!Invitation.isUserInvited(a.getId(), u.getId()) && !u.isAdmin()) {
 			sendUnauthorised(t);
 			return;
 		}
