@@ -251,6 +251,30 @@ public class Invitation extends shared.Invitation {
 		return success;
 	}
 	
+	public static boolean clean(int uid, int aid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "UPDATE Invitation SET dirty=FALSE WHERE userid=? AND appointmentid=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, uid);
+			stm.setInt(2, aid);
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
 	public static boolean alertify(int aid, Date alert) {
 		DBConnection db = null;
 		boolean success = true;

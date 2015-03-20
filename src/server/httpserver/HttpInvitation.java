@@ -64,6 +64,9 @@ public class HttpInvitation extends HttpAPIHandler {
 					case "update_hidden":
 						updateHidden(t, u, request);
 						return;
+					case "update_dirty":
+						updateDirty(t, u, request);
+						return;
 					default:
 						sendInvalidCommand(t);
 						return;
@@ -397,5 +400,30 @@ public class HttpInvitation extends HttpAPIHandler {
 		
 		Invitation.setHidden(aid, uid, hidden);
 		sendOK(t);
+	}
+	
+	private void updateDirty(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid, uid;
+		
+		try {
+			aid = request.getInt("aid");
+			uid = request.getInt("uid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		if(u.getId() != uid && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		if(Invitation.clean(uid, aid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error cleaning invitation");
+			return;
+		}
 	}
 }
