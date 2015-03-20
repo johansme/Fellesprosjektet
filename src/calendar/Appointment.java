@@ -685,7 +685,7 @@ public class Appointment extends shared.Appointment {
 		}
 	}
 	public void setRoom(Room rm){
-		location = null;
+		location = "";
 		thaRoom = rm;
 		if (prev!=null) {
 			if (prev.getRoom()!=rm) {
@@ -719,19 +719,12 @@ public class Appointment extends shared.Appointment {
 			res = API.call("/appointment", obj, calendar.getSession());
 			if (res.getBoolean("status")) {
 				id = res.getInt("aid");
-				if(thaRoom != null){
-					JSONObject obj1 = new JSONObject();
-					obj1.put("command", "reserve");
-					obj1.put("aid", id);
-					obj1.put("rid", thaRoom.getId());
-					LocalDateTime st = date.atTime((startTime));
-
-					LocalDateTime en = date.atTime(endTime);
-					
-					obj1.put("start", Date.from(st.atZone(ZoneId.systemDefault()).toInstant()).getTime());
-					obj1.put("end", Date.from(en.atZone(ZoneId.systemDefault()).toInstant()).getTime());
-					
-					API.call("/rooms", obj1, calendar.getSession());
+				reserveRoom();
+				for (Group group : groups) {
+					sendInvitation(group);
+				}
+				for (User user : users.keySet()) {
+					sendInvitation(user);
 				}
 			}
 		} catch (IOException e) {
@@ -762,12 +755,24 @@ public class Appointment extends shared.Appointment {
 		if (participantList != null && !participantList.isEmpty()) {
 			for (Participant p : participantList) {
 				if (p instanceof User) {
-					if (!users.containsKey((User) p)) {
+					boolean notIn = true;
+					for (User user : users.keySet()) {
+						if (user.toString().equals(p.toString())) {
+							notIn = false;
+						}
+					}
+					if (notIn) {
 						this.addUser((User) p);
 					}
 				}
 				else if (p instanceof Group) {
-					if (!groups.contains((Group) p)) {
+					boolean notIn = true;
+					for (Group group : groups) {
+						if (group.toString().equals(p.toString())) {
+							notIn = false;
+						}
+					}
+					if (notIn) {
 						this.addGroup((Group) p);
 					}
 				}
@@ -782,8 +787,7 @@ public class Appointment extends shared.Appointment {
 			obj.put("command", "cancel");
 			obj.put("aid", super.getId());
 			try {
-				JSONObject res = API.call("/rooms", obj, calendar.getSession());
-				System.out.println(res.toString());
+				API.call("/rooms", obj, calendar.getSession());
 			} catch (IOException e) {
 			}
 		}
@@ -806,6 +810,24 @@ public class Appointment extends shared.Appointment {
 				API.call("/rooms", obj1, calendar.getSession());
 			} catch (IOException e) {
 			}
+		}
+	}
+	
+	public void sendInvitation(Participant participant) {
+		JSONObject obj = new JSONObject();
+		obj.put("aid", super.id);
+		if (participant instanceof User) {
+			obj.put("command", "invite_user");
+			obj.put("uid", ((User) participant).getId());
+		} else if (participant instanceof Group) {
+			obj.put("command", "invite_group");
+			obj.put("gid", ((Group) participant).getId());
+		}
+		try {
+			System.out.println(obj.toString());
+			JSONObject res = API.call("/invitation", obj, calendar.getSession());
+			System.out.println(res.toString());
+		} catch (IOException e) {
 		}
 	}
 	
