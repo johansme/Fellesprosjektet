@@ -30,7 +30,7 @@ public class Appointment extends shared.Appointment {
 	private String attending;
 	private List<String> roomList;
 	private int roomCapacity;
-	private HashMap<User, Boolean> users = new HashMap<User, Boolean>();
+	private HashMap<User, Integer> users = new HashMap<User, Integer>();
 	private Appointment prev;
 	private Appointment next;
 	private List<Group> groups = new ArrayList<Group>();
@@ -244,7 +244,7 @@ public class Appointment extends shared.Appointment {
 		if (p!=null) {
 			for (User participant : p) {
 				if (participantIsValid(participant)) {
-					users.put(participant, false);
+					users.put(participant, -1);
 					if (prev!=null) {
 						if (!prev.getUsers().contains(participant)) {
 							prev.addUser(participant);
@@ -275,7 +275,7 @@ public class Appointment extends shared.Appointment {
 	
 	public void addUser(User user) {
 		if (!users.containsKey(user)) {
-			users.put(user, false);
+			users.put(user, -1);
 			sync();
 			if (prev!=null) {
 				if (!prev.getUsers().contains(user)) {
@@ -402,13 +402,13 @@ public class Appointment extends shared.Appointment {
 		if (s=="Y" || s=="N" || s=="None" || s=="notAnswered") {
 			attending=s;
 			if (s=="Y") {
-				users.replace(calendar.getLoggedInUser(), true);
+				users.replace(calendar.getLoggedInUser(), 1);
 			}
 			else if (s=="N") {
-				users.replace(calendar.getLoggedInUser(), false);
+				users.replace(calendar.getLoggedInUser(), 0);
 			}
 			else if (s=="notAnswered") {
-				users.replace(calendar.getLoggedInUser(), null);
+				users.replace(calendar.getLoggedInUser(), -1);
 			}
 			sync();
 		}
@@ -493,13 +493,13 @@ public class Appointment extends shared.Appointment {
 		return roomList;
 	}
 
-	public boolean getUserAttending(User p) {
+	public int getUserAttending(User p) {
 		return users.get(p);
 	}
 	
-	public void setUserAttending(User p, boolean b) {
+	public void setUserAttending(User p, int b) {
 		if (users.get(p)!=b) {
-			users.replace(p, !b, b);
+			users.replace(p, b);
 			sync();
 			if (prev!=null) {
 				if (prev.getUserAttending(p)!=b) {

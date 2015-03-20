@@ -64,9 +64,6 @@ public class SyncFromServer {
 			o.put("gid", gr.getId());
 			res = new JSONObject();
 			res = API.call("/invitation", o, c.getSession());
-//			if (!res.getBoolean("status")) {
-//				System.out.println(res.get("error"));
-//			}
 			if (res!=null) {
 				JSONArray invArray1= res.getJSONArray("invitations");
 				for (int i=0; i<invArray1.length(); i++) {
@@ -159,20 +156,24 @@ public class SyncFromServer {
 				JSONObject uidReq = new JSONObject();
 				uidReq.put("command", "get_all_users_for_app");
 				uidReq.put("aid", ap.getId());
-				JSONObject getUids = new JSONObject();
-				getUids = API.call("/invitation", uidReq, c.getSession());
-				JSONArray uidArray = getUids.getJSONArray("uids");
-				if (uidArray.length()==1) {
+				JSONObject getUsers = new JSONObject();
+				getUsers = API.call("/invitation", uidReq, c.getSession());
+				JSONArray usersArray = getUsers.getJSONArray("users");
+				if (usersArray.length()==1) {
 					ap.setPersonal(true);
 					ap.setAttending(null);
 				}
 				else {
 					ap.setPersonal(false);
 					ap.setAttending(inv.isAccepted());
-					for (int j=0; j<uidArray.length(); j++) {
+					for (int j=0; j<usersArray.length(); j++) {
+						JSONObject object = new JSONObject();
+						object = usersArray.getJSONObject(j);
+						int uid = object.getInt("uid");
+						int answer = object.getInt("attending");
 						JSONObject userReq = new JSONObject();
 						userReq.put("command", "get_by_id");
-						userReq.put("uid", uidArray.getInt(j));
+						userReq.put("uid", uid);
 						JSONObject jsonUserReq = new JSONObject();
 						jsonUserReq = API.call("/user", userReq, c.getSession());
 						JSONObject jsonUser = new JSONObject();
@@ -180,6 +181,7 @@ public class SyncFromServer {
 						User u = new User();
 						u.fromJSON(jsonUser);
 						ap.addUser(u);
+						ap.setUserAttending(u, answer);
 					}
 				}
 				if (ap.getCreator()==c.getLoggedInUser().getId()) {

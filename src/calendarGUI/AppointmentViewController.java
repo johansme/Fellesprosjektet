@@ -126,13 +126,13 @@ public class AppointmentViewController implements ControllerInterface{
 					boolean added = false;
 					for (User user : appointment.getUsers()) {
 						if (u.getId() == user.getId()) {
-							appointment.setUserAttending(user, true);
+							appointment.setUserAttending(user, 1);
 							added = true;
 						}
 					}
 					if (! added) {
 						appointment.addUser(u);
-						appointment.setUserAttending(u, true);
+						appointment.setUserAttending(u, 0);
 					}
 				}
 			}
@@ -140,7 +140,7 @@ public class AppointmentViewController implements ControllerInterface{
 				appointment.setAttending("N");
 				for (User user : appointment.getUsers()) {
 					if (u.getId() == user.getId()) {
-						appointment.setUserAttending(user, false);
+						appointment.setUserAttending(user, 0);
 					}
 				}
 			}
@@ -230,7 +230,12 @@ public class AppointmentViewController implements ControllerInterface{
 				Label userLabel = new Label();
 				userLabel.setText(p.getUsername());
 				CheckBox checkBox = new CheckBox();
-				checkBox.setSelected(appointment.getUserAttending(p));
+				if (appointment.getUserAttending(p)==1) {
+					checkBox.setSelected(true);
+				}
+				else {
+					checkBox.setSelected(false);
+				}
 				userLabel.setPrefWidth(line.getPrefWidth()-checkBox.getWidth());
 				line.getChildren().addAll(userLabel, checkBox);
 				attendMap.put(checkBox, p);
@@ -238,10 +243,10 @@ public class AppointmentViewController implements ControllerInterface{
 				checkBox.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
 						if (checkBox.isSelected()) {
-							appointment.setUserAttending(attendMap.get(checkBox), true);
+							appointment.setUserAttending(attendMap.get(checkBox), 1);
 						}
 						else {
-							appointment.setUserAttending(attendMap.get(checkBox), false);
+							appointment.setUserAttending(attendMap.get(checkBox), 0);
 						}
 					}
 				});
