@@ -93,6 +93,54 @@ public class Invitation extends shared.Invitation {
 		return success;
 	}
 	
+	public static boolean removeUser(int aid, int uid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM Invitation WHERE userid=? AND appointmentid=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, uid);
+			stm.setInt(2, aid);		
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+
+	public static boolean removeGroup(int aid, int gid) {
+		DBConnection db = null;
+		boolean success = true;
+		final String stm_str = "DELETE FROM GroupInvitation WHERE groupid=? AND appointmentid=?";
+		
+		PreparedStatement stm = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setInt(1, gid);
+			stm.setInt(2, aid);		
+			stm.executeUpdate();
+		} catch(SQLException e) {
+			success = false;
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return success;
+	}
+	
 	public static ArrayList<Integer> getInvitationsForGroup(int gid) {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 
@@ -262,6 +310,48 @@ public class Invitation extends shared.Invitation {
 			stm = db.getConnection().prepareStatement(stm_str);
 			stm.setInt(1, uid);
 			stm.setInt(2, aid);
+			stm.execute();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+	}
+	
+	public static void setHidden(int aid, int uid, boolean hidden) {
+		DBConnection db = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			final String stm_str = "UPDATE Invitation SET hidden=? WHERE userid=? AND appointmentid=?";
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setBoolean(1, hidden);
+			stm.setInt(2, uid);
+			stm.setInt(3, aid);
+			stm.execute();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+	}
+	
+	public static void setAttending(int aid, int uid, boolean attending) {
+		DBConnection db = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			final String stm_str = "UPDATE Invitation SET accepted=? WHERE userid=? AND appointmentid=?";
+			stm = db.getConnection().prepareStatement(stm_str);
+			stm.setBoolean(1, attending);
+			stm.setInt(2, uid);
+			stm.setInt(3, aid);
 			stm.execute();
 		} catch(Exception e) {
 			e.printStackTrace();

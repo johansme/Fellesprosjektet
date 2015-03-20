@@ -52,6 +52,18 @@ public class HttpInvitation extends HttpAPIHandler {
 					case "invite_group":
 						inviteGroup(t, request);
 						return;
+					case "remove_user":
+						removeUser(t, u, request);
+						return;
+					case "remove_group":
+						removeGroup(t, u, request);
+						return;
+					case "update_attending":
+						updateAttending(t, u, request);
+						return;
+					case "update_hidden":
+						updateHidden(t, u, request);
+						return;
 					default:
 						sendInvalidCommand(t);
 						return;
@@ -98,7 +110,7 @@ public class HttpInvitation extends HttpAPIHandler {
 				e.printStackTrace();
 			}
 			
-			jarr.put(new JSONObject().put("invitation", i.toJSON()).put("appointment", a.toJSON()));
+			jarr.put(new JSONObject().put("invitation", i.toJSON()).put("app", a.toJSON()));
 		}
 		sendOK(t, new JSONObject().put("invitations", jarr));
 	}
@@ -138,7 +150,7 @@ public class HttpInvitation extends HttpAPIHandler {
 				e.printStackTrace();
 			}
 			
-			jarr.put(new JSONObject().put("aid", i).put("appointment", a.toJSON()));
+			jarr.put(new JSONObject().put("aid", i).put("app", a.toJSON()));
 		}
 		sendOK(t, new JSONObject().put("invitations", jarr));
 	}
@@ -213,6 +225,11 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		}
 		
+		if(Invitation.isUserInvited(aid, uid)) {
+			sendError(t, "User already invited");
+			return;
+		}
+		
 		Appointment a;
 		try {
 			a = new Appointment(aid);
@@ -264,5 +281,123 @@ public class HttpInvitation extends HttpAPIHandler {
 			sendError(t, "Error inviting group");
 			return;
 		}
+	}
+	
+	private void removeUser(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid,uid;
+		
+		try {
+			aid = request.getInt("aid");
+			uid = request.getInt("uid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error getting appointment from DB");
+			return;
+		}
+		
+		if(u.getId() != a.getCreator() && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		if(Invitation.removeUser(aid, uid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error removing user from appointment; contact law enforcement");
+			return;
+		}
+	}
+	
+	private void removeGroup(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid,gid;
+		
+		try {
+			aid = request.getInt("aid");
+			gid = request.getInt("gid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error getting appointment from DB");
+			return;
+		}
+		
+		if(u.getId() != a.getCreator() && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		if(Invitation.removeGroup(aid, gid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error removing group from appointment; contact armed law enforcement");
+			return;
+		}
+	}
+	
+	private void updateAttending(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid, uid;
+		boolean attending;
+		
+		try {
+			aid = request.getInt("aid");
+			uid = request.getInt("uid");
+			attending = request.getBoolean("attending");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error getting appointment from DB");
+			return;
+		}
+		
+		if(u.getId() != uid && u.getId() != a.getCreator() && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		Invitation.setAttending(aid, uid, attending);
+		sendOK(t);
+	}
+	
+	private void updateHidden(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid, uid;
+		boolean hidden;
+		
+		try {
+			aid = request.getInt("aid");
+			uid = request.getInt("uid");
+			hidden = request.getBoolean("hidden");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+			
+		if(u.getId() != uid && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		Invitation.setHidden(aid, uid, hidden);
+		sendOK(t);
 	}
 }

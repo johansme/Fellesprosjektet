@@ -16,7 +16,9 @@ import org.json.JSONObject;
 import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.Group;
 import calendar.Participant;
+import calendar.User;
 import calendarGUI.ControllerInterface;
 import calendarGUI.ParticipantController;
 import javafx.collections.ObservableList;
@@ -68,6 +70,9 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	
 	private HashMap<String, Room> stringToRoomsMap = new HashMap<String, Room>(); 
 
+	private List<Participant> addedParticipants = new ArrayList<Participant>();
+	private List<Participant> removedParticipants = new ArrayList<Participant>();
+	
 	@FXML
 	private void description(){
 	
@@ -132,15 +137,21 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				a.addParticipants(participantList);				
 			}
 			if (header.getText().equals("Edit appointment")) {
+				int id = appointment.getId();
+				a.setId(id);
+				LocalDateTime t = a.getStartDate().atTime(a.getStartStartTime());
+				a.setStart(Date.from(t.atZone(ZoneId.systemDefault()).toInstant()));
+				t = a.getEndDate().atTime(a.getEndEndTime());
+				a.setEnd(Date.from(t.atZone(ZoneId.systemDefault()).toInstant()));
+				t = LocalDateTime.now();
+				a.setModified(Date.from(t.atZone(ZoneId.systemDefault()).toInstant()));
 				if (appointment.getRoom() != null && appointment.getRoom().getId() != stringToRoomsMap.get(room.textProperty().getValue()).getId()) {
 					appointment.deleteReservation();
-					int id = appointment.getId();
-					a.setId(id);
 					a.reserveRoom();
 				}
 				JSONObject obj = new JSONObject();
 				obj.put("command", "modify");
-				obj.put("app", a);
+				obj.put("app", a.toJSON());
 				try {
 					API.call("/appointment", obj, calendar.getSession());
 					appointment.getDay().removeAppointment(appointment);
@@ -148,10 +159,40 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				} catch (IOException e1) {
 					sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 				}
+				for (Participant p : addedParticipants) {
+					obj = new JSONObject();
+					obj.put("aid", a.getId());
+					if (p instanceof User) {
+						obj.put("command", "invite_user");
+						obj.put("uid", ((User) p).getId());
+					} if (p instanceof Group) {
+						obj.put("command", "invite_group");
+						obj.put("gid", ((Group) p).getId());
+					}
+					try {
+						API.call("/invitation", obj, calendar.getSession());
+					} catch (IOException e1) {
+					}
+				}
+				//TODO remove commenting when ready
+//				for (Participant p : removedParticipants) {
+//					obj = new JSONObject();
+//					obj.put("aid", a.getId());
+//					if (p instanceof User) {
+//						obj.put("command", "remove_user");
+//						obj.put("uid", ((User) p).getId());
+//					} if (p instanceof Group) {
+//						obj.put("command", "remove_group");
+//						obj.put("gid", ((Group) p).getId());
+//					}
+//					try {
+//						API.call("/invitation", obj, calendar.getSession());
+//					} catch (IOException e1) {
+//					}
+//				}
 			} else {
 				a.addToDay();
 				calendar.getLoggedInUser().addAppointment(a);
-				//TODO fix reservation
 				a.createInServer();
 			}
 			sceneHandler.popUpMessage("/messages/Info.fxml", 290, 140, "Your appointment has been saved", this);
@@ -672,11 +713,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			setRoomList();
 			if (a != null) {
 				if (a.getRoom() != null) {
-					for (Room rm : roomList) {
-						if (rm.getId() == a.getRoom().getId()) {
-							room.getItems().get(roomList.indexOf(rm) + 1).fire();
-						}
-					}
+					room.getItems().get(0).fire();
 				} else {
 					room.getItems().get(0).fire();
 					otherField.setText(a.getLocation());
@@ -713,6 +750,24 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		obj.put("start", Date.from(st.atZone(ZoneId.systemDefault()).toInstant()).getTime());
 		obj.put("end", Date.from(en.atZone(ZoneId.systemDefault()).toInstant()).getTime());
 
+		if (appointment.getRoom() != null) {
+			Room rm = appointment.getRoom();
+			roomList.add(rm);
+			
+			MenuItem it = new MenuItem(menuItemStringFormatter(rm.getName(),rm.getCapacity(),17));
+			stringToRoomsMap.put(menuItemStringFormatter(rm.getName(),rm.getCapacity(),17), rm);
+			
+			it.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent t) {
+					room.setText(it.getText());
+					otherField.setDisable(true);
+					otherField.textProperty().setValue("");
+				}
+			});
+			
+			room.getItems().add(it);
+		}
+		
 		MenuItem it1 = new MenuItem("Other");
 
 		it1.setOnAction(new EventHandler<ActionEvent>() {
@@ -776,9 +831,19 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		if(user != null){
 			String[] userName = user.split(";");
 			listView.getItems().remove(user);
-			participantList.remove(i);
+			Participant part = participantList.remove(i);
 			String msg = userName[0] + " removed";
-
+			boolean added = false;
+			for (Participant p : addedParticipants) {
+				if (part.toString().equals(p.toString())) {
+					addedParticipants.remove(p);
+					added = true;
+				}
+			}
+			if (! added) {
+				removedParticipants.add(part);
+			}
+			
 			sceneHandler.popUpMessage("/messages/Info.fxml", 290, 140, msg, this);
 
 		}
@@ -803,6 +868,16 @@ public class NewAppointmentController implements ControllerInterface, Participan
 		if (! eql) {
 			participantList.add(participant);
 			listView.getItems().add(participant.toString());
+		}
+		boolean rmvd = false;
+		for (Participant p : removedParticipants) {
+			if (participant.toString().equals(p.toString())) {
+				removedParticipants.remove(p);
+				rmvd = true;
+			}
+		}
+		if (! rmvd) {
+			addedParticipants.add(participant);
 		}
 	}
 
