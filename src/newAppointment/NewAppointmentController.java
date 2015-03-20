@@ -71,7 +71,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 	@FXML
 	private void description(){
 	
-		if(descriptionField.getText().length() >20)
+		if(descriptionField.getText().length() > 20)
 		{
 			descriptionField.setText("");
 			descriptionField.setPromptText("Description to long");
@@ -308,23 +308,14 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			
 			setRoomList();
 			
-			if(fromTimeHour > toTimeHour)
-			{
-				if(fromTimeMin > toTimeMin)
-				{
-					fromField.setText(getRoundHalfHour(toTimeHour, toTimeMin - 60));
-				}
-				else fromField.setText(getRoundHalfHour(toTimeHour, toTimeMin - 60));
-			}
-			
+			if(fromTimeHour > toTimeHour) fromField.setText(getRoundHalfHour(toTimeHour, toTimeMin - 60));
+				
 			if(!validToTime()){
 				if(timeDiffInMin < 30){
 					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 					printErrorMessage("The appointment must last for at least 30 minutes.");
 				}
-
 			}
-
 			if(!validFromTime())
 			{
 				fromField.setText(toTwoDigits(LocalTime.now().getHour()) + ":" + toTwoDigits(LocalTime.now().getMinute()));
@@ -333,8 +324,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 					printErrorMessage("The appointment must last for at least 30 minutes.");
 				}
 			}
-
-			
 			if(minAndMaxAllowedStartTime())
 			{
 				if(timeDiffInMin < 30) {
@@ -343,7 +332,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			}
 			else 
 			{
-
 				if(fromTimeHour >= 22 && fromTimeMin > 30 || toTimeHour >= 22 && toTimeMin >= 0 )
 				{
 					fromField.setText("22:30");
@@ -392,9 +380,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			if(!validToTime()){
 				if(timeDiffInMin < 30) toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 				//else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-
 			}
-
 			if(fromTimeHour > toTimeHour){
 				toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
 			}
@@ -417,7 +403,6 @@ public class NewAppointmentController implements ControllerInterface, Participan
 					printErrorMessage("The appointment must last for at least 30 minutes.");
 				}
 				//else toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
-
 			}
 		}
 
