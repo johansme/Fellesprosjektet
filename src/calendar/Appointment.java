@@ -650,7 +650,6 @@ public class Appointment extends shared.Appointment {
 					next.setActive(active);
 				}
 			}
-			day.setActiveAppointments();
 		}
 	}
 	
@@ -838,6 +837,19 @@ public class Appointment extends shared.Appointment {
 			API.call("/invitation", obj, calendar.getSession());
 		} catch (IOException e) {
 		}
+	}
+
+	public void clear() {
+		if (prev!=null) {
+			prev.setNext(null);
+			prev.clear();
+		}
+		if (next!=null) {
+			next.setPrev(null);
+			next.clear();
+		}
+		day.removeAppointment(this);
+
 	}
 	
 }

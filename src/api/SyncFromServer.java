@@ -53,6 +53,7 @@ public class SyncFromServer {
 	}
 	
 	public static void getAppointments(Calendar c) throws IOException {
+		c.getLoggedInUser().clearAppointments();
 		JSONObject o;
 		List<Group> g = c.getLoggedInUser().getGroups();
 		JSONObject res;
@@ -102,15 +103,13 @@ public class SyncFromServer {
 //						inv.fromJSON(obj.getJSONObject("invitation"));
 //					}
 //				}
-//				TODO ap.setAttending(inv.isAccepted());
-//				TODO ap.setUsers();
-//				TODO set room
 				if (ap.getCreator()==c.getLoggedInUser().getId()) {
 					ap.setAdmin(true);
 				}
 				else {
 					ap.setAdmin(false);
 				}
+				ap.setValues();
 			}
 		}
 		o = new JSONObject();
@@ -118,62 +117,63 @@ public class SyncFromServer {
 		o.put("uid", c.getLoggedInUser().getId());
 		res = new JSONObject();
 		res = API.call("/invitation", o, c.getSession());
-		JSONArray invArray2 = res.getJSONArray("invitations");
-		for (int i=0; i<invArray2.length(); i++) {
-			JSONObject obj = new JSONObject();
-			obj = invArray2.getJSONObject(i);
-			Appointment ap = new Appointment(c);
-			ap.fromJSON(obj.getJSONObject("app"));
-			Invitation inv = new Invitation();
-			inv.fromJSON(obj.getJSONObject("invitation"));
-			boolean isAdded = false;
-			for (Appointment app : a) {
-				if (app.getID()==ap.getID()) {
-					isAdded = true;
-					break;
+		if (res!=null) {
+			JSONArray invArray2 = res.getJSONArray("invitations");
+			for (int i=0; i<invArray2.length(); i++) {
+				JSONObject obj = new JSONObject();
+				obj = invArray2.getJSONObject(i);
+				Appointment ap = new Appointment(c);
+				ap.fromJSON(obj.getJSONObject("app"));
+				Invitation inv = new Invitation();
+				inv.fromJSON(obj.getJSONObject("invitation"));
+				boolean isAdded = false;
+				for (Appointment app : a) {
+					if (app.getID()==ap.getID()) {
+						isAdded = true;
+						break;
+					}
 				}
-			}
-			if (!isAdded) {
-				a.add(ap);
-			}
-			if (!in.contains(inv)) {
-				in.add(inv);
-			}
-			JSONObject uidReq = new JSONObject();
-			uidReq.put("command", "get_all_users_for_app");
-			uidReq.put("aid", ap.getId());
-			JSONObject getUids = new JSONObject();
-			getUids = API.call("/invitation", uidReq, c.getSession());
-			JSONArray uidArray = getUids.getJSONArray("uids");
-			if (uidArray.length()==1) {
-				ap.setPersonal(true);
-				ap.setAttending(null);
-			}
-			else {
-				ap.setPersonal(false);
-				ap.setAttending(inv.isAccepted());
-				for (int j=0; j<uidArray.length(); j++) {
-					JSONObject userReq = new JSONObject();
-					userReq.put("command", "get_by_id");
-					userReq.put("uid", uidArray.getInt(j));
-					JSONObject jsonUserReq = new JSONObject();
-					jsonUserReq = API.call("/user", userReq, c.getSession());
-					JSONObject jsonUser = new JSONObject();
-					jsonUser = jsonUserReq.getJSONObject("user");
-					User u = new User();
-					u.fromJSON(jsonUser);
-					ap.addUser(u);
+				if (!isAdded) {
+					a.add(ap);
 				}
+				if (!in.contains(inv)) {
+					in.add(inv);
+				}
+				JSONObject uidReq = new JSONObject();
+				uidReq.put("command", "get_all_users_for_app");
+				uidReq.put("aid", ap.getId());
+				JSONObject getUids = new JSONObject();
+				getUids = API.call("/invitation", uidReq, c.getSession());
+				JSONArray uidArray = getUids.getJSONArray("uids");
+				if (uidArray.length()==1) {
+					ap.setPersonal(true);
+					ap.setAttending(null);
+				}
+				else {
+					ap.setPersonal(false);
+					ap.setAttending(inv.isAccepted());
+					for (int j=0; j<uidArray.length(); j++) {
+						JSONObject userReq = new JSONObject();
+						userReq.put("command", "get_by_id");
+						userReq.put("uid", uidArray.getInt(j));
+						JSONObject jsonUserReq = new JSONObject();
+						jsonUserReq = API.call("/user", userReq, c.getSession());
+						JSONObject jsonUser = new JSONObject();
+						jsonUser = jsonUserReq.getJSONObject("user");
+						User u = new User();
+						u.fromJSON(jsonUser);
+						ap.addUser(u);
+					}
+				}
+	//			TODO set room
+				if (ap.getCreator()==c.getLoggedInUser().getId()) {
+					ap.setAdmin(true);
+				}
+				else {
+					ap.setAdmin(false);
+				}
+				ap.setValues();
 			}
-//			TODO setUsers
-//			TODO set room
-			if (ap.getCreator()==c.getLoggedInUser().getId()) {
-				ap.setAdmin(true);
-			}
-			else {
-				ap.setAdmin(false);
-			}
-			ap.setValues();
 		c.getLoggedInUser().setAppointments(a);
 		}
 	}

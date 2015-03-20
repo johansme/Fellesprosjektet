@@ -67,4 +67,11 @@ public class User extends shared.User implements Participant {
 		}
 	}
 
+	public void clearAppointments() {
+		for (Appointment a : appointments) {
+			a.clear();
+		}
+		appointments.clear();
+	}
+
 }
