@@ -38,7 +38,7 @@ public class LoginController implements ControllerInterface {
 	@FXML
 	private void login(Event e){
 		// get username and password
-
+		
 		if (e.getSource().equals(screen)) {
 			if (!(((KeyEvent) e).getCode()==KeyCode.ENTER)) {
 				return;
@@ -58,6 +58,7 @@ public class LoginController implements ControllerInterface {
 			obj.put("uid", uid);
 			JSONObject res;
 			try {
+				
 				res = API.call("/user", obj, session);
 				loggingIn.fromJSON(res.getJSONObject("user"));
 				calendar = new Calendar(loggingIn, session);
@@ -79,6 +80,7 @@ public class LoginController implements ControllerInterface {
 
 	@Override
 	public void setData(Calendar calendar) {
+		
 		this.calendar = calendar;
 	}
 
@@ -103,5 +105,5 @@ public class LoginController implements ControllerInterface {
 	public TextField getPassword(){
 		return password;
 	}
-
+	
 }

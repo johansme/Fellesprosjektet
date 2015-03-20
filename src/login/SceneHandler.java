@@ -3,6 +3,7 @@ package login;
 import newAppointment.AddParticipantsController;
 import calendar.Appointment;
 import calendar.Calendar;
+import calendar.Group;
 import calendar.User;
 import calendarGUI.ControllerInterface;
 import calendarGUI.EditUserPasswordController;
@@ -19,7 +20,7 @@ import javafx.stage.Stage;
 
 public class SceneHandler {
 
-	
+	LoginController login;  
 	public void changeScene(String fxmlPath , Event e){
 		
 		try{
@@ -52,7 +53,7 @@ public class SceneHandler {
 			stage.hide();
 			stage.setScene(scene);
 			stage.centerOnScreen();
-			stage.titleProperty().setValue("BETJA Systems");
+			stage.titleProperty().setValue("BETJA Systems | Logged in as: " + calendar.getLoggedInUser().getName() + " " +calendar.getLoggedInUser().getSurname());
 			stage.setResizable(false);
 			stage.show();
 			  

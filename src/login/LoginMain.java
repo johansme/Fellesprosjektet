@@ -1,6 +1,5 @@
 package login;
 
-import testing.TestNewAppointment;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
