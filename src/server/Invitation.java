@@ -54,7 +54,7 @@ public class Invitation extends shared.Invitation {
 			stm.setBoolean(3, false);
 			stm.setBoolean(4, false);
 			stm.setBoolean(5, true);
-			stm.setTimestamp(6, new Timestamp(alert.getTime() + 60 * 60 * 1000));			
+			stm.setTimestamp(6, new Timestamp(alert.getTime() - 60 * 60 * 1000));			
 			stm.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
