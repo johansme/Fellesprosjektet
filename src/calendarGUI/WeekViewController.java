@@ -1,24 +1,18 @@
 package calendarGUI;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import api.SyncFromServer;
 import calendar.Appointment;
 import calendar.Calendar;
 import calendar.Day;
 import calendar.DayChangeListener;
 import calendar.Month;
-import javafx.application.Application;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -29,7 +23,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import login.SceneHandler;
 
 public class WeekViewController implements ControllerInterface, DayChangeListener {
