@@ -52,6 +52,12 @@ public class HttpInvitation extends HttpAPIHandler {
 					case "invite_group":
 						inviteGroup(t, request);
 						return;
+					case "remove_user":
+						removeUser(t, u, request);
+						return;
+					case "remove_group":
+						removeGroup(t, u, request);
+						return;
 					case "update_attending":
 						updateAttending(t, u, request);
 						return;
@@ -273,6 +279,72 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		} else {
 			sendError(t, "Error inviting group");
+			return;
+		}
+	}
+	
+	private void removeUser(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid,uid;
+		
+		try {
+			aid = request.getInt("aid");
+			uid = request.getInt("uid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error getting appointment from DB");
+			return;
+		}
+		
+		if(u.getId() != a.getCreator() && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		if(Invitation.removeUser(aid, uid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error removing user from appointment; contact law enforcement");
+			return;
+		}
+	}
+	
+	private void removeGroup(HttpExchange t, User u, JSONObject request) throws IOException {
+		int aid,gid;
+		
+		try {
+			aid = request.getInt("aid");
+			gid = request.getInt("gid");
+		} catch(Exception e) {
+			sendInvalidCommand(t);
+			return;
+		}
+		
+		Appointment a;
+		try {
+			a = new Appointment(aid);
+		} catch(Exception e) {
+			sendError(t, "Error getting appointment from DB");
+			return;
+		}
+		
+		if(u.getId() != a.getCreator() && !u.isAdmin()) {
+			sendUnauthorised(t);
+			return;
+		}
+		
+		if(Invitation.removeGroup(aid, gid)) {
+			sendOK(t);
+			return;
+		} else {
+			sendError(t, "Error removing group from appointment; contact armed law enforcement");
 			return;
 		}
 	}
