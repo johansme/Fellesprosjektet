@@ -219,6 +219,11 @@ public class HttpInvitation extends HttpAPIHandler {
 			return;
 		}
 		
+		if(Invitation.isUserInvited(aid, uid)) {
+			sendError(t, "User already invited");
+			return;
+		}
+		
 		Appointment a;
 		try {
 			a = new Appointment(aid);
