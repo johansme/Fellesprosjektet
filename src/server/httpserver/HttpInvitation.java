@@ -178,9 +178,9 @@ public class HttpInvitation extends HttpAPIHandler {
 		ArrayList<Integer> users = Invitation.getInvitationsForAppointment(aid);
 		JSONArray jarr = new JSONArray();
 		for(int i : users) {
-			jarr.put(i);
+			jarr.put(new JSONObject().put("uid", i).put("attending", Invitation.isComing(i, aid)));
 		}
-		sendOK(t, new JSONObject().put("uids", jarr));
+		sendOK(t, new JSONObject().put("users", jarr));
 	}
 	
 	private void getAllGroupsForAppointment(HttpExchange t, User u, JSONObject request) throws IOException {

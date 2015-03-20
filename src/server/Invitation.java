@@ -397,4 +397,34 @@ public class Invitation extends shared.Invitation {
 		}
 		return result;
 	}
+	
+	public static int isComing(int uid, int aid) {
+		int result = -1;
+		
+		DBConnection db = null;
+		final String str_fmt = "SELECT accepted FROM Invitation WHERE userid=? AND appointmentid=?";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			db = new DBConnection();
+			stm = db.getConnection().prepareStatement(str_fmt);
+			stm.setInt(1, uid);
+			stm.setInt(2, aid);
+			stm.execute();
+			rs = stm.getResultSet();
+			if(rs.next()) {
+				Object b = rs.getObject(1);
+				if(b == null)   result = -1;
+				if(!(boolean)b) result = +0;
+				else            result = +1;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{ if(rs != null) rs.close(); } catch(Exception e) {}
+			try{ if(stm != null) stm.close(); } catch(Exception e) {}
+			db.close();
+		}
+		return result;
+	}
 }
