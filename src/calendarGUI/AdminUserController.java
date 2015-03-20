@@ -60,7 +60,8 @@ public class AdminUserController implements ControllerInterface {
 
 	@FXML
 	private void addUser(){
-		if (isValidUser()) {
+		String msg = isValidUser();
+		if (msg == null) {
 			User user = new User();
 			user.setSurname(surnameField.getText());
 			user.setName(nameField.getText());
@@ -85,7 +86,7 @@ public class AdminUserController implements ControllerInterface {
 				sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Something went wrong. Please try again.", this);
 			}
 		} else {
-			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, "Insufficient user info", this);
+			sceneHandler.popUpMessage("/messages/Error.fxml", 290, 140, msg, this);
 		}
 	}
 
@@ -162,35 +163,35 @@ public class AdminUserController implements ControllerInterface {
 		
 	}
 
-	private boolean isValidUser() {
-		if (! surnameField.getText().matches("([A-Zï¿½ï¿½ï¿½][a-zï¿½ï¿½ï¿½]+)(\\-[A-Zï¿½ï¿½ï¿½][a-zï¿½ï¿½ï¿½])?([a-zï¿½ï¿½ï¿½]*)")) {
-			return false;
+	private String isValidUser() {
+		if (! surnameField.getText().matches("([A-ZÆØÅ][a-zæøå]+)(\\-[A-ZÆØÅ][a-zæøå])?([a-zæøå]*)")) {
+			return "Invalid surname. A surname must consist of letters, and may contain '-'. Remember correct use of uppercase letters";
 		}
-		if (! nameField.getText().matches("([A-Zï¿½ï¿½ï¿½][a-zï¿½ï¿½ï¿½]+)(\\-[A-Zï¿½ï¿½ï¿½][a-zï¿½ï¿½ï¿½])?([a-zï¿½ï¿½ï¿½]*)")) {
-			return false;
+		if (! nameField.getText().matches("([A-ZÆØÅ][a-zæøå]+)(\\-[A-ZÆØÅ][a-zæøå])?([a-zæøå]*)")) {
+			return "Invalid name. A name must consist of letters, and may contain space and '-'. Remember correct use of uppercase letters";
 		}
-		if (! emailField.getText().matches("[\\w_\\.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]+@[\\w_\\.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]+\\.[a-z]{2,3}")) {
-			return false;
+		if (! emailField.getText().matches("[\\w_\\.ÆØÅæøå]+@[\\w_\\.ÆØÅæøå]+\\.[a-z]{2,3}")) {
+			return "Invalid email. An email must be on the form 'examle@email.com', and may include letters, numbers, period and '_'.";
 		}
 		String usrnm = usernameField.getText();
-		if (usrnm.length() < 5 || ! usrnm.matches("[a-zï¿½ï¿½ï¿½]+")) {
-			return false;
+		if (usrnm.length() < 5 || ! usrnm.matches("[a-zæøå]+")) {
+			return "Invalid username. A username must consist of at least 5 lowercase letters.";
 		}
 		String srnm = surnameField.getText();
 		String nm = nameField.getText();
 		String eml = emailField.getText();
 		for (User user : userList) {
 			if (usrnm.equals(user.getUsername())) {
-				return false;
+				return "This username is already in use";
 			}
 			if (srnm.equals(user.getSurname()) && nm.equals(user.getName()) && eml.equals(user.getEmail())) {
-				return false;
+				return "This person already has a user.";
 			}
 		}
-		if (passwordField.getText().length() < 6 || ! passwordField.getText().matches("[\\wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]+")) {
-			return false;
+		if (passwordField.getText().length() < 6 || ! passwordField.getText().matches("[\\wÆØÅæøå]+")) {
+			return "Invalid password. A password must consist of at least 6 letters and numbers";
 		}
-		return true;
+		return null;
 	}
 
 	private void setUserList() {
