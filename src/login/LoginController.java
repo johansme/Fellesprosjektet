@@ -3,9 +3,7 @@ package login;
 
 import java.io.IOException;
 import java.time.LocalDate;
-
 import org.json.JSONObject;
-
 import api.API;
 import calendar.Appointment;
 import calendar.Calendar;

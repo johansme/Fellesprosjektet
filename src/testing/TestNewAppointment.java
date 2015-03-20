@@ -2,12 +2,9 @@ package testing;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import login.LoginController;
 import login.LoginMain;
-import login.LoginManager;
 import newAppointment.NewAppointmentController;
 
 import org.junit.After;

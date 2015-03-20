@@ -3,7 +3,6 @@ package login;
 import newAppointment.AddParticipantsController;
 import calendar.Appointment;
 import calendar.Calendar;
-import calendar.Group;
 import calendar.User;
 import calendarGUI.ControllerInterface;
 import calendarGUI.EditUserPasswordController;
