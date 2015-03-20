@@ -2,6 +2,7 @@ package calendar;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public class Day {
@@ -64,8 +65,15 @@ public class Day {
 	}
 	
 	private void fireDayChanged(List<Appointment> oldAppointments) {
-		for (DayChangeListener listener : dayChangeListeners) {
-			listener.dayChanged(this, oldAppointments, getAppointments());
+		try{
+			for (DayChangeListener listener : dayChangeListeners) 
+			{
+				listener.dayChanged(this, oldAppointments, getAppointments());
+			}
+			
+		}catch(ConcurrentModificationException e){
+			System.err.println("This is not good :/");
+			e.printStackTrace();
 		}
 	}
 	
