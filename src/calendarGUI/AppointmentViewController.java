@@ -140,6 +140,9 @@ public class AppointmentViewController implements ControllerInterface{
 	
 	@FXML
 	public void closeAction() {
+		if (appointment.getRoom() != null) {
+			appointment.setLocation("");
+		}
 	    // get a handle to the stage
 	    Stage stage = (Stage) close.getScene().getWindow();
 	    // do what you have to do
