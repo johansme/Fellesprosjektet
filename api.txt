@@ -31,9 +31,9 @@ F	invite_user
 		In: aid(int),uid(int)
 P	invite_group
 		In: aid(int),gid(int)
-	update_attending
+F	update_attending
 		In: uid(int),aid(int),attending(boolean)
-	update_hidden
+F	update_hidden
 		In: uid(int),aid(int),hidden(boolean)
 
 /group
