@@ -636,15 +636,7 @@ public class Appointment extends shared.Appointment {
 	}
 	
 	public boolean getActive(boolean b) {
-//		TODO
 		return true;
-//		if (personal) {
-//			return personal;
-//		}
-//		if (b) {
-//			findActive();
-//		}
-//		return active;
 	}
 	
 	public void setActive(boolean b) {

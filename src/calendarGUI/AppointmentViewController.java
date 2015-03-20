@@ -129,7 +129,7 @@ public class AppointmentViewController implements ControllerInterface{
 					}
 				}
 			}
-			sendConfirmationToServer();
+			sendConfirmationToServer(calendar.getLoggedInUser());
 		}
 		setView(appointment);
 	}
@@ -233,6 +233,7 @@ public class AppointmentViewController implements ControllerInterface{
 						else {
 							appointment.setUserAttending(attendMap.get(checkBox), 0);
 						}
+						sendConfirmationToServer(attendMap.get(checkBox));
 					}
 				});
 
@@ -351,16 +352,24 @@ public class AppointmentViewController implements ControllerInterface{
 		
 	}
 	
-	private void sendConfirmationToServer() {
+	private void sendConfirmationToServer(User user) {
 		int attends = -1;
-		if (appointment.getAttending().equals("Y")) {
-			attends = 1;
-		} else if (appointment.getAttending().equals("N")) {
-			attends = 0;
+		if (user.equals(calendar.getLoggedInUser())) {
+			if (appointment.getAttending().equals("Y")) {
+				attends = 1;
+			} else if (appointment.getAttending().equals("N")) {
+				attends = 0;
+			}
+		} else {
+			if (appointment.getUserAttending(user) == 1) {
+				attends = 1;
+			} else if (appointment.getUserAttending(user) == 0) {
+				attends = 0;
+			}
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("command", "update_attending");
-		obj.put("uid", calendar.getLoggedInUser().getId());
+		obj.put("uid", user.getId());
 		obj.put("aid", appointment.getID());
 		obj.put("attending", attends);
 		try {
