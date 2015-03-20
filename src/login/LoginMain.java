@@ -7,9 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
-
 public class LoginMain extends Application {
-	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -27,9 +25,7 @@ public class LoginMain extends Application {
 			e.printStackTrace();
 		}
 	}
-	
 	public static void main(String[] args) {
 		launch(args);
-		
 	}
 }
