@@ -68,60 +68,62 @@ public class SyncFromServer {
 //			if (!res.getBoolean("status")) {
 //				System.out.println(res.get("error"));
 //			}
-			JSONArray invArray1= res.getJSONArray("invitations");
-			for (int i=0; i<invArray1.length(); i++) {
-				JSONObject obj = new JSONObject();
-				obj = invArray1.getJSONObject(i);
-				Appointment ap = new Appointment(c);
-				ap.fromJSON(obj.getJSONObject("app"));
-				ap.setPersonal(false);
-				ap.addGroup(gr);
-//				TODO code for getting the response from other users, for for for
-//				JSONObject uidReq = new JSONObject();
-//				uidReq.put("command", "get_all_users_for_app");
-//				uidReq.put("aid", ap.getId());
-//				JSONObject getUids = new JSONObject();
-//				getUids = API.call("/invitation", o, c.getSession());
-//				JSONArray uidArray = getUids.getJSONArray("uids");
-//				for (int j=0; j<uidArray.length(); j++) {
-//					int uid = uidArray.getInt(j);
-//					JSONObject appsForUidReq = new JSONObject();
-//					appsForUidReq.put("command", "get_all_for_user");
-//					appsForUidReq.put("uid", uid);
-//					JSONObject getApps = new JSONObject();
-//					getApps = API.call("/invitation", appsForUidReq, c.getSession());
-//					JSONArray uidInvArray = getApps.getJSONArray("invitations");
-//					for (int x=0; x<uidInvArray.length(); x++) {
-//						JSONObject appObj = new JSONObject();
-//						appObj = uidInvArray.getJSONObject(x);
-//						Appointment app = new Appointment(c);
-//						app.fromJSON(appObj.getJSONObject("app"));
-//						Invitation inv = new Invitation();
-//						inv.fromJSON(obj.getJSONObject("invitation"));
-//					}
-//				}
-				if (ap.getCreator()==c.getLoggedInUser().getId()) {
-					ap.setAdmin(true);
-				}
-				else {
-					ap.setAdmin(false);
-				}
-				ap.setValues();
-				
-				boolean added = false;
-				if (a!=null && !a.isEmpty()) {
-					for (Appointment app : a) {
-						if (app.getID()==ap.getID()) {
-							added = true;
-							break;
+			if (res!=null) {
+				JSONArray invArray1= res.getJSONArray("invitations");
+				for (int i=0; i<invArray1.length(); i++) {
+					JSONObject obj = new JSONObject();
+					obj = invArray1.getJSONObject(i);
+					Appointment ap = new Appointment(c);
+					ap.fromJSON(obj.getJSONObject("app"));
+					ap.setPersonal(false);
+					ap.addGroup(gr);
+	//				TODO code for getting the response from other users, for for for
+	//				JSONObject uidReq = new JSONObject();
+	//				uidReq.put("command", "get_all_users_for_app");
+	//				uidReq.put("aid", ap.getId());
+	//				JSONObject getUids = new JSONObject();
+	//				getUids = API.call("/invitation", o, c.getSession());
+	//				JSONArray uidArray = getUids.getJSONArray("uids");
+	//				for (int j=0; j<uidArray.length(); j++) {
+	//					int uid = uidArray.getInt(j);
+	//					JSONObject appsForUidReq = new JSONObject();
+	//					appsForUidReq.put("command", "get_all_for_user");
+	//					appsForUidReq.put("uid", uid);
+	//					JSONObject getApps = new JSONObject();
+	//					getApps = API.call("/invitation", appsForUidReq, c.getSession());
+	//					JSONArray uidInvArray = getApps.getJSONArray("invitations");
+	//					for (int x=0; x<uidInvArray.length(); x++) {
+	//						JSONObject appObj = new JSONObject();
+	//						appObj = uidInvArray.getJSONObject(x);
+	//						Appointment app = new Appointment(c);
+	//						app.fromJSON(appObj.getJSONObject("app"));
+	//						Invitation inv = new Invitation();
+	//						inv.fromJSON(obj.getJSONObject("invitation"));
+	//					}
+	//				}
+					if (ap.getCreator()==c.getLoggedInUser().getId()) {
+						ap.setAdmin(true);
+					}
+					else {
+						ap.setAdmin(false);
+					}
+					ap.setValues();
+					
+					boolean added = false;
+					if (a!=null && !a.isEmpty()) {
+						for (Appointment app : a) {
+							if (app.getID()==ap.getID()) {
+								added = true;
+								break;
+							}
 						}
 					}
+					if (!added) {
+						a.add(ap);
+						c.getLoggedInUser().addAppointment(ap);
+					}
+	
 				}
-				if (!added) {
-					a.add(ap);
-					c.getLoggedInUser().addAppointment(ap);
-				}
-
 			}
 		}
 		o = new JSONObject();
