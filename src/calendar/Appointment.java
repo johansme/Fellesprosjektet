@@ -823,7 +823,6 @@ public class Appointment extends shared.Appointment {
 		setOpened(false);
 		addToDay();
 		day.setActiveAppointments();
-		System.out.println(day.getActiveAppointments().get(0).getDescription());
 	}
 	
 	public void sendInvitation(Participant participant) {
