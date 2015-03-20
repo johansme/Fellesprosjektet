@@ -9,6 +9,7 @@ public class AlertManager extends Thread {
 	private final int PUSH_INTERVAL = 1000 * 10;
 	boolean running = true;
 	
+	// This method pushes alerts
 	private void pushAlerts() {
 		ArrayList<Invitation.Alert> alerts = Invitation.getDueAlerts();
 		for(Invitation.Alert a : alerts) {
