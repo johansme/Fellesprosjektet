@@ -6,7 +6,7 @@ import server.Invitation;
 import server.Notification;
 
 public class AlertManager extends Thread {
-	private final int PUSH_INTERVAL = 1000 * 2;
+	private final int PUSH_INTERVAL = 1000 * 10;
 	boolean running = true;
 	
 	private void pushAlerts() {
