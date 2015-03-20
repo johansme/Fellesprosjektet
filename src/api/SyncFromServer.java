@@ -165,7 +165,6 @@ public class SyncFromServer {
 						ap.addUser(u);
 					}
 				}
-	//			TODO set room
 				if (ap.getCreator()==c.getLoggedInUser().getId()) {
 					ap.setAdmin(true);
 				}
