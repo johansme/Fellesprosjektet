@@ -35,18 +35,6 @@ import login.SceneHandler;
 
 public class AppointmentViewController implements ControllerInterface{
 
-	public void start(Stage primaryStage) {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("AppointmentView.fxml/"));
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
 	private SceneHandler sceneHandler = new SceneHandler();
 	private Calendar calendar;
 	private Appointment appointment;
