@@ -9,7 +9,6 @@ import newAppointment.Room;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import api.API;
 import calendar.Appointment;
 import calendar.Calendar;
