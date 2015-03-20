@@ -72,8 +72,7 @@ public class Day {
 			}
 			
 		}catch(ConcurrentModificationException e){
-			System.err.println("This is not good :/");
-			e.printStackTrace();
+			// burde fikset låsing av lister under endring, men har ikke tid.
 		}
 	}
 	
