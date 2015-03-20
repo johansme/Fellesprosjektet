@@ -308,6 +308,15 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			
 			setRoomList();
 			
+			if(fromTimeHour > toTimeHour)
+			{
+				if(fromTimeMin > toTimeMin)
+				{
+					fromField.setText(getRoundHalfHour(toTimeHour, toTimeMin - 60));
+				}
+				else fromField.setText(getRoundHalfHour(toTimeHour, toTimeMin - 60));
+			}
+			
 			if(!validToTime()){
 				if(timeDiffInMin < 30){
 					toField.setText(getRoundHalfHour(fromTimeHour, fromTimeMin));
@@ -325,7 +334,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 				}
 			}
 
-
+			
 			if(minAndMaxAllowedStartTime())
 			{
 				if(timeDiffInMin < 30) {
