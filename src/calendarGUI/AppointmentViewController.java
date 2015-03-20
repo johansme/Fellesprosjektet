@@ -370,7 +370,7 @@ public class AppointmentViewController implements ControllerInterface{
 		obj.put("command", "update_attending");
 		obj.put("uid", user.getId());
 		obj.put("aid", appointment.getID());
-		obj.put("attending", attends);
+		obj.put("attending", attends==1? true : false);
 		try {
 			API.call("/invitation", obj, calendar.getSession());
 		} catch (IOException e) {
