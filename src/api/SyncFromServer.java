@@ -159,6 +159,7 @@ public class SyncFromServer {
 				JSONObject getUsers = new JSONObject();
 				getUsers = API.call("/invitation", uidReq, c.getSession());
 				JSONArray usersArray = getUsers.getJSONArray("users");
+				ap.setInvitation(inv);
 				if (usersArray.length()==1) {
 					ap.setPersonal(true);
 					ap.setAttending(null);
@@ -166,6 +167,7 @@ public class SyncFromServer {
 				else {
 					ap.setPersonal(false);
 					ap.setAttending(inv.isAccepted());
+					ap.setOpened(inv.isDirty());
 					for (int j=0; j<usersArray.length(); j++) {
 						JSONObject object = new JSONObject();
 						object = usersArray.getJSONObject(j);

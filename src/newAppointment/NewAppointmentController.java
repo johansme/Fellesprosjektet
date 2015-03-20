@@ -134,7 +134,7 @@ public class NewAppointmentController implements ControllerInterface, Participan
 			a.setOpened(true);
 			a.setPersonal(true);
 			if (!participantList.isEmpty() && participantList!=null) {
-				a.addParticipants(participantList);				
+				a.addParticipants(participantList);	
 			}
 			if (header.getText().equals("Edit appointment")) {
 				int id = appointment.getId();
