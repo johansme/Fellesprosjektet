@@ -32,7 +32,7 @@ public class SyncFromServer {
 		
 		JSONObject res = API.call("/group", o, c.getSession());
 		if (! c.getLoggedInUser().isAdmin()) {
-			JSONArray gidArray = res.getJSONArray("gid");
+			JSONArray gidArray = res.getJSONArray("gids");
 			o = new JSONObject();
 			o.put("command", "get");
 			o.put("gid", gidArray);
